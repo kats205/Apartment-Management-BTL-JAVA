@@ -1,0 +1,152 @@
+@startuml
+
+class Building {
+    +int BuildingID
+    +String BuildingName
+    +String Address
+    +int TotalFloors
+    +int YearBuilt
+    +String Description
+    +void addFloor(Floor floor)
+    +void removeFloor(int floorID)
+    +Floor getFloor(int floorID)
+}
+
+class Floor {
+    +int FloorID
+    +int BuildingID
+    +int FloorNumber
+    +String Description
+    +void addApartment(Apartment apartment)
+    +void removeApartment(int apartmentID)
+    +Apartment getApartment(int apartmentID)
+}
+
+class Apartment {
+    +int ApartmentID
+    +String ApartmentNumber
+    +int FloorID
+    +int BuildingID
+    +float Area
+    +int Bedrooms
+    +int Bathrooms
+    +String Status
+    +decimal PurchasePrice
+    +decimal MonthlyFee
+    +void updateStatus(String status)
+    +void assignResident(Resident resident)
+}
+
+class Resident {
+    +int ResidentID
+    +String FullName
+    +Date DateOfBirth
+    +String Gender
+    +String IdentityCard
+    +String Phone
+    +String Email
+    +void reportIncident(Incident incident)
+    +void payBill(MonthlyBill bill, Payment payment)
+}
+
+class ApartmentOwnership {
+    +int OwnershipID
+    +int ApartmentID
+    +int ResidentID
+    +String OwnershipType
+    +Date StartDate
+    +Date EndDate
+    +void transferOwnership(Resident newOwner)
+}
+
+class Service {
+    +int ServiceID
+    +String ServiceName
+    +String Description
+    +decimal DefaultAmount
+    +void updateServiceDetails(String name, String description, decimal amount)
+}
+
+class MonthlyBill {
+    +int BillID
+    +int ApartmentID
+    +int Month
+    +int Year
+    +decimal TotalAmount
+    +Date IssueDate
+    +Date DueDate
+    +void generateBill()
+    +void updatePaymentStatus()
+}
+
+class Payment {
+    +int PaymentID
+    +int BillID
+    +decimal AmountPaid
+    +Date PaymentDate
+    +void processPayment()
+}
+
+class Incident {
+    +int IncidentID
+    +int ApartmentID
+    +int ReportedBy
+    +String IncidentType
+    +String Description
+    +Date ReportDate
+    +String Status
+    +void updateStatus(String newStatus)
+    +void assignHandler(Employee handler)
+}
+
+class User {
+    +int UserID
+    +String Username
+    +String Password
+    +String FullName
+    +String Email
+    +String Phone
+    +void login()
+    +void logout()
+}
+
+class Employee {
+    +int EmployeeID
+    +String Position
+    +String Department
+    +void handleIncident(Incident incident)
+}
+
+class Role {
+    +int RoleID
+    +String RoleName
+    +String Description
+    +void assignPermission(Permission permission)
+}
+
+class Permission {
+    +int PermissionID
+    +String PermissionName
+    +String Description
+}
+
+class RolePermission {
+    +int RoleID
+    +int PermissionID
+}
+
+User <|-- Resident
+User <|-- Employee
+Building "1" -- "*" Floor
+Floor "1" -- "*" Apartment
+Apartment "1" -- "*" ApartmentOwnership
+Resident "1" -- "*" ApartmentOwnership
+Apartment "1" -- "*" MonthlyBill
+MonthlyBill "1" -- "*" Payment
+Apartment "1" -- "*" Incident
+Resident "1" -- "*" Incident : reports
+Employee "1" -- "*" Incident : handles
+Role "1" -- "*" User
+Role "*" -- "*" Permission
+
+@enduml
