@@ -3,31 +3,33 @@ MÔ HÌNH MVC
 learn1/  
 │── .idea/                  (Cấu hình IntelliJ IDEA)  
 │── .mvn/                   (Maven wrapper)  
-|── .src/
-│── main
-│   ├── java
-│   │   └── orgexamplelearn1
-│   │       ├── MainApp.java
-│   │       ├── Events 		(Thư mục chứa bộ điều khiển, xử lý sự kiện - Controllers)                                              
-│   │       │   ├── LoginController.java
-│   │       │   ├── SignupController.java
-│   │       │   ├── models/  (Mô hình dữ liệu - quản lý)
-│   │       │   │   ├── User.java  
-│   │       │   │   ├── Account.java  
-│   │       │   ├── services/  
-│   │       │   │   ├── DatabaseService.java     (Kết nối CSDL)
-│   │       │   │   ├── AuthService.java         (Xác thực người dùng)
-│   │       │   ├── utils/     (Các công cụ hỗ trợ)  
-│   │       │   │   ├── Validator.java  
-│   │       │   │   ├── FileManager.java 
-│   ├── resources
-│   │   └── orgexamplelearn1
-│   │       ├── Images 		(Chứa logo và hình ảnh dự án)
-│   │       ├── Styles 		(CSS để thiết kế giao diện cho button, text field, layout)
-│   │       │   ├── styles.css
-│   │       ├── Views 			(Chứa file giao diện FXML build qua Screen Builder hoặc NetBeans)
-│   │       │   ├── login.fxml
-│   │       │   ├── signup.fxml
+|── 📁src/
+|    │── 📁main
+|    │   ├── 📁java
+|    │   │   └── 📁org.example.learn1
+|    │   │       ├── 📁 Controllers 		(Thư mục chứa bộ điều khiển, xử lý sự kiện)                                              
+|    │   │       │   ├── LoginController.java
+|    │   │       │   ├── HomeController.java
+|    │   │       │   ├── ...
+|    │   │       ├── 📁 Models/  (Model - Lớp dữ liệu, xử lý logic)
+|    │   │       │   ├── User.java
+|    │   │       │   ├── Product.java
+|    │   │       │   ├── ...
+│    │   │       ├── 📁 Views/         (View - Load giao diện từ FXML)
+│    │   │       │   ├── MainApplication.java  (Chạy ứng dụng)
+│    │   │       │   ├── ...
+|    │   │       ├── 📁 Utils/  
+|    │   │       │   │   ├── DatabaseService.java     (Kết nối CSDL)
+|    │   │       │   │   ├── AuthService.java         (Xác thực người dùng)
+│    │   │       │   ├── ...
+|    │   ├── 📁 resources
+|    │   │   └── 📁 or.egxample.learn1
+|    │   │       ├── 📁 Assets 		(Chứa logo và hình ảnh dự án)
+|    │   │       ├── 📁 Styles 		(CSS để thiết kế giao diện cho button, text field, layout)
+|    │   │       │   ├── styles.css
+|    │   │       ├── 📁 Views 			(Chứa file giao diện FXML build qua Screen Builder hoặc NetBeans)
+|    │   │       │   ├── login.fxml
+|    │   │       │   ├── signup.fxml
 │── target/                  (Chứa file build)  
 │── .gitignore               (File cấu hình Git)  
 │── mvnw                     (Maven Wrapper script)  
