@@ -1,0 +1,17 @@
+MÔ HÌNH MVC
+src
+│── main
+│   ├── java
+│   │   └── orgexamplelearn1
+│   │       ├── MainApp.java
+│   │       ├── Events 		(Thư mục chứa bộ điều khiển, xử lý sự kiện - Controllers)                                              
+│   │       │   ├── LoginController.java
+│   │       │   ├── SignupController.java
+│   ├── resources
+│   │   └── orgexamplelearn1
+│   │       ├── Images 		(Chứa logo và hình ảnh dự án)
+│   │       ├── Styles 		(CSS để thiết kế giao diện cho button, text field, layout)
+│   │       │   ├── styles.css
+│   │       ├── Views 			(Chứa file giao diện FXML build qua Screen Builder hoặc NetBeans)
+│   │       │   ├── login.fxml
+│   │       │   ├── signup.fxml
