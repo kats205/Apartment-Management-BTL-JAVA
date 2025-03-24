@@ -1,9 +1,19 @@
 package org.example.apartmentmanagement.Model.ResidentManager;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.example.apartmentmanagement.Model.PropertyManager.Apartment;
+import org.example.apartmentmanagement.Model.SecurityManager.Vehicles;
 
 import java.sql.Date;
+import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Resident {
     private int residentID;
     private String apartmentID;
@@ -16,15 +26,7 @@ public class Resident {
     private boolean isPrimaryResident;
     private Date moveInDate;
 
-    public Resident() {
-        residentID = 0;
-        apartmentID = fullName = identityCard = gender = phoneNumber = email = "";
-        dateOfBirth = moveInDate = null;
-        isPrimaryResident = false;
-    }
-
-    public Resident(int residentID, String apartmentID, String fullName, String identityCard, Date dateOfBirth,
-                    String gender, String phoneNumber, String email, boolean isPrimaryResident, Date moveInDate) {
+    public Resident(int residentID, String apartmentID, String fullName, String identityCard, Date dateOfBirth, String gender, String phoneNumber, String email){
         this.residentID = residentID;
         this.apartmentID = apartmentID;
         this.fullName = fullName;
@@ -33,98 +35,16 @@ public class Resident {
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.isPrimaryResident = isPrimaryResident;
-        this.moveInDate = moveInDate;
     }
 
-    public int getResidentID() {
-        return residentID;
-    }
-
-    public void setResidentID(int residentID) {
-        this.residentID = residentID;
-    }
-
-    public String getApartmentID() {
-        return apartmentID;
-    }
-
-    public void setApartmentID(String apartmentID) {
-        this.apartmentID = apartmentID;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getIdentityCard() {
-        return identityCard;
-    }
-
-    public void setIdentityCard(String identityCard) {
-        this.identityCard = identityCard;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean isPrimaryResident() {
-        return isPrimaryResident;
-    }
-
-    public void setPrimaryResident(boolean primaryResident) {
-        isPrimaryResident = primaryResident;
-    }
-
-    public Date getMoveInDate() {
-        return moveInDate;
-    }
-
-    public void setMoveInDate(Date moveInDate) {
-        this.moveInDate = moveInDate;
-    }
-
-    public void updateProfile(){
-
-    }
-    public Apartment getApartment(){
-
-    }
-
-    public List<Vehicles> getVehiclesList(){
-
-    }
+//    public void updateProfile(){
+//
+//    }
+//    public Apartment getApartment(){
+//
+//    }
+//
+//    public List<Vehicles> getVehiclesList(){
+//
+//    }
 }

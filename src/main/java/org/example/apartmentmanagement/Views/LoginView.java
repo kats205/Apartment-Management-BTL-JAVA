@@ -1,10 +1,17 @@
 package org.example.apartmentmanagement.Views;
 
+import org.example.apartmentmanagement.DAO.UserDAO;
+import org.example.apartmentmanagement.Model.UserManager.Role;
+import org.example.apartmentmanagement.Model.UserManager.User;
+import org.example.apartmentmanagement.Views.AdminDashBoard.AdminDashboard;
+
+import javafx.*;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
+import java.sql.SQLException;
 
 public class LoginView extends JFrame {
     private JPanel backgroundPanel;
@@ -52,9 +59,12 @@ public class LoginView extends JFrame {
         lblUsername.setFont(new Font("Arial", Font.BOLD, 14));
         loginPanel.add(lblUsername);
 
-        JTextField txtEmail = new JTextField();
-        txtEmail.setBorder(new LineBorder(new Color(0, 128, 0), 2));
-        loginPanel.add(txtEmail);
+
+
+        JTextField txtUserName = new JTextField();
+        txtUserName.setBorder(new LineBorder(new Color(0, 128, 0), 2));
+        loginPanel.add(txtUserName);
+
 
         // Tiêu đề Password
         JLabel lblPassword = new JLabel("Password:");
@@ -85,6 +95,60 @@ public class LoginView extends JFrame {
         btnLogin.setFont(new Font("Arial", Font.BOLD, 16));
         btnLogin.setBorderPainted(false);
         loginPanel.add(btnLogin);
+
+        txtPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String userName = txtUserName.getText();
+                    String passWord = new String (txtPassword.getPassword());
+                    UserDAO userDAO = new UserDAO();
+                    int roleID = userDAO.login(userName, passWord);
+                    if(roleID == 1){
+                        try {
+                            new AdminDashboard().adminView();
+                        } catch (SQLException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                    else if(roleID == 2){
+                        JOptionPane.showMessageDialog(LoginView.this, "Hello Manager!");
+                    }
+                    else if(roleID == 3){
+                        JOptionPane.showMessageDialog(LoginView.this, "Hello Staff!");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(LoginView.this, "Tên đăng nhập hoặc mật khẩu sai");
+                    }
+                }
+            }
+        });
+
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               String userName = txtUserName.getText();
+               String passWord = new String (txtPassword.getPassword());
+                UserDAO userDAO = new UserDAO();
+               int roleID = userDAO.login(userName, passWord);
+               if(roleID == 1){
+                   try {
+                       new AdminDashboard().adminView();
+                   } catch (SQLException ex) {
+                       throw new RuntimeException(ex);
+                   }
+               }
+               else if(roleID == 2){
+                   JOptionPane.showMessageDialog(LoginView.this, "Hello Manager!");
+               }
+               else if(roleID == 3){
+                   JOptionPane.showMessageDialog(LoginView.this, "Hello Staff!");
+               }
+               else{
+                   JOptionPane.showMessageDialog(LoginView.this, "Tên đăng nhập hoặc mật khẩu sai");
+               }
+            }
+        });
 
         // Nút Register
 //        JLabel registerText = new JLabel("To Register New Account → ");
@@ -141,6 +205,11 @@ public class LoginView extends JFrame {
     }
 
     public static void main(String[] args) {
-        new LoginView();
+        try{
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            new LoginView();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }

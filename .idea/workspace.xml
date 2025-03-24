@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9a432de7-d79a-491d-85a9-dcf35e3195fe" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/facilityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/facilityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/FacilityDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillingManagement/BillItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillingManagement/BillItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillingManagement/Bills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillingManagement/Bills.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillingManagement/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillingManagement/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/MaintenanceRequest/MaintenanceRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/MaintenanceRequest/MaintenanceRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/NotifacationAndReporting/Notifacation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/NotifacationAndReporting/Notifacation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/NotifacationAndReporting/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/NotifacationAndReporting/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/PropertyManager/Apartment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/PropertyManager/Apartment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/PropertyManager/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/PropertyManager/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/ResidentManager/Resident.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/ResidentManager/Resident.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/SecurityManager/Vehicles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/SecurityManager/Vehicles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/SecurityManager/Visitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/SecurityManager/Visitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/ServiceManager/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/ServiceManager/Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/UserManager/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/UserManager/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/UserManager/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/UserManager/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/ApartmentManagementSystem.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/facilityController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/DatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/DatabaseConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/FacilityDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Images/chung-cu-quan-7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Images/th (1).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Images/th.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/UML/QLCC.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/UML/QLCC.puml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/UML/classDiagram-QLCC.mdj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre11-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre11-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre11.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre8-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre8-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre8.jar" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2ufu7aVG6Dkd0rZ0krdjVbOH3Mu" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AdminDashboard.executor": "Run",
+    "Application.LoginView.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.UserDAO.executor": "Run",
+    "Application.org.example.apartmentmanagement.Views.LoginView.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "trungle",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/lerua/IdeaProjects/QLCC_DACN",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.org.example.apartmentmanagement.Views.LoginView">
+    <configuration name="AdminDashboard" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.AdminDashBoard.AdminDashboard" />
+      <module name="QLCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.apartmentmanagement.Views.AdminDashBoard.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="example.apartmentmanagement.Views.LoginView" />
+      <module name="QLCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="example.apartmentmanagement.Views.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
+      <module name="QLCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.DAO.UserDAO" />
+      <module name="QLCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.apartmentmanagement.DAO.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="org.example.apartmentmanagement.Views.LoginView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.LoginView" />
+      <module name="QLCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.apartmentmanagement.Views.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.org.example.apartmentmanagement.Views.LoginView" />
+        <item itemvalue="Application.AdminDashboard" />
+        <item itemvalue="Application.UserDAO" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.LoginView" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9a432de7-d79a-491d-85a9-dcf35e3195fe" name="Changes" comment="" />
+      <created>1742651783984</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742651783984</updated>
+    </task>
+    <servers />
+  </component>
+</project>
