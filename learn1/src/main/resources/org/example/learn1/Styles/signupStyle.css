@@ -1,0 +1,41 @@
+.root {
+    -fx-background-color: white;
+}
+
+.header {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #004d40;
+}
+
+.primary-button {
+    -fx-background-color: #004d40;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 150px;
+}
+
+.primary-button:hover {
+    -fx-background-color: #00695c;
+}
+
+.link-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #d32f2f;
+    -fx-border-color: transparent;
+}
+
+.link-button:hover {
+    -fx-underline: true;
+}
+
+.logo-section {
+    -fx-background-color: #004d40;
+    -fx-alignment: center;
+}
+
+.logo-text {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
