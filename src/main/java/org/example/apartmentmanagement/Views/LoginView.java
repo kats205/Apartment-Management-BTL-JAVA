@@ -1,11 +1,11 @@
 package org.example.apartmentmanagement.Views;
 
 import org.example.apartmentmanagement.DAO.UserDAO;
-import org.example.apartmentmanagement.Model.UserManager.Role;
-import org.example.apartmentmanagement.Model.UserManager.User;
+import org.example.apartmentmanagement.Model.Role;
+import org.example.apartmentmanagement.Model.User;
 import org.example.apartmentmanagement.Views.AdminDashBoard.AdminDashboard;
 
-import javafx.*;
+//import javafx.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -26,7 +26,7 @@ public class LoginView extends JFrame {
         setLayout(null);
 
         // Load hình nền từ đường dẫn
-        String imagePath = "C:/Users/lerua/IdeaProjects/QLCC/src/main/java/org/example/apartmentmanagement/Images/chung-cu-quan-7.jpg";
+        String imagePath = "C:/Users/lerua/IdeaProjects/QLCC/src/main/java/org/example/apartmentmanagement/Views/Images/chung-cu-quan-7.jpg";
         backgroundImage = new ImageIcon(imagePath);
 
         // Panel chứa hình nền

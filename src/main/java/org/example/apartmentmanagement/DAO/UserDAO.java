@@ -1,6 +1,6 @@
 package org.example.apartmentmanagement.DAO;
 
-import org.example.apartmentmanagement.Model.UserManager.User;
+import org.example.apartmentmanagement.Model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,4 +53,8 @@ public class UserDAO {
         }
         return roleID;
     }
+
+//    public boolean logout(){
+//
+//    }
 }

@@ -1,0 +1,41 @@
+/* Nền gradient */
+#backgroundPane {
+    -fx-background-image: url("chung-cu-quan-7.jpg");
+    -fx-background-size: cover;  /* Phủ kín cửa sổ */
+        -fx-background-position: center;
+}
+
+/* Form Login */
+#loginPane {
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Nền trắng mờ */
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+    -fx-alignment: center;
+    -fx-pref-width: 300px;
+}
+
+/* Tiêu đề */
+#loginTitle {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+/* Input Fields */
+.text-field, .password-field {
+    -fx-pref-height: 35px;
+    -fx-background-radius: 5;
+    -fx-border-color: #ddd;
+}
+
+/* Nút Login */
+#btnLogin {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-pref-width: 100%;
+}
+
+#btnLogin:hover {
+    -fx-background-color: #45a049;
+}

@@ -1,14 +1,15 @@
 package org.example.apartmentmanagement.Views.AdminDashBoard;
 
 import org.example.apartmentmanagement.DAO.ResidentDAO;
-import org.example.apartmentmanagement.Model.ResidentManager.Resident;
+import org.example.apartmentmanagement.Model.Resident;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ResidentPanel extends JPanel {
@@ -21,7 +22,7 @@ public class ResidentPanel extends JPanel {
 //        };
 
         // Table hiển thị danh sách cư dân
-        String[] columnNames = {"ID", "Họ và tên", "CCCD/CMND", "Ngày tháng năm sinh", "Giới tính", "Email", "Số điện thoại", "Căn hộ"};
+        String[] columnNames = {"ID", "Họ và tên", "CCCD/CMND", "Ngày tháng năm sinh", "Giới tính", "cư dân ? ", "Ngày chuyển đến", "Căn hộ"};
         ResidentDAO residentDAO = new ResidentDAO();
         List<Resident> residentList =  residentDAO.getAllResidentDAO();
         Object[][] data = new Object[residentList.size()][8];
@@ -32,8 +33,8 @@ public class ResidentPanel extends JPanel {
             data[i][2] = r.getIdentityCard();
             data[i][3] = r.getDateOfBirth();
             data[i][4] = r.getGender();
-            data[i][5] = r.getEmail();
-            data[i][6] = r.getPhoneNumber();
+            data[i][5] = r.isPrimaryResident();
+            data[i][6] = r.getMoveInDate();
             data[i][7] = r.getApartmentID();
         }
         JTable table = new JTable(data, columnNames);
@@ -53,12 +54,23 @@ public class ResidentPanel extends JPanel {
         // Nút chức năng
         JPanel buttonPanel = new JPanel();
         JButton addBtn = new JButton("Thêm");
+//        xử lý sự kiện thêm cư dân trong giao diện của admin, manager cũng nên có quyền này
+        addBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         JButton editBtn = new JButton("Sửa");
         JButton deleteBtn = new JButton("Xóa");
+
 
         buttonPanel.add(addBtn);
         buttonPanel.add(editBtn);
         buttonPanel.add(deleteBtn);
+
+
         add(buttonPanel, BorderLayout.SOUTH);
     }
 }

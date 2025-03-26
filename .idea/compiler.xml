@@ -10,5 +10,8 @@
         <module name="QLCC" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="QLCC-clone" target="23" />
+    </bytecodeTargetLevel>
   </component>
 </project>
