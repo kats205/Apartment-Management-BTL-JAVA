@@ -1,5 +1,0 @@
-org\example\apartmentmanagement\DAO\DatabaseConnection.class
-org\example\apartmentmanagement\Model\ResidentManager\Resident.class
-org\example\Main.class
-org\example\apartmentmanagement\DAO\ResidentDAO.class
-org\example\apartmentmanagement\Controller\ResidentController.class
