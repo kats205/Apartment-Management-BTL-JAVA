@@ -35,3 +35,32 @@ learn1/
 │── mvnw                     (Maven Wrapper script)  
 │── mvnw.cmd                 (Maven Wrapper cho Windows)  
 │── pom.xml                  (File cấu hình Maven)  
+
+
+
+
+src
+ ├── main
+ │   ├── java
+ │   │   ├── org.example.apartment
+ │   │   │   ├── controller        # Chứa các Controller JavaFX
+ │   │   │   ├── model             # Chứa các class model (entities)
+ │   │   │   ├── database          # (MỚI) Chứa các class kết nối DB
+ │   │   │   │   ├── DatabaseConfig.java   # Cấu hình kết nối database
+ │   │   │   │   ├── DatabaseHelper.java   # Các hàm tiện ích SQL
+ │   │   │   │   ├── UserDAO.java          # Data Access Object cho User
+ │   │   │   │   ├── ApartmentDAO.java     # Data Access Object cho Apartment
+ │   │   │   ├── utils              # Chứa các tiện ích chung
+ │   │   │   ├── view               # Chứa các class xử lý giao diện JavaFX
+ │   │   │   ├── testdemo           # Thư mục test (có thể bỏ)
+ │   │   │   ├── module-info.java   # Cấu hình module
+ │   ├── resources
+ │   │   ├── org.example.apartment
+ │   │   │   ├── assets             # Chứa ảnh, icon
+ │   │   │   ├── fxml               # Chứa file giao diện JavaFX
+ │   │   │   ├── style              # Chứa file CSS
+ │   │   │   ├── database.properties  # (MỚI) Chứa thông tin kết nối database
+ ├── pom.xml
+
+
+
