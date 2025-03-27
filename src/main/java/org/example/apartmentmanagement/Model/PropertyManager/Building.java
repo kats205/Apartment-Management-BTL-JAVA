@@ -1,6 +1,21 @@
 package org.example.apartmentmanagement.Model.PropertyManager;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.management.ConstructorParameters;
+import java.beans.ConstructorProperties;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Building {
     private int buildingID;
@@ -8,70 +23,9 @@ public class Building {
     private String address;
     private int totalFloors;
     private int totalApartment;
-    private Date completionDate;
-
-    public Building() {
-        buildingID = totalApartment = totalFloors = 0;
-        buildingName = address = "";
-        completionDate = null;
-    }
-
-    public Building(int buildingID, String buildingName, String address, int totalFloors, int totalApartment, Date completionDate) {
-        this.buildingID = buildingID;
-        this.buildingName = buildingName;
-        this.address = address;
-        this.totalFloors = totalFloors;
-        this.totalApartment = totalApartment;
-        this.completionDate = completionDate;
-    }
-
-    public int getBuildingID() {
-        return buildingID;
-    }
-
-    public void setBuildingID(int buildingID) {
-        this.buildingID = buildingID;
-    }
-
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public void setBuildingName(String buildingName) {
-        this.buildingName = buildingName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public int getTotalFloors() {
-        return totalFloors;
-    }
-
-    public void setTotalFloors(int totalFloors) {
-        this.totalFloors = totalFloors;
-    }
-
-    public int getTotalApartment() {
-        return totalApartment;
-    }
-
-    public void setTotalApartment(int totalApartment) {
-        this.totalApartment = totalApartment;
-    }
-
-    public Date getCompletionDate() {
-        return completionDate;
-    }
-
-    public void setCompletionDate(Date completionDate) {
-        this.completionDate = completionDate;
-    }
+    private LocalDate completionDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public List<Apartment> getAvailbleApartment(){
 
