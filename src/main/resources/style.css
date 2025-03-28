@@ -39,3 +39,9 @@
 #btnLogin:hover {
     -fx-background-color: #45a049;
 }
+.Pane .Button{
+    -fx-background-color: transparent;
+        -fx-border-color: transparent;
+        -fx-focus-color: transparent;
+        -fx-faint-focus-color: transparent;
+}

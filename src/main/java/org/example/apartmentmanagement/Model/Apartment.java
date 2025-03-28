@@ -15,6 +15,7 @@ public class Apartment {
     private int floors;
     private double area;
     private int bedRoom;
+    private double priceApartment;
     private String status;
     private double maintanceFee;
 

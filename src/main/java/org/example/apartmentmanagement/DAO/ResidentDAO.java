@@ -143,7 +143,6 @@ public class ResidentDAO {
     // hàm này dùng để cập nhật một resident thông qua id, khi chưa biết trước nên cập nhật thông tin gì
     // -> dùng Object để kiểm tra đối tượng cần update
     public static void updateResident(int residentID, String field, Object newValue) throws SQLException {
-        Resident updateResident = findResidentById(residentID);
         // các column có sẵn trong Resident để tránh sql injection
         List<String> allowColumn = Arrays.asList("apartment_id", "full_name", "identity_card","date_of_birth", "gender", "user_id", "is_primary_resident", "move_in_date");
         if(!allowColumn.contains(field.toLowerCase())){

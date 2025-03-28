@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,7 +20,8 @@ public class BillItems {
     private double amount;
     private double quantity;
     private double total;
-
+    private Date created_at;
+    private Date updated_at;
 //    public double calculateTotal(){
 //
 //    }
