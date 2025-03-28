@@ -6,19 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="afe12fbc-94fb-4d02-be89-c1c179d457e9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/ResidentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/ResidentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Apartment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Apartment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/BillItemDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/BillItemDAO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

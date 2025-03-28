@@ -30,7 +30,7 @@ public class BillItemDAO {
         }
     }
 
-    public static void showStaffList(){
+    public static void showBillItemList(){
         if(BillItemList.isEmpty()) getAllBillItems();
         System.out.println("===========================BillItem List===========================");
         for(BillItems billItems : BillItemList){
@@ -48,7 +48,7 @@ public class BillItemDAO {
         }
     }
 
-    //thêm 1 staff vào DB
+    //thêm 1 BillItem vào DB
     public static void addBillItem( int itemID, int billID, String itemType, String description,
                                     float amount, int quantity, double total, Date created_at, Date updated_at){
         String sql = "insert into BillItem( item_id, bill_id, item_type, description, amount, quantity, total, created_at, updated_at)" +
@@ -70,7 +70,7 @@ public class BillItemDAO {
             throw new RuntimeException(e);
         }
     }
-    // xóa staff bằng ID
+    // xóa BillItem bằng ID
     public static void deleteBillItemById(int itemID) throws SQLException {
         String deleteStaffSQL = "DELETE FROM BillItem WHERE item_id  = ?";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -104,7 +104,7 @@ public class BillItemDAO {
         }
 
     }
-    // tìm staff bằng ID
+    // tìm BillItem bằng ID
     public static BillItems findStaffByID(int itemID) throws SQLException {
         if(BillItemList.isEmpty()) getAllBillItems();
         for(BillItems billItems  : BillItemList){
@@ -115,7 +115,7 @@ public class BillItemDAO {
     // hàm này dùng để cập nhật một staff thông qua id, khi chưa biết trước nên cập nhật thông tin gì
     // -> dùng Object để kiểm tra đối tượng cần update
     public static void updateBillItems (int itemID, String field, Object newValue) throws SQLException {
-        // các column có sẵn trong Resident để tránh sql injection
+        // các column có sẵn trong BillItem để tránh sql injection
         List<String> allowColumn = Arrays.asList("item_id", "bill_id", "item_type","description", "amount", "quantity", "total");
         if(!allowColumn.contains(field.toLowerCase())){
             System.out.println("Field need update isn't invalid!");
@@ -134,6 +134,9 @@ public class BillItemDAO {
             }
             else if(newValue instanceof Double){
                 stmt.setDouble(1, (Double) newValue);
+            }
+            else if(newValue instanceof Float){
+                stmt.setFloat(1, (Float)newValue);
             }
             else{
                 System.out.println("Field is invalid!");
