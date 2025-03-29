@@ -2,6 +2,7 @@ package org.example.apartmentmanagement.Model.BillingManagement;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Bills {
     private int billID;
@@ -10,14 +11,14 @@ public class Bills {
     private Date dueDate;
     private double totalAmount;
     private String status;
-    private List<BillItem> items;
+    private List<BillItems> items;
 
     public Bills() {
         billID = 0;
         apartmentID = status = "";
         billingDate = dueDate = null;
         totalAmount = 0;
-        items = new ArrayList<BillItem>();
+        items = new ArrayList<BillItems>();
 
     }
 

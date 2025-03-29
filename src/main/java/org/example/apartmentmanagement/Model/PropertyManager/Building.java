@@ -10,6 +10,7 @@ import java.beans.ConstructorProperties;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -27,8 +28,14 @@ public class Building {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public List<Apartment> getAvailbleApartment(){
-
+    public List<Apartment> getAvailbleApartment(List<Apartment> apartmentList){
+        List<Apartment> availbleApartments = new ArrayList<>();
+        for (int i = 0; i < apartmentList.size(); i++){
+            if (apartmentList.get(i).getStatus().equals("available")){
+                availbleApartments.add(apartmentList.get(i));
+            }
+        }
+        return availbleApartments;
     }
     public List<Apartment> getOccupiedApartments(){
 
