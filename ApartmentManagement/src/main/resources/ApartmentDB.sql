@@ -1,8 +1,15 @@
+﻿CREATE DATABASE Apartment;
+GO
+
+USE Apartment;
+GO
+
+
 -- Bảng Role (Vai trò)
 CREATE TABLE Role (
     role_id INT PRIMARY KEY IDENTITY(1,1),
     role_name VARCHAR(50) NOT NULL,
-    description NVARCHAR(MAX),
+    description NVARCHAR(MAX), 
 );
 -- Bảng User (Người dùng)
 CREATE TABLE [User] (
@@ -12,7 +19,7 @@ CREATE TABLE [User] (
     full_name NVARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE CHECK (email LIKE '%@%.%'),
     phone_number VARCHAR(20) CHECK (phone_number LIKE '0[0-9]%' AND LEN(phone_number) = 10),
-    role_id INT NOT NULL,
+    role_id INT NOT NULL, 
     active BIT DEFAULT 1,
     created_at DATETIME2 DEFAULT GETDATE(), -- dùng để lưu thời điểm tạo bản ghi
     updated_at DATETIME2 DEFAULT GETDATE(), -- dùng để lưu thời điểm khi có sự cập nhật bản ghi
@@ -36,8 +43,9 @@ CREATE TABLE Staff (
 	degree NVARCHAR(100) NOT NULL,
 	certificate NVARCHAR(100) NOT NULL,
     FOREIGN KEY (staff_id) REFERENCES [User](user_id),
-	FOREIGN KEY (manager_id) REFERENCES Manager(manager_id)
+	FOREIGN KEY (manager_id) REFERENCES Manager(manager_id) 
 );
+
 
 -- Bảng Building (Tòa nhà)
 CREATE TABLE Building (
@@ -91,17 +99,13 @@ CREATE TABLE Service (
     service_id INT PRIMARY KEY IDENTITY(1,1),
     service_name VARCHAR(100) NOT NULL,
     description NVARCHAR(MAX),
-    price_sevrice DECIMAL NOT NULL,
+    price_service DECIMAL(10,2) NOT NULL, -- Đã sửa tên cột và kiểu dữ liệu
     unit VARCHAR(20) NOT NULL, -- đơn vị thuê dịch vụ (tháng, năm, lượt)
-    is_available BIT DEFAULT 1, -- quản lý trạng thái dịch vụ (1: đang được thuê, 0: chưa được thuê)
+    is_available BIT DEFAULT 1, -- quản lý trạng thái dịch vụ (1: đang được thuê, 0: chưa được thuê) 
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE() -- tạo trigger để tự động update
 );
-drop table Service;
-select * from [Service]
-EXEC sp_rename 'Service.price_sevrice', 'price_service', 'COLUMN';
-ALTER TABLE [Service]
-ALTER COLUMN price_service DECIMAL(10,2) NOT NULL;
+
 -- Bảng ServiceRegistration (Đăng ký dịch vụ)
 CREATE TABLE ServiceRegistration (
     registration_id INT PRIMARY KEY IDENTITY(1,1),
@@ -122,11 +126,11 @@ CREATE TABLE Bill (
     apartment_id VARCHAR(20) NOT NULL,
     billing_date DATE NOT NULL,
     due_date DATE NOT NULL,
-    total_amount FLOAT NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
     status VARCHAR(20) NOT NULL CHECK (status IN ('pending', 'paid', 'overdue', 'cancelled')),
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE(),
-	late_fee DECIMAL(10,2) DEFAULT 0, -- phí trễ hạn của bill tính 10% cho mỗi ngày trễ hạn, nên tạo thêm trigger để tự động câp nhật phí trễ hạn
+    late_fee DECIMAL(10,2) DEFAULT 0, -- phí trễ hạn của bill tính 10% cho mỗi ngày trễ hạn, nên tạo thêm trigger để tự động câp nhật phí trễ hạn
     FOREIGN KEY (apartment_id) REFERENCES Apartment(apartment_id)
 );
 
@@ -148,7 +152,7 @@ CREATE TABLE BillItem (
 CREATE TABLE Payment (
     payment_id INT PRIMARY KEY IDENTITY(1,1),
     bill_id INT NOT NULL,
-    amount FLOAT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
     payment_date DATE NOT NULL,
     payment_method VARCHAR(50) NOT NULL,
     transaction_id VARCHAR(100),
@@ -214,24 +218,16 @@ CREATE TABLE Report (
     updated_at DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (generated_by_user_id) REFERENCES [User](user_id)
 );
---INSERT
 
-INSERT INTO Role (role_name, description) VALUES
+--INSERT 
+
+INSERT INTO Role (role_name, description) VALUES 
 ('Manager', 'Quản lý hệ thống và tòa nhà'),
 ('Staff', 'Nhân viên hỗ trợ và vận hành'),
 ('Resident', 'Cư dân sử dụng căn hộ');
-delete from [Role] where role_id in ( 1, 2, 3,4,5,6)
-DBCC CHECKIDENT ('Role', RESEED, 0);
 
-select * from [Role]
-USE master;
-ALTER DATABASE QLCC SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-DROP DATABASE QLCC;
-use QLCC
-go
-create database QLCC;
 -- Insert data into User table with the 3 roles
-INSERT INTO [User] (username, password, full_name, email, phone_number, role_id) VALUES
+INSERT INTO [User] (username, password, full_name, email, phone_number, role_id) VALUES 
 ('quanly1', 'ManagerPass123!', N'Trần Văn Quản', 'quanly1@qlcc.com', '0901234567', 1),
 ('quanly2', 'ManagerPass456!', N'Lê Thị Giám', 'quanly2@qlcc.com', '0912345678', 1),
 ('nhanvien1', 'StaffPass123!', N'Phạm Văn Nhân', 'nhanvien1@qlcc.com', '0923456789', 2),
@@ -242,33 +238,20 @@ INSERT INTO [User] (username, password, full_name, email, phone_number, role_id)
 ('cudan3', 'ResidentPass789!', N'Bùi Văn Nhà', 'cudan3@qlcc.com', '0978901234', 3),
 ('cudan4', 'ResidentPass012!', N'Đỗ Thị Hộ', 'cudan4@qlcc.com', '0989012345', 3),
 ('cudan5', 'ResidentPass345!', N'Trương Văn Chung', 'cudan5@qlcc.com', '0990123456', 3);
-delete from [user]
-select * from [User]
-DBCC CHECKIDENT ('[User]', RESEED, 0);
+
 -- Insert data into Manager table
-INSERT INTO Manager (manager_id, office, start_date) VALUES
+INSERT INTO Manager (manager_id, office, start_date) VALUES 
 (1, N'Văn phòng Điều Hành', '2022-01-15'),
 (2, N'Văn phòng Quản Lý Tòa Nhà', '2021-11-01');
 
 -- Insert data into Staff table
-INSERT INTO Staff (staff_id, department, position, hire_date, manager_id) VALUES
-(3, N'Hành Chính', N'Nhân Viên Hành Chính', '2023-02-01', 1),
-(4, N'Vận Hành', N'Nhân Viên Kỹ Thuật', '2022-12-15', 2),
-(5, N'Dịch Vụ', N'Nhân Viên Dịch Vụ', '2022-08-10', 1);
+INSERT INTO Staff (staff_id, department, position,degree,certificate, hire_date, manager_id) VALUES 
+(3, N'Hành Chính', N'Nhân Viên Hành Chính',N'Cử nhân kế toán',N'Toiec 900', '2023-02-01', 1),
+(4, N'Vận Hành', N'Nhân Viên Kỹ Thuật', N'Thạc sĩ Khoa học máy tính',N'Chuyên gia kỹ thuật','2022-12-15', 2),
+(5, N'Dịch Vụ', N'Nhân Viên Dịch Vụ',N'Cử nhân Du Lịch',N'Ai eo 8.0', '2022-08-10', 1);
 
--- Insert data into Resident table
-INSERT INTO Resident (apartment_id, full_name, identity_card, date_of_birth, gender, user_id, is_primary_resident, move_in_date) VALUES
-('A101', N'Vũ Đức Cư', '001234567890', '1985-05-15', N'Nam', 6, 1, '2022-06-01'),
-('A102', N'Ngô Thị Dân', '002345678901', '1990-08-20', N'Nữ', 7, 1, '2022-07-15'),
-('B201', N'Bùi Văn Nhà', '003456789012', '1978-03-10', N'Nam', 8, 1, '2022-09-01'),
-('B202', N'Đỗ Thị Hộ', '004567890123', '1982-11-25', N'Nữ', 9, 1, '2022-10-15'),
-('C301', N'Trương Văn Chung', '005678901234', '1975-07-30', N'Nam', 10, 1, '2022-12-01');
-select * from Resident;
-DELETE FROM Resident;
-DBCC CHECKIDENT ('Resident', RESEED, 0);
 
-select * from Resident
-INSERT INTO Building (building_name, address, total_floors, total_apartments, completion_date) VALUES
+INSERT INTO Building (building_name, address, total_floors, total_apartments, completion_date) VALUES 
 (N'Chung Cư Xanh', N'123 Đường Lê Văn Lương, Quận 7, TP.HCM', 15, 180, '2020-12-31'),
 (N'Tháp Sen', N'456 Đường Nguyễn Văn Trỗi, Quận Phú Nhuận, TP.HCM', 20, 240, '2021-06-30'),
 (N'Khu Dân Cư Hạnh Phúc', N'789 Đường Cộng Hòa, Quận Tân Bình, TP.HCM', 12, 150, '2019-09-15'),
@@ -286,7 +269,7 @@ INSERT INTO Building (building_name, address, total_floors, total_apartments, co
 (N'The Manor Central Park', N'177 Hồ Tùng Mậu, Quận Nam Từ Liêm, Hà Nội', 35, 420, '2022-03-25');
 
 -- Insert data into Apartment table
-INSERT INTO Apartment (apartment_id, building_id, floor, area, bedrooms, price_apartment, status, maintenance_fee) VALUES
+INSERT INTO Apartment (apartment_id, building_id, floor, area, bedrooms, price_apartment, status, maintenance_fee) VALUES 
 ('A101', 1, 1, 75.5, 2, 1510000000, 'occupied', 1500000),
 ('A102', 1, 1, 65.2, 2, 1304000000, 'available', 1300000),
 ('B201', 2, 2, 80.3, 3, 1766600000, 'available', 1600000),
@@ -307,15 +290,17 @@ INSERT INTO Apartment (apartment_id, building_id, floor, area, bedrooms, price_a
 ('K1101', 11, 11, 67.8, 2, 1356000000, 'occupied', 1350000),
 ('L1201', 12, 12, 84.5, 3, 1862000000, 'available', 1700000),
 ('M1301', 13, 13, 71.3, 2, 1426000000, 'reserved', 1450000);
---Công thức chính: price_apartment = area × 20,000,000
---Thêm 10% nếu có 3 phòng ngủ (bedrooms = 3)
---Giảm 5% nếu trạng thái là "maintenance" hoặc "reserved"`
-select * from apartment
 
-
+-- Insert data into Resident table
+INSERT INTO Resident (apartment_id, full_name, identity_card, date_of_birth, gender, user_id, is_primary_resident, move_in_date) VALUES 
+('A101', N'Vũ Đức Cư', '001234567890', '1985-05-15', N'Nam', 6, 1, '2022-06-01'),
+('A102', N'Ngô Thị Dân', '002345678901', '1990-08-20', N'Nữ', 7, 1, '2022-07-15'),
+('B201', N'Bùi Văn Nhà', '003456789012', '1978-03-10', N'Nam', 8, 1, '2022-09-01'),
+('B202', N'Đỗ Thị Hộ', '004567890123', '1982-11-25', N'Nữ', 9, 1, '2022-10-15'),
+('C301', N'Trương Văn Chung', '005678901234', '1975-07-30', N'Nam', 10, 1, '2022-12-01');
 
 -- Insert data into Service table
-INSERT INTO Service (service_name, description, price_sevrice, unit, is_available) VALUES
+INSERT INTO Service (service_name, description, price_service, unit, is_available) VALUES 
 (N'Giữ xe ô tô', N'Dịch vụ giữ xe ô tô an toàn', 500000, N'tháng', 1),
 (N'Giặt ủi', N'Dịch vụ giặt ủi chuyên nghiệp', 300000, N'tháng', 1),
 (N'Vệ sinh', N'Dịch vụ vệ sinh căn hộ', 200000, N'tháng', 1),
@@ -333,7 +318,7 @@ INSERT INTO Service (service_name, description, price_sevrice, unit, is_availabl
 (N'Bảo trì thang máy', N'Dịch vụ bảo trì thang máy', 300000, N'tháng', 1);
 
 -- Insert data into ServiceRegistration table
-INSERT INTO ServiceRegistration (service_id, apartment_id, start_date, end_date, status) VALUES
+INSERT INTO ServiceRegistration (service_id, apartment_id, start_date, end_date, status) VALUES 
 (1, 'A101', '2023-01-01', '2023-12-31', 'active'),
 (2, 'A101', '2023-02-15', '2023-08-15', 'active'),
 (3, 'A102', '2023-03-01', '2023-09-01', 'active'),
@@ -350,8 +335,7 @@ INSERT INTO ServiceRegistration (service_id, apartment_id, start_date, end_date,
 (14, 'G701', '2023-03-15', '2023-09-15', 'active'),
 (15, 'G702', '2023-01-01', '2023-12-31', 'active');
 
--- Insert data into Bill table
-INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES
+INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
 ('A101', '2023-05-01', '2023-05-15', 2500000, 'pending', 0),
 ('A102', '2023-05-01', '2023-05-15', 1800000, 'pending', 0),
 ('B201', '2023-05-01', '2023-05-15', 3200000, 'pending', 0),
@@ -369,7 +353,7 @@ INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, la
 ('H801', '2023-05-01', '2023-05-15', 2700000, 'pending', 0);
 
 -- Insert data into BillItem table
-INSERT INTO BillItem (bill_id, item_type, description, amount, quantity, total) VALUES
+INSERT INTO BillItem (bill_id, item_type, description, amount, quantity, total) VALUES 
 (1, N'Phí quản lý', N'Phí quản lý chung cư', 500000, 1, 500000),
 (1, N'Phí dịch vụ', N'Phí giữ xe', 1000000, 1, 1000000),
 (1, N'Tiền điện', N'Tiêu thụ điện', 1000000, 1, 1000000),
@@ -385,9 +369,9 @@ INSERT INTO BillItem (bill_id, item_type, description, amount, quantity, total) 
 (5, N'Phí quản lý', N'Phí quản lý chung cư', 500000, 1, 500000),
 (5, N'Phí dịch vụ', N'Phí hồ bơi', 1300000, 1, 1300000),
 (5, N'Tiền điện', N'Tiêu thụ điện', 1000000, 1, 1000000);
-select * from BillItem
+
 -- Insert data into Payment table
-INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
+INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES 
 (1, 2500000, '2023-05-10', N'Chuyển khoản', 'TRX123456', 'pending'),
 (2, 1800000, '2023-05-12', N'Tiền mặt', 'CSH789012', 'pending'),
 (3, 3200000, '2023-05-08', N'Thẻ ngân hàng', 'CC345678', 'pending'),
@@ -403,25 +387,22 @@ INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_
 (13, 3300000, '2023-05-14', N'Chuyển khoản', 'TRX890123', 'pending'),
 (14, 2200000, '2023-05-09', N'Ví điện tử', 'E-WALLET901234', 'pending'),
 (15, 2700000, '2023-05-15', N'Tiền mặt', 'CSH567890', 'pending');
-select * from Payment
-delete from Payment where payment_id between 16 and 30
+
 -- Insert data into MaintenanceRequest table
-INSERT INTO MaintenanceRequest (apartment_id, resident_id, request_date, description, status, priority, assigned_staff_id, completion_date) VALUES
+INSERT INTO MaintenanceRequest (apartment_id, resident_id, request_date, description, status, priority, assigned_staff_id, completion_date) VALUES 
 ('A101', 1, '2023-05-02', N'Hỏng khóa cửa', 'pending', 'medium', 3, NULL),
 ('A102', 2, '2023-05-05', N'Rò rỉ nước', 'assigned', 'high', 4, NULL),
-('B201', 1, '2023-05-07', N'Bóng đèn không sáng', 'in_progress', 'low', 5, NULL),
-('B202', 2, '2023-05-10', N'Điều hòa không mát', 'pending', 'high', 3, NULL),
+('B201', 3, '2023-05-07', N'Bóng đèn không sáng', 'in_progress', 'low', 5, NULL),
+('B202', 4, '2023-05-10', N'Điều hòa không mát', 'pending', 'high', 3, NULL),
 ('C301', 1, '2023-05-12', N'Hệ thống điện yếu', 'assigned', 'urgent', 4, NULL),
 ('C302', 2, '2023-05-15', N'Sửa ống nước', 'in_progress', 'medium', 5, NULL),
-('D401', 1, '2023-05-03', N'Thang máy kêu', 'completed', 'low', 3, '2023-05-07'),
-('D402', 2, '2023-05-06', N'Khung cửa sổ lỏng', 'assigned', 'medium', 4, NULL),
+('D401', 3, '2023-05-03', N'Thang máy kêu', 'completed', 'low', 3, '2023-05-07'),
+('D402', 4, '2023-05-06', N'Khung cửa sổ lỏng', 'assigned', 'medium', 4, NULL),
 ('E501', 1, '2023-05-08', N'Vệ sinh máy lạnh', 'pending', 'low', 5, NULL),
 ('E502', 2, '2023-05-11', N'Bể nước nóng', 'in_progress', 'high', 3, NULL);
-select * from MaintenanceRequest
-delete from MaintenanceRequest
 
 -- Insert data into Notification table
-INSERT INTO Notification (title, content, creation_date, type) VALUES
+INSERT INTO Notification (title, content, creation_date, type) VALUES 
 (N'Thông Báo Bảo Trì', N'Sẽ có đợt bảo trì thang máy vào tuần tới', '2023-05-01', 'maintenance'),
 (N'Sự Kiện Cộng Đồng', N'Chào mừng ngày quốc tế thiếu nhi', '2023-05-30', 'community'),
 (N'Cảnh Báo An Ninh', N'Yêu cầu tăng cường cảnh giác', '2023-05-15', 'security'),
@@ -432,11 +413,8 @@ INSERT INTO Notification (title, content, creation_date, type) VALUES
 (N'Tin Tức Quản Lý', N'Thay đổi quy định quản lý', '2023-05-10', 'management'),
 (N'Khuyến Mãi Dịch Vụ', N'Ưu đãi dịch vụ giặt ủi', '2023-05-05', 'promotion'),
 (N'Bảo Trì Định Kỳ', N'Lịch bảo trì hệ thống', '2023-05-18', 'maintenance');
-select * from [Notification]
-DELETE FROM [Notification] WHERE notification_id BETWEEN 11 AND 20;
-
 -- Insert data into NotificationRecipient table
-INSERT INTO NotificationRecipient (notification_id, user_id, is_read, read_at) VALUES
+INSERT INTO NotificationRecipient (notification_id, user_id, is_read, read_at) VALUES 
 (1, 6, 0, NULL),
 (1, 7, 0, NULL),
 (2, 6, 0, NULL),
@@ -447,13 +425,13 @@ INSERT INTO NotificationRecipient (notification_id, user_id, is_read, read_at) V
 (4, 7, 0, NULL),
 (5, 6, 1, '2023-05-21 15:45:00'),
 (5, 7, 0, NULL);
-select * from NotificationRecipient
+
 -- Insert data into Report table
-INSERT INTO Report (report_type, generation_date, generated_by_user_id, parameters, file_path) VALUES
+INSERT INTO Report (report_type, generation_date, generated_by_user_id, parameters, file_path) VALUES 
 (N'Báo Cáo Tài Chính', '2023-05-01', 1, N'Tháng 4/2023', '/reports/financial_04_2023.pdf'),
 (N'Báo Cáo Dịch Vụ', '2023-05-05', 2, N'Quý 2/2023', '/reports/service_q2_2023.pdf'),
 (N'Báo Cáo Bảo Trì', '2023-05-10', 3, N'Tháng 5/2023', '/reports/maintenance_05_2023.pdf'),
 (N'Báo Cáo Cư Dân', '2023-05-15', 1, N'Tháng 5/2023', '/reports/resident_05_2023.pdf'),
 (N'Báo Cáo An Ninh', '2023-05-20', 2, N'Tháng 5/2023', '/reports/security_05_2023.pdf');
 
---TRIGGER
+
