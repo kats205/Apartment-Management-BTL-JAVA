@@ -1,18 +1,16 @@
 package org.example.apartmentmanagement.DAO;
 
-import lombok.SneakyThrows;
 import org.example.apartmentmanagement.Model.Resident;
 
 import java.sql.*;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.*;
 
 public class ResidentDAO {
     private static List<Resident> residentList = new ArrayList<>();
     public static List<Resident> getAllResidentDAO() throws SQLException {
         residentList.clear();
-        String sql = "select resident_id, apartment_id, full_name, identity_card, date_of_birth, gender, user_id, is_primary_resident, move_in_date, created_at, updated_at from Resident";
+        String sql = "SELECT resident_id, apartment_id, full_name, identity_card, date_of_birth, gender, user_id, is_primary_resident, move_in_date, created_at, updated_at FROM Resident";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
@@ -65,7 +63,7 @@ public class ResidentDAO {
     //thêm 1 resident vào DB
     public static void addAResident( String apartmentID, String fullName, String identityCard, Date Dob,
                              String gender, int userID, boolean isPrimaryResident, Date moveInDate){
-        String sql = "insert into Resident( apartment_id, full_name, identity_card, date_of_birth, gender," +
+        String sql = "INSERT INTO Resident( apartment_id, full_name, identity_card, date_of_birth, gender," +
                 " user_id, is_primary_resident, move_in_date, created_at, updated_at) " +
                 "values ( ? , ? , ? , ? , ? , ? , ? , ? , getdate(), getdate());";
         try{
@@ -149,10 +147,12 @@ public class ResidentDAO {
             System.out.println("Field need update isn't invalid!");
             return;
         }
-        String sql = "Update Resident set " + field + " = ? where resident_id = ?";
+        String sql = "UPDATE Resident SET " + field + " = ? WHERE resident_id = ?";
+        String updated_atSQL = "UPDATE Resident SET updated_at = getdate() WHERE resident_id = ?";
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt1 = connection.prepareStatement(updated_atSQL);
             connection.setAutoCommit(false);
             if(newValue instanceof String){
                 stmt.setString(1, (String)newValue);
@@ -163,12 +163,17 @@ public class ResidentDAO {
             else if(newValue instanceof Double){
                 stmt.setDouble(1, (Double) newValue);
             }
+            else if(newValue instanceof Date){
+                stmt.setDate(1, (Date) newValue);
+            }
             else{
                 System.out.println("Field is invalid!");
             }
             stmt.setInt(2, residentID);
             int excuted = stmt.executeUpdate();
             if(excuted > 0) {
+                stmt1.setInt(1, residentID);
+                stmt1.executeUpdate();
                 System.out.println("Update successfully!");
                 connection.commit();
             }

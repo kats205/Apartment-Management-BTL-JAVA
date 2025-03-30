@@ -1,6 +1,5 @@
 package org.example.apartmentmanagement.DAO;
 
-import org.example.apartmentmanagement.Model.Resident;
 import org.example.apartmentmanagement.Model.Staff;
 
 
@@ -15,7 +14,7 @@ public class StaffDAO {
 
     public static void getAllStaff(){
         staffList.clear();
-        String sql = "select * from Staff";
+        String sql = "SELECT * FROM Staff";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
@@ -43,8 +42,8 @@ public class StaffDAO {
     //thêm 1 staff vào DB
     public static void addStaff( int staffID, String department, String position, Date hireDate,
                                  int ManagerID){
-        String sql = "insert into Staff( staff_id, department, position, hire_date, manager_id," +
-                "values ( ? , ? , ? , ? , ?";
+        String sql = "INSERT INTO Staff( staff_id, department, position, hire_date, manager_id," +
+                "VALUES ( ? , ? , ? , ? , ?";
         try{
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -54,14 +53,14 @@ public class StaffDAO {
             stmt.setDate(4, hireDate);
             stmt.setInt(5, ManagerID);
             int excuted = stmt.executeUpdate();
-            if(excuted > 0) System.out.println("Add a resident successfully!");
+            if(excuted > 0) System.out.println("Add a Staff successfully!");
             staffList.add(new Staff(staffID,department,position,hireDate,ManagerID));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
     // xóa staff bằng ID
-    public static void deleteResidentById(int staffID) throws SQLException {
+    public static void deleteStaffByID(int staffID) throws SQLException {
         String deleteStaffSQL = "DELETE FROM Staff WHERE staff_id  = ?";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt1 = connection.prepareStatement(deleteStaffSQL);
@@ -111,10 +110,12 @@ public class StaffDAO {
             System.out.println("Field need update isn't invalid!");
             return;
         }
-        String sql = "Update Staff set " + field + " = ? where staff_id = ?";
+        String sql = "UPDATE Staff SET " + field + " = ? WHERE staff_id = ?";
+        String updated_atSQL = "UPDATE Staff SET updated_at = getdate() WHERE staff_id = ?";
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt1 = connection.prepareStatement(updated_atSQL);
             connection.setAutoCommit(false);
             if(newValue instanceof String){
                 stmt.setString(1, (String)newValue);
@@ -131,6 +132,8 @@ public class StaffDAO {
             stmt.setInt(2, staffID);
             int excuted = stmt.executeUpdate();
             if(excuted > 0) {
+                stmt1.setInt(1, staffID);
+                stmt1.executeUpdate();
                 System.out.println("Update successfully!");
                 connection.commit();
             }
@@ -138,10 +141,5 @@ public class StaffDAO {
         }catch(SQLException e){
             e.printStackTrace();
         }
-    }
-    public static void main(String[] args) throws SQLException {
-        showStaffList();
-//        updateStaff(3, "manager_id", 2);
-        deleteResidentById(3);
     }
 }

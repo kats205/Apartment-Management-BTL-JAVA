@@ -1,7 +1,6 @@
 package org.example.apartmentmanagement.DAO;
 
 import org.example.apartmentmanagement.Model.Apartment;
-import org.example.apartmentmanagement.Model.Resident;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -13,9 +12,9 @@ import java.util.Scanner;
 public class ApartmentDAO {
     private static List<Apartment> apartmentList = new ArrayList<Apartment>();
 
-    public static List<Apartment> getAllApartment(){
+    public static void getAllApartment(){
         apartmentList.clear();
-        String sql = "select * from Apartment";
+        String sql = "SELECT * FROM Apartment";
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -28,7 +27,6 @@ public class ApartmentDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return apartmentList;
     }
     public static void showAllApartment(){
         getAllApartment();
@@ -51,8 +49,8 @@ public class ApartmentDAO {
 
     public static void addApartment(String apartmentID, int buildingID, int floor,
                                     double area, int bedrooms, double priceApartment, String status, double maintenance_fee) throws SQLException {
-        String sql = "insert into Apartment(apartment_id, building_id, floor, area, bedrooms, price_apartment, status, maintenance_fee, created_at, updated_at)" +
-                "values ( ? , ? , ? , ? , ?, ? , ? , ? , ? , ?)";
+        String sql = "INSERT INTO Apartment(apartment_id, building_id, floor, area, bedrooms, price_apartment, status, maintenance_fee, created_at, updated_at)" +
+                "VALUES ( ? , ? , ? , ? , ?, ? , ? , ? , ? , ?)";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setString(1, apartmentID);
@@ -85,17 +83,18 @@ public class ApartmentDAO {
         return null;
     }
     public static void updateApartment(String apartmentID, String field, Object newValue) throws SQLException {
-        Apartment updateApartment = findApartmentById(apartmentID);
         // các column có sẵn trong Resident để tránh sql injection
         List<String> allowColumn = Arrays.asList("apartment_id", "building_id", "floor","area", "bedrooms", "price_apartment", "status", "maintenance_fee");
         if(!allowColumn.contains(field.toLowerCase())){
             System.out.println("Field need update isn't invalid!");
             return;
         }
-        String sql = "Update Apartment set " + field + " = ? where apartment_id = ?";
+        String sql = "UPDATE Apartment SET " + field + " = ? WHERE apartment_id = ?";
+        String updated_atSQL = "UPDATE Apartment SET updated_at = getdate() WHERE apartment_id = ?";
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt1 = connection.prepareStatement(updated_atSQL);
             connection.setAutoCommit(false);
             if(newValue instanceof String){
                 stmt.setString(1, (String)newValue);
@@ -112,6 +111,8 @@ public class ApartmentDAO {
             stmt.setString(2, apartmentID);
             int excuted = stmt.executeUpdate();
             if(excuted > 0) {
+                stmt1.setString(1, apartmentID);
+                stmt1.executeUpdate(); // ghi nhận thời gian update thông tin
                 System.out.println("Update successfully!");
                 connection.commit();
             }
@@ -154,14 +155,7 @@ public class ApartmentDAO {
         }
     }
     public static void main(String[] args) throws SQLException {
-//        ApartmentDAO.showAllApartment();
-        try{
-//            ApartmentDAO.addApartment("S01", 9, 10, 89.2, 2, 1784000000, "occupied", 1800000);
-//            updateApartment("S01", "apartment_id", "SO2");
-            deleteApartmentById("SO2");
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        ApartmentDAO.showAllApartment();
+
+//        ApartmentDAO.updateApartment("A101", "status", "available");
     }
 }

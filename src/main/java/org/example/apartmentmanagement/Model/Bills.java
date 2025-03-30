@@ -18,7 +18,10 @@ public class Bills {
     private Date dueDate;
     private double totalAmount;
     private String status;
-    private List<BillItems> items;
+    private double late_fee;
+    private Date created_at;
+    private Date updated_at;
+
 
 
 //    public double calculateTotalAmount(){

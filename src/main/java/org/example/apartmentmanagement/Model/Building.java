@@ -18,7 +18,8 @@ public class Building {
     private int totalFloors;
     private int totalApartment;
     private Date completionDate;
-
+    private Date created_at;
+    private Date updated_at;
 
 
 //    public List<Apartment> getAvailbleApartment(){

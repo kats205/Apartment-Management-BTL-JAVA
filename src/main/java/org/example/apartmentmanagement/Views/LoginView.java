@@ -3,8 +3,11 @@ package org.example.apartmentmanagement.Views;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.util.Objects;
 
 import static javafx.application.Application.launch;
 
@@ -12,9 +15,10 @@ public class LoginView extends Application  {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+            primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/apartment.png"))));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/login.fxml"));
             AnchorPane root = loader.load();
-            Scene scene = new Scene(root, 834, 509);
+            Scene scene = new Scene(root, 875, 600);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Login Form");
             primaryStage.setResizable(false);

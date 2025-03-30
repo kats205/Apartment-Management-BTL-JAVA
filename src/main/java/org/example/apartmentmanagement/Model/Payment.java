@@ -19,7 +19,8 @@ public class Payment {
     private String paymentMedthod;
     private String transactionID;
     private String status;
-
+    private Date created_at;
+    private Date updated_at;
 //
 //    public  boolean verifyPayment(){
 //

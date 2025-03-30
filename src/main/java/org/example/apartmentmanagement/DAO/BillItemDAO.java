@@ -1,7 +1,6 @@
 package org.example.apartmentmanagement.DAO;
 
 import org.example.apartmentmanagement.Model.BillItems;
-import org.example.apartmentmanagement.Model.Staff;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -15,7 +14,7 @@ public class BillItemDAO {
 
     public static void getAllBillItems(){
         BillItemList.clear();
-        String sql = "select * from BillItem";
+        String sql = "SELECT * FROM BillItem";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
@@ -50,9 +49,9 @@ public class BillItemDAO {
 
     //thêm 1 BillItem vào DB
     public static void addBillItem( int itemID, int billID, String itemType, String description,
-                                    float amount, int quantity, double total, Date created_at, Date updated_at){
-        String sql = "insert into BillItem( item_id, bill_id, item_type, description, amount, quantity, total, created_at, updated_at)" +
-                "values ( ? , ? , ? , ? , ? , ? , ? , getdate(), getdate()";
+                                    float amount, int quantity, double total){
+        String sql = "INSERT INTEO BillItem( item_id, bill_id, item_type, description, amount, quantity, total, created_at, updated_at)" +
+                "VALUES ( ? , ? , ? , ? , ? , ? , ? , getdate(), getdate()";
         try{
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -115,16 +114,17 @@ public class BillItemDAO {
     // hàm này dùng để cập nhật một staff thông qua id, khi chưa biết trước nên cập nhật thông tin gì
     // -> dùng Object để kiểm tra đối tượng cần update
     public static void updateBillItems (int itemID, String field, Object newValue) throws SQLException {
-        // các column có sẵn trong BillItem để tránh sql injection
         List<String> allowColumn = Arrays.asList("item_id", "bill_id", "item_type","description", "amount", "quantity", "total");
         if(!allowColumn.contains(field.toLowerCase())){
             System.out.println("Field need update isn't invalid!");
             return;
         }
-        String sql = "Update BillItem set " + field + " = ? where item_id = ?";
+        String sql = "UPDATE BillItem SET " + field + " = ? WHERE item_id = ?";
+        String updated_atSQL = "UPDATE BillItem SET updated_at = getdate() WHERE itemID = ?";
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt1 = connection.prepareStatement(updated_atSQL);
             connection.setAutoCommit(false);
             if(newValue instanceof String){
                 stmt.setString(1, (String)newValue);
@@ -144,6 +144,8 @@ public class BillItemDAO {
             stmt.setInt(2, itemID);
             int excuted = stmt.executeUpdate();
             if(excuted > 0) {
+                stmt1.setInt(1, itemID);
+                stmt1.executeUpdate();
                 System.out.println("Update successfully!");
                 connection.commit();
             }

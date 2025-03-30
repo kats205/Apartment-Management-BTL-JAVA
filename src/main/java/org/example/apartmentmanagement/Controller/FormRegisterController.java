@@ -6,9 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.example.apartmentmanagement.DAO.UserDAO;
-import org.example.apartmentmanagement.Model.User;
+import org.example.apartmentmanagement.Utils.passwordEncryption;
 
-import java.awt.event.ActionEvent;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -42,10 +41,9 @@ public class FormRegisterController {
             String RE_password = reEnterPassWord.getText();
             String email = Email.getText();
             if(pass_word.equals(RE_password)){
-//                User registerUser = new User(user_name, pass_word, full_name,
-//                        email, phone_number, 3, true);
+
                 UserDAO.addUser(user_name, pass_word, full_name,
-                        email, phone_number, 3, true,Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()));
+                        email, phone_number, 3, true);
             }
             else{
                 System.out.println("Lỗi đăng ký");
@@ -56,6 +54,4 @@ public class FormRegisterController {
 
     }
 
-    public static void main(String[] args) {
-    }
 }

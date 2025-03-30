@@ -5,12 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.apartmentmanagement.DAO.UserDAO;
+import org.example.apartmentmanagement.Utils.AlertBox;
+import org.example.apartmentmanagement.Utils.passwordEncryption;
 
 import java.io.IOException;
 import java.util.prefs.Preferences;
@@ -19,8 +19,9 @@ public class LoginController {
 
     public Button registerBtn;
     @FXML
+    public Label forgotPassword;
+    @FXML
     private Button btnLogin;
-
     @FXML
     private PasswordField txtPassword;
 
@@ -28,37 +29,16 @@ public class LoginController {
     private TextField txtUsername;
 
     @FXML
-    private CheckBox rememberPassword;
-
-    @FXML
     void handleLogin(ActionEvent event) {
-        String userName =  txtUsername.getText();
+        String userName = txtUsername.getText();
         String password = txtPassword.getText();
         UserDAO userDAO = new UserDAO();
         int role_id = userDAO.login(userName, password);
-        if(role_id == 1){
-            System.out.println("Hello manager!");
-        }
-        else if (role_id == 2){
-            System.out.println("Hello staff!");
-        }
-        else if(role_id == 3){
-            System.out.println("hello resident!");
-        }
-        else{
-            System.out.println("Error");
-        }
-
-        Preferences prefs = Preferences.userNodeForPackage(getClass());
-
-        if(rememberPassword.isSelected()){
-            prefs.put("username", userName);
-            prefs.put("password", password);
-            prefs.putBoolean("rememberMe", true);
-        } else {
-            prefs.remove("username");
-            prefs.remove("password");
-            prefs.putBoolean("rememberMe", false);
+        switch (role_id) {
+            case 1 -> AlertBox.showAlertForManager();
+            case 2 -> AlertBox.showAlertForStaff();
+            case 3 -> AlertBox.showAlertForResident();
+            default -> System.out.println("Invalid username or password!");
         }
     }
     private void showRegisterForm() {
@@ -81,11 +61,9 @@ public class LoginController {
                 showRegisterForm();
 
         });
-//        if (registerCheckBox != null && registerCheckBox.isSelected()) {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FormRegister.fxml"));
-//            Parent root = loader.load();
-//            FormRegisterController controller = loader.getController();
-//            controller.handleRegister();
-//        }
     }
+    public void handleForgotPassword(MouseEvent mouseEvent) {
+        System.out.println("Redirecting to Forgot Password page...");
+    }
+
 }

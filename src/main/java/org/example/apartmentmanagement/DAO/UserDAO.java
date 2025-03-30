@@ -1,10 +1,12 @@
 package org.example.apartmentmanagement.DAO;
 
 import org.example.apartmentmanagement.Model.User;
+import org.example.apartmentmanagement.Utils.passwordEncryption;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -12,7 +14,7 @@ public class UserDAO {
     private static List<User> userList = new ArrayList<User>();
     public void getAllUser() throws SQLException {
         userList.clear();
-        String sql = "select user_id, username, password, full_name, email,phone_number, role_id, active from [User]";
+        String sql = "SELECT user_id, username, password, full_name, email,phone_number, role_id, active from [User]";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();){
@@ -42,40 +44,52 @@ public class UserDAO {
 
 
     public int login (String userName, String passWord){
-        String sql = " select role_id from [User] where username = ? and password = ?";
+        String sql = "SELECT * FROM [User] WHERE username = ?";
         int roleID = 0;
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql)){
+        if (userName == null || userName.isEmpty() || passWord == null || passWord.isEmpty()) {
+            return 0; // Tránh truy vấn SQL nếu giá trị rỗng
+        }
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
             stmt.setString(1, userName);
-            stmt.setString(2, passWord);
             ResultSet rs = stmt.executeQuery();
 
-            User user = new User();
-            if(rs.next()){
-                roleID = rs.getInt("role_id");
-                user.setRoleID(roleID);
+            if (rs.next()) {
+                String hashedPassword = rs.getString("password");
+                System.out.println("Stored Hash: " + hashedPassword);
+                System.out.println("Input Password: " + passWord);
+
+                boolean isMatch = passwordEncryption.checkPassword(passWord, hashedPassword);
+                System.out.println("Password Match: " + isMatch);
+
+                if (isMatch) {
+                    roleID = rs.getInt("role_id");
+                    System.out.println("User role: " + roleID);
+                } else {
+                    System.out.println("Password does not match!");
+                }
+            } else {
+                System.out.println("No user found with this username.");
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return roleID;
     }
 
-    public static void addUser(String userName, String passWord, String fullName, String email, String phoneNumber, int roleID, boolean active, Date created_at, Date updated_at) throws SQLException {
-        String sql = "INSERT INTO [User](username, password, full_name, email, phone_number, role_id, active, created_at, updated_at) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ?)";
+    public static void addUser(String userName, String passWord, String fullName, String email, String phoneNumber, int roleID, boolean active) throws SQLException {
+        String sql = "INSERT INTO [User](username, password, full_name, email, phone_number, role_id, active, created_at, updated_at) VALUES ( ? , ? , ? , ? , ? , ? , ? , getdate() , getdate())";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
             conn.setAutoCommit(false);
             stmt.setString(1, userName);
-            stmt.setString(2, passWord);
+            stmt.setString(2, passwordEncryption.hashPassword(passWord));
             stmt.setNString(3, fullName);
             stmt.setString(4, email);
             stmt.setString(5, phoneNumber);
             stmt.setInt(6, roleID);
-            stmt.setInt(7, Boolean.compare(active, false));
-            stmt.setDate(8, Date.valueOf(LocalDate.now()));
-            stmt.setDate(9, Date.valueOf(LocalDate.now()));
+            stmt.setBoolean(7, active);
             int excuted = stmt.executeUpdate();
             if(excuted > 0) {
                 conn.commit();
@@ -85,6 +99,61 @@ public class UserDAO {
                 conn.rollback();
                 System.out.println("Added a User Fail!");
             }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void DeleteStaffbyId (int userID) throws SQLException{
+        String sql = "DELETE FROM [User] WHERE user_id = ?";
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, userID);
+            int executed = stmt.executeUpdate();
+            if(executed > 0) System.out.println("Delete Successfully!");
+            else System.out.println("Delete Fail!");
+        }catch(SQLException e){
+            throw new RuntimeException();
+        }
+    }
+
+    public static void UpdateUserById(int userID, String field, Object newValue){
+        List<String> allowColumn = Arrays.asList("user_id", "username", "password","full_name", "email", "phone_number", "role_id", "active");
+        if(!allowColumn.contains(field.toLowerCase())){
+            System.out.println("Field need update isn't invalid!");
+            return;
+        }
+        String sql = "UPDATE [User] SET " + field + " = ? WHERE user_id = ?";
+        String updated_atSQL = "UPDATE [User] SET updated_at = getdate() WHERE user_id = ?";
+        try{
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt1 = connection.prepareStatement(updated_atSQL);
+            connection.setAutoCommit(false);
+            if(newValue instanceof String){
+                stmt.setString(1, (String)newValue);
+            }
+            else if(newValue instanceof Integer){
+                stmt.setInt(1, (Integer) newValue);
+            }
+            else if(newValue instanceof Double){
+                stmt.setDouble(1, (Double) newValue);
+            }
+            else if(newValue instanceof Boolean){
+                stmt.setInt(1, Boolean.compare((Boolean)newValue, false));
+            }
+            else{
+                System.out.println("Field is invalid!");
+            }
+            stmt.setInt(2, userID);
+            int excuted = stmt.executeUpdate();
+            if(excuted > 0) {
+                stmt1.setInt(1, userID);
+                stmt1.executeUpdate();
+                System.out.println("Update successfully!");
+                connection.commit();
+            }
+            else System.out.println("Update fail!");
         }catch(SQLException e){
             e.printStackTrace();
         }
