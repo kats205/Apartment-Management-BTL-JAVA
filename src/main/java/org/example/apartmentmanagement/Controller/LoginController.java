@@ -10,18 +10,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.apartmentmanagement.DAO.UserDAO;
 import org.example.apartmentmanagement.Utils.AlertBox;
-import org.example.apartmentmanagement.Utils.passwordEncryption;
+import org.example.apartmentmanagement.Utils.TryCatchUtil;
 
 import java.io.IOException;
-import java.util.prefs.Preferences;
 
 public class LoginController {
 
     public Button registerBtn;
     @FXML
     public Label forgotPassword;
-    @FXML
-    private Button btnLogin;
     @FXML
     private PasswordField txtPassword;
 
@@ -35,9 +32,9 @@ public class LoginController {
         UserDAO userDAO = new UserDAO();
         int role_id = userDAO.login(userName, password);
         switch (role_id) {
-            case 1 -> AlertBox.showAlertForManager();
-            case 2 -> AlertBox.showAlertForStaff();
-            case 3 -> AlertBox.showAlertForResident();
+            case 1 -> AlertBox.showAlertForUser("Thông báo","Chào mừng quản lý!");
+            case 2 -> AlertBox.showAlertForUser("Thông báo","Chào mừng nhân viên!");
+            case 3 -> AlertBox.showAlertForUser("Thông báo","Chào mừng cư dân!");
             default -> System.out.println("Invalid username or password!");
         }
     }

@@ -1,20 +1,16 @@
 package org.example.apartmentmanagement.DAO;
 
 import org.example.apartmentmanagement.Model.Payment;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.example.apartmentmanagement.Repository.IPaymentDAO;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-public class PaymentDAO {
-    private static List<Payment> paymentList = new ArrayList<>();
-
-    public static void getAllPayment(){
-        paymentList.clear();
+import java.sql.Date;
+public class PaymentDAO implements IPaymentDAO {
+    @Override
+    public List<Payment> getAllPayment(){
+        List<Payment> paymentList = new ArrayList<>();
         String sql = "SELECT * FROM payment";
         try{
             Connection connection = DatabaseConnection.getConnection();
@@ -28,90 +24,90 @@ public class PaymentDAO {
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return paymentList;
     }
-    public static void showAllPayment(){
-        if(paymentList.isEmpty()) getAllPayment();
-        System.out.println("=====================Payment List=====================");
-        for(Payment payment : paymentList){
-            System.out.println("--------------------------------------");
-            System.out.println("payment ID: " + payment.getPaymentID());
-            System.out.println("Bill ID: " + payment.getBillID());
-            System.out.println("Amount: " + payment.getAmount());
-            System.out.println("Payment Date: " + payment.getPaymentDate());
-            System.out.println("Payment method: " + payment.getPaymentMedthod());
-            System.out.println("Transaction ID: " + payment.getTransactionID());
-            System.out.println("Status: " + payment.getStatus());
-            System.out.println("Created At: " + payment.getCreated_at());
-            System.out.println("Updated At: " + payment.getUpdated_at());
-            System.out.println("--------------------------------------");
-        }
-    }
-    public static Payment findPaymentById(int paymentID){
-        if(paymentID <= 0){
-            System.out.println("payment ID invalid!");
-            return null;
-        }
-        for(Payment payment : paymentList){
-            if(payment.getPaymentID() == paymentID) return payment;
-        }
-        return null;
-    }
-    public static void deletePaymentByID(int paymentID){
-        if(paymentID <= 0){
-            System.out.println("Payment ID invalid!");
-            return;
-        }
+
+    public boolean deletePaymentByID(int paymentID){
         String sql = "DELETE FROM Payment WHERE payment_id = ?";
         try{
             Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, paymentID);
-            int executed = stmt.executeUpdate();
-            if(executed > 0){
-                System.out.println("Delete Successfully!");
-            }
-            else{
-                System.out.println("Delete Fail!");
-            }
+            return stmt.executeUpdate() > 0;
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return false;
     }
 
-    public static void updatePaymentById(int paymentID, String field, Object newValue){
-        if(paymentID <= 0){
-            System.out.println("payment ID invalid!");
-            return;
+    @Override
+    public boolean addPayment(Payment payment) {
+        String sql = "INSERT INTO Payment(payment_id, bill_id, amount, payment_date, payment_method, transaction_id, status, created_at, updated_at" +
+                " VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1, payment.getPaymentID());
+            stmt.setInt(2, payment.getBillID());
+            stmt.setDouble(3, payment.getAmount());
+            stmt.setDate(4, payment.getPaymentDate());
+            stmt.setNString(5, payment.getPaymentMedthod());
+            stmt.setString(6, payment.getTransactionID());
+            stmt.setNString(7, payment.getStatus());
+            stmt.setDate(8, Date.valueOf(LocalDate.now()));
+            stmt.setDate(9, Date.valueOf(LocalDate.now()));
+            return stmt.executeUpdate() > 0;
+        }catch (SQLException e){
+            e.printStackTrace();
         }
-        List<String> allowField = Arrays.asList("payment_id", "bill_id", "amount", "payment_date", "payment_method", "transaction_id", "status");
-        if(!allowField.contains(field.toLowerCase())){
-            System.out.println("Field invalid!");
-        }
-        String sql = "UPDATE payment SET " + field + " = ? WHERE payment_id = ?";
-        String updated_atSQL = "UPDATE payment SET updated_at = getdate() WHERE payment_id = ?";
-        try{
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            PreparedStatement stmt1 = connection.prepareStatement(updated_atSQL);
+        return false;
+    }
+
+    @Override
+    public boolean updatebillID(int paymentID, int newbBillId) {
+        return updatePaymentField(paymentID, "bill_id", newbBillId);
+    }
+
+    @Override
+    public boolean updateAmount(int paymentID, double newAmount) {
+        return updatePaymentField(paymentID, "amount", newAmount);
+    }
+
+    @Override
+    public boolean updatePaymentDate(int paymentID, Date newPaymentDate) {
+        return updatePaymentField(paymentID, "payment_date", newPaymentDate);
+    }
+
+    @Override
+    public boolean updatePaymentMethod(int paymentID, String newPaymentMethod) {
+        return updatePaymentField(paymentID, "payment_method", newPaymentMethod);
+    }
+
+    @Override
+    public boolean updateTransactionID(int paymentID, String newTransactionID) {
+        return updatePaymentField(paymentID, "transaction_id", newTransactionID);
+    }
+
+    @Override
+    public boolean updateStatusPayment(int paymentID, String newStatus) {
+        return updatePaymentField(paymentID, "status", newStatus);
+    }
+
+    public boolean updatePaymentField(int paymentID, String field, Object newValue){
+        String sql = "UPDATE payment SET " + field + " = ? , updated_at = ? WHERE payment_id = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql);){
             if(newValue instanceof String){
                 stmt.setNString(1, (String)newValue);
             }
             else if(newValue instanceof Float){
                 stmt.setFloat(1,(Float)newValue);
             }
-
-            stmt.setInt(2, paymentID);
-            int executed = stmt.executeUpdate();
-            if(executed > 0){
-                stmt1.setInt(1, paymentID);
-                stmt1.executeUpdate();
-                System.out.println("Update successfully!");
-            }
-            else{
-                System.out.println("Update fail!");
-            }
+            stmt.setDate(2, Date.valueOf(LocalDate.now()));
+            stmt.setInt(3, paymentID);
+            return stmt.executeUpdate() > 0;
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return false;
     }
 }

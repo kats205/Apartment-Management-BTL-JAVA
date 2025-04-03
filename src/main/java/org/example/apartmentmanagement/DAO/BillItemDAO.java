@@ -1,6 +1,7 @@
 package org.example.apartmentmanagement.DAO;
 
 import org.example.apartmentmanagement.Model.BillItems;
+import org.example.apartmentmanagement.Repository.IBillItemDAO;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -9,30 +10,94 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class BillItemDAO {
-    private static List<BillItems> BillItemList = new ArrayList<BillItems>();
-
-    public static void getAllBillItems(){
-        BillItemList.clear();
+public class BillItemDAO implements IBillItemDAO {
+    @Override
+    public List<BillItems> getAllBillItems() {
         String sql = "SELECT * FROM BillItem";
+        List<BillItems> billItemsList = new ArrayList<>();
         try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()){
             while(rs.next()){
-                BillItemList.add(new BillItems(rs.getInt("item_id"), rs.getInt("bill_id"), rs.getNString("item_type"),
-                            rs.getNString("description"), rs.getFloat("amount"), rs.getInt("quantity"),
-                        rs.getDouble("total"), rs.getDate("created_at"), rs.getDate("updated_at")));
+                billItemsList.add(new BillItems(rs.getInt("item_id"),
+                        rs.getInt("bill_id"),
+                        rs.getString("item_type"),
+                        rs.getNString("description"),
+                        rs.getFloat("amount"),
+                        rs.getInt("quantity"),
+                        rs.getDouble("total"),
+                        rs.getDate("created_at"),
+                        rs.getDate("updated_at")));
             }
-        } catch (SQLException e) {
+        }catch (SQLException e){
             e.printStackTrace();
         }
+        return billItemsList;
     }
 
+    @Override
+    public boolean addBillItem(BillItems billItems) {
+        String sql = "INSERT INTO BillItem(item_id, bill_id, item_type, description, amount, quantity, total, created_at, updated_at)" +
+                "VALUES ( ? , ? , ? , ? , ? , ? , ? , getdate(), getdate())";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1,billItems.getItemID());
+            stmt.setInt(2, billItems.getBillID());
+            stmt.setString(3, billItems.getItemType());
+            stmt.setNString(4,billItems.getDescription());
+            stmt.setDouble(5, billItems.getAmount());
+            stmt.setDouble(6, billItems.getQuantity());
+            stmt.setDouble(7, billItems.getTotal());
+            return stmt.executeUpdate() > 0;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateBillItemType(int billID, String newType) {
+        return false;
+    }
+
+    @Override
+    public boolean updateBillItemDescription(int billID, String newDescription) {
+        return false;
+    }
+
+    @Override
+    public boolean updateBillItemAmount(int billID, Float newAmount) {
+        return false;
+    }
+
+    @Override
+    public boolean updateBillitemQuantity(int billID, int newQuantity) {
+        return false;
+    }
+
+    public static boolean updateBillItemField(int billID, String field, Object newValue){
+        String sql = "UPDATE BillItem SET " + field + " = ? , updated_at = ? WHERE billID = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            if(newValue instanceof String){
+                stmt.setNString(1, (String) newValue);
+            }
+            else if(newValue instanceof Double){
+                stmt.setDouble(1, (Double)newValue);
+            }
+            stmt.setDate(2, Date.valueOf(LocalDate.now()));
+            stmt.setInt(3, billID);
+            return stmt.executeUpdate() > 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
     public static void showBillItemList(){
-        if(BillItemList.isEmpty()) getAllBillItems();
+        List<BillItems> BillItemsList = new BillItemDAO().getAllBillItems();
+        if(BillItemsList.isEmpty()) return;
         System.out.println("===========================BillItem List===========================");
-        for(BillItems billItems : BillItemList){
+        for(BillItems billItems : BillItemsList){
             System.out.println("-------------------------------------------------");
             System.out.println("Item ID: " + billItems.getItemID());
             System.out.println("Bill ID: " + billItems.getBillID());
@@ -44,114 +109,6 @@ public class BillItemDAO {
             System.out.println("Created At: " + billItems.getCreated_at());
             System.out.println("Updated_at: " + billItems.getUpdated_at());
             System.out.println("-------------------------------------------------");
-        }
-    }
-
-    //thêm 1 BillItem vào DB
-    public static void addBillItem( int itemID, int billID, String itemType, String description,
-                                    float amount, int quantity, double total){
-        String sql = "INSERT INTEO BillItem( item_id, bill_id, item_type, description, amount, quantity, total, created_at, updated_at)" +
-                "VALUES ( ? , ? , ? , ? , ? , ? , ? , getdate(), getdate()";
-        try{
-            Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, itemID);
-            stmt.setInt(2, billID);
-            stmt.setNString(3, itemType);
-            stmt.setNString(4, description);
-            stmt.setFloat(5, amount);
-            stmt.setInt(6, quantity);
-            stmt.setDouble(7, total);
-            int excuted = stmt.executeUpdate();
-            if(excuted > 0) System.out.println("Add a Bill Item successfully!");
-            BillItemList.add(new BillItems(itemID,billID,itemType,description,amount, quantity,total ,Date.valueOf(LocalDate.now()),Date.valueOf(LocalDate.now())));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    // xóa BillItem bằng ID
-    public static void deleteBillItemById(int itemID) throws SQLException {
-        String deleteStaffSQL = "DELETE FROM BillItem WHERE item_id  = ?";
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt1 = connection.prepareStatement(deleteStaffSQL);
-             Scanner sc = new Scanner(System.in)) {
-            connection.setAutoCommit(false);
-            System.out.println("Do you want to delete staff with ID " + itemID + "? (Yes/No)");
-            String check = sc.nextLine().trim();
-            if (!check.equalsIgnoreCase("Yes")) {
-                System.out.println("Deletion cancelled.");
-                return;
-            }
-            stmt1.setInt(1, itemID);
-            int excuted = stmt1.executeUpdate();
-            if (excuted > 0) {
-                connection.commit(); // Chỉ commit nếu không có lỗi
-                System.out.println("Delete A Bill Item Successfully!");
-            } else {
-                connection.rollback(); // Rollback nếu không có dòng nào bị xóa
-                System.out.println("Staff Delete Failed!");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                if (!DatabaseConnection.getConnection().getAutoCommit()) {
-                    DatabaseConnection.getConnection().rollback(); // Rollback nếu có lỗi
-                }
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
-            }
-        }
-
-    }
-    // tìm BillItem bằng ID
-    public static BillItems findStaffByID(int itemID) throws SQLException {
-        if(BillItemList.isEmpty()) getAllBillItems();
-        for(BillItems billItems  : BillItemList){
-            if(billItems.getItemID() == itemID) return billItems;
-        }
-        return null;
-    }
-    // hàm này dùng để cập nhật một staff thông qua id, khi chưa biết trước nên cập nhật thông tin gì
-    // -> dùng Object để kiểm tra đối tượng cần update
-    public static void updateBillItems (int itemID, String field, Object newValue) throws SQLException {
-        List<String> allowColumn = Arrays.asList("item_id", "bill_id", "item_type","description", "amount", "quantity", "total");
-        if(!allowColumn.contains(field.toLowerCase())){
-            System.out.println("Field need update isn't invalid!");
-            return;
-        }
-        String sql = "UPDATE BillItem SET " + field + " = ? WHERE item_id = ?";
-        String updated_atSQL = "UPDATE BillItem SET updated_at = getdate() WHERE itemID = ?";
-        try{
-            Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            PreparedStatement stmt1 = connection.prepareStatement(updated_atSQL);
-            connection.setAutoCommit(false);
-            if(newValue instanceof String){
-                stmt.setString(1, (String)newValue);
-            }
-            else if(newValue instanceof Integer){
-                stmt.setInt(1, (Integer) newValue);
-            }
-            else if(newValue instanceof Double){
-                stmt.setDouble(1, (Double) newValue);
-            }
-            else if(newValue instanceof Float){
-                stmt.setFloat(1, (Float)newValue);
-            }
-            else{
-                System.out.println("Field is invalid!");
-            }
-            stmt.setInt(2, itemID);
-            int excuted = stmt.executeUpdate();
-            if(excuted > 0) {
-                stmt1.setInt(1, itemID);
-                stmt1.executeUpdate();
-                System.out.println("Update successfully!");
-                connection.commit();
-            }
-            else System.out.println("Update fail!");
-        }catch(SQLException e){
-            e.printStackTrace();
         }
     }
 }
