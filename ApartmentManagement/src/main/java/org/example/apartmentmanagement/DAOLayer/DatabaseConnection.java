@@ -64,6 +64,7 @@ public class DatabaseConnection {
     public static void main(String[] args) {
         try{
             getConnection();
+            closeConnection();
         } catch (SQLException e){
             e.printStackTrace();
         }
