@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +16,7 @@ public class Apartment {
     private int floors;
     private double area;
     private int bedRoom;
+    private double priceApartment;
     private String status;
     private double maintenanceFee;
 
