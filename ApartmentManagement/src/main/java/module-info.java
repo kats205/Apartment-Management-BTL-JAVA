@@ -5,6 +5,9 @@ module org.example.apartmentmanagement {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires java.sql;
+    requires static lombok;
+    requires java.management;
+    requires java.desktop;
 
     opens org.example.apartmentmanagement to javafx.fxml;
     exports org.example.apartmentmanagement;
