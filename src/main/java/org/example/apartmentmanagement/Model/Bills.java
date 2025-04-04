@@ -22,8 +22,19 @@ public class Bills {
     private Date created_at;
     private Date updated_at;
 
-
-
+    public Bills(int billId, double amount, String description) {
+        billID = billId;
+        totalAmount = amount;
+        status = description;
+    }
+    public String getPaymentUrl() {
+        return "https://payment.example.com/pay?billId=" + billID + "&amount=" + totalAmount;
+    }
+    public void printBillDetails() {
+        System.out.println("Bill ID: " + billID);
+        System.out.println("Amount: " + totalAmount);
+        System.out.println("Payment URL: " + getPaymentUrl());
+    }
 //    public double calculateTotalAmount(){
 //
 //    }

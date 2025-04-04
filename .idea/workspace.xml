@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="afe12fbc-94fb-4d02-be89-c1c179d457e9" name="Changes" comment="" />
+    <list default="true" id="afe12fbc-94fb-4d02-be89-c1c179d457e9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/ManagerDashboardController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Bills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Bills.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/ManagerDashboardController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Bills.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Bills.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/GeneratePDF.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/GeneratePDF.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +25,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -45,7 +56,7 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2ulTWCDOSXNkNXeKs49FaQrNvql" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -63,7 +74,11 @@
     &quot;Application.Login.executor&quot;: &quot;Run&quot;,
     &quot;Application.LoginView.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ManagerController.executor&quot;: &quot;Run&quot;,
     &quot;Application.ManagerView.executor&quot;: &quot;Run&quot;,
+    &quot;Application.QRCode.executor&quot;: &quot;Run&quot;,
+    &quot;Application.QRCodeGenerator.executor&quot;: &quot;Run&quot;,
+    &quot;Application.QRCodeScanner.executor&quot;: &quot;Run&quot;,
     &quot;Application.ResidentDAO.executor&quot;: &quot;Run&quot;,
     &quot;Application.ResidentForm.executor&quot;: &quot;Run&quot;,
     &quot;Application.StaffDAO.executor&quot;: &quot;Run&quot;,
@@ -78,7 +93,7 @@
     &quot;git-widget-placeholder&quot;: &quot;trungle&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;C:/Users/lerua/IdeaProjects/QLCC/src/main/java&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/lerua/IdeaProjects/QLCC/src/main/resources&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/lerua/IdeaProjects/QLCC_DACN&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -104,7 +119,7 @@
       <recent name="org.example.apartmentmanagement.Views" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GeneratePDF">
+  <component name="RunManager" selected="Application.QRCodeScanner">
     <configuration name="DatabaseConnection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.DAO.DatabaseConnection" />
       <module name="QLCC" />
@@ -131,33 +146,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.HelloApplication" />
-      <module name="QLCC" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\lerua\IdeaProjects\QLCC\src\main\java\org\example\apartmentmanagement\libs\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.apartmentmanagement.Views.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Login" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.Login" />
-      <module name="QLCC" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.apartmentmanagement.Views.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="LoginView" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.LoginView" />
       <module name="QLCC" />
@@ -172,12 +160,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.DAO.UserDAO" />
+    <configuration name="ManagerController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Controller.ManagerController" />
       <module name="QLCC" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.apartmentmanagement.DAO.*" />
+          <option name="PATTERN" value="org.example.apartmentmanagement.Controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="QRCodeGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Utils.QRCodeGenerator" />
+      <module name="QLCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.apartmentmanagement.Utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="QRCodeScanner" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Utils.QRCodeScanner" />
+      <module name="QLCC" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.apartmentmanagement.Utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -187,19 +201,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.LoginView" />
+      <item itemvalue="Application.ManagerController" />
+      <item itemvalue="Application.QRCodeGenerator" />
+      <item itemvalue="Application.QRCodeScanner" />
       <item itemvalue="Application.DatabaseConnection" />
-      <item itemvalue="Application.Login" />
-      <item itemvalue="Application.UserDAO" />
-      <item itemvalue="Application.HelloApplication" />
       <item itemvalue="Application.GeneratePDF" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.QRCodeScanner" />
+        <item itemvalue="Application.QRCodeGenerator" />
+        <item itemvalue="Application.ManagerController" />
         <item itemvalue="Application.GeneratePDF" />
         <item itemvalue="Application.DatabaseConnection" />
-        <item itemvalue="Application.UserDAO" />
-        <item itemvalue="Application.Login" />
-        <item itemvalue="Application.HelloApplication" />
       </list>
     </recent_temporary>
   </component>
