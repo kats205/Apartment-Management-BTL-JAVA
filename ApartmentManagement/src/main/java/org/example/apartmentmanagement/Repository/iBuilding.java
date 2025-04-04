@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface iBuilding {
     List<Building> getAllBuilding();
+    void showAllBuilding();
     boolean addBuilding(Building building);
     boolean deleteBuildingbyID(int buildingID);
 }

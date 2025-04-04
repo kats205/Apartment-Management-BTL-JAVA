@@ -24,9 +24,9 @@ public class Building {
     private String address;
     private int totalFloors;
     private int totalApartment;
-    private LocalDate completionDate;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Date completionDate;
+    private Date createdAt;
+    private Date updatedAt;
 
     public List<Apartment> getAvailbleApartment(List<Apartment> apartmentList){
         List<Apartment> availbleApartments = new ArrayList<>();
