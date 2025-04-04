@@ -17,7 +17,7 @@ public class ApartmentDAO implements iApartment {
     }
 // Method dùng để chuyển dữ liệu cua database sang List
     @Override
-    public List<Apartment> getAllApartments() {
+    public  List<Apartment> getAllApartments() {
         List<Apartment> apartments = new ArrayList<>();
         String sql = "SELECT * FROM Apartment";
         try (Connection connection = DatabaseConnection.getConnection();
