@@ -19,56 +19,97 @@
                <children>
                   <VBox layoutX="265.0" layoutY="136.0" prefHeight="600.0" prefWidth="631.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label alignment="BOTTOM_CENTER" prefHeight="137.0" prefWidth="630.0" text="Register">
+                        <Label alignment="CENTER" prefHeight="85.0" prefWidth="630.0" text="Register">
                            <font>
                               <Font name="Roboto Condensed Bold" size="40.0" />
                            </font>
                         </Label>
                         <AnchorPane prefHeight="70.0" prefWidth="630.0">
                            <children>
-                              <TextField layoutX="100.0" layoutY="8.0" prefHeight="55.0" prefWidth="430.0" promptText="Username" styleClass="textField" stylesheets="@../styles/register.css">
+                              <TextField layoutX="100.0" layoutY="4.0" prefHeight="55.0" prefWidth="430.0" promptText="Username" styleClass="textField" stylesheets="@../styles/register.css">
                                  <font>
                                     <Font name="Roboto Condensed Regular" size="16.0" />
                                  </font>
                               </TextField>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="491.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="492.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/user.png" />
+                                    <Image url="@../assets/Login&amp;register/user.png" />
+                                 </image></ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="70.0" prefWidth="630.0">
+                           <children>
+                              <TextField layoutX="100.0" layoutY="4.0" prefHeight="55.0" prefWidth="430.0" promptText="Full Name" styleClass="textField" stylesheets="@../styles/register.css">
+                                 <font>
+                                    <Font name="Roboto Condensed Regular" size="16.0" />
+                                 </font>
+                              </TextField>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="492.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Login&amp;register/fullname.png" />
                                  </image>
                               </ImageView>
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="70.0" prefWidth="630.0">
                            <children>
-                              <TextField layoutX="100.0" layoutY="16.0" prefHeight="55.0" prefWidth="430.0" promptText="Email" styleClass="textField" stylesheets="@../styles/register.css">
+                              <TextField layoutX="100.0" layoutY="4.0" prefHeight="55.0" prefWidth="430.0" promptText="Email" styleClass="textField" stylesheets="@../styles/register.css">
                                  <font>
                                     <Font name="Roboto Condensed Regular" size="16.0" />
                                  </font>
                               </TextField>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="491.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="492.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/email.png" />
+                                    <Image url="@../assets/Login&amp;register/email.png" />
                                  </image>
                               </ImageView>
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="70.0" prefWidth="630.0">
                            <children>
-                              <TextField layoutX="100.0" layoutY="16.0" prefHeight="55.0" prefWidth="430.0" promptText="Password" styleClass="textField" stylesheets="@../styles/register.css">
+                              <TextField layoutX="100.0" layoutY="4.0" prefHeight="55.0" prefWidth="430.0" promptText="Phone Number" styleClass="textField" stylesheets="@../styles/register.css">
                                  <font>
                                     <Font name="Roboto Condensed Regular" size="16.0" />
                                  </font>
                               </TextField>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="490.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="492.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/lock.png" />
+                                    <Image url="@../assets/Login&amp;register/phonenumber.png" />
                                  </image>
                               </ImageView>
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="70.0" prefWidth="630.0">
                            <children>
-                              <Button layoutX="100.0" layoutY="16.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="430.0" stylesheets="@../styles/register.css" text="Register" textFill="WHITE">
+                              <TextField layoutX="100.0" layoutY="4.0" prefHeight="55.0" prefWidth="430.0" promptText="Password" styleClass="textField" stylesheets="@../styles/register.css">
+                                 <font>
+                                    <Font name="Roboto Condensed Regular" size="16.0" />
+                                 </font>
+                              </TextField>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="492.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Login&amp;register/lock.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="70.0" prefWidth="630.0">
+                           <children>
+                              <TextField layoutX="100.0" layoutY="4.0" prefHeight="55.0" prefWidth="430.0" promptText="Re-enter Password" styleClass="textField" stylesheets="@../styles/register.css">
+                                 <font>
+                                    <Font name="Roboto Condensed Regular" size="16.0" />
+                                 </font>
+                              </TextField>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="492.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/Login&amp;register/confirm.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="70.0" prefWidth="630.0">
+                           <children>
+                              <Button layoutX="100.0" layoutY="4.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="430.0" stylesheets="@../styles/register.css" text="Register" textFill="WHITE">
                                  <font>
                                     <Font name="Roboto Condensed Bold" size="18.0" />
                                  </font>
@@ -77,12 +118,12 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="70.0" prefWidth="630.0">
                            <children>
-                              <Label layoutX="153.0" layoutY="26.0" text="Already have an account?">
+                              <Label layoutX="158.0" layoutY="22.0" text="Already have an account?">
                                  <font>
                                     <Font name="Roboto Condensed Regular" size="16.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="337.0" layoutY="14.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="130.0" stylesheets="@../styles/register.css" text="Login" textFill="WHITE">
+                              <Button layoutX="342.0" layoutY="10.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="130.0" stylesheets="@../styles/register.css" text="Login" textFill="WHITE">
                                  <font>
                                     <Font name="Roboto Condensed Bold" size="18.0" />
                                  </font>
@@ -99,9 +140,9 @@
                <children>
                   <ImageView fx:id="imageView" fitHeight="600.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/apartment.jpg" />
+                        <Image url="@../assets/Login&amp;register/apartment.jpg" />
                      </image></ImageView>
-                  <Label alignment="CENTER" layoutX="128.0" layoutY="83.0" text="Welcome back!" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="135.0" layoutY="129.0" text="Welcome back!" textFill="WHITE">
                      <font>
                         <Font name="Roboto Condensed Black" size="32.0" />
                      </font>
