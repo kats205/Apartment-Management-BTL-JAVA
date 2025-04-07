@@ -5,45 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afe12fbc-94fb-4d02-be89-c1c179d457e9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/Testing/TestSQL.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/controllers/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/controllers/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/controllers/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/views/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/DashBoardView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/views/login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/ManagerDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/ApartmentView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/TableUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/TableUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/FormRegisterView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/FormRegisterView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/ManagerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/ManagerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/FormRegister.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/FormRegister.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ManagerView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/ManagerView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Views/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/FormRegister.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ManagerView.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Views/login.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/ManagerDashboardController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/ManagerDashboardController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/DatabaseConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/DatabaseConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/UserDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TableUtils$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TableUtils$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TableUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TableUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/FormRegisterView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/FormRegisterView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/ManagerView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/ManagerView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/style.css" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/email.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/styles/register.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/register.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +83,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "trungle",
+    "git-widget-placeholder": "Merging trungle",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/lerua/IdeaProjects/QLCC/src/main/java",
     "last_opened_file_path": "C:/Users/lerua/IdeaProjects/Apartment-Management-BTL-JAVA/src/main/resources/fxml",
