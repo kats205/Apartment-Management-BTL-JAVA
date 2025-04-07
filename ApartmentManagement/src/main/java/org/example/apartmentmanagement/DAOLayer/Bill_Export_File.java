@@ -26,23 +26,21 @@ public class Bill_Export_File {
         PdfDocument pdf = new PdfDocument(writer);
         Document doc = new Document(pdf);
 
-        // Set FONT
-        PdfFont font = PdfFontFactory.createFont("src/main/resources/Font/arial.ttf", PdfEncodings.IDENTITY_H);
+        PdfFont font = PdfFontFactory.createFont("D:\\Java\\Bai_Tap_Lon\\ApartmentManagement\\src\\main\\resources\\Font\\arial.ttf", PdfEncodings.IDENTITY_H);
         doc.setFont(font);
-
         // 1. Tạo ảnh (logo)
-        Image logo = new Image(ImageDataFactory.create("src/main/resources/Icon/bulding.png"));
+        Image logo = new Image(ImageDataFactory.create("D:\\Java\\Bai_Tap_Lon\\ApartmentManagement\\src\\main\\resources\\Icon\\building.png"));
         logo.setWidth(100);
 
         // 2. Tạo bảng 2 cột: [Ảnh | Chữ]
         Table tableHeader = new Table(UnitValue.createPercentArray(new float[]{1,4}));
         tableHeader.setWidth(UnitValue.createPercentValue(100));
 
-        // 3. Cột 1: ảnh (không viền)
-//        Cell imgCell = new Cell().add(logo)
-//                .setBorder(Border.NO_BORDER)
-//                .setVerticalAlignment(VerticalAlignment.MIDDLE);
-//        tableHeader.addCell(imgCell);
+//         3. Cột 1: ảnh (không viền)
+        Cell imgCell = new Cell().add(logo)
+                .setBorder(Border.NO_BORDER)
+                .setVerticalAlignment(VerticalAlignment.MIDDLE);
+        tableHeader.addCell(imgCell);
 
         // 4. Cột 2: chữ căn giữa trong ô
         Paragraph tenChungCu = new Paragraph("Tên chung cư")
