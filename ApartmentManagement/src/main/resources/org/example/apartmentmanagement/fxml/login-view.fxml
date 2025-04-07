@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="600" prefWidth="1080" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml1" fx:controller="org.example.apartmentmanagement.controllers.LoginController">
+<AnchorPane fx:id="rootPane" prefHeight="600" prefWidth="1080" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apartmentmanagement.controllers.LoginController">
     <children>
         <!-- Phần bên phải - Form đăng nhập -->
         <Label alignment="CENTER" layoutX="713.0" layoutY="76.0" prefHeight="74.0" prefWidth="158.0" text="Login" textAlignment="CENTER">
@@ -46,16 +46,14 @@
                 <Image url="@../assets/lock.png" />
             </image>
         </ImageView>
-
-        <!-- Link quên mật khẩu -->
-        <Label alignment="CENTER" layoutX="746.0" layoutY="301.0" text="Forgot password?">
-            <font>
-                <Font name="Cabin Condensed Regular" size="14.0" />
-            </font>
-        </Label>
+      <Button layoutX="736.0" layoutY="292.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" text="Forgot password?">
+         <font>
+            <Font name="Cabin Condensed Regular" size="14.0" />
+         </font>
+      </Button>
 
         <!-- Nút đăng nhập -->
-        <Button fx:id="loginButton" layoutX="579.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="55.0" prefWidth="430.5" style="-fx-background-color: #6996ee; -fx-text-fill: white; -fx-background-radius: 15px; -fx-border-color: black; -fx-border-radius: 12px;" text="Login">
+        <Button fx:id="loginButton" layoutX="579.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="55.0" prefWidth="430.5" stylesheets="@../styles/login.css" text="Login">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -69,7 +67,7 @@
         </Label>
 
         <!-- Nút đăng ký -->
-        <Button fx:id="registerButton" layoutX="703.0" layoutY="438.0" mnemonicParsing="false" onAction="#goToSignUp" prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: #6996ee; -fx-text-fill: white; -fx-background-radius: 15px; -fx-border-color: black; -fx-border-radius: 15px;" text="Register">
+        <Button fx:id="registerButton" layoutX="707.0" layoutY="438.0" mnemonicParsing="false" onAction="#goToSignUp" prefHeight="45.0" prefWidth="180.0" stylesheets="@../styles/login.css" text="Register">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>

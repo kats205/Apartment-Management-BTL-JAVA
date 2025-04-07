@@ -97,7 +97,7 @@ public class LoginController {
     @FXML
     public void goToSignUp(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/learn1/Views/signup.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("@../fxml/register-view.fxml"));
             AnchorPane signupPane = loader.load();
 
             Scene scene = new Scene(signupPane);
