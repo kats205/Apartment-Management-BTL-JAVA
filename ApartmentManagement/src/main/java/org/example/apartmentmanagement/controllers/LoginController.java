@@ -82,6 +82,7 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (username.equals("admin") && password.equals("admin")) {
+            
             System.out.println("Login successful!");
         } else {
             System.out.println("Invalid username or password!");
