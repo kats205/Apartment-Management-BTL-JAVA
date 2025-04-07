@@ -19,7 +19,6 @@ public class Apartment {
     private String status;
     private double maintanceFee;
 
-
 //    public double calculateMaintanceFee(){
 //
 //    }

@@ -2,7 +2,6 @@ package org.example.apartmentmanagement.DAO;
 
 import lombok.Getter;
 import org.example.apartmentmanagement.Model.User;
-import org.example.apartmentmanagement.Repository.AbstractDAO;
 import org.example.apartmentmanagement.Repository.IUserDAO;
 import org.example.apartmentmanagement.Utils.AlertBox;
 import org.example.apartmentmanagement.Utils.passwordEncryption;
@@ -10,7 +9,6 @@ import org.example.apartmentmanagement.Utils.passwordEncryption;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -200,5 +198,4 @@ public class UserDAO implements IUserDAO {
 //    public boolean logout(){
 //
 //    }
-
 }
