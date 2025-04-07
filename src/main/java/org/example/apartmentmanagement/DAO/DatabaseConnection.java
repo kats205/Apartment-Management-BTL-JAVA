@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DatabaseConnection {
-    private static Properties properties = new Properties();
+    private static final Properties properties = new Properties();
     private static Connection connection;
 
     static {
@@ -44,14 +44,6 @@ public class DatabaseConnection {
                 connection.close();
                 System.out.println("Đóng kết nối thành công!");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }

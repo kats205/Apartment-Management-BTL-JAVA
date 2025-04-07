@@ -10,7 +10,7 @@ public class FormRegisterView extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FormRegister.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FormRegister.fxml"));
             AnchorPane root = loader.load();
             Scene scene = new Scene(root, 500, 426);
             primaryStage.setScene(scene);

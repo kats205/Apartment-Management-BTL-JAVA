@@ -16,7 +16,7 @@ public class LoginView extends Application  {
     public void start(Stage primaryStage) {
         try {
             primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Assets/apartment.png"))));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
             AnchorPane root = loader.load();
             Scene scene = new Scene(root, 1280, 800);
             primaryStage.setScene(scene);

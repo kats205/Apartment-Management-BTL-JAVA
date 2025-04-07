@@ -46,7 +46,12 @@ public class UserDAO implements IUserDAO {
         }
         return userList;
     }
-
+    public static void Print(){
+        List<User> userList = new UserDAO().getAllUser();
+        for(User user : userList){
+            System.out.println(user);
+        }
+    }
     @Override
     public User getUserByID(int userID) {
         String sql = "SELECT * from [User] WHERE user_id = ?";
@@ -69,7 +74,6 @@ public class UserDAO implements IUserDAO {
         String sql = "INSERT INTO [User](username, password, full_name, email, phone_number, role_id, active, created_at, updated_at) VALUES ( ? , ? , ? , ? , ? , ? , ? , getdate() , getdate())";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
-            conn.setAutoCommit(false);
             stmt.setString(1, user.getUserName());
             stmt.setString(2, passwordEncryption.hashPassword(user.getPassWord()));
             stmt.setNString(3, user.getFullName());
@@ -198,4 +202,7 @@ public class UserDAO implements IUserDAO {
 //    public boolean logout(){
 //
 //    }
+public static void main(String[] args) {
+    UserDAO.Print();
+}
 }

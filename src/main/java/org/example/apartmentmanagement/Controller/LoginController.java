@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.apartmentmanagement.DAO.UserDAO;
 import org.example.apartmentmanagement.Utils.AlertBox;
-import org.example.apartmentmanagement.Utils.TryCatchUtil;
 
 import java.io.IOException;
 
@@ -22,6 +21,7 @@ public class LoginController {
     public Button registerBtn;
     @FXML
     public Label forgotPassword;
+    public Button btnLogin;
     @FXML
     private PasswordField txtPassword;
 
@@ -56,7 +56,7 @@ public class LoginController {
     }
     private void showRegisterForm() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FormRegister.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FormRegister.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

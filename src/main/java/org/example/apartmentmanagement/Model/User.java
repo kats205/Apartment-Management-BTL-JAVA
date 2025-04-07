@@ -38,4 +38,17 @@ public class User {
         this.active = active;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", roleID=" + roleID +
+                ", active=" + active +
+                '}';
+    }
 }
