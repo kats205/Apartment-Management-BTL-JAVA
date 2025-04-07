@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apartmentmanagement.Controller.LoginController">
+    <children>
+        <Label layoutX="600.0" layoutY="14.0" prefHeight="71.0" prefWidth="94.0" text="Login" textAlignment="CENTER">
+            <font>
+                <Font name="System Bold" size="35.0" />
+            </font>
+        </Label>
+        <TextField fx:id="txtUsername" layoutX="434.0" layoutY="100.0" prefWidth="420.0" promptText="username" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-radius: 10px;">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </TextField>
+      <PasswordField fx:id="txtPassword" layoutX="434.0" layoutY="171.0" prefHeight="35.0" prefWidth="420.0" promptText="password" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-radius: 10px;">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </PasswordField>
+        <Label fx:id="forgotPassword" layoutX="581.0" layoutY="247.0" onMouseClicked="#handleForgotPassword" style="-fx-text-fill: blue; -fx-underline: true;" text="Forgot password?">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <Button fx:id="btnLogin" layoutX="434.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="46.0" prefWidth="420.0" style="-fx-background-color: #6996ee; -fx-text-fill: white; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-radius: 10px;" text="Login" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="registerBtn" layoutX="515.0" layoutY="429.0" mnemonicParsing="false" onAction="#registerAccountBtn" prefHeight="25.0" prefWidth="257.0" style="-fx-background-color: #6996ee; -fx-text-fill: white; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-radius: 10px;" text="Register" textFill="WHITE">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Label layoutX="561.0" layoutY="376.0" text="Don't have an account?">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="35.0" fitWidth="32.0" layoutX="800.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../Assets/user.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="35.0" fitWidth="32.0" layoutX="800.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../Assets/lock.png" />
+            </image>
+        </ImageView>
+        <Pane layoutX="-10.0" layoutY="-8.0" prefHeight="606.0" prefWidth="420.0" style="-fx-background-color: black; -fx-background-radius: 0 350 350 0;">
+            <children>
+                <ImageView fitHeight="606.0" fitWidth="420.0" layoutX="11.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 0 100px 100px 0; -fx-border-radius: 0 100px 100px 0; -fx-border-color: white; -fx-border-width: 5px;">
+                    <image>
+                        <Image url="@../Assets/apartment.jpg" />
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER" layoutX="37.0" layoutY="33.0" prefHeight="71.0" prefWidth="359.0" text="Welcome To Apartment!" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+      <AnchorPane layoutX="970.0" layoutY="7.0">
+         <children>
+            <AnchorPane fx:id="registerPane" layoutX="-11.0" layoutY="-16.0" prefHeight="617.0" prefWidth="463.0" style="-fx-background-color: white;">
+               <children>
+                  <Label layoutX="178.0" layoutY="33.0" text="Register Form">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="42.0" layoutY="92.0" prefHeight="39.0" prefWidth="371.0" promptText="username" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-radius: 10px;">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="44.0" layoutY="162.0" prefHeight="26.0" prefWidth="371.0" promptText="password" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-radius: 10px;">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="42.0" layoutY="232.0" prefHeight="39.0" prefWidth="371.0" promptText="Re Enter Password" style="-fx-background-color: #e3e3e3; -fx-background-radius: 10px; -fx-text-fill: black; -fx-border-color: black; -fx-border-radius: 10px;">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="42.0" layoutY="301.0" prefHeight="26.0" prefWidth="371.0" promptText="Phone Number" style="-fx-background-color: #e3e3e3; -fx-background-radius: 10px; -fx-text-fill: black; -fx-border-radius: 10px; -fx-border-color: black;">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="44.0" layoutY="368.0" prefHeight="26.0" prefWidth="371.0" promptText="Email" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: black;">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </TextField>
+                  <TextField layoutX="44.0" layoutY="431.0" prefHeight="26.0" prefWidth="371.0" promptText="Full Name" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-border-color: black; -fx-background-radius: 10px; -fx-border-radius: 10px;">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </TextField>
+                  <Button layoutX="301.0" layoutY="501.0" mnemonicParsing="false" style="-fx-background-color: #6996ee; -fx-alignment: center; -fx-padding: 10px 20px 10px 20px; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-text-fill: white; -fx-border-color: black;" text="Register ">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="backLogin" layoutX="65.0" layoutY="501.0" mnemonicParsing="false" onAction="#backLogin" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #6996ee; -fx-padding: 10px 20px 10px 20px; -fx-border-color: black; -fx-background-radius: 10px; -fx-border-radius: 10px; -fx-text-fill: white;" text="Back" textAlignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="415.0" layoutY="625.0" prefHeight="625.0" prefWidth="462.0" style="-fx-background-color: white;">
+         <children>
+            <Label layoutX="162.0" layoutY="44.0" prefHeight="26.0" prefWidth="139.0" text="Forgot Password">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <TextField layoutX="67.0" layoutY="109.0" prefHeight="37.0" prefWidth="340.0" promptText="username" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 10px; -fx-border-color: black; -fx-border-radius: 10px;" />
+            <TextField layoutX="65.0" layoutY="176.0" prefHeight="26.0" prefWidth="340.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>
