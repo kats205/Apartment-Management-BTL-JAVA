@@ -1,15 +1,13 @@
-package org.example.apartmentmanagement.controllers;
+package org.example.apartmentmanagement.DAOLayer;
 
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import org.example.apartmentmanagement.DAOLayer.ApartmentDAO;
 import org.example.apartmentmanagement.models.Apartment;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,6 +51,7 @@ public class ExportPDF {
         document.add(table);
 
 
+        System.out.println("TẠO file thành công!!!!");
         document.close();
 
 

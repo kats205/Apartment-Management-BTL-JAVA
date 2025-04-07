@@ -3,6 +3,7 @@ package org.example.apartmentmanagement.Repository;
 import org.example.apartmentmanagement.models.Bills;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public interface iBill {

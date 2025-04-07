@@ -10,6 +10,8 @@ module org.example.apartmentmanagement {
     requires java.desktop;
     requires kernel;
     requires layout;
+    requires com.google.zxing;
+    requires io;
 
     opens org.example.apartmentmanagement to javafx.fxml;
     exports org.example.apartmentmanagement;
@@ -17,4 +19,6 @@ module org.example.apartmentmanagement {
     opens org.example.apartmentmanagement.views to javafx.fxml;
     exports org.example.apartmentmanagement.controllers;
     opens org.example.apartmentmanagement.controllers to javafx.fxml;
+    exports org.example.apartmentmanagement.DAOLayer;
+    opens org.example.apartmentmanagement.DAOLayer to javafx.fxml;
 }
