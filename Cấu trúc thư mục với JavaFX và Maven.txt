@@ -1,0 +1,66 @@
+MÔ HÌNH MVC
+
+learn1/  
+│── .idea/                  (Cấu hình IntelliJ IDEA)  
+│── .mvn/                   (Maven wrapper)  
+|── 📁src/
+|    │── 📁main
+|    │   ├── 📁java
+|    │   │   └── 📁org.example.learn1
+|    │   │       ├── 📁 Controllers 		(Thư mục chứa bộ điều khiển, xử lý sự kiện)                                              
+|    │   │       │   ├── LoginController.java
+|    │   │       │   ├── HomeController.java
+|    │   │       │   ├── ...
+|    │   │       ├── 📁 Models/  (Model - Lớp dữ liệu, xử lý logic)
+|    │   │       │   ├── User.java
+|    │   │       │   ├── Product.java
+|    │   │       │   ├── ...
+│    │   │       ├── 📁 Views/         (View - Load giao diện từ FXML)
+│    │   │       │   ├── MainApplication.java  (Chạy ứng dụng)
+│    │   │       │   ├── ...
+|    │   │       ├── 📁 Utils/  
+|    │   │       │   │   ├── DatabaseService.java     (Kết nối CSDL)
+|    │   │       │   │   ├── AuthService.java         (Xác thực người dùng)
+│    │   │       │   ├── ...
+|    │   ├── 📁 resources
+|    │   │   └── 📁 or.egxample.learn1
+|    │   │       ├── 📁 Assets 		(Chứa logo và hình ảnh dự án)
+|    │   │       ├── 📁 Styles 		(CSS để thiết kế giao diện cho button, text field, layout)
+|    │   │       │   ├── styles.css
+|    │   │       ├── 📁 Views 			(Chứa file giao diện FXML build qua Screen Builder hoặc NetBeans)
+|    │   │       │   ├── login.fxml
+|    │   │       │   ├── signup.fxml
+│── target/                  (Chứa file build)  
+│── .gitignore               (File cấu hình Git)  
+│── mvnw                     (Maven Wrapper script)  
+│── mvnw.cmd                 (Maven Wrapper cho Windows)  
+│── pom.xml                  (File cấu hình Maven)  
+
+
+
+
+src
+ ├── main
+ │   ├── java
+ │   │   ├── org.example.apartment
+ │   │   │   ├── controller        # Chứa các Controller JavaFX
+ │   │   │   ├── model             # Chứa các class model (entities)
+ │   │   │   ├── database          # (MỚI) Chứa các class kết nối DB
+ │   │   │   │   ├── DatabaseConfig.java   # Cấu hình kết nối database
+ │   │   │   │   ├── DatabaseHelper.java   # Các hàm tiện ích SQL
+ │   │   │   │   ├── UserDAO.java          # Data Access Object cho User
+ │   │   │   │   ├── ApartmentDAO.java     # Data Access Object cho Apartment
+ │   │   │   ├── utils              # Chứa các tiện ích chung
+ │   │   │   ├── view               # Chứa các class xử lý giao diện JavaFX
+ │   │   │   ├── testdemo           # Thư mục test (có thể bỏ)
+ │   │   │   ├── module-info.java   # Cấu hình module
+ │   ├── resources
+ │   │   ├── org.example.apartment
+ │   │   │   ├── assets             # Chứa ảnh, icon
+ │   │   │   ├── fxml               # Chứa file giao diện JavaFX
+ │   │   │   ├── style              # Chứa file CSS
+ │   │   │   ├── database.properties  # (MỚI) Chứa thông tin kết nối database
+ ├── pom.xml
+
+
+

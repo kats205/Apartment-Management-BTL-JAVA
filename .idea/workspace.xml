@@ -36,6 +36,7 @@
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/Login.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" afterDir="false" />
     </list>
+    <list default="true" id="afe12fbc-94fb-4d02-be89-c1c179d457e9" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -94,7 +95,6 @@
     "Application.Login.executor": "Run",
     "Application.LoginView.executor": "Run",
     "Application.Main.executor": "Run",
-    "Application.ManagerDashboardController.executor": "Run",
     "Application.ManagerView.executor": "Run",
     "Application.ResidentDAO.executor": "Run",
     "Application.ResidentForm.executor": "Run",
@@ -112,6 +112,7 @@
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/lerua/IdeaProjects/QLCC/src/main/java",
     "last_opened_file_path": "C:/Users/lerua/IdeaProjects/QLCC",
+    "last_opened_file_path": "C:/Users/lerua/IdeaProjects/QLCC/src/main/resources",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -138,6 +139,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.ManagerDashboardController">
+  <component name="RunManager" selected="Application.GeneratePDF">
     <configuration name="DatabaseConnection" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.DAO.DatabaseConnection" />
       <module name="QLCC" />
@@ -166,7 +168,10 @@
     </configuration>
     <configuration name="Login" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.Login" />
+    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.HelloApplication" />
       <module name="QLCC" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\lerua\IdeaProjects\QLCC\src\main\java\org\example\apartmentmanagement\libs\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.apartmentmanagement.Views.*" />
@@ -177,6 +182,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Login" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.Login" />
     <configuration name="LoginView" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.LoginView" />
       <module name="QLCC" />
@@ -193,11 +200,14 @@
     </configuration>
     <configuration name="ManagerDashboardController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Controller.ManagerDashboardController" />
+    <configuration name="LoginView" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.LoginView" />
       <module name="QLCC" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\lerua\IdeaProjects\QLCC\src\main\java\org\example\apartmentmanagement\libs\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.apartmentmanagement.Controller.*" />
+          <option name="PATTERN" value="org.example.apartmentmanagement.Views.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -207,11 +217,14 @@
     </configuration>
     <configuration name="ManagerView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.Views.ManagerView" />
+    <configuration name="UserDAO" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.apartmentmanagement.DAO.UserDAO" />
       <module name="QLCC" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\lerua\IdeaProjects\QLCC\src\main\java\org\example\apartmentmanagement\libs\javafx-sdk-24\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.example.apartmentmanagement.Views.*" />
+          <option name="PATTERN" value="org.example.apartmentmanagement.DAO.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -225,6 +238,8 @@
       <item itemvalue="Application.ManagerView" />
       <item itemvalue="Application.DatabaseConnection" />
       <item itemvalue="Application.Login" />
+      <item itemvalue="Application.UserDAO" />
+      <item itemvalue="Application.HelloApplication" />
       <item itemvalue="Application.GeneratePDF" />
     </list>
     <recent_temporary>
@@ -234,6 +249,9 @@
         <item itemvalue="Application.Login" />
         <item itemvalue="Application.ManagerView" />
         <item itemvalue="Application.DatabaseConnection" />
+        <item itemvalue="Application.UserDAO" />
+        <item itemvalue="Application.Login" />
+        <item itemvalue="Application.HelloApplication" />
       </list>
     </recent_temporary>
   </component>
