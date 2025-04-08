@@ -12,6 +12,7 @@ module org.example.apartmentmanagement {
     requires layout;
     requires com.google.zxing;
     requires io;
+    requires barcodes;
 
     opens org.example.apartmentmanagement to javafx.fxml;
     exports org.example.apartmentmanagement;

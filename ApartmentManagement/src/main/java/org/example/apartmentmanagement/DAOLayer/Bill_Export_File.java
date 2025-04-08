@@ -1,6 +1,7 @@
 package org.example.apartmentmanagement.DAOLayer;
 
 
+import com.itextpdf.barcodes.Barcode128;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFont;
@@ -15,6 +16,7 @@ import com.itextpdf.layout.element.*;
 
 import java.io.FileOutputStream;
 
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.properties.VerticalAlignment;
@@ -123,6 +125,18 @@ public class Bill_Export_File {
         // Thêm bảng vào tài liệu
         doc.add(table);
 
+        Barcode128 barcode = new Barcode128(pdf);
+        barcode.setCode("MaHoaDon");
+        barcode.setCodeType(Barcode128.CODE128);
+        Image barcodeImage = new Image(barcode.createFormXObject(pdf));
+
+        barcodeImage.setHorizontalAlignment(HorizontalAlignment.CENTER).setMarginTop(20);
+        doc.add(barcodeImage);
+
+//        Paragraph maHoaDonText = new Paragraph("MaHoaDon")
+//                .setTextAlignment(TextAlignment.CENTER)
+//                .setMarginTop(5);
+//        doc.add(maHoaDonText);
 
 
         // nét đứt
@@ -137,72 +151,7 @@ public class Bill_Export_File {
 
 
 
-//        doc.add(new Paragraph("4/1 Nam Cao, Tân Phú, Thủ Đức, TP.HCM"));
-//        doc.add(new Paragraph("SĐT: 0909 999 999"));
-//        doc.add(new Paragraph("\nMã Hóa Đơn: HD001"));
-//        doc.add(new Paragraph("Ngày: 05/04/2025\n"));
-//
-//        // Bảng sản phẩm
-//        Table table = new Table(UnitValue.createPercentArray(new float[]{4, 1, 2, 2}))
-//                .useAllAvailableWidth();
-//
-//        table.addHeaderCell("Tên SP");
-//        table.addHeaderCell("SL");
-//        table.addHeaderCell("Đơn giá");
-//        table.addHeaderCell("Thành tiền");
-//
-//        // Dữ liệu mẫu
-//        table.addCell("Gạo ST25");
-//        table.addCell("2");
-//        table.addCell("18000");
-//        table.addCell("36000");
-//
-//        table.addCell("Nước suối");
-//        table.addCell("5");
-//        table.addCell("4000");
-//        table.addCell("20000");
-//
-//        table.addCell("Dầu ăn");
-//        table.addCell("1");
-//        table.addCell("40000");
-//        table.addCell("40000");
-//
-//        doc.add(table);
-//
-//        doc.add(new Paragraph("\nTổng cộng: 96.000 đ").setBold().setTextAlignment(TextAlignment.RIGHT));
-//
-//        // Tạo QR code (giả sử chứa nội dung thanh toán)
-//        Image qrImage = new Image(ImageDataFactory.create(generateQRCodeImage("Thanh toán HD001 - 96000")));
-//        qrImage.setWidth(100);
-//        qrImage.setMarginTop(10);
-//        doc.add(qrImage);
-//
-//        doc.add(new Paragraph("\nCảm ơn quý khách. Hẹn gặp lại!").setTextAlignment(TextAlignment.CENTER));
-//
-//        doc.close();
-//        System.out.println("✔ PDF đã tạo: " + dest);
-//    }
 
-        // Hàm tạo ảnh QR code (dưới dạng byte[])
-//    private static byte[] generateQRCodeImage(String text) throws WriterException {
-//        int size = 150;
-//        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-//        BitMatrix matrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, size, size);
-//
-//        BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
-//        for (int x = 0; x < size; x++) {
-//            for (int y = 0; y < size; y++) {
-//                image.setRGB(x, y, matrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
-//            }
-//        }
-//
-//        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-//            ImageIO.write(image, "png", baos);
-//            return baos.toByteArray();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
     }
 }
 
