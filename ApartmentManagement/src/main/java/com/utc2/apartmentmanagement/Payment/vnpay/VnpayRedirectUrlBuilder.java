@@ -1,8 +1,8 @@
-package org.example.apartmentmanagement.Payment.vnpay;
+package com.utc2.apartmentmanagement.Payment.vnpay;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.example.apartmentmanagement.Vnpay.config.Config;
+import com.utc2.apartmentmanagement.Vnpay.config.Config;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

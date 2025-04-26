@@ -11,9 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import org.example.apartmentmanagement.DAO.BillItemDAO;
-import org.example.apartmentmanagement.Model.BillItems;
-import org.example.apartmentmanagement.Model.Bills;
+import com.utc2.apartmentmanagement.DAO.BillItemDAO;
+import com.utc2.apartmentmanagement.Model.BillItems;
+import com.utc2.apartmentmanagement.Model.Bills;
 
 import java.net.URL;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package org.example.apartmentmanagement.Payment.vnpay;
+package com.utc2.apartmentmanagement.Payment.vnpay;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

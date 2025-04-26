@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.example.apartmentmanagement.Payment.vnpay;
+package com.utc2.apartmentmanagement.Payment.vnpay;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.example.apartmentmanagement.Vnpay.config.Config;
+import com.utc2.apartmentmanagement.Vnpay.config.Config;
 
 import java.io.IOException;import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

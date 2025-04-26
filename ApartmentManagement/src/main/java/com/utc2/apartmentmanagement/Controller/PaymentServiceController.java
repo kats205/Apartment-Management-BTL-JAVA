@@ -9,10 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import org.example.apartmentmanagement.DAO.DatabaseConnection;
-import org.example.apartmentmanagement.Model.BillItems;
-import org.example.apartmentmanagement.Model.Bills;
-import org.example.apartmentmanagement.Model.Payment;
+import com.utc2.apartmentmanagement.DAO.DatabaseConnection;
+import com.utc2.apartmentmanagement.Model.BillItems;
+import com.utc2.apartmentmanagement.Model.Bills;
+import com.utc2.apartmentmanagement.Model.Payment;
 
 import java.net.URL;
 import java.sql.Connection;

@@ -1,5 +1,4 @@
-
-package org.example.apartmentmanagement.Vnpay.config;
+package com.utc2.apartmentmanagement.Vnpay.config;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

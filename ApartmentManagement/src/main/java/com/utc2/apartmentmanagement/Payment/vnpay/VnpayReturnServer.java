@@ -1,4 +1,4 @@
-package org.example.apartmentmanagement.Payment.vnpay;
+package com.utc2.apartmentmanagement.Payment.vnpay;
 
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpExchange;

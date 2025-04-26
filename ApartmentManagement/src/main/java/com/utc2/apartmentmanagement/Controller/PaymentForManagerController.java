@@ -16,11 +16,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.example.apartmentmanagement.DAO.ApartmentDAO;
-import org.example.apartmentmanagement.DAO.BillsDAO;
-import org.example.apartmentmanagement.Model.Bills;
-import org.example.apartmentmanagement.Views.BillItemsView;
-import org.example.apartmentmanagement.Views.DashBoardView;
+import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
+import com.utc2.apartmentmanagement.DAO.BillsDAO;
+import com.utc2.apartmentmanagement.Model.Bills;
+import com.utc2.apartmentmanagement.Views.BillItemsView;
+import com.utc2.apartmentmanagement.Views.DashBoardView;
 
 import java.net.URL;
 import java.time.LocalDate;

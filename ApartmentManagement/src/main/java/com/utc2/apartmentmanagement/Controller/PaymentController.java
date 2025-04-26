@@ -4,10 +4,10 @@ import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.web.WebView;
-import org.example.apartmentmanagement.DAO.PaymentDAO;
-import org.example.apartmentmanagement.Model.Payment;
-import org.example.apartmentmanagement.Payment.vnpay.VnpayRedirectUrlBuilder;
-import org.example.apartmentmanagement.Payment.vnpay.VnpayReturnServer;
+import com.utc2.apartmentmanagement.DAO.PaymentDAO;
+import com.utc2.apartmentmanagement.Model.Payment;
+import com.utc2.apartmentmanagement.Payment.vnpay.VnpayRedirectUrlBuilder;
+import com.utc2.apartmentmanagement.Payment.vnpay.VnpayReturnServer;
 
 import java.io.IOException;
 import java.net.URI;
