@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="710.0" prefWidth="1062.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.BillItemsController">
+
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Hóa đơn:" />
+                <ComboBox fx:id="billSelectionComboBox" prefWidth="200" />
+                <Button onAction="#loadBillDetails" text="Xem chi tiết" />
+            </HBox>
+
+            <GridPane hgap="10" vgap="10">
+                <padding>
+                    <Insets bottom="10" left="0" right="0" top="10" />
+                </padding>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+
+                <Label text="Mã hóa đơn:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label fx:id="billIdLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Label text="Căn hộ:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Label fx:id="apartmentIdLabel" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                <Label text="Ngày lập:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label fx:id="billingDateLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label text="Hạn thanh toán:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Label fx:id="dueDateLabel" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            </GridPane>
+            <Separator />
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="0" />
+            </padding>
+            <Label text="Chi tiết các khoản phí:">
+                <font>
+                    <Font name="System Bold" size="14.0" />
+                </font>
+            </Label>
+            <TableView fx:id="billItemsTableView" onMouseClicked="#handleTableView" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="itemIdCol" maxWidth="4920.0" minWidth="20.0" prefWidth="136.79999101161957" text="Mã chi tiết hóa đơn " />
+                    <TableColumn fx:id="billIdCol" minWidth="0.0" prefWidth="149.6000518798828" text="Mã hóa đơn " />
+                    <TableColumn fx:id="billTypeCol" prefWidth="95.99993896484375" text="Loại hóa đơn " />
+                    <TableColumn fx:id="descriptionCol" minWidth="0.0" prefWidth="97.599853515625" text="Mô tả " />
+                    <TableColumn fx:id="amountCol" prefWidth="127.99990844726562" text="Đơn giá" />
+               <TableColumn fx:id="quantityCol" prefWidth="75.0" text="Số lượng " />
+               <TableColumn fx:id="totalCol" prefWidth="75.0" text="Thành tiền " />
+               <TableColumn fx:id="createDateCol" prefWidth="143.20001220703125" text="Ngày tạo " />
+               <TableColumn fx:id="updateDateCol" prefWidth="130.39996337890625" text="Ngày cập " />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox spacing="10">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <HBox alignment="CENTER_RIGHT" spacing="20">
+                <Label text="Tổng cộng:" />
+                <Label fx:id="totalBillAmountLabel" text="0 VNĐ">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="20">
+                <Label text="Phí trễ hạn:" />
+                <Label fx:id="totalLateFeeLabel" text="0 VNĐ">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="20">
+                <Label text="Thành tiền:" />
+                <Label fx:id="finalAmountLabel" text="0 VNĐ">
+                    <font>
+                        <Font name="System Bold" size="16.0" />
+                    </font>
+                </Label>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>

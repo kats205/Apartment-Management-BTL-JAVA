@@ -5,9 +5,410 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afe12fbc-94fb-4d02-be89-c1c179d457e9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/email.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/styles/register.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/register.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/BillItemsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/DashboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/ManagerDashboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/PaymentForManagerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/PaymentServiceController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/RegisterController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Payment/vnpay/VnpayHashUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Payment/vnpay/VnpayRedirectUrlBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Payment/vnpay/VnpayReturnServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Payment/vnpay/ajaxServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Payment/vnpay/vnpayQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Payment/vnpay/vnpayRefund.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Test/TestSQL.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Utils/ScannerUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Views/login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Views/register.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Vnpay/config/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Login_register/confirm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Login_register/fullname.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Login_register/phonenumber.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/ApartmentView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/BillItemsView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/ButtonPayment.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/ButtonView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/PaymentForManager.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/PaymentService.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/PaymentView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/ReportView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/styles/Dashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/styles/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/qr_code.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/BillItemsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/DashboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/PaymentForManagerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/PaymentServiceController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/RegisterController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Payment/vnpay/VnpayHashUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Payment/vnpay/VnpayRedirectUrlBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Payment/vnpay/VnpayReturnServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Payment/vnpay/ajaxServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Payment/vnpay/vnpayQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Payment/vnpay/vnpayRefund.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Service/QRCodeGenerate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Service/VNPayService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/BillItemsView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/PaymentForManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/PaymentServiceView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/qrcode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Vnpay/config/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Assets/confirm.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Assets/email.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Assets/fullname.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Assets/phonenumber.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/BillItemsView.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/ButtonPayment.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/PaymentForManager.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/PaymentService.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/qrCode/qrCode.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/vnpay_return.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/DAOLayer/Connector.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/Stable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/controllers/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/controllers/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/controllers/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/models/Manager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/models/Staff.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/models/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/utils/ScannerUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/views/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/views/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/views/login.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/views/login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/views/register.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/org/example/apartmentmanagement/views/register.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/add.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/add.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/add1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/add1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/dash.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/dash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/dash1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/dash1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/data.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/data.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/data1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/data1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/exit.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/exit.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/menu.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/menu.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/menu1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/menu1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/report.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/report.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/Dashboard/report1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Dashboard/report1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/apartment.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Login_register/apartment.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/email.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Login_register/email.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/lock.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Login_register/lock.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/assets/user.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/assets/Login_register/user.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/fxml/DashBoard-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/DashBoard-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/fxml/login-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/login-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/fxml/register-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/register-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/styles/Dashboard.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/styles/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles/register.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/org/example/apartmentmanagement/styles/register.css" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/styles/register.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apartment.mdj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/FormRegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/FormRegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Controller/ResidentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Controller/ResidentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/ApartmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/ApartmentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/BillItemDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/BillItemDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/BillsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/BillsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/BuildingDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/BuildingDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/DatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/MaintenanceRequestDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/MaintenanceRequestDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/ManagerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/ManagerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/NotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/NotificationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/NotificationRecipientDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/NotificationRecipientDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/PaymentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/PaymentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/ReportDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/ReportDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/ResidentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/ResidentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/RoleDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/RoleDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/ServiceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/ServiceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/ServiceRegistrationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/ServiceRegistrationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/StaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/StaffDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/DAO/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/DAO/UserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Apartment.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Apartment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/BillItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/BillItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Bills.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Bills.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/MaintenanceRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/MaintenanceRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/NotificationRecipient.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/NotificationRecipient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Payment.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Payment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Report.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Report.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Resident.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Resident.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/ServiceRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/ServiceRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/Staff.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IApartmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IApartmentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IBillDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IBillDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IBillItemDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IBillItemDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IBuildingDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IBuildingDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IMaintenanceRequestDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IMaintenanceRequestDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IManagerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IManagerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/INotificationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/INotificationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/INotificationRecipientDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/INotificationRecipientDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IPaymentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IPaymentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IReportDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IReportDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IResidentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IResidentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IRoleDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IRoleDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IServiceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IServiceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IServiceRegistrationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IServiceRegistrationDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IStaffDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IStaffDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Repository/IUserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Repository/IUserDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/UML/QLCC.png" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/UML/QLCC.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/UML/QLCC.puml" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/UML/QLCC.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/UML/classDiagram-QLCC.mdj" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/UML/classDiagram-QLCC.mdj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/AlertBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Utils/AlertBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/DateUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Utils/DateUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/GeneratePDF.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Utils/GeneratePDF.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/StringUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Utils/StringUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/TableUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Utils/TableUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/TryCatchUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Utils/TryCatchUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Utils/passwordEncryption.java" beforeDir="false" afterPath="$PROJECT_DIR$/ApartmentManagement/src/main/java/com/utc2/apartmentmanagement/Utils/passwordEncryption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/DashBoardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/DashBoardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/ManagerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/ButtonPayment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/Views/register.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/controllers/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/controllers/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/controllers/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/controllers/RegisterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-console-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-console-l1-2-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-datetime-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-debug-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-errorhandling-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-file-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-file-l1-2-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-file-l2-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-handle-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-heap-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-interlocked-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-libraryloader-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-localization-l1-2-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-memory-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-namedpipe-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-processenvironment-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-processthreads-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-processthreads-l1-1-1.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-profile-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-rtlsupport-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-string-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-synch-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-synch-l1-2-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-sysinfo-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-timezone-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-core-util-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-conio-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-convert-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-environment-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-filesystem-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-heap-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-locale-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-math-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-multibyte-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-private-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-process-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-runtime-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-stdio-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-string-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-time-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/api-ms-win-crt-utility-l1-1-0.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/decora_sse.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/fxplugins.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/glass.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/glib-lite.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/gstreamer-lite.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/javafx_font.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/javafx_iio.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/jfxmedia.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/jfxwebkit.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/msvcp140.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/msvcp140_1.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/msvcp140_2.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/prism_common.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/prism_d3d.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/prism_sw.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/ucrtbase.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/vcruntime140.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/bin/vcruntime140_1.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.base/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.base/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.base/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.controls/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.controls/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.controls/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.fxml/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.fxml/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.fxml/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.graphics/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.graphics/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.graphics/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.graphics/jpeg_fx.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.graphics/mesa3d.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.graphics/pipewire.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.media/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.media/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.media/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.media/directshow.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.media/glib.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.media/gstreamer.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.media/libffi.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.swing/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.swing/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.swing/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.web/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.web/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.web/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.web/icu_web.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.web/libxml2.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.web/libxslt.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/javafx.web/webkit.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jdk.jsobject/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jdk.jsobject/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jdk.jsobject/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jfx.incubator.input/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jfx.incubator.input/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jfx.incubator.input/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jfx.incubator.richtext/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jfx.incubator.richtext/ASSEMBLY_EXCEPTION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jfx.incubator.richtext/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/legal/jfx.incubator.richtext/unicode-fx.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx-swt.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx.base.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx.controls.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx.fxml.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx.graphics.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx.media.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx.swing.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/javafx.web.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/jdk.jsobject.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/jfx.incubator.input.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/jfx.incubator.richtext.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/javafx-sdk-24/lib/src.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre11-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre11-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre11.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre8-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre8-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/apartmentmanagement/libs/mssql-jdbc-12.8.1.jre8.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Assets/apartment (1).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Assets/apartment.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Assets/apartment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Assets/lock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Assets/user.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Database.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/th (2).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/times.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/timesbd.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/timesbi.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/timesi.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/add.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/add1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/dash.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/dash1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/data.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/data1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/exit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/menu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/menu1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/report.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/Dashboard/report1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/apartment (1).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/apartment.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/apartment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/lock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Assets/user.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Database.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/DashBoard-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/FormRegister.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/ManagerView.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/login-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/login.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/fxml/register-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/FormRegisterController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Controller/ResidentController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/ApartmentDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/BillItemDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/BillsDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/BuildingDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/DatabaseConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/MaintenanceRequestDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/ManagerDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/NotificationDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/NotificationRecipientDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/PaymentDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/ReportDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/ResidentDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/RoleDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/ServiceDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/ServiceRegistrationDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/StaffDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/DAO/UserDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Apartment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/BillItems.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Bills.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Building.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/MaintenanceRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Manager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Notification.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/NotificationRecipient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Payment.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Report.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Resident.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Role.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Service.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/ServiceRegistration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/Staff.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Model/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IApartmentDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IBillDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IBillItemDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IBuildingDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IMaintenanceRequestDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IManagerDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/INotificationDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/INotificationRecipientDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IPaymentDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IReportDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IResidentDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IRoleDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IServiceDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IServiceRegistrationDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IStaffDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Repository/IUserDAO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/AlertBox.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/DateUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/GeneratePDF.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/StringUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TableUtils$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TableUtils$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TableUtils$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TableUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/TryCatchUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Utils/passwordEncryption.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/ApartmentView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/DashBoardView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/FormRegisterView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/LoginView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/ManagerView.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/Views/login.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/controllers/DashboardController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/controllers/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/apartmentmanagement/controllers/RegisterController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/styles/Dashboard.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/styles/login.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/th (2).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/times.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/timesbd.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/timesbi.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/timesi.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,43 +457,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ApartmentDAO.executor": "Run",
-    "Application.DatabaseConnection.executor": "Run",
-    "Application.FormRegisterController.executor": "Run",
-    "Application.FormRegisterView.executor": "Run",
-    "Application.GeneratePDF.executor": "Run",
-    "Application.HelloApplication.executor": "Run",
-    "Application.Login.executor": "Run",
-    "Application.LoginView.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.ManagerDashboardController.executor": "Run",
-    "Application.ManagerView.executor": "Run",
-    "Application.ResidentDAO.executor": "Run",
-    "Application.ResidentForm.executor": "Run",
-    "Application.StaffDAO.executor": "Run",
-    "Application.UserDAO.executor": "Run",
-    "Application.login.executor": "Run",
-    "Application.org.example.apartmentmanagement.Views.Main.executor": "Run",
-    "Application.passwordEncryption.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging trungle",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "C:/Users/lerua/IdeaProjects/QLCC/src/main/java",
-    "last_opened_file_path": "C:/Users/lerua/IdeaProjects/Apartment-Management-BTL-JAVA/src/main/resources/fxml",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ApartmentDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DatabaseConnection.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FormRegisterController.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FormRegisterView.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GeneratePDF.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login.executor&quot;: &quot;Run&quot;,
+    &quot;Application.LoginView.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ManagerDashboardController.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ManagerView.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ResidentDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ResidentForm.executor&quot;: &quot;Run&quot;,
+    &quot;Application.StaffDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UserDAO.executor&quot;: &quot;Run&quot;,
+    &quot;Application.login.executor&quot;: &quot;Run&quot;,
+    &quot;Application.org.example.apartmentmanagement.Views.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.passwordEncryption.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging trungle&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/lerua/IdeaProjects/QLCC/src/main/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/lerua/IdeaProjects/Apartment-Management-BTL-JAVA/src/main/resources/fxml&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\lerua\IdeaProjects\Apartment-Management-BTL-JAVA\src\main\resources\fxml" />

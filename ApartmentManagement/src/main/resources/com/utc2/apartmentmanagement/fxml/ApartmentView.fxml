@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="664.0" prefWidth="1306.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.ApartmentViewController">
+    <children>
+        <Label alignment="CENTER" layoutX="539.0" layoutY="27.0" prefHeight="35.0" prefWidth="282.0" style="-fx-font-weight: bold;" text="DANH SÁCH CĂN HỘ" textAlignment="CENTER">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER_LEFT" layoutX="79.0" layoutY="87.0" prefHeight="40.0" prefWidth="864.0" spacing="15.0">
+            <children>
+                <Label text="Tòa nhà:">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="buildingComboBox" prefHeight="30.0" prefWidth="220.0" promptText="Chọn tòa nhà" stylesheets="@../styles/Dashboard.css" />
+                <Label text="Trạng thái:">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="statusComboBox" prefHeight="30.0" prefWidth="220.0" promptText="Chọn trạng thái" stylesheets="@../styles/Dashboard.css" />
+                <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Tìm kiếm" />
+                <Button fx:id="refreshButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Làm mới" />
+            </children>
+        </HBox>
+        <Button fx:id="addApartmentButton" layoutX="1151.0" layoutY="93.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" styleClass="create-button" stylesheets="@../styles/Dashboard.css" text="Thêm căn hộ mới" />
+        <TableView fx:id="apartmentTable" layoutX="79.0" layoutY="143.0" prefHeight="430.0" prefWidth="1207.0" stylesheets="@../styles/Dashboard.css">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="100.0" text="Mã căn hộ" />
+                <TableColumn fx:id="buildingColumn" prefWidth="120.0" text="Tòa nhà" />
+                <TableColumn fx:id="floorColumn" prefWidth="100.0" text="Tầng" />
+                <TableColumn fx:id="areaColumn" prefWidth="120.0" text="Diện tích (m²)" />
+                <TableColumn fx:id="bedroomsColumn" prefWidth="120.0" text="Số phòng ngủ" />
+                <TableColumn fx:id="bathroomsColumn" prefWidth="120.0" text="Số phòng tắm" />
+                <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Giá thuê (VNĐ)" />
+                <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Trạng thái" />
+                <TableColumn fx:id="actionsColumn" prefWidth="120.0" text="Thao tác" />
+            </columns>
+        </TableView>
+        <Label fx:id="noContentLabel" alignment="CENTER" layoutY="358.0" prefHeight="30.0" prefWidth="1317.0" text="Không có dữ liệu" textFill="#757575" visible="true" />
+        <Label layoutX="84.0" layoutY="600.0" text="Tổng số căn hộ:">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <Label fx:id="apartmentCountLabel" layoutX="209.0" layoutY="600.0" text="0">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER_RIGHT" layoutX="932.0" layoutY="585.0" prefHeight="40.0" prefWidth="355.0" spacing="10.0">
+            <children>
+                <Button fx:id="detailButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xem chi tiết" />
+                <Button fx:id="editButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Chỉnh sửa" />
+                <Button fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
+            </children>
+        </HBox>
+        <Button fx:id="closeButton" layoutX="1185.0" layoutY="634.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
+    </children>
+</AnchorPane>

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apartmentmanagement.Controller.PaymentServiceController">
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="15" right="15" bottom="15" left="15"/>
+            </padding>
+            <HBox alignment="CENTER">
+                <Label text="HỆ THỐNG THANH TOÁN HÓA ĐƠN">
+                    <font>
+                        <Font name="System Bold" size="20.0"/>
+                    </font>
+                </Label>
+            </HBox>
+            <Separator />
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <!-- Tab danh sách hóa đơn -->
+                <Tab text="Danh sách hóa đơn">
+                    <VBox spacing="10">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Label text="Căn hộ:"/>
+                            <ComboBox fx:id="apartmentComboBox" prefWidth="150"/>
+                            <Label text="Trạng thái:"/>
+                            <ComboBox fx:id="statusComboBox" prefWidth="120"/>
+                            <Button text="Tìm kiếm" onAction="#searchBills"/>
+                            <Button text="Làm mới" onAction="#refreshBills"/>
+                            <Pane HBox.hgrow="ALWAYS" />
+                            <Button text="Tạo hóa đơn mới" onAction="#createNewBill"/>
+                        </HBox>
+
+                        <TableView fx:id="billsTableView" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="billIdColumn" text="Mã HĐ" prefWidth="80"/>
+                                <TableColumn fx:id="apartmentIdColumn" text="Căn hộ" prefWidth="100"/>
+                                <TableColumn fx:id="billingDateColumn" text="Ngày lập" prefWidth="100"/>
+                                <TableColumn fx:id="dueDateColumn" text="Hạn thanh toán" prefWidth="120"/>
+                                <TableColumn fx:id="totalAmountColumn" text="Tổng tiền" prefWidth="120"/>
+                                <TableColumn fx:id="lateFeeColumn" text="Phí trễ hạn" prefWidth="120"/>
+                                <TableColumn fx:id="statusColumn" text="Trạng thái" prefWidth="100"/>
+                                <TableColumn fx:id="actionColumn" text="Thao tác" prefWidth="150"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </Tab>
+
+                <!-- Tab chi tiết hóa đơn -->
+                <Tab text="Chi tiết hóa đơn">
+                    <BorderPane>
+                        <top>
+                            <VBox spacing="10">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Label text="Hóa đơn:"/>
+                                    <ComboBox fx:id="billSelectionComboBox" prefWidth="200"/>
+                                    <Button text="Xem chi tiết" onAction="#loadBillDetails"/>
+                                </HBox>
+
+                                <GridPane hgap="10" vgap="10">
+                                    <padding>
+                                        <Insets top="10" right="0" bottom="10" left="0"/>
+                                    </padding>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <Label text="Mã hóa đơn:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                    <Label fx:id="billIdLabel" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                                    <Label text="Căn hộ:" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                                    <Label fx:id="apartmentIdLabel" GridPane.rowIndex="0" GridPane.columnIndex="3" />
+                                    <Label text="Ngày lập:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                    <Label fx:id="billingDateLabel" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                                    <Label text="Hạn thanh toán:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                                    <Label fx:id="dueDateLabel" GridPane.rowIndex="1" GridPane.columnIndex="3" />
+                                </GridPane>
+                                <Separator />
+                            </VBox>
+                        </top>
+
+                        <center>
+                            <VBox spacing="10">
+                                <padding>
+                                    <Insets top="0" right="10" bottom="10" left="10"/>
+                                </padding>
+                                <Label text="Chi tiết các khoản phí:">
+                                    <font>
+                                        <Font name="System Bold" size="14.0"/>
+                                    </font>
+                                </Label>
+                                <TableView fx:id="billItemsTableView" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="itemTypeColumn" text="Loại phí" prefWidth="150"/>
+                                        <TableColumn fx:id="descriptionColumn" text="Mô tả" prefWidth="200"/>
+                                        <TableColumn fx:id="amountColumn" text="Đơn giá" prefWidth="120"/>
+                                        <TableColumn fx:id="quantityColumn" text="Số lượng" prefWidth="100"/>
+                                        <TableColumn fx:id="totalColumn" text="Thành tiền" prefWidth="120"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </center>
+
+                        <bottom>
+                            <VBox spacing="10">
+                                <padding>
+                                    <Insets top="10" right="10" bottom="10" left="10"/>
+                                </padding>
+                                <HBox alignment="CENTER_RIGHT" spacing="20">
+                                    <Label text="Tổng cộng:"/>
+                                    <Label fx:id="totalBillAmountLabel" text="0 VNĐ">
+                                        <font>
+                                            <Font name="System Bold" size="14.0"/>
+                                        </font>
+                                    </Label>
+                                </HBox>
+                                <HBox alignment="CENTER_RIGHT" spacing="20">
+                                    <Label text="Phí trễ hạn:"/>
+                                    <Label fx:id="totalLateFeeLabel" text="0 VNĐ">
+                                        <font>
+                                            <Font name="System Bold" size="14.0"/>
+                                        </font>
+                                    </Label>
+                                </HBox>
+                                <HBox alignment="CENTER_RIGHT" spacing="20">
+                                    <Label text="Thành tiền:"/>
+                                    <Label fx:id="finalAmountLabel" text="0 VNĐ">
+                                        <font>
+                                            <Font name="System Bold" size="16.0"/>
+                                        </font>
+                                    </Label>
+                                </HBox>
+                            </VBox>
+                        </bottom>
+                    </BorderPane>
+                </Tab>
+
+                <!-- Tab thanh toán -->
+                <Tab text="Thanh toán">
+                    <VBox spacing="15">
+                        <padding>
+                            <Insets top="15" right="15" bottom="15" left="15"/>
+                        </padding>
+
+                        <GridPane hgap="15" vgap="15" alignment="CENTER">
+                            <padding>
+                                <Insets top="20" right="20" bottom="20" left="20"/>
+                            </padding>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+
+                            <Label text="Chọn hóa đơn:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                            <ComboBox fx:id="paymentBillComboBox" prefWidth="300" GridPane.rowIndex="0" GridPane.columnIndex="1" onAction="#loadSelectedBillForPayment" />
+
+                            <Label text="Số tiền cần thanh toán:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                            <Label fx:id="amountDueLabel" text="0 VNĐ" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                                <font>
+                                    <Font name="System Bold" size="14.0"/>
+                                </font>
+                            </Label>
+
+                            <Label text="Số tiền thanh toán:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                            <TextField fx:id="paymentAmountField" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                            <Label text="Phương thức thanh toán:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                            <ComboBox fx:id="paymentMethodComboBox" prefWidth="300" GridPane.rowIndex="3" GridPane.columnIndex="1">
+                                <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                        <String fx:value="Tiền mặt" />
+                                        <String fx:value="Chuyển khoản" />
+                                        <String fx:value="Thẻ tín dụng" />
+                                        <String fx:value="Ví điện tử" />
+                                    </FXCollections>
+                                </items>
+                            </ComboBox>
+
+                            <Label text="Mã giao dịch:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                            <TextField fx:id="transactionIdField" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                            <HBox alignment="CENTER_RIGHT" spacing="15" GridPane.rowIndex="5" GridPane.columnIndex="1">
+                                <Button text="Hủy" onAction="#cancelPayment" prefWidth="100" />
+                                <Button text="Xác nhận thanh toán" onAction="#processPayment" prefWidth="180" styleClass="primary-button" />
+                            </HBox>
+                        </GridPane>
+
+                        <Separator />
+
+                        <Label text="Lịch sử thanh toán của hóa đơn:" >
+                            <font>
+                                <Font name="System Bold" size="14.0"/>
+                            </font>
+                        </Label>
+
+                        <TableView fx:id="paymentHistoryTableView" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="paymentIdColumn" text="Mã thanh toán" prefWidth="100"/>
+                                <TableColumn fx:id="paymentAmountColumn" text="Số tiền" prefWidth="120"/>
+                                <TableColumn fx:id="paymentDateColumn" text="Ngày thanh toán" prefWidth="150"/>
+                                <TableColumn fx:id="paymentMethodColumn" text="Phương thức" prefWidth="150"/>
+                                <TableColumn fx:id="transactionIdColumn" text="Mã giao dịch" prefWidth="150"/>
+                                <TableColumn fx:id="paymentStatusColumn" text="Trạng thái" prefWidth="100"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="10" right="15" bottom="15" left="15"/>
+            </padding>
+            <Label fx:id="statusLabel" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button text="Thoát" onAction="#exitApplication" prefWidth="100" />
+        </HBox>
+    </bottom>
+</BorderPane>

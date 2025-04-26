@@ -1,0 +1,23 @@
+.button{
+    -fx-background-color: #6996ee;
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+    -fx-border-color: black;
+    -fx-border-radius: 15px;
+}
+.button:pressed{
+    -fx-background-color: #146886;
+    -fx-text-fill: white;
+}
+.button:hover{
+    -fx-background-color: #146886;
+    -fx-text-fill: white;
+}
+
+.textField{
+    -fx-background-color: #e3e3e3;
+    -fx-text-fill: black;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: black;
+}
