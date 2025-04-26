@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="620.0" prefWidth="1245.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.apartmentmanagement.Controller.PaymentForManagerController">
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets bottom="15" left="15" right="15" top="15" />
+            </padding>
+            <HBox alignment="CENTER">
+                <Label text="DANH SÁCH HÓA ĐƠN">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+            </HBox>
+            <Separator />
+        </VBox>
+    </top>
+
+    <center>
+        <VBox prefHeight="494.0" prefWidth="1290.0" spacing="10">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Căn hộ:" />
+                <ComboBox fx:id="apartmentComboBox" prefWidth="150" />
+                <Label text="Trạng thái:" />
+                <ComboBox fx:id="statusComboBox" prefWidth="120" />
+                <Button onAction="#searchBills" text="Tìm kiếm" />
+                <Button onAction="#refreshBills" text="Làm mới" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button onAction="#createNewBill" text="Tạo hóa đơn mới" />
+            </HBox>
+
+            <TableView fx:id="billsTableView" onMouseClicked="#handleTableView" prefHeight="401.0" prefWidth="1223.0" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="billIdColumn" prefWidth="80" text="Mã HĐ" />
+                    <TableColumn fx:id="apartmentIdColumn" prefWidth="118.13333892822266" text="Căn hộ" />
+                    <TableColumn fx:id="billingDateColumn" prefWidth="133.86668395996094" text="Ngày thanh toán" />
+                    <TableColumn fx:id="dueDateColumn" prefWidth="122.933349609375" text="Hạn thanh toán" />
+                    <TableColumn fx:id="totalAmountColumn" prefWidth="98.93331909179688" text="Tổng tiền" />
+                    <TableColumn fx:id="lateFeeColumn" prefWidth="168.2667236328125" text="Phí trễ hạn" />
+                    <TableColumn fx:id="statusColumn" prefWidth="216.0" text="Trạng thái" />
+               <TableColumn fx:id="createDateCol" prefWidth="151.4666748046875" text="Ngày tạo" />
+               <TableColumn fx:id="updateDateCol" prefWidth="122.1334228515625" text="Ngày cập nhật" />
+                </columns>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label text="Tổng số hóa đơn:" />
+                <Label fx:id="totalBillsLabel" text="0" />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button disable="${billsTableView.selectionModel.empty}" onAction="#viewSelectedBillDetails" text="Xem chi tiết" />
+                <Button disable="${billsTableView.selectionModel.empty}" onAction="#paySelectedBill" text="Thanh toán" />
+                <Button onAction="#exportBillsReport" text="Xuất báo cáo" />
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets bottom="15" left="15" right="15" top="10" />
+            </padding>
+            <Label fx:id="statusLabel" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button onAction="#closeWindow" prefWidth="100" text="Đóng" />
+        </HBox>
+    </bottom>
+</BorderPane>
