@@ -1,0 +1,55 @@
+.button{
+    -fx-background-color: #6996ee;
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+    -fx-border-color: black;
+    -fx-border-radius: 15px;
+}
+
+.button:pressed{
+    -fx-background-color: #146886;
+    -fx-text-fill: white;
+}
+
+.button:hover{
+    -fx-background-color: #146886;
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-background-color: #6996ee;
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+    -fx-border-color: black;
+    -fx-border-radius: 15px;
+}
+
+.button:pressed {
+    -fx-background-color: #146886;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #146886;
+    -fx-text-fill: white;
+}
+
+/* Override general button styles for the specific forgotPassword button */
+#forgotPassword {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: black;
+    -fx-underline: false;
+}
+
+#forgotPassword:hover {
+    -fx-underline: true;
+    -fx-text-fill: #3a75e0;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+#forgotPassword:pressed {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
