@@ -8,17 +8,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ApartmentViewController implements Initializable {
@@ -118,35 +116,62 @@ public class ApartmentViewController implements Initializable {
     private void getValueCol(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
         idColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        idColumn.setPrefWidth(150);
+        idColumn.setPrefWidth(140);
 
         buildingColumn.setCellValueFactory(new PropertyValueFactory<>("buildingID"));
         buildingColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        buildingColumn.setPrefWidth(150);
+        buildingColumn.setPrefWidth(100);
 
         floorColumn.setCellValueFactory(new PropertyValueFactory<>("floors"));
         floorColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        floorColumn.setPrefWidth(150);
+        floorColumn.setPrefWidth(100);
 
         areaColumn.setCellValueFactory(new PropertyValueFactory<>("area"));
         areaColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        areaColumn.setPrefWidth(150);
+        areaColumn.setPrefWidth(140);
+
+        areaColumn.setCellFactory(column -> new TableCell<Apartment, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f", item)); // giữ lại 2 số thập phân
+                }
+            }
+        });
 
         bedroomsColumn.setCellValueFactory(new PropertyValueFactory<>("bedRoom"));
         bedroomsColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        bedroomsColumn.setPrefWidth(150);
+        bedroomsColumn.setPrefWidth(140);
 
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("priceApartment"));
         priceColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
         priceColumn.setPrefWidth(150);
 
+        priceColumn.setCellFactory(column -> new TableCell<Apartment, Double>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+                    formatter.setMaximumFractionDigits(2); // tối đa 2 số thập phân
+                    formatter.setMinimumFractionDigits(2); // luôn luôn có 2 số thập phân
+                    setText(formatter.format(item)); // format dạng 1,510,000,000
+                }
+            }
+        });
+
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         statusColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        statusColumn.setPrefWidth(150);
+        statusColumn.setPrefWidth(140);
 
         maintenanceFeeCol.setCellValueFactory(new PropertyValueFactory<>("maintanceFee"));
         maintenanceFeeCol.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        maintenanceFeeCol.setPrefWidth(150);
+        maintenanceFeeCol.setPrefWidth(120);
     }
     private void loadDataApartment(){
         getValueCol();
