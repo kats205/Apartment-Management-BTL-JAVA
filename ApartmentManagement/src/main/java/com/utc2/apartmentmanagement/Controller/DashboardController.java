@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 import lombok.Getter;
 
@@ -41,17 +42,20 @@ public class DashboardController implements Initializable {
 
     private boolean isSidebarVisible = true;
 
+    @FXML
+    private BorderPane mainBorderPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         setupMenuToggle();
+        mainBorderPane.setBottom(null); // Hoặc sử dụng Pane rỗng
+        mainBorderPane.setRight(null);  // Hoặc sử dụng Pane rỗng
 
         Exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
 
-        slider.setTranslateX(-176);
+        slider.setTranslateX(-150);
 
         Menu.setOnMouseClicked(event -> {
             TranslateTransition slide = new TranslateTransition();
@@ -61,7 +65,7 @@ public class DashboardController implements Initializable {
             slide.setToX(0);
             slide.play();
 
-            slider.setTranslateX(-176);
+            slider.setTranslateX(-150);
 
             slide.setOnFinished((ActionEvent e)-> {
                 Menu.setVisible(false);
@@ -74,7 +78,7 @@ public class DashboardController implements Initializable {
             slide.setDuration(Duration.seconds(0.4));
             slide.setNode(slider);
 
-            slide.setToX(-176);
+            slide.setToX(-150);
             slide.play();
 
             slider.setTranslateX(0);
@@ -131,7 +135,7 @@ public class DashboardController implements Initializable {
         } else {
             // Show sidebar
             sidebarTransition.setToX(0);
-            contentTransition.setToX(200);
+            contentTransition.setToX(150);
 
             // Swap menu labels
             Menu.setVisible(true);
@@ -161,7 +165,8 @@ public class DashboardController implements Initializable {
         }
 
         Parent apartmentView = loader.load();
-        apartmentView.minWidth(900);
+        apartmentView.minWidth(1130);
+        apartmentView.minHeight(655);
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
@@ -190,7 +195,8 @@ public class DashboardController implements Initializable {
         }
 
         Parent PaymentView = loader.load();
-        PaymentView.minWidth(900);
+        PaymentView.minWidth(1130);
+        PaymentView.minHeight(655);
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 

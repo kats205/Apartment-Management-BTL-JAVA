@@ -117,15 +117,15 @@ public class PaymentViewController implements Initializable {
     public void getValueColumn(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("paymentID"));
         idColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        idColumn.setPrefWidth(150);
+        idColumn.setPrefWidth(140);
 
         invoiceColumn.setCellValueFactory(new PropertyValueFactory<>("billID"));
         invoiceColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        invoiceColumn.setPrefWidth(150);
+        invoiceColumn.setPrefWidth(140);
 
         apartmentColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
         apartmentColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        apartmentColumn.setPrefWidth(150);
+        apartmentColumn.setPrefWidth(140);
 
         paymentDateColumn.setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
         paymentDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
@@ -137,15 +137,15 @@ public class PaymentViewController implements Initializable {
 
         methodColumn.setCellValueFactory(new PropertyValueFactory<>("paymentMedthod"));
         methodColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        methodColumn.setPrefWidth(150);
+        methodColumn.setPrefWidth(130);
 
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         statusColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        statusColumn.setPrefWidth(150);
+        statusColumn.setPrefWidth(130);
 
         createDateColumn.setCellValueFactory(new PropertyValueFactory<>("created_at"));
         createDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        createDateColumn.setPrefWidth(150);
+        createDateColumn.setPrefWidth(130);
 
         transactionIdColumn.setCellValueFactory(new PropertyValueFactory<>("transactionID"));
         transactionIdColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
