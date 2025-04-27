@@ -58,14 +58,14 @@
         <Button fx:id="addApartmentButton" layoutX="935.0" layoutY="65.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" styleClass="create-button" stylesheets="@../styles/Dashboard.css" text="Thêm căn hộ mới" />
         <TableView fx:id="apartmentTable" layoutX="60.0" layoutY="158.0" prefHeight="412.0" prefWidth="1010.0" stylesheets="@../styles/Dashboard.css">
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="100.0" text="Mã căn hộ" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;"/>
-                <TableColumn fx:id="buildingColumn" prefWidth="120.0" text="Tòa nhà" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;"/>
-                <TableColumn fx:id="floorColumn" prefWidth="100.0" text="Tầng" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;"/>
-                <TableColumn fx:id="areaColumn" prefWidth="120.0" text="Diện tích (m²)" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;"/>
-                <TableColumn fx:id="bedroomsColumn" prefWidth="120.0" text="Số phòng ngủ" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;"/>
-                <TableColumn fx:id="priceColumn" prefWidth="150.0" text="Giá thuê (VNĐ)" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;"/>
-                <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Trạng thái" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;"/>
-                <TableColumn fx:id="maintenanceFeeCol" prefWidth="120.0" text="Phí bảo trì" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;"/>
+                <TableColumn fx:id="idColumn" prefWidth="100.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Mã căn hộ" />
+                <TableColumn fx:id="buildingColumn" prefWidth="120.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Tòa nhà" />
+                <TableColumn fx:id="floorColumn" prefWidth="100.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Tầng" />
+                <TableColumn fx:id="areaColumn" prefWidth="120.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Diện tích (m²)" />
+                <TableColumn fx:id="bedroomsColumn" prefWidth="120.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Số phòng ngủ" />
+                <TableColumn fx:id="priceColumn" prefWidth="150.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Giá thuê (VNĐ)" />
+                <TableColumn fx:id="statusColumn" prefWidth="150.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Trạng thái" />
+                <TableColumn fx:id="maintenanceFeeCol" prefWidth="120.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Phí bảo trì" />
             </columns>
         </TableView>
         <Label layoutX="60.0" layoutY="587.0" text="Tổng số căn hộ:">
