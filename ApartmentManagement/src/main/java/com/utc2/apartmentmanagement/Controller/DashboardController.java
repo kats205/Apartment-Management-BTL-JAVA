@@ -22,6 +22,8 @@ public class DashboardController implements Initializable {
     @FXML
     public Button paymentButton;
     @FXML
+    public Button ReportButton;
+    @FXML
     private Button ApartmentButton;
 
     @FXML
@@ -48,14 +50,14 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupMenuToggle();
-        mainBorderPane.setBottom(null); // Hoặc sử dụng Pane rỗng
-        mainBorderPane.setRight(null);  // Hoặc sử dụng Pane rỗng
+//        mainBorderPane.setBottom(null); // Hoặc sử dụng Pane rỗng
+//        mainBorderPane.setRight(null);  // Hoặc sử dụng Pane rỗng
 
         Exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
 
-        slider.setTranslateX(-150);
+        slider.setTranslateX(-200);
 
         Menu.setOnMouseClicked(event -> {
             TranslateTransition slide = new TranslateTransition();
@@ -104,9 +106,18 @@ public class DashboardController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        });
 
+        ReportButton.setOnAction(event -> {
+            try {
+                loadReportView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         // Các thiết lập khác...
+
+
     }
     // tạo hiệu ứng trượt
     private void setupMenuToggle() {
@@ -165,8 +176,6 @@ public class DashboardController implements Initializable {
         }
 
         Parent apartmentView = loader.load();
-        apartmentView.minWidth(1130);
-        apartmentView.minHeight(655);
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
@@ -195,8 +204,7 @@ public class DashboardController implements Initializable {
         }
 
         Parent PaymentView = loader.load();
-        PaymentView.minWidth(1130);
-        PaymentView.minHeight(655);
+
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
@@ -212,4 +220,31 @@ public class DashboardController implements Initializable {
         System.out.println("Đã thêm PaymentView vào contentArea");
     }
 
+    public void loadReportView() throws IOException {
+        System.out.println("Đang cố gắng tải ReportView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/ReportView.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        if (url == null) {
+            System.out.println("Không tìm thấy file ReportView.fxml");
+            return;
+        }
+
+        Parent ReportView = loader.load();
+
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(ReportView, 0.0);
+        AnchorPane.setRightAnchor(ReportView, 0.0);
+        AnchorPane.setBottomAnchor(ReportView, 0.0);
+        AnchorPane.setLeftAnchor(ReportView, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm ApartmentView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(ReportView);
+        System.out.println("Đã thêm ReportView vào contentArea");
+    }
 }

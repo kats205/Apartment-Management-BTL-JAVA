@@ -123,9 +123,9 @@ public class PaymentViewController implements Initializable {
         invoiceColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
         invoiceColumn.setPrefWidth(140);
 
-        apartmentColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
-        apartmentColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        apartmentColumn.setPrefWidth(140);
+//        apartmentColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
+//        apartmentColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+//        apartmentColumn.setPrefWidth(140);
 
         paymentDateColumn.setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
         paymentDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
@@ -149,7 +149,7 @@ public class PaymentViewController implements Initializable {
 
         transactionIdColumn.setCellValueFactory(new PropertyValueFactory<>("transactionID"));
         transactionIdColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        transactionIdColumn.setPrefWidth(150);
+        transactionIdColumn.setPrefWidth(200);
 
     }
 
