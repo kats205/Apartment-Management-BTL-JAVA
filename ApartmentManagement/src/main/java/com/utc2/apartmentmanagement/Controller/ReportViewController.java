@@ -2,10 +2,14 @@ package com.utc2.apartmentmanagement.Controller;
 
 import com.utc2.apartmentmanagement.DAO.ReportDAO;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -38,7 +42,7 @@ public class ReportViewController implements Initializable {
     private Button exportReportButton;
 
     @FXML
-    private BarChart<?, ?> revenueChart;
+    private BarChart<String, Number> revenueChart;
 
     @FXML
     private PieChart statusChart;
@@ -98,6 +102,8 @@ public class ReportViewController implements Initializable {
 
         // Tải dữ liệu mặc định
         loadDefaultData();
+
+
     }
 
     private void initializeComponents() {
@@ -120,6 +126,7 @@ public class ReportViewController implements Initializable {
         LocalDate firstDayOfMonth = LocalDate.of(now.getYear(), now.getMonth(), 1);
         fromDatePicker.setValue(firstDayOfMonth);
         toDatePicker.setValue(now);
+
     }
 
     private void initializeComboBoxes() {
@@ -135,6 +142,7 @@ public class ReportViewController implements Initializable {
 
     private void initializeCharts() {
         // TODO: Cấu hình biểu đồ bar chart và pie chart
+
     }
 
     private void setupEventHandlers() {
@@ -179,8 +187,27 @@ public class ReportViewController implements Initializable {
         updateSummaryData();
     }
 
-    private void updateCharts() {
+    private void updateCharts() throws SQLException {
         // TODO: Cập nhật dữ liệu cho biểu đồ doanh thu và biểu đồ trạng thái
+        LocalDate fromDate = fromDatePicker.getValue();
+        LocalDate toDate = toDatePicker.getValue();
+        ObservableList<XYChart.Data<String, Number>> data = new ReportDAO().getValue(fromDate, toDate);
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Doanh thu theo tháng");
+        series.setData(data);
+
+        CategoryAxis xAxis = (CategoryAxis) revenueChart.getXAxis();
+        xAxis.setTickLabelRotation(-45); // Xoay label 45 độ nhìn gọn
+// KHÔNG cần setTickLabelGap ở đây, vì không giúp cách cột
+
+        revenueChart.getData().clear();
+        revenueChart.getData().add(series);
+
+// Chính xác ở đây nè
+        revenueChart.setCategoryGap(100); // 👈 cái này giúp các tháng (các cột) cách xa nhau theo trục ngang
+        revenueChart.setBarGap(10);        // nếu sau này có nhiều cột trong cùng 1 tháng thì mỗi cột cũng cách nhau
+
     }
 
     private void updateTableData() throws SQLException {

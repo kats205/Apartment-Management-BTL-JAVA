@@ -5,6 +5,7 @@ import com.utc2.apartmentmanagement.Repository.IReportDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.XYChart;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -166,5 +167,36 @@ public class ReportDAO implements IReportDAO {
         }
         return data;
     }
+    public ObservableList<XYChart.Data<String, Number>> getValue(LocalDate fromDate, LocalDate toDate) throws SQLException {
+        String sql = "SELECT \n" +
+                "    FORMAT(p.payment_date, 'yyyy-MM') AS Thang,\n" +
+                "    SUM(p.amount) AS TongDoanhThu\n" +
+                "FROM \n" +
+                "    Payment p\n" +
+                "JOIN \n" +
+                "    Bill b ON p.bill_id = b.bill_id\n" +
+                "WHERE \n" +
+                "    p.status = 'completed' \n" +
+                "    AND p.payment_date BETWEEN ? AND ? \n" +
+                "GROUP BY \n" +
+                "    FORMAT(p.payment_date, 'yyyy-MM')\n" +
+                "ORDER BY \n" +
+                "    Thang ASC";
+        ObservableList<XYChart.Data<String, Number>> data = FXCollections.observableArrayList();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setDate(1, Date.valueOf(fromDate));
+            stmt.setDate(2, Date.valueOf(toDate));
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                String thang = rs.getString("Thang");
+                double doanhThu = rs.getDouble("TongDoanhThu");
 
+                data.add(new XYChart.Data<>(thang, doanhThu));
+            }
+        }catch(SQLException e){
+            throw new SQLException("Error while generating report", e);
+        }
+        return data;
+    }
 }
