@@ -1,5 +1,7 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.ReportDAO;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -10,15 +12,18 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.MapValueFactory;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ReportViewController implements Initializable {
 
     @FXML
-    private ComboBox<?> reportTypeComboBox;
+    private ComboBox<String> reportTypeComboBox;
 
     @FXML
     private DatePicker fromDatePicker;
@@ -39,28 +44,28 @@ public class ReportViewController implements Initializable {
     private PieChart statusChart;
 
     @FXML
-    private TableView<?> reportTable;
+    private TableView<Map<String, Object>> reportTable;
 
     @FXML
-    private TableColumn<?, ?> periodColumn;
+    private TableColumn<Map, String> periodColumn;
 
     @FXML
-    private TableColumn<?, ?> totalInvoicesColumn;
+    private TableColumn<Map, Double> totalInvoicesColumn;
 
     @FXML
-    private TableColumn<?, ?> paidInvoicesColumn;
+    private TableColumn<Map, Integer> paidInvoicesColumn;
 
     @FXML
-    private TableColumn<?, ?> unpaidInvoicesColumn;
+    private TableColumn<Map, Integer> unpaidInvoicesColumn;
 
     @FXML
-    private TableColumn<?, ?> overdueInvoicesColumn;
+    private TableColumn<Map, Integer> overdueInvoicesColumn;
 
     @FXML
-    private TableColumn<?, ?> totalRevenueColumn;
+    private TableColumn<Map, Double> totalRevenueColumn;
 
     @FXML
-    private TableColumn<?, ?> totalFeesColumn;
+    private TableColumn<Map, Double> totalFeesColumn;
 
     @FXML
     private Label totalInvoicesLabel;
@@ -113,7 +118,6 @@ public class ReportViewController implements Initializable {
         // Thiết lập giá trị mặc định: từ đầu tháng đến hiện tại
         LocalDate now = LocalDate.now();
         LocalDate firstDayOfMonth = LocalDate.of(now.getYear(), now.getMonth(), 1);
-
         fromDatePicker.setValue(firstDayOfMonth);
         toDatePicker.setValue(now);
     }
@@ -121,10 +125,12 @@ public class ReportViewController implements Initializable {
     private void initializeComboBoxes() {
         // TODO: Khởi tạo các loại báo cáo cho reportTypeComboBox
         // Ví dụ: Báo cáo theo tháng, theo quý, theo năm
+        reportTypeComboBox.getItems().addAll("Báo cáo theo tháng", "Báo cáo theo quý", "Báo cáo theo năm");
     }
 
     private void initializeTableView() {
         // TODO: Cấu hình TableView và các cột
+
     }
 
     private void initializeCharts() {
@@ -133,7 +139,13 @@ public class ReportViewController implements Initializable {
 
     private void setupEventHandlers() {
         // Xử lý sự kiện tạo báo cáo
-        generateButton.setOnAction(event -> generateReport());
+        generateButton.setOnAction(event -> {
+            try {
+                generateReport();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         // Xử lý sự kiện xuất báo cáo
         exportReportButton.setOnAction(event -> exportFullReport());
@@ -154,7 +166,7 @@ public class ReportViewController implements Initializable {
         updateSummaryData();
     }
 
-    private void generateReport() {
+    private void generateReport() throws SQLException {
         // TODO: Tạo báo cáo dựa trên loại báo cáo và khoảng thời gian đã chọn
 
         // Cập nhật biểu đồ
@@ -171,8 +183,18 @@ public class ReportViewController implements Initializable {
         // TODO: Cập nhật dữ liệu cho biểu đồ doanh thu và biểu đồ trạng thái
     }
 
-    private void updateTableData() {
+    private void updateTableData() throws SQLException {
         // TODO: Cập nhật dữ liệu cho bảng báo cáo
+        LocalDate fromDate = fromDatePicker.getValue();
+        LocalDate toDate = toDatePicker.getValue();
+        periodColumn.setCellValueFactory(new MapValueFactory<>("kỳ"));
+        totalInvoicesColumn.setCellValueFactory(new MapValueFactory<>("tổng số hóa đơn"));
+        overdueInvoicesColumn.setCellValueFactory(new MapValueFactory<>("quá hạn"));
+        paidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("đã thanh toán"));
+        totalFeesColumn.setCellValueFactory(new MapValueFactory<>("tổng phí phạt"));
+        unpaidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("chưa thanh toán"));
+        reportTable.setItems(new ReportDAO().getValueReport(fromDate, toDate));
+        totalRevenueColumn.setCellValueFactory(new MapValueFactory<>("tổng doanh thu"));
     }
 
     private void updateSummaryData() {

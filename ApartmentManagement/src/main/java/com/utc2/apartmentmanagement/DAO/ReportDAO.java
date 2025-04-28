@@ -2,11 +2,16 @@ package com.utc2.apartmentmanagement.DAO;
 
 import com.utc2.apartmentmanagement.Model.Report;
 import com.utc2.apartmentmanagement.Repository.IReportDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReportDAO implements IReportDAO {
     @Override
@@ -120,4 +125,46 @@ public class ReportDAO implements IReportDAO {
         }
         return false;
     }
+
+    public ObservableList<Map<String, Object>> getValueReport(LocalDate fromDate, LocalDate toDate) throws SQLException{
+        ObservableList<Map<String, Object>> data = FXCollections.observableArrayList();
+        String sql = "SELECT \n" +
+                "    FORMAT(B.billing_date, 'MM/yyyy') AS [Kỳ],\n" +
+                "    COUNT(B.bill_id) AS [Tổng số hóa đơn],\n" +
+                "    SUM(CASE WHEN B.status = 'paid' THEN 1 ELSE 0 END) AS [Đã thanh toán],\n" +
+                "    SUM(CASE WHEN B.status = 'pending' THEN 1 ELSE 0 END) AS [Chưa thanh toán],\n" +
+                "    SUM(CASE WHEN B.status = 'overdue' THEN 1 ELSE 0 END) AS [Quá hạn],\n" +
+                "    SUM(B.total_amount) AS [Tổng doanh thu (VND)],\n" +
+                "    SUM(B.late_fee) AS [Tổng phí phạt (VND)]\n" +
+                "FROM \n" +
+                "    Bill B\n" +
+                "WHERE \n" +
+                "    B.billing_date BETWEEN ? AND ?\n" +
+                "GROUP BY \n" +
+                "    FORMAT(B.billing_date, 'MM/yyyy')\n" +
+                "ORDER BY \n" +
+                "    FORMAT(B.billing_date, 'MM/yyyy')";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setDate(1, Date.valueOf(fromDate));
+            stmt.setDate(2, Date.valueOf(toDate));
+            ResultSet rs = stmt.executeQuery();
+            Map<String, Object> row = new HashMap<>();
+            while(rs.next()){
+                row.put("kỳ", rs.getNString("Kỳ"));
+                row.put("tổng số hóa đơn", rs.getInt("Tổng số hóa đơn"));
+                row.put("đã thanh toán", rs.getInt("Đã thanh toán"));
+                row.put("chưa thanh toán", rs.getInt("Chưa thanh toán"));
+                row.put("quá hạn", rs.getInt("Quá hạn"));
+                row.put("tổng doanh thu", rs.getDouble("Tổng doanh thu (VND)"));
+                row.put("tổng phí phạt", rs.getDouble("Tổng phí phạt (VND)"));
+                data.add(row);
+            }
+
+        }catch(SQLException e){
+            throw new SQLException("Error while generating report", e);
+        }
+        return data;
+    }
+
 }

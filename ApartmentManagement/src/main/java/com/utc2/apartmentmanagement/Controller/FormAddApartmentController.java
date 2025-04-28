@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -324,6 +325,7 @@ public class FormAddApartmentController implements Initializable {
         }
     }
     public void handleCancelButton(ActionEvent actionEvent) {
+        ((Stage) apartmentIdField.getScene().getWindow()).close();
     }
 
     public void handleSaveButton(ActionEvent actionEvent){
