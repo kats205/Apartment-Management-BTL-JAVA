@@ -91,13 +91,13 @@
                             <children>
                                 <TableView fx:id="reportTable" layoutX="14.0" layoutY="14.0" prefHeight="373.0" prefWidth="1179.0">
                                     <columns>
-                                        <TableColumn fx:id="periodColumn" prefWidth="150.0" text="Kỳ" />
-                                        <TableColumn fx:id="totalInvoicesColumn" prefWidth="150.0" text="Tổng số hóa đơn" />
-                                        <TableColumn fx:id="paidInvoicesColumn" prefWidth="150.0" text="Đã thanh toán" />
-                                        <TableColumn fx:id="unpaidInvoicesColumn" prefWidth="150.0" text="Chưa thanh toán" />
-                                        <TableColumn fx:id="overdueInvoicesColumn" prefWidth="150.0" text="Quá hạn" />
-                                        <TableColumn fx:id="totalRevenueColumn" prefWidth="200.0" text="Tổng doanh thu (VNĐ)" />
-                                        <TableColumn fx:id="totalFeesColumn" prefWidth="200.0" text="Tổng phí phạt (VNĐ)" />
+                                        <TableColumn fx:id="reportTypeColumn" prefWidth="180.0" text="Loại báo cáo" />
+                                        <TableColumn fx:id="generationDateColumn" prefWidth="180.0" text="Ngày tạo báo cáo" />
+                                        <TableColumn fx:id="generatedByUserIdColumn" prefWidth="180.0" text="Người tạo báo cáo" />
+                                        <TableColumn fx:id="parametersColumn" prefWidth="180.0" text="Tham số" />
+                                        <TableColumn fx:id="filePathColumn" prefWidth="200.0" text="Đường dẫn tệp" />
+                                        <TableColumn fx:id="createdAtColumn" prefWidth="130.0" text="Ngày tạo" />
+                                        <TableColumn fx:id="updatedAtColumn" prefWidth="130.0" text="Ngày cập nhật" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -112,26 +112,12 @@
                                     <children>
                                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1179.0" spacing="20.0">
                                             <children>
-                                                <Label prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Tổng số hóa đơn:">
+                                                <Label prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Tổng số báo cáo:">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="totalInvoicesLabel" prefHeight="30.0" prefWidth="200.0" text="0">
-                                                    <font>
-                                                        <Font size="14.0" />
-                                                    </font>
-                                                </Label>
-                                            </children>
-                                        </HBox>
-                                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1179.0" spacing="20.0">
-                                            <children>
-                                                <Label prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Tổng doanh thu:">
-                                                    <font>
-                                                        <Font size="14.0" />
-                                                    </font>
-                                                </Label>
-                                                <Label fx:id="totalRevenueLabel" prefHeight="30.0" prefWidth="200.0" text="0 VNĐ">
+                                                <Label fx:id="totalReportsLabel" prefHeight="30.0" prefWidth="200.0" text="0">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
@@ -140,12 +126,12 @@
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1179.0" spacing="20.0">
                                             <children>
-                                                <Label prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Tỷ lệ thanh toán:">
+                                                <Label prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Báo cáo mới nhất:">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="paymentRateLabel" prefHeight="30.0" prefWidth="200.0" text="0%">
+                                                <Label fx:id="latestReportLabel" prefHeight="30.0" prefWidth="200.0" text="--">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
@@ -154,12 +140,26 @@
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1179.0" spacing="20.0">
                                             <children>
-                                                <Label prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Tỷ lệ quá hạn:">
+                                                <Label prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Loại báo cáo phổ biến:">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>
                                                 </Label>
-                                                <Label fx:id="overdueRateLabel" prefHeight="30.0" prefWidth="200.0" text="0%">
+                                                <Label fx:id="popularReportTypeLabel" prefHeight="30.0" prefWidth="200.0" text="--">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1179.0" spacing="20.0">
+                                            <children>
+                                                <Label prefHeight="30.0" prefWidth="200.0" style="-fx-font-weight: bold;" text="Người tạo nhiều nhất:">
+                                                    <font>
+                                                        <Font size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="topGeneratorLabel" prefHeight="30.0" prefWidth="200.0" text="--">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>

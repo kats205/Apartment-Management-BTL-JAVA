@@ -115,20 +115,20 @@ public class ApartmentViewController implements Initializable {
     }
     private void getValueCol(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
-        idColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        idColumn.setPrefWidth(140);
+        idColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+        idColumn.setPrefWidth(130);
 
         buildingColumn.setCellValueFactory(new PropertyValueFactory<>("buildingID"));
-        buildingColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
+        buildingColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
         buildingColumn.setPrefWidth(100);
 
         floorColumn.setCellValueFactory(new PropertyValueFactory<>("floors"));
-        floorColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
+        floorColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
         floorColumn.setPrefWidth(100);
 
         areaColumn.setCellValueFactory(new PropertyValueFactory<>("area"));
-        areaColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        areaColumn.setPrefWidth(140);
+        areaColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+        areaColumn.setPrefWidth(130);
 
         areaColumn.setCellFactory(column -> new TableCell<Apartment, Double>() {
             @Override
@@ -143,11 +143,11 @@ public class ApartmentViewController implements Initializable {
         });
 
         bedroomsColumn.setCellValueFactory(new PropertyValueFactory<>("bedRoom"));
-        bedroomsColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
-        bedroomsColumn.setPrefWidth(140);
+        bedroomsColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+        bedroomsColumn.setPrefWidth(130);
 
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("priceApartment"));
-        priceColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
+        priceColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
         priceColumn.setPrefWidth(150);
 
         priceColumn.setCellFactory(column -> new TableCell<Apartment, Double>() {
@@ -166,11 +166,11 @@ public class ApartmentViewController implements Initializable {
         });
 
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        statusColumn.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
+        statusColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
         statusColumn.setPrefWidth(140);
 
         maintenanceFeeCol.setCellValueFactory(new PropertyValueFactory<>("maintanceFee"));
-        maintenanceFeeCol.setStyle("-fx-font-size: 14px; -fx-text-alignment: CENTER;");
+        maintenanceFeeCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
         maintenanceFeeCol.setPrefWidth(120);
     }
     private void loadDataApartment(){

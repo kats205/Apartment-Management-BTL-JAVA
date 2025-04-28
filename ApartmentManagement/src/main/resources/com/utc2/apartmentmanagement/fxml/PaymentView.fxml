@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="paymentView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.PaymentViewController">
     <children>
-        <Label alignment="CENTER" layoutX="424.0" layoutY="15.0" prefHeight="35.0" prefWidth="282.0" style="-fx-font-weight: bold;" text="THANH TOÁN" textAlignment="CENTER">
+        <Label alignment="CENTER" layoutX="424.0" layoutY="20.0" prefHeight="35.0" prefWidth="282.0" style="-fx-font-weight: bold;" text="THANH TOÁN" textAlignment="CENTER">
             <font>
                 <Font size="24.0" />
             </font>
@@ -36,7 +36,7 @@
             </children>
         </HBox>
         <Button fx:id="newPaymentButton" layoutX="981.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" styleClass="create-button" stylesheets="@../styles/Dashboard.css" text="Thanh toán mới" />
-        <TableView fx:id="paymentTable" layoutY="127.0" prefHeight="430.0" prefWidth="1130.0" stylesheets="@../styles/Dashboard.css">
+        <TableView fx:id="paymentTable" layoutX="8.0" layoutY="126.0" prefHeight="430.0" prefWidth="1115.0" stylesheets="@../styles/Dashboard.css">
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="100.0" text="Mã thanh toán" />
                 <TableColumn fx:id="invoiceColumn" prefWidth="100.0" text="Mã hóa đơn" />
@@ -50,23 +50,23 @@
             </columns>
         </TableView>
         <Label fx:id="noContentLabel" alignment="CENTER" layoutX="80.0" layoutY="20.0" prefHeight="30.0" prefWidth="236.0" style="-fx-background-color: transparent; -fx-opacity: 0;" text="Không có dữ liệu" textFill="#757575" visible="true" />
-        <Label layoutX="48.0" layoutY="582.0" text="Tổng số giao dịch:">
+        <Label layoutX="48.0" layoutY="578.0" text="Tổng số giao dịch:">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="paymentCountLabel" layoutX="173.0" layoutY="583.0" text="0">
+        <Label fx:id="paymentCountLabel" layoutX="173.0" layoutY="579.0" text="0">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER_RIGHT" layoutX="761.0" layoutY="570.0" prefHeight="40.0" prefWidth="355.0" spacing="10.0">
+        <HBox alignment="CENTER_RIGHT" layoutX="761.0" layoutY="565.0" prefHeight="40.0" prefWidth="355.0" spacing="10.0">
             <children>
                 <Button fx:id="detailButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xem chi tiết" />
                 <Button fx:id="printButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="In biên lai" />
                 <Button fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
             </children>
         </HBox>
-        <Button fx:id="closeButton" layoutX="1016.0" layoutY="618.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
+        <Button fx:id="closeButton" layoutX="1017.0" layoutY="611.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
     </children>
 </AnchorPane>
