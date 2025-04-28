@@ -13,6 +13,8 @@ module com.utc2.apartmentmanagement {
     requires bcrypt;
     requires itextpdf;
 
+    opens com.utc2.apartmentmanagement.Test to javafx.base;
+    exports com.utc2.apartmentmanagement.Test;
     opens com.utc2.apartmentmanagement.Views to javafx.fxml;
     exports com.utc2.apartmentmanagement.Views;
     opens com.utc2.apartmentmanagement.Controller to javafx.fxml;
