@@ -5,17 +5,12 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.UnitValue;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.Model.Apartment;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
-import com.utc2.apartmentmanagement.Utils.ValidateColumn;
-import com.utc2.apartmentmanagement.Views.EditApartmentView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,15 +23,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import com.itextpdf.layout.element.Cell;
+
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.NumberFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -304,95 +300,61 @@ public class ApartmentViewController implements Initializable {
 
 
 
+    @FXML
     private void exportReport() {
         // TODO: Xuất danh sách căn hộ thành PDF
-        List<Apartment> apartmentList = new ApartmentDAO().getAllApartments();
-        String FONT_BASE64 = "AAEAAAASAQAABAAgR0RFRgBKAAgAAAHMAAAAJkdQT1MtPyafAAAD5AAAAMxHU1VCkw2CAgAAAewAAAA0T1MvMnSaAagAAAL4AAAAYGNtYXAAPwDTAAADWAAAAGxjdnQgK6gHnQAAAyQAAAAUZnBnbXf4YKsAAAGYAAABvGdhc3AACAATAAABLAAAAAxnbHlmQERP2QAABJgAAAZgaGVhZBfS9DsAAAJ0AAAANmhoZWEHUgOFAAACrAAAACRobXR4GHQCUgAAAiQAAAA8bG9jYQdGB7gAAAI4AAAAHm1heHAAFgAvAAABxAAAACBuYW1lKeYRVQAAAkgAAAKCcG9zdP+4ADIAAAFMAAAAIAABAAAAAQgkks2vdF8PPPUAAwPoAAAAANgd1iQAAAAA2B3WJAANAAADiQMgAAAAAwACAAAAAAAAAAEAAAMg/zgAyAQAAAAAAA"; // Shortened for brevity
-
-        try {
-            // Tạo hộp thoại chọn vị trí lưu file
+        try{
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Lưu danh sách căn hộ");
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("PDF Files", "*.pdf")
-            );
+            fileChooser.setTitle("Save PDF");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
+            Stage stage = (Stage) exportButton.getScene().getWindow();
+            File file = fileChooser.showSaveDialog(stage);
 
-            // Đặt tên file mặc định theo thời gian hiện tại
-            LocalDateTime now = LocalDateTime.now();
-            String defaultFileName = "DanhSachSinhVien_" +
-                    now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".pdf";
-            fileChooser.setInitialFileName(defaultFileName);
-
-            File outputFile = fileChooser.showSaveDialog(stage);
-            if (outputFile != null) {
-                // Tạo PDF với iText
-                PdfWriter writer = new PdfWriter(new FileOutputStream(outputFile));
+            if(file != null){
+                // Tạo tài liệu PDF
+                PdfWriter writer = new PdfWriter(file.getAbsolutePath());
                 PdfDocument pdf = new PdfDocument(writer);
                 Document document = new Document(pdf);
 
-                // Tiêu đề
-                Paragraph title = new Paragraph("DANH SÁCH SINH VIÊN");
-                title.setTextAlignment(TextAlignment.CENTER);
-                title.setBold();
-                title.setFontSize(16);
-                document.add(title);
 
-                // Thêm ngày giờ xuất báo cáo
-                Paragraph dateInfo = new Paragraph("Ngày xuất: " +
-                        now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
-                dateInfo.setTextAlignment(TextAlignment.RIGHT);
-                dateInfo.setFontSize(10);
-                document.add(dateInfo);
+                // Thêm tiêu đề
+                document.add(new Paragraph("Danh sách Apartment").setBold().setFontSize(16));
+                // Tạo bảng có 8 cột
+                float[] columnWidths = {100F, 80F, 60F, 80F, 60F, 100F, 80F, 100F};
+                Table table = new Table(columnWidths);
 
-                document.add(new Paragraph("\n"));
+                // Header
+                table.addCell(new Cell().add(new Paragraph("Apartment ID")));
+                table.addCell(new Cell().add(new Paragraph("Building ID")));
+                table.addCell(new Cell().add(new Paragraph("Floors")));
+                table.addCell(new Cell().add(new Paragraph("Area (m2)")));
+                table.addCell(new Cell().add(new Paragraph("Bed Room")));
+                table.addCell(new Cell().add(new Paragraph("Price (VND)")));
+                table.addCell(new Cell().add(new Paragraph("Status")));
+                table.addCell(new Cell().add(new Paragraph("Maintenance Fee")));
 
-                // Tạo bảng
-                Table table = new Table(UnitValue.createPercentArray(new float[]{15, 40, 15, 30}));
-                table.setWidth(UnitValue.createPercentValue(100));
-
-                // Thêm header
-                table.addHeaderCell(createCell("Mã SV", true));
-                table.addHeaderCell(createCell("Họ và tên", true));
-                table.addHeaderCell(createCell("Tuổi", true));
-                table.addHeaderCell(createCell("Lớp", true));
-
-                // Thêm dữ liệu từ model
-                for (Apartment apartment: apartmentList) {
-                    table.addCell(String.valueOf(createCell(apartment.getApartmentID(), false)));
-                    table.addCell(createCell(student.getName(), false));
-                    table.addCell(createCell(String.valueOf(student.getAge()), false));
-                    table.addCell(createCell(student.getClassName(), false));
+                // Data
+                List<Apartment> apartmentList = new ApartmentDAO().getAllApartments();
+                for (Apartment apt : apartmentList) {
+                    table.addCell(new Cell().add(new Paragraph(apt.getApartmentID())));
+                    table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getBuildingID()))));
+                    table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getFloors()))));
+                    table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getArea()))));
+                    table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getBedRoom()))));
+                    table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getPriceApartment()))));
+                    table.addCell(new Cell().add(new Paragraph(apt.getStatus())));
+                    table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getMaintanceFee()))));
                 }
 
+                // Thêm bảng vào document
                 document.add(table);
 
-                // Thêm chân trang
-                document.add(new Paragraph("\n"));
-                Paragraph footer = new Paragraph("Tổng số sinh viên: " +
-                        apartmentList.size());
-                document.add(footer);
-
-                // Đóng document
                 document.close();
-
-                // Hiển thị thông báo thành công
-                showAlert("Xuất PDF thành công", "File đã được lưu tại:\n" +
-                        outputFile.getAbsolutePath());
-
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Lỗi", "Không thể xuất file PDF: " + e.getMessage());
-        }
-    }
 
-    private Cell createCell(String content, boolean isHeader) {
-        Cell cell = new Cell().add(new Paragraph(content));
-        if (isHeader) {
-            cell.setBold();
-            cell.setTextAlignment(TextAlignment.CENTER);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        return cell;
     }
 
     // Hiển thị alert dialog
