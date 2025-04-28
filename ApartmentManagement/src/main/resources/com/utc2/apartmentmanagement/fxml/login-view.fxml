@@ -53,7 +53,7 @@
       </Button>
 
         <!-- Nút đăng nhập -->
-        <Button fx:id="loginButton" layoutX="579.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="55.0" prefWidth="430.5" stylesheets="@../styles/login.css" text="Login">
+        <Button fx:id="buttonLogin" layoutX="579.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="55.0" prefWidth="430.5" stylesheets="@../styles/login.css" text="Login">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>

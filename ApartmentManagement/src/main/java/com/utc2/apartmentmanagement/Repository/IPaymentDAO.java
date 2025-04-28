@@ -3,6 +3,7 @@ package com.utc2.apartmentmanagement.Repository;
 import com.utc2.apartmentmanagement.Model.Payment;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IPaymentDAO {
@@ -15,4 +16,5 @@ public interface IPaymentDAO {
     boolean updatePaymentMethod(int paymentID, String newPaymentMethod);
     boolean updateTransactionID(int paymentID, String newTransactionID);
     boolean updateStatusPayment(int paymentID, String newStatus);
+    List<Payment> findPaymentByDate(LocalDate fromDate, LocalDate toDate);
 }

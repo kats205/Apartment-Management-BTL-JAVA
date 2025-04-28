@@ -6,13 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ApartmentView extends Application {
+import java.util.Objects;
 
-    @Override
+public class ThemeView extends Application {
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/ApartmentView.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/SettingView.fxml")));
         primaryStage.setTitle("Apartment Application");
-        primaryStage.setScene(new Scene(root, 1500, 800));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

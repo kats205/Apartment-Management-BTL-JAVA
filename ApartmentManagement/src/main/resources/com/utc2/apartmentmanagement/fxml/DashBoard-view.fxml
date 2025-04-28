@@ -28,7 +28,7 @@
                   </Pane>
                   <HBox layoutX="173.0" layoutY="25.0" prefHeight="41.0" prefWidth="1317.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
                      <children>
-                        <Button fx:id="apartment" mnemonicParsing="false" prefHeight="41.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Apartment">
+                        <Button fx:id="apartmentButton1" mnemonicParsing="false" prefHeight="41.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Apartment">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -40,7 +40,7 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="payment" mnemonicParsing="false" prefHeight="41.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Payment">
+                        <Button fx:id="paymentButton1" mnemonicParsing="false" prefHeight="41.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Payment">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -52,7 +52,7 @@
                               <Font size="16.0" />
                            </font>
                         </Button>
-                        <Button fx:id="report" mnemonicParsing="false" prefHeight="41.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Report">
+                        <Button fx:id="reportButton1" mnemonicParsing="false" prefHeight="41.0" prefWidth="320.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Report">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -160,7 +160,7 @@
                         </Button>
                         <Pane prefHeight="464.0" prefWidth="176.0">
                            <children>
-                              <Button alignment="BASELINE_LEFT" layoutX="4.0" layoutY="408.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="113.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Setting" textFill="WHITE">
+                              <Button alignment="BASELINE_LEFT" layoutX="4.0" layoutY="408.0" mnemonicParsing="false" onAction="#handleButtonSetting" prefHeight="43.0" prefWidth="113.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Setting" textFill="WHITE">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

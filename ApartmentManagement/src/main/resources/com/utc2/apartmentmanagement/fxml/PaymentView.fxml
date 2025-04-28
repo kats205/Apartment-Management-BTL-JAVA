@@ -17,7 +17,7 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="70.0" prefHeight="40.0" prefWidth="864.0" spacing="15.0">
+        <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="70.0" prefHeight="40.0" prefWidth="911.0" spacing="15.0">
             <children>
                 <Label text="Căn hộ:">
                     <font>
@@ -25,14 +25,15 @@
                     </font>
                 </Label>
                 <ComboBox fx:id="apartmentComboBox" prefHeight="30.0" prefWidth="220.0" promptText="Chọn căn hộ" stylesheets="@../styles/Dashboard.css" />
-                <Label text="Thời gian:">
+            <Button fx:id="searByApartmentId" mnemonicParsing="false" onAction="#handlesearByApartmentIdButton" prefHeight="30.0" prefWidth="107.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Tìm kiếm" />
+                <Label prefHeight="20.0" prefWidth="67.0" text="Thời gian:">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
                 <DatePicker fx:id="fromDatePicker" prefHeight="30.0" prefWidth="150.0" promptText="Từ ngày" />
                 <DatePicker fx:id="toDatePicker" prefHeight="30.0" prefWidth="150.0" promptText="Đến ngày" />
-                <Button fx:id="searchButton" layoutX="100.0" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Tìm kiếm" />
+                <Button fx:id="searchByDateButton" layoutX="100.0" mnemonicParsing="false" onAction="#handleSearchByDateButton" prefHeight="30.0" prefWidth="107.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Tìm kiếm" />
             </children>
         </HBox>
         <Button fx:id="newPaymentButton" layoutX="1120.0" layoutY="74.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" styleClass="create-button" stylesheets="@../styles/Dashboard.css" text="Thanh toán mới" />
@@ -40,7 +41,6 @@
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="100.0" text="Mã thanh toán" />
                 <TableColumn fx:id="invoiceColumn" prefWidth="100.0" text="Mã hóa đơn" />
-                <TableColumn fx:id="apartmentColumn" prefWidth="100.0" text="Mã căn hộ" />
                 <TableColumn fx:id="paymentDateColumn" prefWidth="120.0" text="Ngày thanh toán" />
                 <TableColumn fx:id="amountColumn" prefWidth="150.0" text="Số tiền (VNĐ)" />
                 <TableColumn fx:id="methodColumn" prefWidth="130.0" text="Phương thức" />
@@ -67,6 +67,6 @@
                 <Button fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
             </children>
         </HBox>
-        <Button fx:id="closeButton" layoutX="1157.0" layoutY="618.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
+        <Button fx:id="closeButton" layoutX="1157.0" layoutY="618.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
     </children>
 </AnchorPane>

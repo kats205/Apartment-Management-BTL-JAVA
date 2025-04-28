@@ -1,7 +1,9 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.Model.Apartment;
 import com.utc2.apartmentmanagement.Model.Building;
+import com.utc2.apartmentmanagement.Utils.ValidateColumn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,18 +12,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditApartmentViewController implements Initializable {
-
+    @FXML
+    public TextField buildingID;
     @FXML
     private TextField apartmentIdField;
-
-    @FXML
-    private ComboBox<Building> buildingComboBox;
 
     @FXML
     private TextField floorField;
@@ -46,46 +48,17 @@ public class EditApartmentViewController implements Initializable {
 
     @FXML
     private Button cancelButton;
-    private Apartment currentApartment;
-    private ApartmentViewController parentController;
+    private ApartmentViewController parentController = new ApartmentViewController();
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         List<String> statusList = Arrays.asList("Trống", "Đã thuê", "Đang bảo trì", "Không khả dụng");
         statusComboBox.setItems(FXCollections.observableArrayList(statusList));
-
-        loadBuildingList();
         setupValidators();
+        buildingID.setEditable(false);
+        apartmentIdField.setEditable(false);
+        floorField.setEditable(false);
     }
 
-    // Phương thức để load danh sách tòa nhà
-    private void loadBuildingList() {
-
-        // Hiển thị tên tòa nhà trong combo box
-        buildingComboBox.setCellFactory(param -> new ListCell<Building>() {
-            @Override
-            protected void updateItem(Building item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.getBuildingName());
-                }
-            }
-        });
-
-        buildingComboBox.setButtonCell(new ListCell<Building>() {
-            @Override
-            protected void updateItem(Building item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.getBuildingName());
-                }
-            }
-        });
-    }
 
     // Phương thức thiết lập các validator cho các trường nhập liệu
     private void setupValidators() {
@@ -126,11 +99,18 @@ public class EditApartmentViewController implements Initializable {
     }
 
     // Phương thức để đặt dữ liệu căn hộ cần chỉnh sửa
-    public void setApartment(Apartment apartment) {
-        this.currentApartment = apartment;
-
+    public void setApartment(Apartment apartment) throws IOException {
+        if(apartment != null) {
+            apartmentIdField.setText(apartment.getApartmentID());
+            buildingID.setText(String.valueOf(apartment.getBuildingID()));
+            floorField.setText(String.valueOf(apartment.getFloors()));
+            areaField.setText(String.valueOf(apartment.getArea()));
+            bedroomsField.setText(String.valueOf(apartment.getBedRoom()));
+            priceField.setText(String.valueOf(apartment.getPriceApartment()));
+            maintenanceFeeField.setText(String.valueOf(apartment.getMaintanceFee()));
+            statusComboBox.setValue(apartment.getStatus());
+        }
         // Đổ dữ liệu vào form
-
         // Tìm và chọn tòa nhà tương ứng
     }
 
@@ -153,7 +133,7 @@ public class EditApartmentViewController implements Initializable {
     private boolean validateInputs() {
         StringBuilder errors = new StringBuilder();
 
-        if (buildingComboBox.getValue() == null) {
+        if (buildingID.getText() == null) {
             errors.append("- Vui lòng chọn tòa nhà\n");
         }
 
@@ -196,15 +176,38 @@ public class EditApartmentViewController implements Initializable {
     // Phương thức để cập nhật thông tin căn hộ
     private void updateApartment() {
         try {
-            // xử lý thêm thông tin căn hộ qua nút lưu
+            // Lấy thông tin từ giao diện
+            String apartmentID = apartmentIdField.getText();
+            String buildingId = buildingID.getText();
+            String floor = floorField.getText();
+            String area = areaField.getText();
+            String bedrooms = bedroomsField.getText();
+            String price = priceField.getText();
+            String maintenanceFee = maintenanceFeeField.getText();
+            String status = statusComboBox.getValue();
 
+            // Tạo đối tượng Apartment với thông tin đã chuẩn hóa
+            Apartment newApartment = new Apartment(
+                    apartmentID,
+                    Integer.parseInt(buildingId),
+                    Integer.parseInt(floor),
+                    Double.parseDouble(area),
+                    Integer.parseInt(bedrooms),
+                    Double.parseDouble(price),
+                    status,
+                    parseWithoutExponential(maintenanceFee) // Dùng hàm để tránh "E"
+            );
 
+            // Cập nhật căn hộ
+            if(new ApartmentDAO().updateApartment(newApartment)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText("Cập nhật thành công");
+                alert.setContentText("Thông tin căn hộ đã được cập nhật thành công!");
+                alert.showAndWait();
+                refreshTable();
+            }
 
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Thông báo");
-            alert.setHeaderText("Cập nhật thành công");
-            alert.setContentText("Thông tin căn hộ đã được cập nhật thành công!");
-            alert.showAndWait();
 
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -221,6 +224,7 @@ public class EditApartmentViewController implements Initializable {
         }
     }
 
+
     // Phương thức xử lý sự kiện nút Hủy
     @FXML
     public void handleCancelButton(ActionEvent event) {
@@ -231,13 +235,13 @@ public class EditApartmentViewController implements Initializable {
         alert.setContentText("Các thay đổi sẽ không được lưu.");
 
         if (alert.showAndWait().get() == ButtonType.OK) {
+            refreshTable();
             closeForm();
         }
     }
 
     public void refreshTable() {
-        // Tải lại dữ liệu từ cơ sở dữ liệu và cập nhật bảng
-
+        parentController.loadDataApartment();
     }
 
     private void closeForm() {
@@ -249,4 +253,14 @@ public class EditApartmentViewController implements Initializable {
     public void setParentController(ApartmentViewController controller) {
         this.parentController = controller;
     }
+    public static double parseWithoutExponential(String value) {
+        try {
+            // Sử dụng DecimalFormat để format theo số bình thường
+            DecimalFormat format = new DecimalFormat("0.##########"); // đảm bảo không có chữ E
+            return format.parse(value).doubleValue();
+        } catch (Exception e) {
+            return 0.0;  // Nếu không phải số hợp lệ thì trả về 0.0
+        }
+    }
+
 }

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="664.0" prefWidth="1306.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.ButtonViewController">
+<AnchorPane fx:id="SettingView" prefHeight="700.0" prefWidth="1306.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.SettingController">
     <children>
         <Label alignment="CENTER" layoutX="539.0" layoutY="27.0" prefHeight="35.0" prefWidth="282.0" style="-fx-font-weight: bold;" text="CÀI ĐẶT HỆ THỐNG" textAlignment="CENTER">
             <font>
@@ -108,7 +108,7 @@
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="themeButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Thay đổi" />
+                                <Button fx:id="themeButton" mnemonicParsing="false" onAction="#handleThemeButton" prefHeight="30.0" prefWidth="150.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Thay đổi" />
                             </children>
                         </VBox>
                     </children>
@@ -118,6 +118,6 @@
 
         <Button fx:id="saveSettingsButton" layoutX="1079.0" layoutY="585.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Lưu cài đặt" />
         <Button fx:id="resetButton" layoutX="1186.0" layoutY="585.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Khôi phục" />
-        <Button fx:id="closeButton" layoutX="1185.0" layoutY="634.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
+        <Button fx:id="closeButton" layoutX="1185.0" layoutY="634.0" mnemonicParsing="false" onAction="#handleButtonClose" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
     </children>
 </AnchorPane>

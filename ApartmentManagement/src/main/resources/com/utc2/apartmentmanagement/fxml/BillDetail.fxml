@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <Label styleClass="table-title" stylesheets="@../styles/billDetail.css" text="Chi tiết hóa đơn thanh toán" />
+
+    <TableView fx:id="billDetailTable" prefWidth="800" stylesheets="@../styles/billDetail.css">
+        <columns>
+            <TableColumn fx:id="billIdCol" text="Bill ID" />
+            <TableColumn fx:id="apartmentIdCol" text="Apartment ID" />
+            <TableColumn fx:id="descriptionCol" text="Description" />
+            <TableColumn fx:id="amountCol" text="Amount" />
+            <TableColumn fx:id="quantityCol" text="Quantity" />
+            <TableColumn fx:id="totalCol" text="Total" />
+            <TableColumn fx:id="createdAtCol" text="Created At" />
+        </columns>
+    </TableView>
+</VBox>

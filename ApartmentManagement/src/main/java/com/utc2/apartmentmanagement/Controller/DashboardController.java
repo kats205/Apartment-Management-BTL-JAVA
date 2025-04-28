@@ -24,6 +24,12 @@ public class DashboardController implements Initializable {
     @FXML
     public Button ReportButton;
     @FXML
+    public Button apartmentButton1;
+    @FXML
+    public Button paymentButton1;
+    @FXML
+    public Button reportButton1;
+    @FXML
     private Button ApartmentButton;
 
     @FXML
@@ -80,7 +86,7 @@ public class DashboardController implements Initializable {
             slide.setDuration(Duration.seconds(0.4));
             slide.setNode(slider);
 
-            slide.setToX(-150);
+            slide.setToX(-200);
             slide.play();
 
             slider.setTranslateX(0);
@@ -100,7 +106,22 @@ public class DashboardController implements Initializable {
             }
 
         });
+        apartmentButton1.setOnAction(event -> {
+            try {
+                loadApartmentView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
         paymentButton.setOnAction(event -> {
+            try {
+                loadPaymentView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        paymentButton1.setOnAction(event -> {
             try {
                 loadPaymentView();
             } catch (IOException e) {
@@ -109,6 +130,13 @@ public class DashboardController implements Initializable {
         });
 
         ReportButton.setOnAction(event -> {
+            try {
+                loadReportView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        reportButton1.setOnAction(event -> {
             try {
                 loadReportView();
             } catch (IOException e) {
@@ -245,6 +273,34 @@ public class DashboardController implements Initializable {
         // Xóa tất cả các view hiện tại và thêm ApartmentView
         contentArea.getChildren().clear();
         contentArea.getChildren().add(ReportView);
+        System.out.println("Đã thêm ReportView vào contentArea");
+    }
+
+    public void handleButtonSetting(ActionEvent actionEvent) throws IOException {
+        System.out.println("Đang cố gắng tải SettingView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/SettingView.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        if (url == null) {
+            System.out.println("Không tìm thấy file SettingView.fxml");
+            return;
+        }
+
+        Parent SettingView = loader.load();
+
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(SettingView, 0.0);
+        AnchorPane.setRightAnchor(SettingView, 0.0);
+        AnchorPane.setBottomAnchor(SettingView, 0.0);
+        AnchorPane.setLeftAnchor(SettingView, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm ApartmentView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(SettingView);
         System.out.println("Đã thêm ReportView vào contentArea");
     }
 }

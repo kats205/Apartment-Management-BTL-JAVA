@@ -218,6 +218,59 @@ public class ApartmentDAO implements IApartmentDAO {
         }
         return false;
     }
+
+    @Override
+    public boolean updateApartment(Apartment apartment) throws SQLException {
+        String sql = "UPDATE Apartment SET  area = ?, bedrooms = ?, price_apartment = ?, status = ?, maintenance_fee = ?, updated_at = ? WHERE apartment_id = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setDouble(1, apartment.getArea());
+            stmt.setInt(2, apartment.getBedRoom());
+            stmt.setDouble(3, apartment.getPriceApartment());
+            stmt.setString(4, apartment.getStatus());
+            stmt.setDouble(5, apartment.getMaintanceFee());
+            stmt.setDate(6, Date.valueOf(LocalDate.now()));
+            stmt.setString(7, apartment.getApartmentID());
+            return stmt.executeUpdate() > 0;
+        }catch(SQLException e){
+            throw new SQLException("Lỗi khi cập nhật căn hộ", e);
+        }
+    }
+
+    @Override
+    public List<Integer> getAllBuildingId() throws SQLException{
+        List<Integer> buildingIdList = new ArrayList<>();
+        String sql = "SELECT distinct building_id FROM Apartment";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                buildingIdList.add(rs.getInt("building_id"));
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Lỗi khi lấy danh sách ID tòa nhà", e);
+        }
+        return buildingIdList;
+    }
+
+    @Override
+    public List<Integer> getAllFloorId() throws SQLException {
+        List<Integer> floorList = new ArrayList<>();
+        String sql = "SELECT distinct floor FROM Apartment";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                floorList.add(rs.getInt("floor"));
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Lỗi khi lấy danh sách tầng", e);
+        }
+        return floorList;
+    }
+
+
+
     public int countApartment() throws SQLException{
         String sql = "SELECT COUNT(*) FROM Apartment";
         try(Connection connection = DatabaseConnection.getConnection();
