@@ -1,5 +1,7 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -326,22 +328,28 @@ public class ApartmentViewController implements Initializable {
             Document document = new Document(pdf);
             document.setFont(vietnameseFont);
 
+            Color headerColor = new DeviceRgb(209, 224, 227);
+            Color textHeadColor = new DeviceRgb(21, 88, 155);
+
             // Thêm tiêu đề
-            document.add(new Paragraph("Danh sách căn hộ").setBold().setFontSize(16)).setTextAlignment(TextAlignment.CENTER);
+            document.add(new Paragraph("Danh sách căn hộ").setBold().setFontColor(textHeadColor).setFontSize(16).setTextAlignment(TextAlignment.CENTER));
+            document.add(new Paragraph(""));
 
             // Tạo bảng
-            float[] columnWidths = {100F, 80F, 60F, 80F, 60F, 100F, 80F, 100F};
+            float[] columnWidths = {100F, 80F, 40F, 90F, 120F, 10F, 80F, 80F};
             Table table = new Table(columnWidths);
 
+            table.setTextAlignment(TextAlignment.CENTER);
             // Header
-            table.addCell(new Cell().add(new Paragraph("Mã căn hộ")));
-            table.addCell(new Cell().add(new Paragraph("Tòa nhà")));
-            table.addCell(new Cell().add(new Paragraph("Tầng")));
-            table.addCell(new Cell().add(new Paragraph("Diện tích (m^2)")));
-            table.addCell(new Cell().add(new Paragraph("Số phòng ngủ")));
-            table.addCell(new Cell().add(new Paragraph("Giá thuê (VNĐ)")));
-            table.addCell(new Cell().add(new Paragraph("Trạng thái")));
-            table.addCell(new Cell().add(new Paragraph("Phí bảo trì")));
+
+            table.addCell(new Cell().add(new Paragraph("Mã căn hộ").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Tòa nhà").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Tầng").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Diện tích (m^2)").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Số phòng ngủ").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Giá thuê (VNĐ)").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Trạng thái").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Phí bảo trì").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
 
             // Data
             List<Apartment> apartments = new ApartmentDAO().getAllApartments();

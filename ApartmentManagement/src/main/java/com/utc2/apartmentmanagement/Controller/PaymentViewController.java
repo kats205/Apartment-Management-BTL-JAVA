@@ -1,5 +1,7 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -264,21 +266,29 @@ public class PaymentViewController implements Initializable {
             Document document = new Document(pdf);
             document.setFont(vietnameseFont);
 
+            Color headerColor = new DeviceRgb(209, 224, 227);
+            Color textHeadColor = new DeviceRgb(21, 88, 155);
+
             // Thêm tiêu đề
-            document.add(new Paragraph("Danh sách thanh toán").setBold().setFontSize(16)).setTextAlignment(TextAlignment.CENTER);
+            document.add(new Paragraph("Danh sách thanh toán").setBold().setFontColor(textHeadColor).setFontSize(16).setTextAlignment(TextAlignment.CENTER));
+            document.add(new Paragraph(""));
 
             // Tạo bảng
             float[] columnWidths = {60F, 60F, 80F, 80F, 90F, 90F, 70F};
             Table table = new Table(columnWidths);
 
+
             // Header
-            table.addCell(new Cell().add(new Paragraph("Mã thanh toán")));
-            table.addCell(new Cell().add(new Paragraph("Mã hóa đơn")));
-            table.addCell(new Cell().add(new Paragraph("Ngày thanh toán")));
-            table.addCell(new Cell().add(new Paragraph("Số tiền (VNĐ)")));
-            table.addCell(new Cell().add(new Paragraph("Phương thức")));
-            table.addCell(new Cell().add(new Paragraph("Trạng thái")));
-            table.addCell(new Cell().add(new Paragraph("Ngày tạo")));
+            table.addCell(new Cell().add(new Paragraph("Mã thanh toán"))
+                    .setBackgroundColor(headerColor)
+                    .setBold()
+            );
+            table.addCell(new Cell().add(new Paragraph("Mã hóa đơn").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Ngày thanh toán").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Số tiền (VNĐ)").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Phương thức").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Trạng thái").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
+            table.addCell(new Cell().add(new Paragraph("Ngày tạo").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
 
 
             // Data
