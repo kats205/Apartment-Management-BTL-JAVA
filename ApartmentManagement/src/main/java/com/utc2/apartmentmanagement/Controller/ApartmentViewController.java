@@ -5,6 +5,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.Model.Apartment;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
@@ -303,57 +304,76 @@ public class ApartmentViewController implements Initializable {
     @FXML
     private void exportReport() {
         // TODO: Xuất danh sách căn hộ thành PDF
-        try{
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save PDF");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-            Stage stage = (Stage) exportButton.getScene().getWindow();
-            File file = fileChooser.showSaveDialog(stage);
+        try {
+            // Đường dẫn mặc định
+            String directoryPath = "src/main/resources/com/utc2/apartmentmanagement/PDF_File/";
+            String filePath = directoryPath + "Apartment_List.pdf";
 
-            if(file != null){
-                // Tạo tài liệu PDF
-                PdfWriter writer = new PdfWriter(file.getAbsolutePath());
-                PdfDocument pdf = new PdfDocument(writer);
-                Document document = new Document(pdf);
-
-
-                // Thêm tiêu đề
-                document.add(new Paragraph("Danh sách Apartment").setBold().setFontSize(16));
-                // Tạo bảng có 8 cột
-                float[] columnWidths = {100F, 80F, 60F, 80F, 60F, 100F, 80F, 100F};
-                Table table = new Table(columnWidths);
-
-                // Header
-                table.addCell(new Cell().add(new Paragraph("Apartment ID")));
-                table.addCell(new Cell().add(new Paragraph("Building ID")));
-                table.addCell(new Cell().add(new Paragraph("Floors")));
-                table.addCell(new Cell().add(new Paragraph("Area (m2)")));
-                table.addCell(new Cell().add(new Paragraph("Bed Room")));
-                table.addCell(new Cell().add(new Paragraph("Price (VND)")));
-                table.addCell(new Cell().add(new Paragraph("Status")));
-                table.addCell(new Cell().add(new Paragraph("Maintenance Fee")));
-
-                // Data
-                List<Apartment> apartmentList = new ApartmentDAO().getAllApartments();
-                for (Apartment apt : apartmentList) {
-                    table.addCell(new Cell().add(new Paragraph(apt.getApartmentID())));
-                    table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getBuildingID()))));
-                    table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getFloors()))));
-                    table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getArea()))));
-                    table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getBedRoom()))));
-                    table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getPriceApartment()))));
-                    table.addCell(new Cell().add(new Paragraph(apt.getStatus())));
-                    table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getMaintanceFee()))));
-                }
-
-                // Thêm bảng vào document
-                document.add(table);
-
-                document.close();
+            // Tạo thư mục nếu chưa có
+            File directory = new File(directoryPath);
+            if (!directory.exists()) {
+                directory.mkdirs();
             }
 
-        } catch (FileNotFoundException e) {
+            // Tạo file PDF
+            PdfWriter writer = new PdfWriter(filePath);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+
+            // Thêm tiêu đề
+            document.add(new Paragraph("Danh sách Apartment").setBold().setFontSize(16)).setTextAlignment(TextAlignment.CENTER);
+
+            // Tạo bảng
+            float[] columnWidths = {100F, 80F, 60F, 80F, 60F, 100F, 80F, 100F};
+            Table table = new Table(columnWidths);
+
+            // Header
+            table.addCell(new Cell().add(new Paragraph("Apartment ID")));
+            table.addCell(new Cell().add(new Paragraph("Building ID")));
+            table.addCell(new Cell().add(new Paragraph("Floors")));
+            table.addCell(new Cell().add(new Paragraph("Area (m2)")));
+            table.addCell(new Cell().add(new Paragraph("Bed Room")));
+            table.addCell(new Cell().add(new Paragraph("Price (VND)")));
+            table.addCell(new Cell().add(new Paragraph("Status")));
+            table.addCell(new Cell().add(new Paragraph("Maintenance Fee")));
+
+            // Data
+            List<Apartment> apartments = new ApartmentDAO().getAllApartments();
+            for (Apartment apt : apartments) {
+                table.addCell(new Cell().add(new Paragraph(apt.getApartmentID())));
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getBuildingID()))));
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getFloors()))));
+                table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getArea()))));
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getBedRoom()))));
+                table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getPriceApartment()))));
+                table.addCell(new Cell().add(new Paragraph(apt.getStatus())));
+                table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getMaintanceFee()))));
+            }
+
+            // Thêm bảng vào document
+            document.add(table);
+
+            // Đóng tài liệu
+            document.close();
+
+            // 🔥 Thông báo thành công
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Xuất file PDF thành công!\nĐã lưu tại: " + filePath);
+            alert.showAndWait();
+
+            System.out.println("Xuất báo cáo thành công!!!");
+            System.out.println("PDF exported to: " + filePath);
+        } catch (Exception e) {
             e.printStackTrace();
+
+            // 🔥 Nếu lỗi thì thông báo lỗi
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Xuất file thất bại");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 
