@@ -1,5 +1,14 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.PaymentDAO;
 import com.utc2.apartmentmanagement.Model.Apartment;
@@ -10,17 +19,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -235,8 +241,92 @@ public class PaymentViewController implements Initializable {
         // TODO: In biên lai thanh toán được chọn
     }
 
+    @FXML
     private void exportReport() {
-        // TODO: Xuất báo cáo thanh toán
+        // TODO: Xuất danh sách thanh toán thành PDF
+        try {
+            // Đường dẫn mặc định
+            String directoryPath = "src/main/resources/com/utc2/apartmentmanagement/PDF_File/";
+            String filePath = directoryPath + "Payment_List.pdf";
+
+            // Tạo thư mục nếu chưa có
+            File directory = new File(directoryPath);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            PdfFont vietnameseFont = PdfFontFactory.createFont("src/main/resources/com/utc2/apartmentmanagement/Font/arial.ttf");
+
+            // Tạo file PDF
+            PdfWriter writer = new PdfWriter(filePath);
+            PdfDocument pdf = new PdfDocument(writer);
+
+            Document document = new Document(pdf);
+            document.setFont(vietnameseFont);
+
+            // Thêm tiêu đề
+            document.add(new Paragraph("Danh sách thanh toán").setBold().setFontSize(16)).setTextAlignment(TextAlignment.CENTER);
+
+            // Tạo bảng
+            float[] columnWidths = {60F, 60F, 80F, 80F, 90F, 90F, 70F};
+            Table table = new Table(columnWidths);
+
+            // Header
+            table.addCell(new Cell().add(new Paragraph("Mã thanh toán")));
+            table.addCell(new Cell().add(new Paragraph("Mã hóa đơn")));
+            table.addCell(new Cell().add(new Paragraph("Ngày thanh toán")));
+            table.addCell(new Cell().add(new Paragraph("Số tiền (VNĐ)")));
+            table.addCell(new Cell().add(new Paragraph("Phương thức")));
+            table.addCell(new Cell().add(new Paragraph("Trạng thái")));
+            table.addCell(new Cell().add(new Paragraph("Ngày tạo")));
+
+
+            // Data
+            List<Payment> payments = new PaymentDAO().getAllPayment();
+
+            for (Payment payment : payments) {
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(payment.getPaymentID()))));
+                table.addCell(new Cell().add(new Paragraph(String.valueOf(payment.getBillID()))));
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String paymentDateStr = payment.getPaymentDate() != null ? dateFormat.format(payment.getPaymentDate()) : "";
+                table.addCell(new Cell().add(new Paragraph(paymentDateStr)));
+
+                table.addCell(new Cell().add(new Paragraph(String.format("%.2f", payment.getAmount()))));
+
+                table.addCell(new Cell().add(new Paragraph(payment.getPaymentMedthod())));
+
+                table.addCell(new Cell().add(new Paragraph(payment.getStatus())));
+
+                String createdDateStr = payment.getCreated_at() != null ? dateFormat.format(payment.getCreated_at()) : "";
+                table.addCell(new Cell().add(new Paragraph(createdDateStr)));
+            }
+
+            // Thêm bảng vào document
+            document.add(table);
+
+            // Đóng tài liệu
+            document.close();
+
+            // Thông báo thành công
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Xuất file PDF thành công!\nĐã lưu tại: " + filePath);
+            alert.showAndWait();
+
+            System.out.println("Xuất báo cáo thanh toán thành công!!!");
+            System.out.println("PDF exported to: " + filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // Nếu lỗi thì thông báo lỗi
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Xuất file thất bại");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     private void updatePaymentCount() {

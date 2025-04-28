@@ -64,7 +64,7 @@
             <children>
                 <Button fx:id="detailButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xem chi tiết" />
                 <Button fx:id="printButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="In biên lai" />
-                <Button fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
+                <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportReport" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
             </children>
         </HBox>
         <Button fx:id="closeButton" layoutX="1157.0" layoutY="618.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />

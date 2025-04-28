@@ -1,7 +1,10 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.parser.listener.TextChunk;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
@@ -22,6 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import com.itextpdf.layout.element.Cell;
@@ -299,8 +303,6 @@ public class ApartmentViewController implements Initializable {
         // TODO: Hiển thị chi tiết căn hộ được chọn
     }
 
-
-
     @FXML
     private void exportReport() {
         // TODO: Xuất danh sách căn hộ thành PDF
@@ -315,30 +317,35 @@ public class ApartmentViewController implements Initializable {
                 directory.mkdirs();
             }
 
+            PdfFont vietnameseFont = PdfFontFactory.createFont("src/main/resources/com/utc2/apartmentmanagement/Font/arial.ttf");
+
             // Tạo file PDF
             PdfWriter writer = new PdfWriter(filePath);
             PdfDocument pdf = new PdfDocument(writer);
+
             Document document = new Document(pdf);
+            document.setFont(vietnameseFont);
 
             // Thêm tiêu đề
-            document.add(new Paragraph("Danh sách Apartment").setBold().setFontSize(16)).setTextAlignment(TextAlignment.CENTER);
+            document.add(new Paragraph("Danh sách căn hộ").setBold().setFontSize(16)).setTextAlignment(TextAlignment.CENTER);
 
             // Tạo bảng
             float[] columnWidths = {100F, 80F, 60F, 80F, 60F, 100F, 80F, 100F};
             Table table = new Table(columnWidths);
 
             // Header
-            table.addCell(new Cell().add(new Paragraph("Apartment ID")));
-            table.addCell(new Cell().add(new Paragraph("Building ID")));
-            table.addCell(new Cell().add(new Paragraph("Floors")));
-            table.addCell(new Cell().add(new Paragraph("Area (m2)")));
-            table.addCell(new Cell().add(new Paragraph("Bed Room")));
-            table.addCell(new Cell().add(new Paragraph("Price (VND)")));
-            table.addCell(new Cell().add(new Paragraph("Status")));
-            table.addCell(new Cell().add(new Paragraph("Maintenance Fee")));
+            table.addCell(new Cell().add(new Paragraph("Mã căn hộ")));
+            table.addCell(new Cell().add(new Paragraph("Tòa nhà")));
+            table.addCell(new Cell().add(new Paragraph("Tầng")));
+            table.addCell(new Cell().add(new Paragraph("Diện tích (m^2)")));
+            table.addCell(new Cell().add(new Paragraph("Số phòng ngủ")));
+            table.addCell(new Cell().add(new Paragraph("Giá thuê (VNĐ)")));
+            table.addCell(new Cell().add(new Paragraph("Trạng thái")));
+            table.addCell(new Cell().add(new Paragraph("Phí bảo trì")));
 
             // Data
             List<Apartment> apartments = new ApartmentDAO().getAllApartments();
+
             for (Apartment apt : apartments) {
                 table.addCell(new Cell().add(new Paragraph(apt.getApartmentID())));
                 table.addCell(new Cell().add(new Paragraph(String.valueOf(apt.getBuildingID()))));
@@ -356,7 +363,7 @@ public class ApartmentViewController implements Initializable {
             // Đóng tài liệu
             document.close();
 
-            // 🔥 Thông báo thành công
+            // Thông báo thành công
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Thông báo");
             alert.setHeaderText(null);
@@ -368,23 +375,13 @@ public class ApartmentViewController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
 
-            // 🔥 Nếu lỗi thì thông báo lỗi
+            // Nếu lỗi thì thông báo lỗi
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lỗi");
             alert.setHeaderText("Xuất file thất bại");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
-    }
-
-    // Hiển thị alert dialog
-    private void showAlert(String title, String message) {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
-                javafx.scene.control.Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private void updateApartmentCount() {
