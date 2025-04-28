@@ -16,7 +16,7 @@
     -fx-border-color: transparent;
     -fx-background-radius: 0;
     -fx-cursor: hand;
-    -fx-transition: -fx-border-color 0.2s ease-in-out;
+    -fx-transition: -fx-border-color 0.4s ease-in-out;
 }
 
 .menuItem:hover{
@@ -49,11 +49,11 @@
 /* Menu slider animation */
 .slider-menu {
     -fx-background-color: #0A4969;
-    -fx-transition: -fx-pref-width 0.3s ease-in-out;
+    -fx-transition: -fx-pref-width 0.4s ease-in-out;
 }
 
 .slider-menu-expanded {
-    -fx-pref-width: 176;
+    -fx-pref-width: 150;
 }
 
 .slider-menu-collapsed {
@@ -63,7 +63,7 @@
 /* Menu buttons transition */
 .menu-button {
     -fx-opacity: 100;
-    -fx-transition: opacity 0.2s ease-in-out;
+    -fx-transition: opacity 0.3s ease-in-out;
 }
 
 .menu-button-hidden {
@@ -76,7 +76,7 @@
     -fx-text-fill: white;
     -fx-background-radius: 3;
     -fx-cursor: hand;
-    -fx-transition: -fx-background-color 0.2s ease-in-out;
+    -fx-transition: -fx-background-color 0.3s ease-in-out;
 }
 
 .actionButton:hover {
@@ -127,14 +127,6 @@
     -fx-border-width: 0 0 1 0;
     -fx-padding: 5 0 5 0;
     -fx-transition: -fx-background-color 0.1s ease-in-out;
-}
-
-/* .table-view .table-row-cell:odd {
-    -fx-background-color: #fafafa;
-}
-
-/* .table-view .table-row-cell:selected {
-    -fx-background-color: #white;
 }
 
 /* Labels */

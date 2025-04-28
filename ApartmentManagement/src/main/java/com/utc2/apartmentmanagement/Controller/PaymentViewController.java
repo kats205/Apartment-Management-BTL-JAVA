@@ -121,11 +121,11 @@ public class PaymentViewController implements Initializable {
 
         invoiceColumn.setCellValueFactory(new PropertyValueFactory<>("billID"));
         invoiceColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        invoiceColumn.setPrefWidth(140);
+        invoiceColumn.setPrefWidth(120);
 
         apartmentColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
         apartmentColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        apartmentColumn.setPrefWidth(140);
+        apartmentColumn.setPrefWidth(110);
 
         paymentDateColumn.setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
         paymentDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
@@ -133,7 +133,7 @@ public class PaymentViewController implements Initializable {
 
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amountColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        amountColumn.setPrefWidth(150);
+        amountColumn.setPrefWidth(140);
 
         methodColumn.setCellValueFactory(new PropertyValueFactory<>("paymentMedthod"));
         methodColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
@@ -141,15 +141,15 @@ public class PaymentViewController implements Initializable {
 
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         statusColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        statusColumn.setPrefWidth(130);
+        statusColumn.setPrefWidth(110);
 
         createDateColumn.setCellValueFactory(new PropertyValueFactory<>("created_at"));
         createDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        createDateColumn.setPrefWidth(130);
+        createDateColumn.setPrefWidth(100);
 
         transactionIdColumn.setCellValueFactory(new PropertyValueFactory<>("transactionID"));
         transactionIdColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        transactionIdColumn.setPrefWidth(150);
+        transactionIdColumn.setPrefWidth(140);
 
     }
 
