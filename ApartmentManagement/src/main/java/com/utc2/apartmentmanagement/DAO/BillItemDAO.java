@@ -78,7 +78,7 @@ public class BillItemDAO implements IBillItemDAO {
     public static boolean updateBillItemField(int billID, String field, Object newValue){
         String sql = "UPDATE BillItem SET " + field + " = ? , updated_at = ? WHERE billID = ?";
         try(Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)){
+            PreparedStatement stmt = connection.prepareStatement(sql)){
             if(newValue instanceof String){
                 stmt.setNString(1, (String) newValue);
             }

@@ -77,8 +77,14 @@ public class UserDAO implements IUserDAO {
             stmt.setString(5, user.getPhoneNumber());
             stmt.setInt(6, user.getRoleID());
             stmt.setBoolean(7, user.isActive());
-            return stmt.executeUpdate() > 0;
+            int affectedRows = stmt.executeUpdate();
 
+            if (affectedRows > 0) {
+                conn.commit(); // Commit khi insert thành công
+                return true;
+            } else {
+                conn.rollback(); // Rollback nếu không insert được
+            }
         }catch(SQLException e){
             e.printStackTrace();
         }

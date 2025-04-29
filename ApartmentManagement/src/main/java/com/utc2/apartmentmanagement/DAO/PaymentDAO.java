@@ -92,6 +92,26 @@ public class PaymentDAO implements IPaymentDAO {
         return updatePaymentField(paymentID, "status", newStatus);
     }
 
+    @Override
+    public List<Payment> findPaymentByDate(LocalDate fromDate, LocalDate toDate) {
+        String sql = "SELECT * FROM Payment WHERE payment_date BETWEEN ? AND ?";
+        List<Payment> paymentList = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setDate(1, Date.valueOf(fromDate));
+            stmt.setDate(2, Date.valueOf(toDate));
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                paymentList.add(new Payment(rs.getInt("payment_id"), rs.getInt("bill_id"), rs.getFloat("amount"),
+                        rs.getDate("payment_date"), rs.getString("payment_method"), rs.getString("transaction_id"),
+                        rs.getString("status"), rs.getDate("created_at"), rs.getDate("updated_at")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Lỗi lấy dữ liệu",e);
+        }
+        return paymentList;
+    }
+
     public boolean updatePaymentField(int paymentID, String field, Object newValue){
         String sql = "UPDATE payment SET " + field + " = ? , updated_at = ? WHERE payment_id = ?";
         try(Connection connection = DatabaseConnection.getConnection();

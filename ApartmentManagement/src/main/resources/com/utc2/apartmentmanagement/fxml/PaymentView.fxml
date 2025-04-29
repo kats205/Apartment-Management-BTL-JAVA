@@ -10,14 +10,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paymentView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.PaymentViewController">
+<AnchorPane fx:id="paymentView" prefHeight="675.0" prefWidth="1295.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.PaymentViewController">
     <children>
+
         <Label alignment="CENTER" layoutX="424.0" layoutY="20.0" prefHeight="35.0" prefWidth="282.0" style="-fx-font-weight: bold;" text="THANH TOÁN" textAlignment="CENTER">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER_LEFT" layoutX="48.0" layoutY="70.0" prefHeight="40.0" prefWidth="864.0" spacing="15.0">
+        <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="70.0" prefHeight="40.0" prefWidth="911.0" spacing="15.0">
             <children>
                 <Label text="Căn hộ:">
                     <font>
@@ -25,28 +26,29 @@
                     </font>
                 </Label>
                 <ComboBox fx:id="apartmentComboBox" prefHeight="30.0" prefWidth="220.0" promptText="Chọn căn hộ" stylesheets="@../styles/Dashboard.css" />
-                <Label text="Thời gian:">
+            <Button fx:id="searByApartmentId" mnemonicParsing="false" onAction="#handlesearByApartmentIdButton" prefHeight="30.0" prefWidth="107.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Tìm kiếm" />
+                <Label prefHeight="20.0" prefWidth="67.0" text="Thời gian:">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
                 <DatePicker fx:id="fromDatePicker" prefHeight="30.0" prefWidth="150.0" promptText="Từ ngày" />
                 <DatePicker fx:id="toDatePicker" prefHeight="30.0" prefWidth="150.0" promptText="Đến ngày" />
-                <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Tìm kiếm" />
+                <Button fx:id="searchByDateButton" layoutX="100.0" mnemonicParsing="false" onAction="#handleSearchByDateButton" prefHeight="30.0" prefWidth="107.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Tìm kiếm" />
             </children>
         </HBox>
+
         <Button fx:id="newPaymentButton" layoutX="981.0" layoutY="75.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" styleClass="create-button" stylesheets="@../styles/Dashboard.css" text="Thanh toán mới" />
         <TableView fx:id="paymentTable" layoutX="8.0" layoutY="126.0" prefHeight="430.0" prefWidth="1115.0" stylesheets="@../styles/Dashboard.css">
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="100.0" text="Mã thanh toán" />
                 <TableColumn fx:id="invoiceColumn" prefWidth="100.0" text="Mã hóa đơn" />
-                <TableColumn fx:id="apartmentColumn" prefWidth="100.0" text="Mã căn hộ" />
                 <TableColumn fx:id="paymentDateColumn" prefWidth="120.0" text="Ngày thanh toán" />
                 <TableColumn fx:id="amountColumn" prefWidth="150.0" text="Số tiền (VNĐ)" />
                 <TableColumn fx:id="methodColumn" prefWidth="130.0" text="Phương thức" />
                 <TableColumn fx:id="statusColumn" prefWidth="130.0" text="Trạng thái" />
                 <TableColumn fx:id="createDateColumn" prefWidth="130.0" text="Ngày tạo" />
-                <TableColumn fx:id="transactionIdColumn" prefWidth="150.0" text="Mã giao dịch" />
+                <TableColumn fx:id="transactionIdColumn" prefWidth="160.00006103515625" text="Mã giao dịch" />
             </columns>
         </TableView>
         <Label fx:id="noContentLabel" alignment="CENTER" layoutX="80.0" layoutY="20.0" prefHeight="30.0" prefWidth="236.0" style="-fx-background-color: transparent; -fx-opacity: 0;" text="Không có dữ liệu" textFill="#757575" visible="true" />
@@ -60,13 +62,15 @@
                 <Font size="14.0" />
             </font>
         </Label>
+
         <HBox alignment="CENTER_RIGHT" layoutX="761.0" layoutY="565.0" prefHeight="40.0" prefWidth="355.0" spacing="10.0">
             <children>
                 <Button fx:id="detailButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xem chi tiết" />
                 <Button fx:id="printButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="In biên lai" />
-                <Button fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
+                <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportReport" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
             </children>
         </HBox>
+
         <Button fx:id="closeButton" layoutX="1017.0" layoutY="611.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
     </children>
 </AnchorPane>
