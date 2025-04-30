@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="685.0" prefWidth="1339.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.ReportViewController">
+<AnchorPane prefHeight="664.0" prefWidth="1306.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.ReportViewController">
     <children>
         <Label alignment="CENTER" layoutX="539.0" layoutY="27.0" prefHeight="35.0" prefWidth="282.0" style="-fx-font-weight: bold;" text="BÁO CÁO THỐNG KÊ" textAlignment="CENTER">
             <font>
@@ -59,7 +59,7 @@
                                                         <Font size="16.0" />
                                                     </font>
                                                 </Label>
-                                                <BarChart fx:id="revenueChart" prefHeight="343.0" prefWidth="500.0">
+                                                <BarChart fx:id="revenueChart" prefHeight="343.0" prefWidth="580.0">
                                                     <xAxis>
                                                         <CategoryAxis side="BOTTOM" />
                                                     </xAxis>
@@ -76,7 +76,7 @@
                                                         <Font size="16.0" />
                                                     </font>
                                                 </Label>
-                                                <PieChart fx:id="statusChart" prefHeight="343.0" prefWidth="500.0" />
+                                                <PieChart fx:id="statusChart" prefHeight="343.0" prefWidth="580.0" />
                                             </children>
                                         </VBox>
                                     </children>

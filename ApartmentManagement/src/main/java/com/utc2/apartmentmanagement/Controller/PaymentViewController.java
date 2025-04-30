@@ -350,4 +350,7 @@ public class PaymentViewController implements Initializable {
             }
         }
     }
+
+    public void handleSearchButton(ActionEvent actionEvent) {
+    }
 }

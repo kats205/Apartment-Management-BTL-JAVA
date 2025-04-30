@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles/Dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.TestController">
+    <children>
+        <BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1280.0">
+            <top>
+                <AnchorPane prefHeight="65.0" prefWidth="1280.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+                    <children>
+                        <Pane prefHeight="25.0" prefWidth="1280.0" style="-fx-background-color: #032d4d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                            <children>
+                                <ImageView fx:id="Exit" fitHeight="22.0" fitWidth="22.0" layoutX="1258.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../assets/Dashboard/exit.png" />
+                                    </image>
+                                </ImageView>
+                                <Label alignment="CENTER" layoutX="10.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </Pane>
+                        <HBox layoutX="150.0" layoutY="25.0" prefHeight="40.0" prefWidth="1130.0" AnchorPane.bottomAnchor="0.0">
+                            <children>
+                                <Button fx:id="apartment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Apartment">
+                                    <graphic>
+                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/dash1.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="payment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Payment">
+                                    <graphic>
+                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/data1.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="report" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Report">
+                                    <graphic>
+                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/report1.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Button">
+                                    <graphic>
+                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/add1.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </HBox>
+                        <Label fx:id="Menu" layoutX="6.0" layoutY="32.0" text="AD'S PANEL">
+                            <graphic>
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../assets/UserDashboard/setting.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="MenuBack" layoutX="6.0" layoutY="32.0" text="AD'S PANEL">
+                            <graphic>
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../assets/UserDashboard/setting.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </top>
+            <left>
+                <AnchorPane fx:id="slider" prefHeight="655.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" BorderPane.alignment="CENTER">
+                    <children>
+                        <VBox prefHeight="275.0" prefWidth="150.0">
+                            <children>
+                                <Button fx:id="ApartmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Apartment" textAlignment="CENTER" textFill="WHITE">
+                                    <graphic>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/dash.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <VBox.margin>
+                                        <Insets />
+                                    </VBox.margin>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                                <Button fx:id="paymentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Payment" textAlignment="CENTER" textFill="WHITE">
+                                    <graphic>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/data.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                                <Button fx:id="reportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Report" textAlignment="CENTER" textFill="WHITE">
+                                    <graphic>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/report.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                                <Button fx:id="hrButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
+                                    <graphic>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/HR.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox layoutX="-1.0" layoutY="603.0" prefHeight="50.0" prefWidth="150.0">
+                            <children>
+                                <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
+                                    <graphic>
+                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/profile.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Button>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </left>
+            <center>
+                <AnchorPane fx:id="contentArea" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f5f5f5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label layoutX="45.0" layoutY="30.0" styleClass="dashboard-title" text="Admin Dashboard Overview" textFill="#032d4d">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Statistics Cards Row -->
+                        <HBox layoutX="45.0" layoutY="80.0" prefHeight="200.0" prefWidth="1040.0" spacing="30.0">
+                            <children>
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
+                                    <children>
+                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Total Apartments" textFill="#0a4969">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="86.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/dash.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label fx:id="totalApartmentsLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="125" textFill="#0a4969">
+                                            <font>
+                                                <Font size="36.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Occupied: 98" />
+                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Available: 27" />
+                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Details" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
+                                    <children>
+                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Monthly Revenue" textFill="#0a4969">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="97.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/data.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label fx:id="revenueLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="₫258M" textFill="#0a4969">
+                                            <font>
+                                                <Font size="36.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Collected: ₫195M" />
+                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Outstanding: ₫63M" />
+                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Report" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
+                                    <children>
+                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Active Requests" textFill="#0a4969">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="69.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/report.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label fx:id="requestsLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="42" textFill="#0a4969">
+                                            <font>
+                                                <Font size="36.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Complaints: 18" />
+                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Maintenance: 24" />
+                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="Manage Requests" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
+                                    <children>
+                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="System Status" textFill="#0a4969">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="77.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../assets/Dashboard/HR.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label layoutX="10.0" layoutY="60.0" text="All Systems Operational" textFill="#0a4969">
+                                            <font>
+                                                <Font size="16.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="10.0" layoutY="90.0" styleClass="stat-detail" text="Last Backup: Today, 03:00 AM" />
+                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Active Users: 67" />
+                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Server Load: 32%" />
+                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="System Settings" />
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </HBox>
+
+                        <!-- Recent Activities Section -->
+                        <Label layoutX="45.0" layoutY="325.0" styleClass="section-heading" text="Recent Activities" textFill="#0a4969">
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Label>
+
+                        <TableView fx:id="recentActivitiesTable" layoutX="45.0" layoutY="370.0" prefHeight="250.0" prefWidth="1040.0">
+                            <columns>
+                                <TableColumn fx:id="dateColumn" prefWidth="130.0" text="User" />
+                                <TableColumn fx:id="actionColumn1" prefWidth="130.0" text="Role" />
+                                <TableColumn fx:id="timeColumn" prefWidth="130.0" text="Status" />
+                                <TableColumn fx:id="activityColumn" prefWidth="150.0" text="Action" />
+                                <TableColumn fx:id="userColumn" prefWidth="200.0" text="Activity" />
+                                <TableColumn fx:id="statusColumn" prefWidth="130.0" text="Date" />
+                                <TableColumn fx:id="actionColumn" prefWidth="130.0" text="Time" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
