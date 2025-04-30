@@ -25,9 +25,9 @@
                               <Image url="@../assets/Dashboard/exit.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" layoutX="8.0" layoutY="1.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
+                        <Label alignment="CENTER" layoutX="8.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="17.0" />
+                              <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
                      </children>
@@ -104,7 +104,7 @@
                <children>
                   <VBox prefHeight="275.0" prefWidth="150.0">
                      <children>
-                        <Button fx:id="ApartmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Apartment" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="ApartmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Apartment" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -116,7 +116,7 @@
                               <Insets />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="paymentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Payment" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="paymentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Payment" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -125,7 +125,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Report" textAlignment="CENTER" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Report" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -134,11 +134,11 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Button" textAlignment="CENTER" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/add.png" />
+                                    <Image url="@../assets/Dashboard/HR.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -151,7 +151,7 @@
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/UserDashboard/profile.png" />
+                                    <Image url="@../assets/Dashboard/profile.png" />
                                  </image>
                               </ImageView>
                            </graphic>
