@@ -130,35 +130,39 @@ public class TestController implements Initializable {
     }
 
     private void toggleSidebar() {
-        // Create translation transition for sidebar
+        // Tạo transition cho sidebar
         TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(300), slider);
 
         if (isSidebarVisible) {
-            // Hide sidebar
-            sidebarTransition.setToX(-150); // Kéo sidebar sang trái bằng đúng chiều rộng của nó
+            // Ẩn sidebar
+            sidebarTransition.setToX(-150);
 
-            // Điều chỉnh contentArea để lấp đầy phần trống
-            AnchorPane.setLeftAnchor(contentArea, 0.0); // Di chuyển contentArea để lấp đầy không gian
+            // Điều chỉnh contentArea
+            TranslateTransition contentTransition = new TranslateTransition(Duration.millis(300), contentArea);
+            contentTransition.setToX(-75); // Dịch chuyển contentArea sang trái 150px
+            contentTransition.play();
 
-            // Swap menu labels
+            // Đổi nút menu
             Menu.setVisible(false);
             MenuBack.setVisible(true);
         } else {
-            // Show sidebar
-            sidebarTransition.setToX(0); // Đẩy sidebar trở lại vị trí ban đầu
+            // Hiện sidebar
+            sidebarTransition.setToX(0);
 
-            // Phục hồi contentArea về vị trí ban đầu
-            AnchorPane.setLeftAnchor(contentArea, 150.0); // Đặt lại margin trái cho contentArea
+            // Điều chỉnh contentArea
+            TranslateTransition contentTransition = new TranslateTransition(Duration.millis(300), contentArea);
+            contentTransition.setToX(0); // Đưa contentArea về vị trí ban đầu
+            contentTransition.play();
 
-            // Swap menu labels
+            // Đổi nút menu
             Menu.setVisible(true);
             MenuBack.setVisible(false);
         }
 
-        // Play transition
+        // Chạy animation cho sidebar
         sidebarTransition.play();
 
-        // Toggle sidebar visibility state
+        // Đảo trạng thái
         isSidebarVisible = !isSidebarVisible;
     }
 
