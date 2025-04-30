@@ -1,7 +1,10 @@
 package com.utc2.apartmentmanagement.Controller;
 
 import com.utc2.apartmentmanagement.DAO.ReportDAO;
+import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.Report;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,15 +20,30 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ReportViewController implements Initializable {
 
+    @FXML public TableColumn<Report, String> reportTypeColumn;
+    @FXML public TableColumn<Report, LocalDate> generationDateColumn;
+    @FXML public TableColumn<Report, Integer> generatedByUserIdColumn;
+    @FXML public TableColumn<Report, Date> parametersColumn;
+    @FXML public TableColumn<Report, String> filePathColumn;
+    @FXML public TableColumn<Report, LocalDate> createdAtColumn;
+    @FXML public TableColumn<Report, LocalDate> updatedAtColumn;
+    @FXML public Label topGeneratorLabel;
+    @FXML public Label popularReportTypeLabel;
+    @FXML public Label latestReportLabel;
+    @FXML public Label totalReportsLabel;
     @FXML
     private ComboBox<String> reportTypeComboBox;
 
@@ -48,7 +66,7 @@ public class ReportViewController implements Initializable {
     private PieChart statusChart;
 
     @FXML
-    private TableView<Map<String, Object>> reportTable;
+    private TableView<Report> reportTable;
 
     @FXML
     private TableColumn<Map, String> periodColumn;
@@ -104,6 +122,7 @@ public class ReportViewController implements Initializable {
         loadDefaultData();
 
 
+
     }
 
     private void initializeComponents() {
@@ -118,6 +137,53 @@ public class ReportViewController implements Initializable {
 
         // Khởi tạo biểu đồ
         initializeCharts();
+
+        initializeTableView();
+
+        initialSummary();
+    }
+
+    public void initialSummary(){
+        List<Report> reportList = new ReportDAO().getAllReports();
+        int totalReport = reportList.size();
+        String newestReport = reportList.getLast().getReportType();
+        // Map 1: Đếm số lần mỗi loại báo cáo
+        Map<String, Integer> reportTypeCountMap = new HashMap<>();
+
+// Map 2: Đếm số lần mỗi user tạo báo cáo
+        Map<Integer, Integer> userReportCountMap = new HashMap<>();
+
+        for (Report report : reportList) {
+            // Đếm loại báo cáo
+            String type = report.getReportType();
+            reportTypeCountMap.put(type, reportTypeCountMap.getOrDefault(type, 0) + 1);
+
+            // Đếm theo user
+            int userId = report.getGeneratedByUserId();
+            userReportCountMap.put(userId, userReportCountMap.getOrDefault(userId, 0) + 1);
+        }
+
+        // Tìm loại báo cáo phổ biến nhất
+        String popularReport = reportTypeCountMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+
+        // Tìm user tạo nhiều báo cáo nhất
+        Integer mostActiveUserId = userReportCountMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+        String nameUserById = new UserDAO().getUserByID(mostActiveUserId).getFullName();
+        totalReportsLabel.setText(String.valueOf(totalReport));
+        latestReportLabel.setText(newestReport);
+        popularReportTypeLabel.setText(popularReport);
+        topGeneratorLabel.setText(nameUserById);
+        // Output thử
+        System.out.println("Tổng số báo cáo: " + totalReport);
+        System.out.println("Báo cáo mới nhất: " + newestReport);
+        System.out.println("Loại báo cáo phổ biến nhất: " + popularReport);
+        System.out.println("Người dùng tạo nhiều báo cáo nhất: User ID = " + mostActiveUserId);
     }
 
     private void initializeDatePickers() {
@@ -137,7 +203,31 @@ public class ReportViewController implements Initializable {
 
     private void initializeTableView() {
         // TODO: Cấu hình TableView và các cột
+        reportTypeColumn.setCellValueFactory(new PropertyValueFactory<>("reportType"));
+        reportTypeColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
+        generationDateColumn.setCellValueFactory(new PropertyValueFactory<>("generationDate"));
+        generationDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        generatedByUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("generatedByUserId"));
+        generatedByUserIdColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        parametersColumn.setCellValueFactory(new PropertyValueFactory<>("parameters"));
+        parametersColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        filePathColumn.setCellValueFactory(new PropertyValueFactory<>("filePath"));
+        filePathColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        createdAtColumn.setCellValueFactory( new PropertyValueFactory<>("createdAt"));
+        createdAtColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        updatedAtColumn.setCellValueFactory(new PropertyValueFactory<>("updatedAt"));
+        updatedAtColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        ObservableList<Report> reportList = FXCollections.observableArrayList();
+        List<Report> reportList1 = new ReportDAO().getAllReports();
+        reportList.addAll(reportList1);
+        reportTable.setItems(reportList);
     }
 
     private void initializeCharts() {
@@ -181,7 +271,7 @@ public class ReportViewController implements Initializable {
         updateCharts();
 
         // Cập nhật bảng dữ liệu
-        updateTableData();
+//        updateTableData();
 
         // Cập nhật dữ liệu tóm tắt
         updateSummaryData();
@@ -210,27 +300,27 @@ public class ReportViewController implements Initializable {
 
     }
 
-    private void updateTableData() throws SQLException {
-        // TODO: Cập nhật dữ liệu cho bảng báo cáo
-        LocalDate fromDate = fromDatePicker.getValue();
-        LocalDate toDate = toDatePicker.getValue();
-        periodColumn.setCellValueFactory(new MapValueFactory<>("kỳ"));
-        totalInvoicesColumn.setCellValueFactory(new MapValueFactory<>("tổng số hóa đơn"));
-        overdueInvoicesColumn.setCellValueFactory(new MapValueFactory<>("quá hạn"));
-        paidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("đã thanh toán"));
-        totalFeesColumn.setCellValueFactory(new MapValueFactory<>("tổng phí phạt"));
-        unpaidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("chưa thanh toán"));
-        reportTable.setItems(new ReportDAO().getValueReport(fromDate, toDate));
-        totalRevenueColumn.setCellValueFactory(new MapValueFactory<>("tổng doanh thu"));
-    }
+//    private void updateTableData() throws SQLException {
+//        // TODO: Cập nhật dữ liệu cho bảng báo cáo
+//        LocalDate fromDate = fromDatePicker.getValue();
+//        LocalDate toDate = toDatePicker.getValue();
+//        reportTable.setItems(new ReportDAO().getValue(fromDate, toDate));
+//        periodColumn.setCellValueFactory(new MapValueFactory<>("kỳ"));
+//        totalInvoicesColumn.setCellValueFactory(new MapValueFactory<>("tổng số hóa đơn"));
+//        overdueInvoicesColumn.setCellValueFactory(new MapValueFactory<>("quá hạn"));
+//        paidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("đã thanh toán"));
+//        totalFeesColumn.setCellValueFactory(new MapValueFactory<>("tổng phí phạt"));
+//        unpaidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("chưa thanh toán"));
+//        totalRevenueColumn.setCellValueFactory(new MapValueFactory<>("tổng doanh thu"));
+//    }
 
     private void updateSummaryData() {
         // TODO: Cập nhật các thông tin tóm tắt
         // Giả sử các giá trị mặc định
-        totalInvoicesLabel.setText("0");
-        totalRevenueLabel.setText("0 VNĐ");
-        paymentRateLabel.setText("0%");
-        overdueRateLabel.setText("0%");
+//        totalInvoicesLabel.setText("0");
+//        totalRevenueLabel.setText("0 VNĐ");
+//        paymentRateLabel.setText("0%");
+//        overdueRateLabel.setText("0%");
     }
 
     private void exportFullReport() {

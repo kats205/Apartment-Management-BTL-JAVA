@@ -15,157 +15,219 @@ import java.util.List;
 import java.util.Map;
 
 public class ReportDAO implements IReportDAO {
+    private Connection connection;
+
+    public ReportDAO() {
+        try {
+            connection = DatabaseConnection.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public List<Report> getAllReports() {
-        List<Report> reportList = new ArrayList<>();
-        String sql = "SELECT * FROM Report";
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-            while(rs.next()){
-                reportList.add(new Report(
-                        rs.getInt("report_id"),
-                        rs.getString("report_type"),
-                        rs.getDate("generation_date"),
-                        rs.getInt("generated_by_user_id"),
-                        rs.getString("parameters")
-                ));
+        List<Report> reports = new ArrayList<>();
+        String query = "SELECT * FROM report ORDER BY created_at DESC";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Report report = mapResultSetToReport(resultSet);
+                reports.add(report);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return reportList;
+
+        return reports;
     }
 
     @Override
     public Report getReportById(int id) {
-        String sql = "SELECT * FROM Report WHERE report_id = ?";
-        try(Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
-                return new Report(
-                        rs.getInt("report_id"),
-                        rs.getString("report_type"),
-                        rs.getDate("generation_date"),
-                        rs.getInt("generated_by_user_id"),
-                        rs.getString("parameters")
-                );
+        String query = "SELECT * FROM reports WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return mapResultSetToReport(resultSet);
+                }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
     @Override
-    public boolean addReport(Report report) {
-        String sql = "INSERT INTO Report (report_type, generation_date, generated_by_user_id, parameters, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
-        try(Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setString(1, report.getReportType());
-            stmt.setDate(2, report.getGenerationDate());
-            stmt.setInt(3, report.getGenaratedByUserID());
-            stmt.setString(4, report.getParameter());
-            stmt.setDate(5, Date.valueOf(LocalDate.now()));
-            stmt.setDate(6, Date.valueOf(LocalDate.now()));
-            return stmt.executeUpdate() > 0;
-        }catch (SQLException e){
+    public boolean saveReport(Report report) {
+        String query = "INSERT INTO reports (report_type, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, report.getReportType());
+            statement.setDate(2, report.getGenerationDate() != null ?
+                    java.sql.Date.valueOf(report.getGenerationDate()) : null);
+            statement.setInt(3, report.getGeneratedByUserId());
+            statement.setString(4, report.getParameters());
+            statement.setString(5, report.getFilePath());
+            statement.setDate(6, report.getCreatedAt() != null ?
+                    java.sql.Date.valueOf(report.getCreatedAt()) : null);
+            statement.setDate(7, report.getUpdatedAt() != null ?
+                    java.sql.Date.valueOf(report.getUpdatedAt()) : null);
+
+            int affectedRows = statement.executeUpdate();
+
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        report.setId(generatedKeys.getInt(1));
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return false;
+    }
+
+    @Override
+    public boolean updateReport(Report report) {
+        String query = "UPDATE reports SET report_type = ?, generation_date = ?, generated_by_user_id = ?, " +
+                "parameters = ?, file_path = ?, updated_at = ? WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, report.getReportType());
+            statement.setDate(2, report.getGenerationDate() != null ?
+                    java.sql.Date.valueOf(report.getGenerationDate()) : null);
+            statement.setInt(3, report.getGeneratedByUserId());
+            statement.setString(4, report.getParameters());
+            statement.setString(5, report.getFilePath());
+            statement.setDate(6, report.getUpdatedAt() != null ?
+                    java.sql.Date.valueOf(report.getUpdatedAt()) : null);
+            statement.setInt(7, report.getId());
+
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
     @Override
     public boolean deleteReport(int id) {
-        String sql = "DELETE FROM Report WHERE report_id = ?";
-        try(Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setInt(1, id);
-            return stmt.executeUpdate() > 0;
-        }catch (SQLException e){
+        String query = "DELETE FROM reports WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+
+            int affectedRows = statement.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return false;
     }
 
-
     @Override
-    public boolean updateReportType(int id, String newType) {
-        return updateReportField(id, "report_type", newType);
-    }
+    public List<Report> getReportsByDateRange(LocalDate fromDate, LocalDate toDate) {
+        List<Report> reports = new ArrayList<>();
+        String query = "SELECT * FROM reports WHERE generation_date BETWEEN ? AND ? ORDER BY generation_date DESC";
 
-    @Override
-    public boolean updateGenerationDate(int id, Date newDate) {
-        return updateReportField(id, "generation_date", newDate);
-    }
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDate(1, java.sql.Date.valueOf(fromDate));
+            statement.setDate(2, java.sql.Date.valueOf(toDate));
 
-    @Override
-    public boolean updateParameter(int id, String newParameter) {
-        return updateReportField(id, "parameters", newParameter);
-    }
-    public boolean updateReportField(int id, String field, Object newValue){
-        String sql = "UPDATE Report SET " + field + " = ? , updated_at = ? WHERE report_id = ?";
-        try(Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql)){
-            if(newValue instanceof Integer){
-                stmt.setInt(1, (Integer) newValue);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Report report = mapResultSetToReport(resultSet);
+                    reports.add(report);
+                }
             }
-            else if(newValue instanceof String){
-                stmt.setString(1, (String) newValue);
-            }
-            else if(newValue instanceof Date){
-                stmt.setDate(1, (Date) newValue);
-            }
-            stmt.setDate(2, Date.valueOf(LocalDate.now()));
-            stmt.setInt(3, id);
-            return stmt.executeUpdate() > 0;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+
+        return reports;
     }
 
-    public ObservableList<Map<String, Object>> getValueReport(LocalDate fromDate, LocalDate toDate) throws SQLException{
-        ObservableList<Map<String, Object>> data = FXCollections.observableArrayList();
-        String sql = "SELECT \n" +
-                "    FORMAT(B.billing_date, 'MM/yyyy') AS [Kỳ],\n" +
-                "    COUNT(B.bill_id) AS [Tổng số hóa đơn],\n" +
-                "    SUM(CASE WHEN B.status = 'paid' THEN 1 ELSE 0 END) AS [Đã thanh toán],\n" +
-                "    SUM(CASE WHEN B.status = 'pending' THEN 1 ELSE 0 END) AS [Chưa thanh toán],\n" +
-                "    SUM(CASE WHEN B.status = 'overdue' THEN 1 ELSE 0 END) AS [Quá hạn],\n" +
-                "    SUM(B.total_amount) AS [Tổng doanh thu (VND)],\n" +
-                "    SUM(B.late_fee) AS [Tổng phí phạt (VND)]\n" +
-                "FROM \n" +
-                "    Bill B\n" +
-                "WHERE \n" +
-                "    B.billing_date BETWEEN ? AND ?\n" +
-                "GROUP BY \n" +
-                "    FORMAT(B.billing_date, 'MM/yyyy')\n" +
-                "ORDER BY \n" +
-                "    FORMAT(B.billing_date, 'MM/yyyy')";
-        try(Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setDate(1, Date.valueOf(fromDate));
-            stmt.setDate(2, Date.valueOf(toDate));
-            ResultSet rs = stmt.executeQuery();
-            Map<String, Object> row = new HashMap<>();
-            while(rs.next()){
-                row.put("kỳ", rs.getNString("Kỳ"));
-                row.put("tổng số hóa đơn", rs.getInt("Tổng số hóa đơn"));
-                row.put("đã thanh toán", rs.getInt("Đã thanh toán"));
-                row.put("chưa thanh toán", rs.getInt("Chưa thanh toán"));
-                row.put("quá hạn", rs.getInt("Quá hạn"));
-                row.put("tổng doanh thu", rs.getDouble("Tổng doanh thu (VND)"));
-                row.put("tổng phí phạt", rs.getDouble("Tổng phí phạt (VND)"));
-                data.add(row);
-            }
+    @Override
+    public List<Report> getReportsByType(String reportType) {
+        List<Report> reports = new ArrayList<>();
+        String query = "SELECT * FROM reports WHERE report_type = ? ORDER BY generation_date DESC";
 
-        }catch(SQLException e){
-            throw new SQLException("Error while generating report", e);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, reportType);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Report report = mapResultSetToReport(resultSet);
+                    reports.add(report);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return data;
+
+        return reports;
+    }
+
+    @Override
+    public List<Report> getReportsByUser(int userId) {
+        List<Report> reports = new ArrayList<>();
+        String query = "SELECT * FROM reports WHERE generated_by_user_id = ? ORDER BY generation_date DESC";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, userId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Report report = mapResultSetToReport(resultSet);
+                    reports.add(report);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reports;
+    }
+
+    @Override
+    public Report mapResultSetToReport(ResultSet resultSet) throws SQLException {
+        Report report = new Report();
+        report.setId(resultSet.getInt("report_id"));
+        report.setReportType(resultSet.getString("report_type"));
+
+        Date generationDate = resultSet.getDate("generation_date");
+        if (generationDate != null) {
+            report.setGenerationDate(generationDate.toLocalDate());
+        }
+
+        report.setGeneratedByUserId(resultSet.getInt("generated_by_user_id"));
+        report.setParameters(resultSet.getString("parameters"));
+        report.setFilePath(resultSet.getString("file_path"));
+
+        Date createdAt = resultSet.getDate("created_at");
+        if (createdAt != null) {
+            report.setCreatedAt(createdAt.toLocalDate());
+        }
+
+        Date updatedAt = resultSet.getDate("updated_at");
+        if (updatedAt != null) {
+            report.setUpdatedAt(updatedAt.toLocalDate());
+        }
+
+        return report;
     }
     public ObservableList<XYChart.Data<String, Number>> getValue(LocalDate fromDate, LocalDate toDate) throws SQLException {
         String sql = "SELECT \n" +

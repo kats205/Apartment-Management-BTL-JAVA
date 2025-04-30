@@ -137,6 +137,8 @@ public class UserDAO implements IUserDAO {
     public boolean updateActive(int userID, boolean newActive) {
         return updateStaffField(userID, "active", newActive);
     }
+
+
     public int login (String userName, String passWord){
         String sql = "SELECT * FROM [User] WHERE username = ?";
         int roleID = 0;
