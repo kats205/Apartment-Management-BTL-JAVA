@@ -25,9 +25,9 @@
                                         <Image url="@../assets/Dashboard/exit.png" />
                                     </image>
                                 </ImageView>
-                                <Label layoutX="10.0" layoutY="3.0" text="Apartment Management System" textFill="WHITE">
+                                <Label layoutX="10.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
                                     <font>
-                                        <Font name="System Bold" size="12.0" />
+                                        <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -81,9 +81,9 @@
                                 </Button>
                             </children>
                         </HBox>
-                        <Label fx:id="Menu" layoutX="16.0" layoutY="32.0" text="USER PANEL">
+                        <Label fx:id="Menu" layoutX="10.0" layoutY="32.0" text="USER'S PANEL">
                             <graphic>
-                                <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../assets/UserDashboard/setting.png" />
                                     </image>
@@ -93,9 +93,9 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <Label fx:id="MenuBack" layoutX="16.0" layoutY="32.0" text="USER PANEL">
+                        <Label fx:id="MenuBack" layoutX="10.0" layoutY="32.0" text="USER'S PANEL">
                             <graphic>
-                                <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../assets/UserDashboard/setting.png" />
                                     </image>
