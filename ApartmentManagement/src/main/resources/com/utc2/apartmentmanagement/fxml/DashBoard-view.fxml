@@ -18,16 +18,21 @@
          <top>
             <AnchorPane prefHeight="65.0" prefWidth="1280.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                <children>
-                  <Pane prefHeight="25.0" prefWidth="1280.0" style="-fx-background-color: #032d4d;">
+                  <Pane prefHeight="25.0" prefWidth="1280.0" style="-fx-background-color: #032d4d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <children>
                         <ImageView fx:id="Exit" fitHeight="22.0" fitWidth="22.0" layoutX="1258.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../assets/Dashboard/exit.png" />
                            </image>
                         </ImageView>
+                        <Label alignment="CENTER" layoutX="8.0" layoutY="1.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
-                  <HBox layoutX="150.0" layoutY="25.0" prefHeight="40.0" prefWidth="1130.0">
+                  <HBox layoutX="150.0" layoutY="25.0" prefHeight="40.0" prefWidth="1130.0" AnchorPane.bottomAnchor="0.0">
                      <children>
                         <Button fx:id="apartment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Apartment">
                            <graphic>
@@ -140,13 +145,13 @@
                         </Button>
                      </children>
                   </VBox>
-                  <VBox layoutY="592.0" prefHeight="63.0" prefWidth="150.0">
+                  <VBox layoutX="-1.0" layoutY="603.0" prefHeight="50.0" prefWidth="150.0">
                      <children>
-                        <Button fx:id="ApartmentButton11" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="51.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Setting" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="ApartmentButton11" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/setting1.png" />
+                                    <Image url="@../assets/UserDashboard/profile.png" />
                                  </image>
                               </ImageView>
                            </graphic>

@@ -10,71 +10,71 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="600" prefWidth="1080" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.LoginController">
+<AnchorPane fx:id="rootPane" prefHeight="625.0" prefWidth="1080" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.LoginController">
     <children>
         <!-- Phần bên phải - Form đăng nhập -->
-        <Label alignment="CENTER" layoutX="713.0" layoutY="76.0" prefHeight="74.0" prefWidth="158.0" text="Login" textAlignment="CENTER">
+        <Label alignment="CENTER" layoutX="687.0" layoutY="121.0" prefHeight="74.0" prefWidth="158.0" text="Login" textAlignment="CENTER">
             <font>
                 <Font name="Roboto Condensed Bold" size="40.0" />
             </font>
         </Label>
 
         <!-- Trường nhập tên người dùng -->
-        <TextField fx:id="usernameField" layoutX="581.0" layoutY="150.0" prefHeight="55.0" prefWidth="430.5" promptText="Username or email" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-color: black;">
+        <TextField fx:id="usernameField" layoutX="555.0" layoutY="195.0" prefHeight="55.0" prefWidth="430.5" promptText="Username or email" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-color: black;">
             <font>
                 <Font size="16.0" />
             </font>
         </TextField>
 
         <!-- Ikon người dùng -->
-        <ImageView fx:id="userView" fitHeight="30.0" fitWidth="38.0" layoutX="972.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="userView" fitHeight="26.0" fitWidth="26.0" layoutX="946.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../assets/Login_register/user.png" />
+                <Image url="@../assets/Login_register/profilev2.png" />
             </image>
         </ImageView>
 
         <!-- Trường nhập mật khẩu -->
-        <PasswordField fx:id="passwordField" layoutX="579.0" layoutY="230.0" prefHeight="55.0" prefWidth="430.5" promptText="Password" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-color: black;">
+        <PasswordField fx:id="passwordField" layoutX="553.0" layoutY="275.0" prefHeight="55.0" prefWidth="430.5" promptText="Password" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-color: black;">
             <font>
                 <Font size="16.0" />
             </font>
         </PasswordField>
 
         <!-- Ikon khóa -->
-        <ImageView fx:id="lockView" fitHeight="33.0" fitWidth="33.0" layoutX="970.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="lockView" fitHeight="30.0" fitWidth="30.0" layoutX="945.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../assets/Login_register/lock.png" />
+                <Image url="@../assets/Login_register/eyev3.png" />
             </image>
         </ImageView>
-      <Button fx:id="forgotPassword" layoutX="736.0" layoutY="292.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/login.css" text="Forgot password?">
+      <Button fx:id="forgotPassword" layoutX="710.0" layoutY="337.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/login.css" text="Forgot password?">
          <font>
             <Font name="Cabin Condensed Regular" size="14.0" />
          </font>
       </Button>
 
         <!-- Nút đăng nhập -->
-        <Button fx:id="loginButton" layoutX="579.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="55.0" prefWidth="430.5" stylesheets="@../styles/login.css" text="Login">
+        <Button fx:id="loginButton" layoutX="553.0" layoutY="378.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="55.0" prefWidth="430.5" stylesheets="@../styles/login.css" text="Login">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Button>
 
         <!-- Text chưa có tài khoản -->
-        <Label alignment="CENTER" layoutX="731.0" layoutY="403.0" text="Don't have an account?">
+        <Label alignment="CENTER" layoutX="705.0" layoutY="448.0" text="Don't have an account?">
             <font>
                 <Font name="Roboto Condensed Regular" size="14.0" />
             </font>
         </Label>
 
         <!-- Nút đăng ký -->
-        <Button fx:id="registerButton" layoutX="707.0" layoutY="438.0" mnemonicParsing="false" onAction="#goToSignUp" prefHeight="45.0" prefWidth="180.0" stylesheets="@../styles/login.css" text="Register">
+        <Button fx:id="registerButton" layoutX="681.0" layoutY="483.0" mnemonicParsing="false" onAction="#goToSignUp" prefHeight="45.0" prefWidth="180.0" stylesheets="@../styles/login.css" text="Register">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Button>
 
         <!-- Phần bên trái - Hình ảnh với bo góc bên phải -->
-        <Pane fx:id="imagePane" layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="450.0" style="-fx-background-color: black; -fx-shape: 'M4 0H284C377.888 0 454 76.1116 454 170V430C454 523.888 377.888 600 284 600H4V0Z';">
+        <Pane fx:id="imagePane" layoutX="-19.4" layoutY="25.0" prefHeight="600.0" prefWidth="450.0" style="-fx-background-color: black; -fx-shape: 'M4 0H284C377.888 0 454 76.1116 454 170V430C454 523.888 377.888 600 284 600H4V0Z';" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-19.4">
             <children>
                 <ImageView fx:id="imageView" fitHeight="600.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -88,5 +88,19 @@
                 </Label>
             </children>
         </Pane>
+      <Pane prefHeight="25.0" prefWidth="1080.0" style="-fx-background-color: #032d4d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <ImageView fx:id="Exit" fitHeight="25.0" fitWidth="22.0" layoutX="1055.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assets/Dashboard/exit.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" layoutX="8.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

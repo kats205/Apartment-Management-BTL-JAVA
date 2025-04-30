@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600" prefWidth="1080" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.RegisterController">
+<AnchorPane prefHeight="625.0" prefWidth="1080" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.RegisterController">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -136,7 +136,7 @@
             </AnchorPane>
          </center>
          <right>
-            <Pane fx:id="imagePane" prefHeight="600.0" prefWidth="450.0" style="-fx-background-color: black; -fx-shape: 'M454 0H174C80.1116 0 4 76.1116 4 170V430C4 523.888 80.1116 600 174 600H454V0Z';" BorderPane.alignment="CENTER">
+            <Pane fx:id="imagePane" prefHeight="607.0" prefWidth="450.0" style="-fx-background-color: black; -fx-shape: 'M454 0H174C80.1116 0 4 76.1116 4 170V430C4 523.888 80.1116 600 174 600H454V0Z';" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="imageView" fitHeight="600.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -150,6 +150,22 @@
                </children>
             </Pane>
          </right>
+         <top>
+            <Pane prefHeight="25.0" prefWidth="1080.0" style="-fx-background-color: #032d4d;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="Exit" fitHeight="25.0" fitWidth="22.0" layoutX="1055.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/Dashboard/exit.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" layoutX="8.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </top>
       </BorderPane>
    </children>
 </AnchorPane>

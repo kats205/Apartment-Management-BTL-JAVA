@@ -22,7 +22,7 @@
                             <children>
                                 <ImageView fx:id="Exit" fitHeight="22.0" fitWidth="22.0" layoutX="1258.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../assets/UserDashboard/exit.png" />
+                                        <Image url="@../assets/Dashboard/exit.png" />
                                     </image>
                                 </ImageView>
                                 <Label layoutX="10.0" layoutY="3.0" text="Apartment Management System" textFill="WHITE">
@@ -245,7 +245,7 @@
                             <children>
                                 <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">
                                     <children>
-                                        <Label layoutX="20.0" layoutY="20.0" text="My Apartment" textFill="#1a936f">
+                                        <Label layoutX="10.0" layoutY="20.0" text="My Apartment" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -255,16 +255,16 @@
                                                 <Image url="@../assets/UserDashboard/apartment.png" />
                                             </image>
                                         </ImageView>
-                                        <Label layoutX="20.0" layoutY="60.0" text="Apartment ID:" />
-                                        <Label layoutX="20.0" layoutY="80.0" text="Building:" />
-                                        <Label layoutX="20.0" layoutY="100.0" text="Floor:" />
-                                        <Label layoutX="20.0" layoutY="120.0" text="Area:" />
+                                        <Label layoutX="10.0" layoutY="60.0" text="Apartment ID:" />
+                                        <Label layoutX="10.0" layoutY="80.0" text="Building:" />
+                                        <Label layoutX="10.0" layoutY="100.0" text="Floor:" />
+                                        <Label layoutX="10.0" layoutY="120.0" text="Area:" />
                                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../styles/UserDashboard.css" text="View Details" />
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">
                                     <children>
-                                        <Label layoutX="20.0" layoutY="20.0" text="Active Services" textFill="#1a936f">
+                                        <Label layoutX="10.0" layoutY="20.0" text="Active Services" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -274,15 +274,15 @@
                                                 <Image url="@../assets/UserDashboard/active_service.png" />
                                             </image>
                                         </ImageView>
-                                        <Label layoutX="20.0" layoutY="60.0" text="Total Services:" />
-                                        <Label layoutX="20.0" layoutY="80.0" text="Monthly Cost:" />
-                                        <Label layoutX="20.0" layoutY="100.0" text="Next Payment:" />
+                                        <Label layoutX="10.0" layoutY="60.0" text="Total Services:" />
+                                        <Label layoutX="10.0" layoutY="80.0" text="Monthly Cost:" />
+                                        <Label layoutX="10.0" layoutY="100.0" text="Next Payment:" />
                                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../styles/UserDashboard.css" text="Manage Services" />
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">
                                     <children>
-                                        <Label layoutX="20.0" layoutY="20.0" text="Open Requests" textFill="#1a936f">
+                                        <Label layoutX="10.0" layoutY="20.0" text="Open Requests" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -292,27 +292,27 @@
                                                 <Image url="@../assets/UserDashboard/open_request.png" />
                                             </image>
                                         </ImageView>
-                                        <Label layoutX="20.0" layoutY="60.0" text="Complaints:" />
-                                        <Label layoutX="20.0" layoutY="80.0" text="Incidents:" />
-                                        <Label layoutX="20.0" layoutY="100.0" text="Service Requests:" />
+                                        <Label layoutX="10.0" layoutY="60.0" text="Complaints:" />
+                                        <Label layoutX="10.0" layoutY="80.0" text="Incidents:" />
+                                        <Label layoutX="10.0" layoutY="100.0" text="Service Requests:" />
                                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../styles/UserDashboard.css" text="View All Requests" />
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">
                                     <children>
-                                        <Label layoutX="20.0" layoutY="20.0" text="Recent Payments" textFill="#1a936f">
+                                        <Label layoutX="10.0" layoutY="18.0" text="Recent Payments" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
                                         </Label>
-                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="145.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="157.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../assets/UserDashboard/recent_payment.png" />
                                             </image>
                                         </ImageView>
-                                        <Label layoutX="20.0" layoutY="60.0" text="Last Payment:" />
-                                        <Label layoutX="20.0" layoutY="80.0" text="Amount:" />
-                                        <Label layoutX="20.0" layoutY="100.0" text="Next Due:" />
+                                        <Label layoutX="10.0" layoutY="60.0" text="Last Payment:" />
+                                        <Label layoutX="10.0" layoutY="80.0" text="Amount:" />
+                                        <Label layoutX="10.0" layoutY="100.0" text="Next Due:" />
                                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../styles/UserDashboard.css" text="Payment History" />
                                     </children>
                                 </AnchorPane>
