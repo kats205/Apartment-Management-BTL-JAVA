@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +49,8 @@ public class EditApartmentViewController implements Initializable {
 
     @FXML
     private Button cancelButton;
+    // Thiết lập controller cha
+    @Setter
     private ApartmentViewController parentController = new ApartmentViewController();
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -249,10 +252,6 @@ public class EditApartmentViewController implements Initializable {
         stage.close();
     }
 
-    // Thiết lập controller cha
-    public void setParentController(ApartmentViewController controller) {
-        this.parentController = controller;
-    }
     public static double parseWithoutExponential(String value) {
         try {
             // Sử dụng DecimalFormat để format theo số bình thường

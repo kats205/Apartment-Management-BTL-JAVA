@@ -19,7 +19,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -92,6 +95,8 @@ public class ApartmentViewController implements Initializable {
     @FXML
     private Button exportButton;
 
+    // Getter cho nút đóng để DashboardController có thể truy cập
+    @Getter
     @FXML
     private Button closeButton;
 
@@ -278,6 +283,8 @@ public class ApartmentViewController implements Initializable {
         // Xóa các lựa chọn trong ComboBox
         buildingComboBox.getSelectionModel().clearSelection();
         statusComboBox.getSelectionModel().clearSelection();
+        buildingComboBox.setValue("Chọn tòa nhà");
+        statusComboBox.setValue("Chọn trạng thái");
         // Tải lại dữ liệu
         loadData();
     }
@@ -306,11 +313,6 @@ public class ApartmentViewController implements Initializable {
         noContentLabel.setVisible(!hasData);
     }
 
-    // Getter cho nút đóng để DashboardController có thể truy cập
-    public Button getCloseButton() {
-        return closeButton;
-    }
-
     public void handleButtonSearch(ActionEvent event) {
         String apartmentId = buildingComboBox.getValue();
         System.out.println("Apartment ID: " + apartmentId);
@@ -328,7 +330,7 @@ public class ApartmentViewController implements Initializable {
         else{
             Apartment apartment = new ApartmentDAO().findApartmentByIdAndStatus(apartmentId, status);
             if(apartment == null){
-                new AlertBox().showAlertForUser("Thông báo", "Không tìm thấy căn hộ nào với ID và trạng thái đã chọn");
+                AlertBox.showAlertForUser("Thông báo", "Không tìm thấy căn hộ nào với ID và trạng thái đã chọn");
             }
             else{
                 loadTableView(apartment);
@@ -338,22 +340,21 @@ public class ApartmentViewController implements Initializable {
     }
 
     public void handleRefresh(ActionEvent event) {
+        buildingComboBox.setValue("Chọn tòa nhà");
+        statusComboBox.setValue("Chọn trạng thái");
         loadDataApartment();
     }
 
+    @Setter
+    private DashboardController parentController;
+
     public void handleCloseButton(ActionEvent event) {
-        // Đóng cửa sổ hiện tại
-        apartmentView.setVisible(false);
+        // Xoá apartment view
+        ((Pane) apartmentView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
 
-//    public void handleEditApartment(ActionEvent actionEvent) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("com/utc2/apartmentmanagement/fxml/EditApartmentView.fxml"));
-//        Parent root = loader.load();
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(root));
-//        stage.setTitle("Chỉnh sửa căn hộ");
-//        stage.show();
-//    }
 
     public void getSelectedApartment(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.SECONDARY) {
@@ -401,25 +402,18 @@ public class ApartmentViewController implements Initializable {
 
             // Hiện ContextMenu tại vị trí con trỏ
             contextMenu.show(apartmentTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
-        }
 
-    }
-    @FXML
-    public void handleAddApartmentButton(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/FormAddApartmentView.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Chỉnh sửa căn hộ");
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            // Thêm listener để ẩn ContextMenu nếu click chỗ khác
+            apartmentTable.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                // Ẩn menu nếu click trái hoặc phải ở nơi khác
+                if (currentContextMenu != null && currentContextMenu.isShowing()
+                        && (event.getButton() == MouseButton.PRIMARY || event.getButton() == MouseButton.SECONDARY)) {
+                    currentContextMenu.hide();
+                }
+            });
         }
     }
 
 
-//    public void getSelectedApartment(Event event){
-//        if()
-//    }
+
 }

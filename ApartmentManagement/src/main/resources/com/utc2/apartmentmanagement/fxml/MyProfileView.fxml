@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="460.0" prefWidth="700.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.SettingController">
+<AnchorPane fx:id="SettingView" prefHeight="460.0" prefWidth="700.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.SettingController">
     <children>
         <VBox prefHeight="460.0" prefWidth="700.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;">
             <padding>
@@ -67,12 +67,12 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="157.0" layoutY="76.0" text="28/04/2025 08:30:15">
+                        <Label fx:id="lastLogin" layoutX="157.0" layoutY="76.0" text="28/04/2025 08:30:15">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="93.0" layoutY="45.0" text="Khanh">
+                        <Label fx:id="userName" layoutX="93.0" layoutY="45.0" text="Khanh">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -225,7 +225,8 @@
                 <Separator prefWidth="200.0" />
                 <HBox alignment="CENTER" prefHeight="50.0" prefWidth="660.0" spacing="15.0">
                     <children>
-                        <Button fx:id="logoutBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="logout-button" stylesheets="@../styles/Dashboard.css" text="Đăng xuất" textAlignment="CENTER">
+                  <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="40.0" prefWidth="200.0" styleClass="logout-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
+                        <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#handleLogout" prefHeight="40.0" prefWidth="200.0" styleClass="logout-button" stylesheets="@../styles/Dashboard.css" text="Đăng xuất" textAlignment="CENTER">
                             <graphic>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>

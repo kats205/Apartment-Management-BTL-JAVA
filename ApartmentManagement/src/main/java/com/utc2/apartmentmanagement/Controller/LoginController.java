@@ -1,6 +1,7 @@
 package com.utc2.apartmentmanagement.Controller;
 
 import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
 import com.utc2.apartmentmanagement.Views.register;
@@ -23,7 +24,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import lombok.Getter;
+
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class LoginController {
 
@@ -43,7 +47,7 @@ public class LoginController {
     private PasswordField passwordField;
 
     @FXML
-    private Button buttonLogin;
+    private Button loginButton;
 
     @FXML
     private Button registerButton;
@@ -53,13 +57,13 @@ public class LoginController {
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
         // Gán sự kiện click nút login
-        buttonLogin.setOnAction(this::handleLogin);
+        loginButton.setOnAction(this::handleLogin);
         // Cho phép nhấn Enter ở bất kỳ input nào
-        buttonLogin.setDefaultButton(true);
+        loginButton.setDefaultButton(true);
         // Nhấn Enter ở passwordField thì login
         passwordField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                buttonLogin.fire(); // Gọi lại handleLogin
+                loginButton.fire(); // Gọi lại handleLogin
             }
         });
     }
@@ -95,6 +99,7 @@ public class LoginController {
     public void handleLogin(ActionEvent event) {
         String userName = usernameField.getText();
         String password = passwordField.getText();
+
         if (userName.isEmpty() && password.isEmpty()) {
             AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập tên đăng nhập và mật khẩu!");
         } else if (userName.isEmpty()) {
@@ -108,6 +113,8 @@ public class LoginController {
         switch (role_id) {
             case 1 -> {
                 try {
+                    Session.setLastLogin(LocalDate.now());
+                    Session.setUserName(userName);
                     // Đóng cửa sổ hiện tại
                     ((Stage) usernameField.getScene().getWindow()).close();
                     // Khởi chạy dashboard

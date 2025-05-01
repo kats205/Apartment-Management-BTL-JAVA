@@ -16,9 +16,9 @@ import java.util.Objects;
 public class Test extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/FormAddApartmentView.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/Test.fxml")));
         primaryStage.setTitle("Apartment Application");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
     }
 

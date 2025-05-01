@@ -1,42 +1,46 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.Model.Session;
+import com.utc2.apartmentmanagement.Views.login;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.stage.Stage;
+import lombok.Setter;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 
 public class SettingController implements Initializable {
-    @FXML
-    public Button themeButton;
-    public Button saveSettingsButton;
-    public Button resetButton;
-    public Button closeButton;
-    public Button notificationSettingsButton;
-    public Button restoreButton;
-    public Button backupButton;
-    public TableColumn userActionsColumn;
-    public TableColumn statusColumn;
-    public TableColumn roleColumn;
-    public TableColumn phoneColumn;
-    public TableColumn emailColumn;
-    public TableColumn nameColumn;
-    public TableColumn usernameColumn;
-    public TableColumn userIdColumn;
-    public TableView userTable;
-    public Button addUserButton;
-    public Button searchUserButton;
-    public TextField searchUserField;
-    @FXML
-    public AnchorPane SettingView;
+    @FXML public Button themeButton;
+    @FXML public Button saveSettingsButton;
+    @FXML public Button resetButton;
+    @FXML public Button closeButton;
+    @FXML public AnchorPane SettingView;
+    @FXML public Button changeAvatarBtn;
+    @FXML public ImageView userAvatar;
+    @FXML public Label usernameLabel1;
+    @FXML public Label roleLabel1;
+    @FXML public Label lastLoginLabel1;
+    @FXML public Label lastLogin;
+    @FXML public Label userName;
+    @FXML public TextField fullNameField;
+    @FXML public TextField emailField;
+    @FXML public TextField phoneField;
+    @FXML public TextField officeField;
+    @FXML public Button saveProfileBtn;
+    @FXML public PasswordField currentPasswordField;
+    @FXML public PasswordField confirmPasswordField;
+    @FXML public PasswordField newPasswordField1;
+    @FXML public Button changePasswordBtn1;
+    @FXML public Button logoutBtn;
     private boolean darkMode = false;
 
 
@@ -56,11 +60,31 @@ public class SettingController implements Initializable {
         darkMode = !darkMode;
     }
 
-    public void handleButtonClose(ActionEvent actionEvent) {
-        SettingView.setVisible(false);
+    @Setter
+    private DashboardController parentController;
+    @FXML
+    public void handleCloseButton(ActionEvent event) {
+        // Xoá apartment view
+        ((Pane)SettingView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+//        String userNameLbel = Session.getUserName();
+//        LocalDate lastLoginLabel = Session.getLastLogin();
+//        userName.setText(userNameLbel);
+//        lastLogin.setText(String.valueOf(lastLoginLabel));
+//        System.out.println("Last login: " + lastLogin);
+//        System.out.println("User name: " + userName);
+
+    }
+    @FXML
+    public void handleLogout() throws Exception {
+        ((Stage) logoutBtn.getScene().getWindow()).close();
+        login login = new login();
+        Stage stage = new Stage();
+        login.start(stage);
     }
 }

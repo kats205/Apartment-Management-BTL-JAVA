@@ -30,21 +30,20 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="apartmentIdField" disable="true" prefHeight="30.0" prefWidth="200.0" promptText="Mã căn hộ" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="apartmentIdField" disable="true" editable="false" prefHeight="30.0" prefWidth="200.0" promptText="Mã căn hộ" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                 <Label text="Tòa nhà:" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="buildingComboBox" prefHeight="25.0" prefWidth="260.0" promptText="Chọn tòa nhà" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                 <Label text="Tầng:" GridPane.rowIndex="2">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="floorField" prefHeight="30.0" prefWidth="200.0" promptText="Tầng" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="floorField" disable="true" editable="false" prefHeight="30.0" prefWidth="200.0" promptText="Tầng" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                 <Label text="Diện tích (m²):" GridPane.rowIndex="3">
                     <font>
@@ -80,6 +79,7 @@
                     </font>
                 </Label>
                 <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="260.0" promptText="Chọn trạng thái" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="buildingID" disable="true" editable="false" promptText="Mã tòa nhà" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </children>
             <columnConstraints>
                 <javafx.scene.layout.ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="105.0" prefWidth="113.0" />

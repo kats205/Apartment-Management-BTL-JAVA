@@ -2,26 +2,34 @@ package com.utc2.apartmentmanagement.Controller;
 
 import com.utc2.apartmentmanagement.DAO.ReportDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.Apartment;
 import com.utc2.apartmentmanagement.Model.Report;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -44,6 +52,7 @@ public class ReportViewController implements Initializable {
     @FXML public Label popularReportTypeLabel;
     @FXML public Label latestReportLabel;
     @FXML public Label totalReportsLabel;
+    @FXML public AnchorPane reportView;
     @FXML
     private ComboBox<String> reportTypeComboBox;
 
@@ -107,6 +116,8 @@ public class ReportViewController implements Initializable {
     @FXML
     private Button exportButton;
 
+    // Getter cho nút đóng để DashboardController có thể truy cập
+    @Getter
     @FXML
     private Button closeButton;
 
@@ -335,8 +346,73 @@ public class ReportViewController implements Initializable {
         // TODO: Xuất báo cáo dạng Excel
     }
 
-    // Getter cho nút đóng để DashboardController có thể truy cập
-    public Button getCloseButton() {
-        return closeButton;
+    @Setter
+    private DashboardController parentController;
+
+    private ContextMenu currentContextMenu;
+
+    public void handleCloseButton(ActionEvent event) {
+        // Xoá apartment view
+        ((Pane)reportView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
+    }
+
+    public void getSelectedApartment(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+            Report selectedReport = reportTable.getSelectionModel().getSelectedItem();
+            if (selectedReport == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Vui lòng chọn căn hộ để chỉnh sửa!");
+                alert.showAndWait();
+                return;
+            }
+
+            // Nếu đã có ContextMenu đang mở -> đóng lại
+            if (currentContextMenu != null && currentContextMenu.isShowing()) {
+                currentContextMenu.hide();
+            }
+
+            // Tạo ContextMenu mới
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem editItem = new MenuItem("Xem chi tiết báo cáo");
+
+            editItem.setOnAction(e -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/DetailReport.fxml"));
+                    Parent root = loader.load();
+
+                    DetailReportController editController = loader.getController();
+                    editController.setParentController(this);   // set controller cha
+                    editController.setApartment(selectedReport); // set báo cáo cần xem chi tiết
+
+                    Stage stage = new Stage();
+                    stage.setTitle("Chi tiết báo cáo");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+
+            contextMenu.getItems().add(editItem);
+
+            // Lưu context menu mới
+            currentContextMenu = contextMenu;
+
+            // Hiện ContextMenu tại vị trí con trỏ
+            contextMenu.show(reportTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+
+            // Thêm listener để ẩn ContextMenu nếu click chỗ khác
+            reportTable.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                // Ẩn menu nếu click trái hoặc phải ở nơi khác
+                if (currentContextMenu != null && currentContextMenu.isShowing()
+                        && (event.getButton() == MouseButton.PRIMARY || event.getButton() == MouseButton.SECONDARY)) {
+                    currentContextMenu.hide();
+                }
+            });
+        }
     }
 }

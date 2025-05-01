@@ -3,6 +3,7 @@ package com.utc2.apartmentmanagement.Model;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +30,36 @@ public class Payment {
 //    public Bills getBill(){
 //
 //    }
+
+    public int completedPayment(List<Payment> paymentList){
+        int total = 0;
+        for(Payment payment : paymentList){
+            if(payment.getStatus().equals("completed")) total++;
+        }
+        return total;
+    }
+    public double totalAmountCollected(List<Payment> paymentList){
+        double total = 0;
+        for(Payment payment : paymentList){
+            if(payment.getStatus().equals("completed")){
+                total+= payment.getAmount();
+            }
+        }
+        return total;
+    }
+    public double totalOutstandingLabel(List<Payment> paymentList){
+        double total = 0;
+        for(Payment payment : paymentList){
+            if(!payment.getStatus().equals("completed")){
+                total+= payment.getAmount();
+            }
+        }
+        return total;
+    }
+    public double paymentRateLabel(List<Payment> paymentList){
+        double totalCollected = totalAmountCollected(paymentList);
+        double totalOutstanding = totalOutstandingLabel(paymentList);
+        return (totalCollected / (totalCollected + totalOutstanding)) * 100;
+    }
+
 }

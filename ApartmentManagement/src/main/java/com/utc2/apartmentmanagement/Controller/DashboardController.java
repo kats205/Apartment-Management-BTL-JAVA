@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +17,8 @@ import lombok.Getter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -46,7 +49,10 @@ public class DashboardController implements Initializable {
 
 
     @FXML
+    @Getter
     private AnchorPane contentArea;
+    @Getter
+    private List<Node> dashboardNodes;
 
     private boolean isSidebarVisible = true;
 
@@ -58,6 +64,8 @@ public class DashboardController implements Initializable {
         setupMenuToggle();
 //        mainBorderPane.setBottom(null); // Hoặc sử dụng Pane rỗng
 //        mainBorderPane.setRight(null);  // Hoặc sử dụng Pane rỗng
+
+        dashboardNodes = new ArrayList<>(contentArea.getChildren());
 
         Exit.setOnMouseClicked(event -> {
             System.exit(0);
@@ -196,14 +204,21 @@ public class DashboardController implements Initializable {
         System.out.println("Đang cố gắng tải ApartmentView.fxml");
         URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/ApartmentView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
-
         FXMLLoader loader = new FXMLLoader(url);
+
         if (url == null) {
             System.out.println("Không tìm thấy file ApartmentView.fxml");
             return;
         }
 
         Parent apartmentView = loader.load();
+        ApartmentViewController controller = loader.getController();
+        controller.setParentController(this);  // Gán parent
+
+        // Hiển thị ApartmentView thay cho dashboard
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(apartmentView); // Hiện phần danh sách căn hộ
+
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
@@ -232,7 +247,8 @@ public class DashboardController implements Initializable {
         }
 
         Parent PaymentView = loader.load();
-
+        PaymentViewController controller = loader.getController();
+        controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
@@ -260,7 +276,8 @@ public class DashboardController implements Initializable {
         }
 
         Parent ReportView = loader.load();
-
+        ReportViewController controller = loader.getController();
+        controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
@@ -301,6 +318,36 @@ public class DashboardController implements Initializable {
         // Xóa tất cả các view hiện tại và thêm ApartmentView
         contentArea.getChildren().clear();
         contentArea.getChildren().add(SettingView);
+        System.out.println("Đã thêm ReportView vào contentArea");
+    }
+
+    @FXML
+    public void loadMyProfile(ActionEvent actionEvent) throws IOException {
+        System.out.println("Đang cố gắng tải ReportView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/MyProfileView.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        if (url == null) {
+            System.out.println("Không tìm thấy file ReportView.fxml");
+            return;
+        }
+
+        Parent ReportView = loader.load();
+        SettingController controller = loader.getController();
+        controller.setParentController(this);  // Gán parent
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(ReportView, 0.0);
+        AnchorPane.setRightAnchor(ReportView, 0.0);
+        AnchorPane.setBottomAnchor(ReportView, 0.0);
+        AnchorPane.setLeftAnchor(ReportView, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm ApartmentView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(ReportView);
         System.out.println("Đã thêm ReportView vào contentArea");
     }
 }

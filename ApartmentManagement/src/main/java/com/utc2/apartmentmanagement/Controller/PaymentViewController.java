@@ -18,6 +18,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -89,6 +92,8 @@ public class PaymentViewController implements Initializable {
     @FXML
     private Button exportButton;
 
+    // Getter cho nút đóng để DashboardController có thể truy cập
+    @Getter
     @FXML
     private Button closeButton;
 
@@ -249,12 +254,7 @@ public class PaymentViewController implements Initializable {
         noContentLabel.setVisible(!hasData);
     }
 
-    // Getter cho nút đóng để DashboardController có thể truy cập
-    public Button getCloseButton() {
-        return closeButton;
-    }
-
-//    public void handleSearchButton(ActionEvent event) throws SQLException {
+    //    public void handleSearchButton(ActionEvent event) throws SQLException {
 //        String apartmentID = apartmentComboBox.getValue();
 //
 //        // Kiểm tra nếu apartmentID không null
@@ -296,9 +296,14 @@ public class PaymentViewController implements Initializable {
 //            }
 //        }
 //    }
-    @FXML
-    public void handleCloseButton(ActionEvent actionEvent) {
-        paymentView.setVisible(false);
+    @Setter
+    private DashboardController parentController;
+
+    public void handleCloseButton(ActionEvent event) {
+        // Xoá apartment view
+        ((Pane) paymentView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
 
 

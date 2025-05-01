@@ -36,7 +36,7 @@
             </children>
         </HBox>
         <Button fx:id="addApartmentButton" layoutX="940.0" layoutY="78.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" styleClass="create-button" stylesheets="@../styles/Dashboard.css" text="Thêm căn hộ mới" />
-        <TableView fx:id="apartmentTable" layoutX="55.0" layoutY="138.0" prefHeight="412.0" prefWidth="1020.0" stylesheets="@../styles/Dashboard.css">
+        <TableView fx:id="apartmentTable" layoutX="55.0" layoutY="138.0" onMouseClicked="#getSelectedApartment" prefHeight="412.0" prefWidth="1020.0" stylesheets="@../styles/Dashboard.css">
             <columns>
                 <TableColumn fx:id="idColumn" prefWidth="130.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Mã căn hộ" />
                 <TableColumn fx:id="buildingColumn" prefWidth="100.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Tòa nhà" />

@@ -106,7 +106,7 @@ public class RegisterController {
     @FXML
     public void BackLogin(ActionEvent actionEvent) throws Exception {
         try {
-            ((Stage) registerUserName.getScene().getWindow()).close();
+            ((Stage) registerReEnterPW.getScene().getWindow()).close();
             // Khởi chạy dashboard
             login loginUser = new login();
             Stage stage = new Stage();
