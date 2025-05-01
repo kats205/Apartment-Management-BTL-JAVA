@@ -6,10 +6,8 @@ import com.utc2.apartmentmanagement.Repository.IStaffDAO;
 
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.sql.Date;
+import java.util.*;
 
 public class StaffDAO implements IStaffDAO {
 
@@ -87,6 +85,84 @@ public class StaffDAO implements IStaffDAO {
     public boolean updateManagerID(int staffID, int newManagerID) {
         return updateStaffField(staffID, "manager_id", newManagerID);
     }
+
+
+    @Override
+    public List<Map<String, Object>> getAllStaffInfo() throws SQLException{
+        String sql = "SELECT s.staff_id, u.username, r.role_name, u.full_name, " +
+                "u.email, u.phone_number, s.department, s.position, u.active FROM staff s\n" +
+                "JOIN [user] u ON u.user_id = s.staff_id\n" +
+                "JOIN role r ON r.role_id = u.role_id";
+        List<Map<String, Object>> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, Object> row = new HashMap<>();
+                row.put("ID", rs.getInt("staff_id"));
+                row.put("Tendangnhap", rs.getString("username"));
+                row.put("Vaitro", rs.getString("role_name"));
+                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Email", rs.getString("email"));
+                row.put("Sodienthoai", rs.getString("phone_number"));
+                row.put("Phongban", rs.getString("department"));
+                row.put("Chucvu", rs.getNString("position"));
+                row.put("Trangthai", rs.getBoolean("active"));
+                list.add(row);
+            }
+            return list;
+        }catch(SQLException e){
+            throw new SQLException("Error retrieving staff information: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<String> listPosition() throws SQLException {
+        String sql = "SELECT DISTINCT position FROM Staff";
+        List<String> positionList = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                positionList.add(rs.getNString("position"));
+            }
+        }catch (SQLException e){
+            throw new SQLException("Error retrieving position list: " + e.getMessage(), e);
+        }
+        return positionList;
+    }
+
+    @Override
+    public List<Map<String, Object>> filterStaffByRoleName(String position) throws SQLException {
+        String sql = "SELECT s.staff_id, u.username, r.role_name, u.full_name, " +
+                "u.email, u.phone_number, s.department, s.position, u.active FROM staff s\n" +
+                "JOIN [user] u ON u.user_id = s.staff_id\n" +
+                "JOIN role r ON r.role_id = u.role_id " +
+                " WHERE s.position = ?";
+        List<Map<String, Object>> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setNString(1, position);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, Object> row = new HashMap<>();
+                row.put("ID", rs.getInt("staff_id"));
+                row.put("Tendangnhap", rs.getString("username"));
+                row.put("Vaitro", rs.getString("role_name"));
+                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Email", rs.getString("email"));
+                row.put("Sodienthoai", rs.getString("phone_number"));
+                row.put("Phongban", rs.getString("department"));
+                row.put("Chucvu", rs.getNString("position"));
+                row.put("Trangthai", rs.getBoolean("active"));
+                list.add(row);
+            }
+            return list;
+        }catch(SQLException e){
+            throw new SQLException("Error retrieving staff information: " + e.getMessage(), e);
+        }
+    }
+
 
     public boolean updateStaffField(int staffID, String field, Object newValue){
         String sql = "UPDATE Staff SET " + field + " = ?  WHERE staff_id = ?";
