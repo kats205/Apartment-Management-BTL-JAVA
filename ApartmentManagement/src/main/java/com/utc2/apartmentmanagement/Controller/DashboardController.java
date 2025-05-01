@@ -25,13 +25,13 @@ public class DashboardController implements Initializable {
     @FXML
     public Button paymentButton;
     @FXML
-    public Button ReportButton;
+    public Button report;
     @FXML
-    public Button apartmentButton1;
+    public Button apartment;
     @FXML
-    public Button paymentButton1;
+    public Button payment;
     @FXML
-    public Button reportButton1;
+    public Button reportButton;
     @FXML
     private Button ApartmentButton;
 
@@ -71,39 +71,39 @@ public class DashboardController implements Initializable {
             System.exit(0);
         });
 
-        slider.setTranslateX(-200);
-
-        Menu.setOnMouseClicked(event -> {
-            TranslateTransition slide = new TranslateTransition();
-            slide.setDuration(Duration.seconds(0.4));
-            slide.setNode(slider);
-
-            slide.setToX(0);
-            slide.play();
-
-            slider.setTranslateX(-150);
-
-            slide.setOnFinished((ActionEvent e)-> {
-                Menu.setVisible(false);
-                MenuBack.setVisible(true);
-            });
-        });
-
-        MenuBack.setOnMouseClicked(event -> {
-            TranslateTransition slide = new TranslateTransition();
-            slide.setDuration(Duration.seconds(0.4));
-            slide.setNode(slider);
-
-            slide.setToX(-200);
-            slide.play();
-
-            slider.setTranslateX(0);
-
-            slide.setOnFinished((ActionEvent e)-> {
-                Menu.setVisible(true);
-                MenuBack.setVisible(false);
-            });
-        });
+//        slider.setTranslateX(-200);
+//
+//        Menu.setOnMouseClicked(event -> {
+//            TranslateTransition slide = new TranslateTransition();
+//            slide.setDuration(Duration.seconds(0.4));
+//            slide.setNode(slider);
+//
+//            slide.setToX(0);
+//            slide.play();
+//
+//            slider.setTranslateX(-150);
+//
+//            slide.setOnFinished((ActionEvent e)-> {
+//                Menu.setVisible(false);
+//                MenuBack.setVisible(true);
+//            });
+//        });
+//
+//        MenuBack.setOnMouseClicked(event -> {
+//            TranslateTransition slide = new TranslateTransition();
+//            slide.setDuration(Duration.seconds(0.4));
+//            slide.setNode(slider);
+//
+//            slide.setToX(-200);
+//            slide.play();
+//
+//            slider.setTranslateX(0);
+//
+//            slide.setOnFinished((ActionEvent e)-> {
+//                Menu.setVisible(true);
+//                MenuBack.setVisible(false);
+//            });
+//        });
 
         // Thiết lập sự kiện cho nút ApartmentButton
         ApartmentButton.setOnAction(event -> {
@@ -114,7 +114,7 @@ public class DashboardController implements Initializable {
             }
 
         });
-        apartmentButton1.setOnAction(event -> {
+        apartment.setOnAction(event -> {
             try {
                 loadApartmentView();
             } catch (IOException e) {
@@ -129,7 +129,7 @@ public class DashboardController implements Initializable {
                 e.printStackTrace();
             }
         });
-        paymentButton1.setOnAction(event -> {
+        payment.setOnAction(event -> {
             try {
                 loadPaymentView();
             } catch (IOException e) {
@@ -137,14 +137,14 @@ public class DashboardController implements Initializable {
             }
         });
 
-        ReportButton.setOnAction(event -> {
+        reportButton.setOnAction(event -> {
             try {
                 loadReportView();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-        reportButton1.setOnAction(event -> {
+        report.setOnAction(event -> {
             try {
                 loadReportView();
             } catch (IOException e) {
@@ -156,6 +156,48 @@ public class DashboardController implements Initializable {
 
     }
     // tạo hiệu ứng trượt
+//    private void setupMenuToggle() {
+//        // Initial setup for menu labels
+//        MenuBack.setVisible(false);
+//
+//        // Add click event to both Menu and MenuBack labels
+//        Menu.setOnMouseClicked(event -> toggleSidebar());
+//        MenuBack.setOnMouseClicked(event -> toggleSidebar());
+//    }
+//
+//    private void toggleSidebar() {
+//        // Create translation transition for sidebar
+//        TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(300), slider);
+//
+//        // Create translation transition for content area
+//        TranslateTransition contentTransition = new TranslateTransition(Duration.millis(300), contentArea);
+//
+//        if (isSidebarVisible) {
+//            // Hide sidebar
+//            sidebarTransition.setToX(-slider.getWidth());
+//            contentTransition.setToX(-slider.getWidth());
+//            // Swap menu labels
+//            Menu.setVisible(false);
+//            MenuBack.setVisible(true);
+//        } else {
+//            // Show sidebar
+//            sidebarTransition.setToX(0);
+//            contentTransition.setToX(150);
+//
+//            // Swap menu labels
+//            Menu.setVisible(true);
+//            MenuBack.setVisible(false);
+//        }
+//
+//        // Play both transitions
+//        sidebarTransition.play();
+//        contentTransition.play();
+//
+//        // Toggle sidebar visibility state
+//        isSidebarVisible = !isSidebarVisible;
+//    }
+
+
     private void setupMenuToggle() {
         // Initial setup for menu labels
         MenuBack.setVisible(false);
@@ -166,37 +208,41 @@ public class DashboardController implements Initializable {
     }
 
     private void toggleSidebar() {
-        // Create translation transition for sidebar
+        // Tạo transition cho sidebar
         TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(300), slider);
 
-        // Create translation transition for content area
-        TranslateTransition contentTransition = new TranslateTransition(Duration.millis(300), contentArea);
-
         if (isSidebarVisible) {
-            // Hide sidebar
-            sidebarTransition.setToX(-slider.getWidth());
-            contentTransition.setToX(-slider.getWidth());
-            // Swap menu labels
+            // Ẩn sidebar
+            sidebarTransition.setToX(-150);
+
+            // Điều chỉnh contentArea
+            TranslateTransition contentTransition = new TranslateTransition(Duration.millis(300), contentArea);
+            contentTransition.setToX(-75); // Dịch chuyển contentArea sang trái 150px
+            contentTransition.play();
+
+            // Đổi nút menu
             Menu.setVisible(false);
             MenuBack.setVisible(true);
         } else {
-            // Show sidebar
+            // Hiện sidebar
             sidebarTransition.setToX(0);
-            contentTransition.setToX(150);
 
-            // Swap menu labels
+            // Điều chỉnh contentArea
+            TranslateTransition contentTransition = new TranslateTransition(Duration.millis(300), contentArea);
+            contentTransition.setToX(0); // Đưa contentArea về vị trí ban đầu
+            contentTransition.play();
+
+            // Đổi nút menu
             Menu.setVisible(true);
             MenuBack.setVisible(false);
         }
 
-        // Play both transitions
+        // Chạy animation cho sidebar
         sidebarTransition.play();
-        contentTransition.play();
 
-        // Toggle sidebar visibility state
+        // Đảo trạng thái
         isSidebarVisible = !isSidebarVisible;
     }
-
 
     // Phương thức để tải ApartmentView vào contentArea
     private void loadApartmentView() throws IOException {
@@ -335,6 +381,35 @@ public class DashboardController implements Initializable {
 
         Parent ReportView = loader.load();
         SettingController controller = loader.getController();
+        controller.setParentController(this);  // Gán parent
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(ReportView, 0.0);
+        AnchorPane.setRightAnchor(ReportView, 0.0);
+        AnchorPane.setBottomAnchor(ReportView, 0.0);
+        AnchorPane.setLeftAnchor(ReportView, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm ApartmentView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(ReportView);
+        System.out.println("Đã thêm ReportView vào contentArea");
+    }
+
+    public void loadHRView(ActionEvent actionEvent) throws IOException {
+        System.out.println("Đang cố gắng tải ReportView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/HRView.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        if (url == null) {
+            System.out.println("Không tìm thấy file ReportView.fxml");
+            return;
+        }
+
+        Parent ReportView = loader.load();
+        HRViewController controller = loader.getController();
         controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));

@@ -299,6 +299,7 @@ public class ApartmentViewController implements Initializable {
 
 
 
+    @FXML
     private void exportReport() {
         // TODO: Xuất báo cáo danh sách căn hộ
     }

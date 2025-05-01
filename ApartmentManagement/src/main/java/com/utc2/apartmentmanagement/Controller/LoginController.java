@@ -28,6 +28,8 @@ import lombok.Getter;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LoginController {
 
@@ -113,7 +115,11 @@ public class LoginController {
         switch (role_id) {
             case 1 -> {
                 try {
-                    Session.setLastLogin(LocalDate.now());
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+                    String formatted = now.format(formatter);
+                    Session.setLastLogin(formatted);
                     Session.setUserName(userName);
                     // Đóng cửa sổ hiện tại
                     ((Stage) usernameField.getScene().getWindow()).close();

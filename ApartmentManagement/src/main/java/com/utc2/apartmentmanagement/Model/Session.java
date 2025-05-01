@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Session {
     @Getter
@@ -13,11 +14,11 @@ public class Session {
     private static  String userName;
     @Getter
     @Setter
-    private static  LocalDate lastLogin;
+    private static String lastLogin;
 
     public Session() {}
 
-    public Session(String userName, LocalDate lastLogin) {
+    public Session(String userName, String lastLogin) {
         Session.userName = userName;
         Session.lastLogin = lastLogin;
     }

@@ -57,9 +57,6 @@ public class EditApartmentViewController implements Initializable {
         List<String> statusList = Arrays.asList("Trống", "Đã thuê", "Đang bảo trì", "Không khả dụng");
         statusComboBox.setItems(FXCollections.observableArrayList(statusList));
         setupValidators();
-        buildingID.setEditable(false);
-        apartmentIdField.setEditable(false);
-        floorField.setEditable(false);
     }
 
 

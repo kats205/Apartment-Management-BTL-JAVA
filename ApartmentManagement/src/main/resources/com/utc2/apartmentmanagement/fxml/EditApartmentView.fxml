@@ -30,7 +30,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="apartmentIdField" disable="true" editable="false" prefHeight="30.0" prefWidth="200.0" promptText="Mã căn hộ" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="apartmentIdField" disable="true" prefHeight="30.0" prefWidth="200.0" promptText="Mã căn hộ" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                 <Label text="Tòa nhà:" GridPane.rowIndex="1">
                     <font>
@@ -43,7 +43,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="floorField" disable="true" editable="false" prefHeight="30.0" prefWidth="200.0" promptText="Tầng" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="floorField" disable="true" prefHeight="30.0" prefWidth="200.0" promptText="Tầng" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                 <Label text="Diện tích (m²):" GridPane.rowIndex="3">
                     <font>

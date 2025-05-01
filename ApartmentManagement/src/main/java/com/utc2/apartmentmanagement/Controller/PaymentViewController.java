@@ -203,7 +203,7 @@ public class PaymentViewController implements Initializable {
         newPaymentButton.setOnAction(event -> createNewPayment());
 
         // Xử lý sự kiện xem chi tiết
-        detailButton.setOnAction(event -> viewPaymentDetails());
+//        detailButton.setOnAction(event -> viewPaymentDetails());
 
         // Xử lý sự kiện in biên lai
         printButton.setOnAction(event -> printReceipt());
@@ -232,9 +232,11 @@ public class PaymentViewController implements Initializable {
         // TODO: Mở form tạo thanh toán mới
     }
 
-    private void viewPaymentDetails() {
-        // TODO: Hiển thị chi tiết thanh toán được chọn
-    }
+//    private void viewPaymentDetails() {
+//        // TODO: Hiển thị chi tiết thanh toán được chọn
+//
+//
+//    }
 
     private void printReceipt() {
         // TODO: In biên lai thanh toán được chọn
@@ -299,6 +301,7 @@ public class PaymentViewController implements Initializable {
     @Setter
     private DashboardController parentController;
 
+    @FXML
     public void handleCloseButton(ActionEvent event) {
         // Xoá apartment view
         ((Pane) paymentView.getParent()).getChildren().clear();

@@ -36,7 +36,7 @@
                   </Pane>
                   <HBox layoutX="150.0" layoutY="25.0" prefHeight="40.0" prefWidth="1130.0" AnchorPane.bottomAnchor="0.0">
                      <children>
-                        <Button fx:id="apartmentButton1" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Apartment">
+                        <Button fx:id="apartment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Apartment">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -45,7 +45,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="paymentButton1" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Payment">
+                        <Button fx:id="payment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Payment">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -54,7 +54,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="reportButton1" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Report">
+                        <Button fx:id="report" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Report">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -133,7 +133,7 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="ReportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Report" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="reportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Report" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -145,7 +145,7 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="hrButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="hrButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadHRView" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -179,7 +179,7 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane fx:id="contentArea" prefHeight="618.0" prefWidth="1130.0" style="-fx-background-color: #f5f5f5;" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="contentArea" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f5f5f5;" BorderPane.alignment="CENTER">
                <children>
                   <Label layoutX="45.0" layoutY="30.0" styleClass="dashboard-title" text="Admin Dashboard Overview" textFill="#032d4d">
                      <font>
@@ -190,7 +190,7 @@
                   <!-- Statistics Cards Row -->
                   <HBox layoutX="45.0" layoutY="80.0" prefHeight="200.0" prefWidth="1040.0" spacing="30.0">
                      <children>
-                        <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card" stylesheets="@../styles/Dashboard.css">
+                        <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
                            <children>
                               <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Total Apartments" textFill="#0a4969">
                                  <font>
@@ -212,7 +212,7 @@
                               <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Details" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card" stylesheets="@../styles/Dashboard.css">
+                        <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
                            <children>
                               <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Monthly Revenue" textFill="#0a4969">
                                  <font>

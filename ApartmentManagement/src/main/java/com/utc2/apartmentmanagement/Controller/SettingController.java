@@ -44,6 +44,8 @@ public class SettingController implements Initializable {
     private boolean darkMode = false;
 
 
+
+
     public void handleThemeButton() {
         Region root = (Region) themeButton.getScene().getRoot();
 
@@ -78,6 +80,14 @@ public class SettingController implements Initializable {
 //        lastLogin.setText(String.valueOf(lastLoginLabel));
 //        System.out.println("Last login: " + lastLogin);
 //        System.out.println("User name: " + userName);
+
+
+        String username = Session.getUserName();
+        String lastlogin = Session.getLastLogin();
+        System.out.println("Last login: " + lastLogin);
+        System.out.println("User name: " + userName);
+        userName.setText(username);
+        lastLogin.setText(lastlogin);
 
     }
     @FXML
