@@ -340,10 +340,13 @@ public class ApartmentViewController implements Initializable {
     }
 
     public void handleRefresh(ActionEvent event) {
+// Xóa các lựa chọn trong ComboBox
+        buildingComboBox.getSelectionModel().clearSelection();
+        statusComboBox.getSelectionModel().clearSelection();
         buildingComboBox.setValue("Chọn tòa nhà");
         statusComboBox.setValue("Chọn trạng thái");
-        loadDataApartment();
-    }
+        // Tải lại dữ liệu
+        loadData();    }
 
     @Setter
     private DashboardController parentController;

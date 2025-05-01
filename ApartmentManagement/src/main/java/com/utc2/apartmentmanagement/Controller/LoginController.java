@@ -127,7 +127,6 @@ public class LoginController {
             }
             case 2 -> AlertBox.showAlertForUser("Thông báo","Chào mừng nhân viên!");
             case 3 -> AlertBox.showAlertForUser("Thông báo","Chào mừng cư dân!");
-            default -> AlertBox.showAlertForExeptionRegister("Thông báo!", "Tài khoản này không tồn tại !");
         }
     }
 
