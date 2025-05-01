@@ -1,5 +1,9 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Utils.AlertBox;
+import com.utc2.apartmentmanagement.Views.Main;
+import com.utc2.apartmentmanagement.Views.register;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,13 +16,17 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import lombok.Getter;
+
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class LoginController {
 
@@ -41,12 +49,29 @@ public class LoginController {
     private Button loginButton;
 
     @FXML
+    private ImageView Exit;
+
+    @FXML
     private Button registerButton;
 
     @FXML
     public void initialize() {
+        Exit.setOnMouseClicked(event -> {
+            System.exit(0);
+        });
+
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
+        // Gán sự kiện click nút login
+        loginButton.setOnAction(this::handleLogin);
+        // Cho phép nhấn Enter ở bất kỳ input nào
+        loginButton.setDefaultButton(true);
+        // Nhấn Enter ở passwordField thì login
+        passwordField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                loginButton.fire(); // Gọi lại handleLogin
+            }
+        });
     }
 
     private void setupImagePane() {
@@ -75,37 +100,55 @@ public class LoginController {
             }
         }
     }
+    @Getter
+    private String userName;
+    @Getter
+    private LocalDate lastLogin;
 
     @FXML
     public void handleLogin(ActionEvent event) {
-        String username = usernameField.getText();
+        String userName = usernameField.getText();
         String password = passwordField.getText();
-
-        if (username.equals("admin") && password.equals("admin")) {
-
-            System.out.println("Login successful!");
-        } else {
-            System.out.println("Invalid username or password!");
+        this.userName = userName;
+        lastLogin = LocalDate.now();
+        if (userName.isEmpty() && password.isEmpty()) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập tên đăng nhập và mật khẩu!");
+        } else if (userName.isEmpty()) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập tên đăng nhập!");
+        } else if (password.isEmpty()) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập mật khẩu!");
         }
 
-        // Thực hiện xác thực đăng nhập tại đây
-        System.out.println("Đang đăng nhập với tên người dùng: " + username);
-
-        // Thêm logic chuyển đến màn hình chính sau khi đăng nhập thành công
+        UserDAO userDAO = new UserDAO();
+        int role_id = userDAO.login(userName, password);
+        switch (role_id) {
+            case 1 -> {
+                try {
+                    // Đóng cửa sổ hiện tại
+                    ((Stage) usernameField.getScene().getWindow()).close();
+                    // Khởi chạy dashboard
+                    Main main = new Main();
+                    Stage stage = new Stage();
+                    main.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            case 2 -> AlertBox.showAlertForUser("Thông báo","Chào mừng nhân viên!");
+            case 3 -> AlertBox.showAlertForUser("Thông báo","Chào mừng cư dân!");
+            default -> AlertBox.showAlertForExeptionRegister("Thông báo!", "Tài khoản này không tồn tại !");
+        }
     }
 
     @FXML
     public void goToSignUp(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("@../fxml/register-view.fxml"));
-            AnchorPane signupPane = loader.load();
-
-            Scene scene = new Scene(signupPane);
-            Stage stage = (Stage) rootPane.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            System.err.println("Lỗi khi chuyển sang màn hình đăng ký: " + e.getMessage());
+        try{
+            ((Stage) usernameField.getScene().getWindow()).close();
+            // Khởi chạy dashboard
+            register registerUser = new register();
+            Stage stage = new Stage();
+            registerUser.start(stage);
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

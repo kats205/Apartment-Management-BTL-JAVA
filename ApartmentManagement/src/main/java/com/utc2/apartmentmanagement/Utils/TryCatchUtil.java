@@ -13,4 +13,8 @@ public class TryCatchUtil {
     public static boolean validatePhone(String phone){
         return phone.matches("0\\d{9,10}");   //  10 hoặc 11 chữ số, bắt đầu bằng 0
     }
+    public static boolean validateFullName(String fullName) {
+        // Không được rỗng, chỉ chứa chữ và khoảng trắng
+        return fullName != null && fullName.matches("^[a-zA-ZÀ-ỹà-ỹ\\s]+$");
+    }
 }

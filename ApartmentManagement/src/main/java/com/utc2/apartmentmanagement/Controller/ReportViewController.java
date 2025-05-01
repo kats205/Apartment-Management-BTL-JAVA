@@ -141,6 +141,7 @@ public class ReportViewController implements Initializable {
         // Biểu đồ trạng thái
         statusChart.getData().clear();
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                // Số ở sau chỉ thị tỉ lệ phần trăm của biều đồ tròn
                 new PieChart.Data("Chờ thanh toán", 25),
                 new PieChart.Data("Đã thanh toán", 45),
                 new PieChart.Data("Quá hạn", 15),

@@ -10,7 +10,7 @@ public class login extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/login-view.fxml"));
         primaryStage.setTitle("Apartment Application");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
