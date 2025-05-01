@@ -1,7 +1,7 @@
-//package com.utc2.apartmentmanagement.DAO;
+package com.utc2.apartmentmanagement.DAO;//package com.utc2.apartmentmanagement.DAO;
 //
 //import com.utc2.apartmentmanagement.Model.Report;
-//import com.utc2.apartmentmanagement.Repository.IReportDAOv2;
+//import com.utc2.apartmentmanagement.Repository.IReportDAO;
 //import com.utc2.apartmentmanagement.DAO.DatabaseConnection;
 //
 //import java.sql.*;

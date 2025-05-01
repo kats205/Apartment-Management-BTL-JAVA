@@ -17,31 +17,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.ReportViewController">
+<AnchorPane fx:id="reportView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.ReportViewController">
     <children>
         <Label alignment="CENTER" layoutX="425.0" layoutY="25.0" prefHeight="35.0" prefWidth="280.0" style="-fx-font-weight: bold;" text="BÁO CÁO THỐNG KÊ" textAlignment="CENTER">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER_LEFT" layoutX="114.0" layoutY="78.0" prefHeight="40.0" prefWidth="740.0" spacing="15.0">
+        <HBox alignment="CENTER_LEFT" layoutX="74.0" layoutY="78.0" prefHeight="40.0" prefWidth="840.0" spacing="15.0">
             <children>
-                <Label prefHeight="40.0" text="Loại báo cáo:">
+                <Label prefHeight="40.0" prefWidth="85.0" text="Loại báo cáo:">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="reportTypeComboBox" prefHeight="30.0" prefWidth="220.0" promptText="Chọn loại báo cáo" stylesheets="@../styles/Dashboard.css" />
-                <Label prefHeight="40.0" text="Thời gian:">
+                <ComboBox fx:id="reportTypeComboBox" prefHeight="30.0" prefWidth="200.0" promptText="Chọn loại báo cáo" stylesheets="@../styles/Dashboard.css" />
+                <Label prefHeight="40.0" prefWidth="65.0" text="Thời gian:">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
                 <DatePicker fx:id="fromDatePicker" prefHeight="30.0" prefWidth="150.0" promptText="Từ ngày" />
                 <DatePicker fx:id="toDatePicker" prefHeight="30.0" prefWidth="150.0" promptText="Đến ngày" />
+                <Button fx:id="generateButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="Tạo báo cáo" />
             </children>
         </HBox>
-        <Button fx:id="exportReportButton" layoutX="860.0" layoutY="83.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" styleClass="create-button" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
+        <Button fx:id="exportReportButton" layoutX="914.0" layoutY="83.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="135.0" styleClass="create-button" stylesheets="@../styles/Dashboard.css" text="Xuất báo cáo" />
 
         <TabPane layoutX="55.0" layoutY="135.0" prefHeight="425.0" prefWidth="1020.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -88,7 +89,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="375.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="reportTable" layoutY="10.0" prefHeight="375.0" prefWidth="1020.0" stylesheets="@../styles/Dashboard.css">
+                                <TableView fx:id="reportTable" layoutY="10.0" onMouseClicked="#getSelectedApartment" prefHeight="375.0" prefWidth="1020.0" stylesheets="@../styles/Dashboard.css">
                                     <columns>
                                         <TableColumn fx:id="reportTypeColumn" prefWidth="130.0" text="Loại báo cáo" />
                                         <TableColumn fx:id="generationDateColumn" prefWidth="140.0" text="Ngày tạo báo cáo" />
@@ -173,7 +174,7 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <Button fx:id="closeButton" layoutX="975.0" layoutY="610.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
+        <Button fx:id="closeButton" layoutX="975.0" layoutY="610.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
       <HBox layoutX="860.0" layoutY="570.0" prefHeight="30.0" prefWidth="215.0" spacing="15.0">
          <children>
             <Button fx:id="printButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../styles/Dashboard.css" text="In báo cáo" />

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="655.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.HRViewController">
+<AnchorPane fx:id="hrView" prefHeight="655.0" prefWidth="1130.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.HRViewController">
     <children>
         <BorderPane layoutX="0.0" layoutY="0.0" prefHeight="655.0" prefWidth="1130.0">
             <top>
@@ -183,7 +183,7 @@
                                     </Label>
                                           </children>
                                       </HBox>
-                              <Button fx:id="btnClose" layoutX="706.0" layoutY="3.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Đóng" />
+                              <Button fx:id="btnClose" layoutX="706.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="80.0" text="Đóng" />
                            </children>
                         </AnchorPane>
                             </children>

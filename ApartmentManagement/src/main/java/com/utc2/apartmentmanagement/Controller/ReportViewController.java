@@ -1,22 +1,54 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.ReportDAO;
+import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.Report;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ReportViewController implements Initializable {
 
+    @FXML public TableColumn<Report, String> reportTypeColumn;
+    @FXML public TableColumn<Report, LocalDate> generationDateColumn;
+    @FXML public TableColumn<Report, Integer> generatedByUserIdColumn;
+    @FXML public TableColumn<Report, Date> parametersColumn;
+    @FXML public TableColumn<Report, String> filePathColumn;
+    @FXML public TableColumn<Report, LocalDate> createdAtColumn;
+    @FXML public TableColumn<Report, LocalDate> updatedAtColumn;
+    @FXML public Label topGeneratorLabel;
+    @FXML public Label popularReportTypeLabel;
+    @FXML public Label latestReportLabel;
+    @FXML public Label totalReportsLabel;
+    @FXML public AnchorPane reportView;
     @FXML
     private ComboBox<String> reportTypeComboBox;
 
@@ -39,40 +71,40 @@ public class ReportViewController implements Initializable {
     private PieChart statusChart;
 
     @FXML
-    private TableView reportTable;
+    private TableView<Report> reportTable;
 
     @FXML
-    private TableColumn reportTypeColumn;
+    private TableColumn<Map, String> periodColumn;
 
     @FXML
-    private TableColumn generationDateColumn;
+    private TableColumn<Map, Double> totalInvoicesColumn;
 
     @FXML
-    private TableColumn generatedByUserIdColumn;
+    private TableColumn<Map, Integer> paidInvoicesColumn;
 
     @FXML
-    private TableColumn parametersColumn;
+    private TableColumn<Map, Integer> unpaidInvoicesColumn;
 
     @FXML
-    private TableColumn filePathColumn;
+    private TableColumn<Map, Integer> overdueInvoicesColumn;
 
     @FXML
-    private TableColumn createdAtColumn;
+    private TableColumn<Map, Double> totalRevenueColumn;
 
     @FXML
-    private TableColumn updatedAtColumn;
+    private TableColumn<Map, Double> totalFeesColumn;
 
     @FXML
-    private Label totalReportsLabel;
+    private Label totalInvoicesLabel;
 
     @FXML
-    private Label latestReportLabel;
+    private Label totalRevenueLabel;
 
     @FXML
-    private Label popularReportTypeLabel;
+    private Label paymentRateLabel;
 
     @FXML
-    private Label topGeneratorLabel;
+    private Label overdueRateLabel;
 
     @FXML
     private Button printButton;
@@ -80,153 +112,303 @@ public class ReportViewController implements Initializable {
     @FXML
     private Button exportButton;
 
+    // Getter cho nút đóng để DashboardController có thể truy cập
+    @Getter
     @FXML
     private Button closeButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Thiết lập các giá trị mặc định
-        fromDatePicker.setValue(LocalDate.now().minusMonths(1));
-        toDatePicker.setValue(LocalDate.now());
+        // Khởi tạo các thành phần UI
+        initializeComponents();
 
-        // Khởi tạo loại báo cáo
-        initReportTypes();
+        // Thiết lập các sự kiện
+        setupEventHandlers();
 
-        // Thiết lập sự kiện cho các nút
-        setupButtonActions();
+        // Tải dữ liệu mặc định
+        loadDefaultData();
 
-        // Tạo dữ liệu mẫu cho biểu đồ và bảng
-        createSampleData();
+
+
     }
 
-    // Khởi tạo các loại báo cáo
-    private void initReportTypes() {
-        ObservableList<String> reportTypes = FXCollections.observableArrayList(
-                "Doanh thu theo tháng",
-                "Trạng thái thanh toán",
-                "Báo cáo tài chính",
-                "Tình trạng căn hộ",
-                "Báo cáo hoạt động"
-        );
-        reportTypeComboBox.setItems(reportTypes);
-        reportTypeComboBox.getSelectionModel().selectFirst();
+    private void initializeComponents() {
+        // Khởi tạo DatePicker
+        initializeDatePickers();
+
+        // Khởi tạo ComboBox
+        initializeComboBoxes();
+
+        // Khởi tạo TableView
+        initializeTableView();
+
+        // Khởi tạo biểu đồ
+        initializeCharts();
+
+        initializeTableView();
+
+        initialSummary();
     }
 
-    // Thiết lập sự kiện cho các nút
-    private void setupButtonActions() {
-        exportReportButton.setOnAction(this::handleExportReport);
-        printButton.setOnAction(this::handlePrintReport);
-        exportButton.setOnAction(this::handleExportExcel);
-        closeButton.setOnAction(this::handleClose);
+    public void initialSummary(){
+        List<Report> reportList = new ReportDAO().getAllReports();
+        int totalReport = reportList.size();
+        String newestReport = reportList.getLast().getReportType();
+        // Map 1: Đếm số lần mỗi loại báo cáo
+        Map<String, Integer> reportTypeCountMap = new HashMap<>();
 
-        // Sự kiện khi thay đổi loại báo cáo
-        reportTypeComboBox.setOnAction(event -> createSampleData());
+// Map 2: Đếm số lần mỗi user tạo báo cáo
+        Map<Integer, Integer> userReportCountMap = new HashMap<>();
 
-        // Sự kiện khi thay đổi ngày
-        fromDatePicker.setOnAction(event -> createSampleData());
-        toDatePicker.setOnAction(event -> createSampleData());
+        for (Report report : reportList) {
+            // Đếm loại báo cáo
+            String type = report.getReportType();
+            reportTypeCountMap.put(type, reportTypeCountMap.getOrDefault(type, 0) + 1);
+
+            // Đếm theo user
+            int userId = report.getGeneratedByUserId();
+            userReportCountMap.put(userId, userReportCountMap.getOrDefault(userId, 0) + 1);
+        }
+
+        // Tìm loại báo cáo phổ biến nhất
+        String popularReport = reportTypeCountMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+
+        // Tìm user tạo nhiều báo cáo nhất
+        Integer mostActiveUserId = userReportCountMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
+        String nameUserById = new UserDAO().getUserByID(mostActiveUserId).getFullName();
+        totalReportsLabel.setText(String.valueOf(totalReport));
+        latestReportLabel.setText(newestReport);
+        popularReportTypeLabel.setText(popularReport);
+        topGeneratorLabel.setText(nameUserById);
+        // Output thử
+        System.out.println("Tổng số báo cáo: " + totalReport);
+        System.out.println("Báo cáo mới nhất: " + newestReport);
+        System.out.println("Loại báo cáo phổ biến nhất: " + popularReport);
+        System.out.println("Người dùng tạo nhiều báo cáo nhất: User ID = " + mostActiveUserId);
     }
 
-    // Tạo dữ liệu mẫu cho biểu đồ và bảng
-    private void createSampleData() {
-        createSampleCharts();
-        updateSummaryInfo();
+    private void initializeDatePickers() {
+        // Thiết lập giá trị mặc định: từ đầu tháng đến hiện tại
+        LocalDate now = LocalDate.now();
+        LocalDate firstDayOfMonth = LocalDate.of(now.getYear(), now.getMonth(), 1);
+        fromDatePicker.setValue(firstDayOfMonth);
+        toDatePicker.setValue(now);
+
     }
 
-    // Tạo biểu đồ mẫu
-    private void createSampleCharts() {
-        // Biểu đồ doanh thu theo tháng
-        revenueChart.getData().clear();
-
-        // Biểu đồ trạng thái
-        statusChart.getData().clear();
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                // Số ở sau chỉ thị tỉ lệ phần trăm của biều đồ tròn
-                new PieChart.Data("Chờ thanh toán", 25),
-                new PieChart.Data("Đã thanh toán", 45),
-                new PieChart.Data("Quá hạn", 15),
-                new PieChart.Data("Đã hủy", 15)
-        );
-        statusChart.setData(pieChartData);
+    private void initializeComboBoxes() {
+        // TODO: Khởi tạo các loại báo cáo cho reportTypeComboBox
+        // Ví dụ: Báo cáo theo tháng, theo quý, theo năm
+        reportTypeComboBox.getItems().addAll("Báo cáo theo tháng", "Báo cáo theo quý", "Báo cáo theo năm");
     }
 
-    // Cập nhật thông tin tóm tắt
-    private void updateSummaryInfo() {
-        totalReportsLabel.setText("15");
-        latestReportLabel.setText("Báo cáo tài chính (01/05/2025)");
-        popularReportTypeLabel.setText("Doanh thu theo tháng");
-        topGeneratorLabel.setText("Trần Văn Quản");
+    private void initializeTableView() {
+        // TODO: Cấu hình TableView và các cột
+        reportTypeColumn.setCellValueFactory(new PropertyValueFactory<>("reportType"));
+        reportTypeColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        generationDateColumn.setCellValueFactory(new PropertyValueFactory<>("generationDate"));
+        generationDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        generatedByUserIdColumn.setCellValueFactory(new PropertyValueFactory<>("generatedByUserId"));
+        generatedByUserIdColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        parametersColumn.setCellValueFactory(new PropertyValueFactory<>("parameters"));
+        parametersColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        filePathColumn.setCellValueFactory(new PropertyValueFactory<>("filePath"));
+        filePathColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        createdAtColumn.setCellValueFactory( new PropertyValueFactory<>("createdAt"));
+        createdAtColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        updatedAtColumn.setCellValueFactory(new PropertyValueFactory<>("updatedAt"));
+        updatedAtColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        ObservableList<Report> reportList = FXCollections.observableArrayList();
+        List<Report> reportList1 = new ReportDAO().getAllReports();
+        reportList.addAll(reportList1);
+        reportTable.setItems(reportList);
     }
 
-    // Xử lý sự kiện xuất báo cáo
-    private void handleExportReport(ActionEvent event) {
-        String reportType = reportTypeComboBox.getValue();
+    private void initializeCharts() {
+        // TODO: Cấu hình biểu đồ bar chart và pie chart
+
+    }
+
+    private void setupEventHandlers() {
+        // Xử lý sự kiện tạo báo cáo
+        generateButton.setOnAction(event -> {
+            try {
+                generateReport();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        // Xử lý sự kiện xuất báo cáo
+        exportReportButton.setOnAction(event -> exportFullReport());
+
+        // Xử lý sự kiện in báo cáo
+        printButton.setOnAction(event -> printReport());
+
+        // Xử lý sự kiện xuất Excel
+        exportButton.setOnAction(event -> exportToExcel());
+
+        // Nút đóng mặc định không làm gì - sẽ được xử lý bởi DashboardController
+    }
+
+    private void loadDefaultData() {
+        // TODO: Tải dữ liệu báo cáo mặc định
+
+        // Hiển thị dữ liệu tóm tắt
+        updateSummaryData();
+    }
+
+    private void generateReport() throws SQLException {
+        // TODO: Tạo báo cáo dựa trên loại báo cáo và khoảng thời gian đã chọn
+
+        // Cập nhật biểu đồ
+        updateCharts();
+
+        // Cập nhật bảng dữ liệu
+//        updateTableData();
+
+        // Cập nhật dữ liệu tóm tắt
+        updateSummaryData();
+    }
+
+    private void updateCharts() throws SQLException {
+        // TODO: Cập nhật dữ liệu cho biểu đồ doanh thu và biểu đồ trạng thái
         LocalDate fromDate = fromDatePicker.getValue();
         LocalDate toDate = toDatePicker.getValue();
+        ObservableList<XYChart.Data<String, Number>> data = new ReportDAO().getValue(fromDate, toDate);
 
-        showAlert(Alert.AlertType.INFORMATION, "Thông báo",
-                "Đang xuất báo cáo: " + reportType + "\n" +
-                        "Từ ngày: " + fromDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\n" +
-                        "Đến ngày: " + toDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Doanh thu theo tháng");
+        series.setData(data);
+
+        CategoryAxis xAxis = (CategoryAxis) revenueChart.getXAxis();
+        xAxis.setTickLabelRotation(-45); // Xoay label 45 độ nhìn gọn
+// KHÔNG cần setTickLabelGap ở đây, vì không giúp cách cột
+
+        revenueChart.getData().clear();
+        revenueChart.getData().add(series);
+
+// Chính xác ở đây nè
+        revenueChart.setCategoryGap(100); // 👈 cái này giúp các tháng (các cột) cách xa nhau theo trục ngang
+        revenueChart.setBarGap(10);        // nếu sau này có nhiều cột trong cùng 1 tháng thì mỗi cột cũng cách nhau
+
     }
 
-    // Xử lý sự kiện in báo cáo
-    private void handlePrintReport(ActionEvent event) {
-        showAlert(Alert.AlertType.INFORMATION, "Thông báo",
-                "Báo cáo đang được gửi đến máy in...");
+//    private void updateTableData() throws SQLException {
+//        // TODO: Cập nhật dữ liệu cho bảng báo cáo
+//        LocalDate fromDate = fromDatePicker.getValue();
+//        LocalDate toDate = toDatePicker.getValue();
+//        reportTable.setItems(new ReportDAO().getValue(fromDate, toDate));
+//        periodColumn.setCellValueFactory(new MapValueFactory<>("kỳ"));
+//        totalInvoicesColumn.setCellValueFactory(new MapValueFactory<>("tổng số hóa đơn"));
+//        overdueInvoicesColumn.setCellValueFactory(new MapValueFactory<>("quá hạn"));
+//        paidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("đã thanh toán"));
+//        totalFeesColumn.setCellValueFactory(new MapValueFactory<>("tổng phí phạt"));
+//        unpaidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("chưa thanh toán"));
+//        totalRevenueColumn.setCellValueFactory(new MapValueFactory<>("tổng doanh thu"));
+//    }
+
+    private void updateSummaryData() {
+        // TODO: Cập nhật các thông tin tóm tắt
+        // Giả sử các giá trị mặc định
+//        totalInvoicesLabel.setText("0");
+//        totalRevenueLabel.setText("0 VNĐ");
+//        paymentRateLabel.setText("0%");
+//        overdueRateLabel.setText("0%");
     }
 
-    // Xử lý sự kiện xuất Excel
-    private void handleExportExcel(ActionEvent event) {
-        showAlert(Alert.AlertType.INFORMATION, "Thông báo",
-                "Báo cáo đã được xuất sang Excel thành công!");
+    private void exportFullReport() {
+        // TODO: Xuất toàn bộ báo cáo (bao gồm biểu đồ, bảng dữ liệu và tóm tắt)
     }
 
-    // Xử lý sự kiện đóng
-    private void handleClose(ActionEvent event) {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
+    private void printReport() {
+        // TODO: In báo cáo
     }
 
-    // Hiển thị thông báo
-    private void showAlert(Alert.AlertType alertType, String title, String content) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
+    private void exportToExcel() {
+        // TODO: Xuất báo cáo dạng Excel
     }
 
-    /*
-     * Các method liên quan đến Model
-     * Các phương thức này sẽ được triển khai khi có các model tương ứng
-     */
+    @Setter
+    private DashboardController parentController;
 
-    /*
-    // Tải dữ liệu báo cáo
-    private void loadReportData() {
-        // Sẽ được triển khai khi có model Report
+    private ContextMenu currentContextMenu;
+
+    public void handleCloseButton(ActionEvent event) {
+        // Xoá apartment view
+        ((Pane)reportView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
 
-    // Tạo báo cáo mới
-    private void createNewReport(String reportType, LocalDate fromDate, LocalDate toDate) {
-        // Sẽ được triển khai khi có model Report
-    }
+    public void getSelectedApartment(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+            Report selectedReport = reportTable.getSelectionModel().getSelectedItem();
+            if (selectedReport == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Vui lòng chọn căn hộ để chỉnh sửa!");
+                alert.showAndWait();
+                return;
+            }
 
-    // Cập nhật báo cáo
-    private void updateReport(Report report) {
-        // Sẽ được triển khai khi có model Report
-    }
+            // Nếu đã có ContextMenu đang mở -> đóng lại
+            if (currentContextMenu != null && currentContextMenu.isShowing()) {
+                currentContextMenu.hide();
+            }
 
-    // Xóa báo cáo
-    private void deleteReport(Report report) {
-        // Sẽ được triển khai khi có model Report
-    }
+            // Tạo ContextMenu mới
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem editItem = new MenuItem("Xem chi tiết báo cáo");
 
-    // Lấy người dùng theo ID
-    private User getUserById(int userId) {
-        // Sẽ được triển khai khi có model User
-        return null;
+            editItem.setOnAction(e -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/DetailReport.fxml"));
+                    Parent root = loader.load();
+
+                    DetailReportController editController = loader.getController();
+                    editController.setParentController(this);   // set controller cha
+                    editController.setApartment(selectedReport); // set báo cáo cần xem chi tiết
+
+                    Stage stage = new Stage();
+                    stage.setTitle("Chi tiết báo cáo");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+
+            contextMenu.getItems().add(editItem);
+
+            // Lưu context menu mới
+            currentContextMenu = contextMenu;
+
+            // Hiện ContextMenu tại vị trí con trỏ
+            contextMenu.show(reportTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+
+            // Thêm listener để ẩn ContextMenu nếu click chỗ khác
+            reportTable.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                // Ẩn menu nếu click trái hoặc phải ở nơi khác
+                if (currentContextMenu != null && currentContextMenu.isShowing()
+                        && (event.getButton() == MouseButton.PRIMARY || event.getButton() == MouseButton.SECONDARY)) {
+                    currentContextMenu.hide();
+                }
+            });
+        }
     }
-    */
 }

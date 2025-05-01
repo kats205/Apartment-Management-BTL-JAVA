@@ -4,6 +4,7 @@ import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.PaymentDAO;
 import com.utc2.apartmentmanagement.Model.Apartment;
 import com.utc2.apartmentmanagement.Model.Payment;
+import com.utc2.apartmentmanagement.Utils.AlertBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -88,6 +92,8 @@ public class PaymentViewController implements Initializable {
     @FXML
     private Button exportButton;
 
+    // Getter cho nút đóng để DashboardController có thể truy cập
+    @Getter
     @FXML
     private Button closeButton;
 
@@ -121,11 +127,11 @@ public class PaymentViewController implements Initializable {
 
         invoiceColumn.setCellValueFactory(new PropertyValueFactory<>("billID"));
         invoiceColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        invoiceColumn.setPrefWidth(120);
+        invoiceColumn.setPrefWidth(140);
 
-        apartmentColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
-        apartmentColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        apartmentColumn.setPrefWidth(110);
+//        apartmentColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
+//        apartmentColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+//        apartmentColumn.setPrefWidth(140);
 
         paymentDateColumn.setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
         paymentDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
@@ -133,23 +139,23 @@ public class PaymentViewController implements Initializable {
 
         amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amountColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        amountColumn.setPrefWidth(140);
+        amountColumn.setPrefWidth(150);
 
         methodColumn.setCellValueFactory(new PropertyValueFactory<>("paymentMedthod"));
         methodColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        methodColumn.setPrefWidth(130);
+        methodColumn.setPrefWidth(170);
 
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         statusColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        statusColumn.setPrefWidth(110);
+        statusColumn.setPrefWidth(130);
 
         createDateColumn.setCellValueFactory(new PropertyValueFactory<>("created_at"));
         createDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        createDateColumn.setPrefWidth(100);
+        createDateColumn.setPrefWidth(130);
 
         transactionIdColumn.setCellValueFactory(new PropertyValueFactory<>("transactionID"));
         transactionIdColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        transactionIdColumn.setPrefWidth(140);
+        transactionIdColumn.setPrefWidth(250);
 
     }
 
@@ -197,7 +203,7 @@ public class PaymentViewController implements Initializable {
         newPaymentButton.setOnAction(event -> createNewPayment());
 
         // Xử lý sự kiện xem chi tiết
-        detailButton.setOnAction(event -> viewPaymentDetails());
+//        detailButton.setOnAction(event -> viewPaymentDetails());
 
         // Xử lý sự kiện in biên lai
         printButton.setOnAction(event -> printReceipt());
@@ -226,9 +232,11 @@ public class PaymentViewController implements Initializable {
         // TODO: Mở form tạo thanh toán mới
     }
 
-    private void viewPaymentDetails() {
-        // TODO: Hiển thị chi tiết thanh toán được chọn
-    }
+//    private void viewPaymentDetails() {
+//        // TODO: Hiển thị chi tiết thanh toán được chọn
+//
+//
+//    }
 
     private void printReceipt() {
         // TODO: In biên lai thanh toán được chọn
@@ -248,18 +256,88 @@ public class PaymentViewController implements Initializable {
         noContentLabel.setVisible(!hasData);
     }
 
-    // Getter cho nút đóng để DashboardController có thể truy cập
-    public Button getCloseButton() {
-        return closeButton;
+    //    public void handleSearchButton(ActionEvent event) throws SQLException {
+//        String apartmentID = apartmentComboBox.getValue();
+//
+//        // Kiểm tra nếu apartmentID không null
+//        Payment payment = null;
+//        if (apartmentID != null && !apartmentID.isEmpty()) {
+//            // Tìm payment theo apartmentId
+//            payment = new PaymentDAO().findPaymentByApartmentId(apartmentID);
+//
+//            // Xóa dữ liệu cũ trong bảng
+//            paymentTable.getItems().clear();
+//
+//            // Kiểm tra nếu có payment
+//            if (payment != null) {
+//                // Thêm payment vào bảng
+//                ObservableList<Payment> payments = FXCollections.observableArrayList(payment);
+//                paymentTable.setItems(payments);
+//
+//                // Cập nhật số lượng payment
+//                paymentCountLabel.setText("1");
+//                noContentLabel.setVisible(false);
+//            } else {
+//                // Không có payment
+//                paymentCountLabel.setText("0");
+//                noContentLabel.setVisible(true);
+//            }
+//        }
+//
+//        LocalDate fromDate = fromDatePicker.getValue();
+//        LocalDate toDate = toDatePicker.getValue();
+//        if (fromDate != null && toDate != null && payment != null) {
+//            List<Payment> paymentList = new PaymentDAO().findPaymentByDate(fromDate, toDate);
+//            int sizeList = paymentList.size();
+//            if (sizeList == 0) {
+//                AlertBox.showAlertForExeptionRegister("Thông báo!", "Không có dữ liệu trong khoảng thời gian này!");
+//            } else {
+//                ObservableList<Payment> payments = FXCollections.observableArrayList();
+//                payments.addAll(paymentList);
+//                paymentTable.setItems(payments);
+//            }
+//        }
+//    }
+    @Setter
+    private DashboardController parentController;
+
+    @FXML
+    public void handleCloseButton(ActionEvent event) {
+        // Xoá apartment view
+        ((Pane) paymentView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
 
-    public void handleSearchButton(ActionEvent event) throws SQLException {
+
+    public void handleSearchByDateButton(ActionEvent actionEvent) {
+        LocalDate fromDate = fromDatePicker.getValue();
+        LocalDate toDate = toDatePicker.getValue();
+        if (fromDate != null && toDate != null) {
+            List<Payment> paymentList = new PaymentDAO().findPaymentByDate(fromDate, toDate);
+            int sizeList = paymentList.size();
+            if (sizeList == 0) {
+                AlertBox.showAlertForExeptionRegister("Thông báo!", "Không có dữ liệu trong khoảng thời gian này!");
+                paymentCountLabel.setText("1");
+                paymentCountLabel.setText(String.valueOf(paymentList.size()));
+            } else {
+                ObservableList<Payment> payments = FXCollections.observableArrayList();
+                payments.addAll(paymentList);
+                paymentTable.setItems(payments);
+                paymentCountLabel.setText(String.valueOf(paymentList.size()));
+                noContentLabel.setVisible(false);
+            }
+        }
+    }
+
+    public void handlesearByApartmentIdButton(ActionEvent actionEvent) throws SQLException {
         String apartmentID = apartmentComboBox.getValue();
 
         // Kiểm tra nếu apartmentID không null
+        Payment payment = null;
         if (apartmentID != null && !apartmentID.isEmpty()) {
             // Tìm payment theo apartmentId
-            Payment payment = new PaymentDAO().findPaymentByApartmentId(apartmentID);
+            payment = new PaymentDAO().findPaymentByApartmentId(apartmentID);
 
             // Xóa dữ liệu cũ trong bảng
             paymentTable.getItems().clear();
@@ -279,5 +357,8 @@ public class PaymentViewController implements Initializable {
                 noContentLabel.setVisible(true);
             }
         }
+    }
+
+    public void handleSearchButton(ActionEvent actionEvent) {
     }
 }

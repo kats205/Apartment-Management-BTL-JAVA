@@ -1,5 +1,6 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.Model.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -17,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -71,7 +73,10 @@ public class SettingViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        String userName = Session.getUserName();
+        String lastLogin = Session.getLastLogin();
+        System.out.println("Last login: " + lastLogin);
+        System.out.println("User name: " + userName);
     }
 
     private void loadUserInfo() {

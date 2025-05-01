@@ -145,7 +145,7 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="hrButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="hrButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadHRView" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -161,7 +161,7 @@
                   </VBox>
                   <VBox layoutX="-1.0" layoutY="603.0" prefHeight="50.0" prefWidth="150.0">
                      <children>
-                        <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadMyProfile" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

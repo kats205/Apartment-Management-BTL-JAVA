@@ -1,4 +1,4 @@
 package com.utc2.apartmentmanagement.Controller;
 
-public class UserDashboardController {
+public class ExportReportController {
 }

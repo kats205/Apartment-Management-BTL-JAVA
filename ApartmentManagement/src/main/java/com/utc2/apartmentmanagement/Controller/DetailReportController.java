@@ -1,124 +1,52 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.PaymentDAO;
+import com.utc2.apartmentmanagement.Model.Apartment;
+import com.utc2.apartmentmanagement.Model.Payment;
+import com.utc2.apartmentmanagement.Model.Report;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
-import javafx.stage.FileChooser;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import lombok.Setter;
 
-import java.io.File;
-import java.net.URL;
-import java.text.NumberFormat;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.List;
 
-public class DetailReportController implements Initializable {
+public class DetailReportController {
+    @FXML public Label totalInvoicesLabel;
+    @FXML public Label paidInvoicesLabel;
+    @FXML public Label paymentRateLabel;
+    @FXML public Label totalCollectedLabel;
+    @FXML public Label totalOutstandingLabel;
+    @FXML public BarChart revenueChart;
+    @FXML public Label reportTypeLabel;
+    @FXML public Label fromDateLabel;
+    @FXML public Label toDateLabel;
+    @FXML public Button exportButton;
 
-    @FXML
-    private Label reportTypeLabel;
+    @Setter
+    private ReportViewController parentController = new ReportViewController();
+    public void setApartment(Report report) throws IOException {
+        if (report != null) {
+            List<Payment> paymentList = new PaymentDAO().getAllPayment();
+            Payment payment = new Payment();
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            DecimalFormat df = new DecimalFormat("0.00");
+            double rate = payment.paymentRateLabel(paymentList); // ví dụ trả về 83.3333
 
-    @FXML
-    private Label fromDateLabel;
+            reportTypeLabel.setText(report.getReportType());
+            totalInvoicesLabel.setText(String.valueOf(paymentList.size()));
+            paidInvoicesLabel.setText(String.valueOf(payment.completedPayment(paymentList)));
+            totalCollectedLabel.setText(formatter.format(payment.totalAmountCollected(paymentList)) + " VND");
+            totalOutstandingLabel.setText(formatter.format(payment.totalOutstandingLabel(paymentList))+ " VND");
+            paymentRateLabel.setText(df.format(rate) + " %");
 
-    @FXML
-    private Label toDateLabel;
-
-    @FXML
-    private Button exportButton;
-
-    @FXML
-    private Label totalInvoicesLabel;
-
-    @FXML
-    private Label paidInvoicesLabel;
-
-    @FXML
-    private Label paymentRateLabel;
-
-    @FXML
-    private Label totalCollectedLabel;
-
-    @FXML
-    private Label totalOutstandingLabel;
-
-    @FXML
-    private BarChart<String, Number> revenueChart;
-
-    // Định dạng số tiền VNĐ
-    private final NumberFormat currencyFormatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // Các giá trị mặc định sẽ được thiết lập từ backend
-
-        // Định dạng số tiền
-        currencyFormatter.setMaximumFractionDigits(0);
-        currencyFormatter.setGroupingUsed(true);
-    }
-
-    /**
-     * Cập nhật thông tin báo cáo
-     * Method này sẽ được gọi từ backend để hiển thị dữ liệu
-     */
-    public void updateReportInfo(String reportType, String fromDate, String toDate,
-                                 int totalInvoices, int paidInvoices, double paymentRate,
-                                 double totalCollected, double totalOutstanding) {
-
-        reportTypeLabel.setText(reportType);
-        fromDateLabel.setText(fromDate);
-        toDateLabel.setText(toDate);
-
-        totalInvoicesLabel.setText(String.format("%,d", totalInvoices));
-        paidInvoicesLabel.setText(String.format("%,d", paidInvoices));
-        paymentRateLabel.setText(String.format("%.2f%%", paymentRate));
-        totalCollectedLabel.setText(currencyFormatter.format(totalCollected));
-        totalOutstandingLabel.setText(currencyFormatter.format(totalOutstanding));
-    }
-
-    /**
-     * Cập nhật biểu đồ doanh thu
-     * Method này sẽ được gọi từ backend để hiển thị dữ liệu
-     */
-    public void updateRevenueChart(String[] timeLabels, double[] collectedAmounts, double[] outstandingAmounts) {
-        revenueChart.getData().clear();
-
-        XYChart.Series<String, Number> collectedSeries = new XYChart.Series<>();
-        collectedSeries.setName("Đã thu");
-
-        XYChart.Series<String, Number> outstandingSeries = new XYChart.Series<>();
-        outstandingSeries.setName("Chưa thu");
-
-        for (int i = 0; i < timeLabels.length; i++) {
-            collectedSeries.getData().add(new XYChart.Data<>(timeLabels[i], collectedAmounts[i]));
-            outstandingSeries.getData().add(new XYChart.Data<>(timeLabels[i], outstandingAmounts[i]));
         }
-
-        revenueChart.getData().addAll(collectedSeries, outstandingSeries);
     }
+    public void exportReport(ActionEvent actionEvent) {
 
-    @FXML
-    private void exportReport(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Xuất báo cáo");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"),
-                new FileChooser.ExtensionFilter("PDF Files", "*.pdf"),
-                new FileChooser.ExtensionFilter("CSV Files", "*.csv")
-        );
-
-        File file = fileChooser.showSaveDialog(exportButton.getScene().getWindow());
-
-        if (file != null) {
-            // Thực hiện xuất báo cáo theo định dạng file đã chọn
-            // Backend sẽ xử lý phần này
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Thông báo");
-            alert.setHeaderText(null);
-            alert.setContentText("Đã xuất báo cáo thành công!");
-            alert.showAndWait();
-        }
     }
 }

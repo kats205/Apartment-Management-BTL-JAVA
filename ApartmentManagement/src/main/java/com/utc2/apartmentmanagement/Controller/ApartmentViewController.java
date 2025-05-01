@@ -3,15 +3,28 @@ package com.utc2.apartmentmanagement.Controller;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.Model.Apartment;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
+import com.utc2.apartmentmanagement.Utils.ValidateColumn;
+import com.utc2.apartmentmanagement.Views.EditApartmentView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.NumberFormat;
@@ -82,8 +95,13 @@ public class ApartmentViewController implements Initializable {
     @FXML
     private Button exportButton;
 
+    // Getter cho nút đóng để DashboardController có thể truy cập
+    @Getter
     @FXML
     private Button closeButton;
+
+
+    private ContextMenu currentContextMenu;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -115,20 +133,20 @@ public class ApartmentViewController implements Initializable {
     }
     private void getValueCol(){
         idColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
-        idColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        idColumn.setPrefWidth(130);
+        idColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
+        idColumn.setPrefWidth(140);
 
         buildingColumn.setCellValueFactory(new PropertyValueFactory<>("buildingID"));
-        buildingColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+        buildingColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
         buildingColumn.setPrefWidth(100);
 
         floorColumn.setCellValueFactory(new PropertyValueFactory<>("floors"));
-        floorColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+        floorColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
         floorColumn.setPrefWidth(100);
 
         areaColumn.setCellValueFactory(new PropertyValueFactory<>("area"));
-        areaColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        areaColumn.setPrefWidth(130);
+        areaColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
+        areaColumn.setPrefWidth(140);
 
         areaColumn.setCellFactory(column -> new TableCell<Apartment, Double>() {
             @Override
@@ -143,12 +161,12 @@ public class ApartmentViewController implements Initializable {
         });
 
         bedroomsColumn.setCellValueFactory(new PropertyValueFactory<>("bedRoom"));
-        bedroomsColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        bedroomsColumn.setPrefWidth(130);
+        bedroomsColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
+        bedroomsColumn.setPrefWidth(140);
 
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("priceApartment"));
-        priceColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        priceColumn.setPrefWidth(150);
+        priceColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
+        priceColumn.setPrefWidth(200);
 
         priceColumn.setCellFactory(column -> new TableCell<Apartment, Double>() {
             @Override
@@ -166,16 +184,15 @@ public class ApartmentViewController implements Initializable {
         });
 
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        statusColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        statusColumn.setPrefWidth(140);
+        statusColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
+        statusColumn.setPrefWidth(200);
 
         maintenanceFeeCol.setCellValueFactory(new PropertyValueFactory<>("maintanceFee"));
-        maintenanceFeeCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-        maintenanceFeeCol.setPrefWidth(120);
+        maintenanceFeeCol.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
+        maintenanceFeeCol.setPrefWidth(250);
     }
-    private void loadDataApartment(){
+    void loadDataApartment(){
         getValueCol();
-
         List<Apartment> apartmentList = new ApartmentDAO().getAllApartments();
         loadTableListView(apartmentList);
     }
@@ -240,7 +257,7 @@ public class ApartmentViewController implements Initializable {
         detailButton.setOnAction(event -> viewApartmentDetails());
 
         // Xử lý sự kiện chỉnh sửa
-        editButton.setOnAction(event -> editApartment());
+
 
         // Xử lý sự kiện xuất báo cáo
         exportButton.setOnAction(event -> exportReport());
@@ -266,7 +283,8 @@ public class ApartmentViewController implements Initializable {
         // Xóa các lựa chọn trong ComboBox
         buildingComboBox.getSelectionModel().clearSelection();
         statusComboBox.getSelectionModel().clearSelection();
-
+        buildingComboBox.setValue("Chọn tòa nhà");
+        statusComboBox.setValue("Chọn trạng thái");
         // Tải lại dữ liệu
         loadData();
     }
@@ -279,10 +297,9 @@ public class ApartmentViewController implements Initializable {
         // TODO: Hiển thị chi tiết căn hộ được chọn
     }
 
-    private void editApartment() {
-        // TODO: Mở form chỉnh sửa căn hộ được chọn
-    }
 
+
+    @FXML
     private void exportReport() {
         // TODO: Xuất báo cáo danh sách căn hộ
     }
@@ -295,11 +312,7 @@ public class ApartmentViewController implements Initializable {
         // Hiển thị/ẩn nhãn không có dữ liệu
         boolean hasData = false; // TODO: Kiểm tra có dữ liệu hay không
         noContentLabel.setVisible(!hasData);
-    }
-
-    // Getter cho nút đóng để DashboardController có thể truy cập
-    public Button getCloseButton() {
-        return closeButton;
+        loadDataApartment();
     }
 
     public void handleButtonSearch(ActionEvent event) {
@@ -319,7 +332,7 @@ public class ApartmentViewController implements Initializable {
         else{
             Apartment apartment = new ApartmentDAO().findApartmentByIdAndStatus(apartmentId, status);
             if(apartment == null){
-                new AlertBox().showAlertForUser("Thông báo", "Không tìm thấy căn hộ nào với ID và trạng thái đã chọn");
+                AlertBox.showAlertForUser("Thông báo", "Không tìm thấy căn hộ nào với ID và trạng thái đã chọn");
             }
             else{
                 loadTableView(apartment);
@@ -329,11 +342,83 @@ public class ApartmentViewController implements Initializable {
     }
 
     public void handleRefresh(ActionEvent event) {
-        loadDataApartment();
-    }
+// Xóa các lựa chọn trong ComboBox
+        buildingComboBox.getSelectionModel().clearSelection();
+        statusComboBox.getSelectionModel().clearSelection();
+        buildingComboBox.setValue("Chọn tòa nhà");
+        statusComboBox.setValue("Chọn trạng thái");
+        // Tải lại dữ liệu
+        loadData();    }
+
+    @Setter
+    private DashboardController parentController;
 
     public void handleCloseButton(ActionEvent event) {
-        // Đóng cửa sổ hiện tại
-        apartmentView.setVisible(false);
+        // Xoá apartment view
+        ((Pane) apartmentView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
+
+
+    public void getSelectedApartment(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+            Apartment selectedApartment = apartmentTable.getSelectionModel().getSelectedItem();
+            if (selectedApartment == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Thông báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Vui lòng chọn căn hộ để chỉnh sửa!");
+                alert.showAndWait();
+                return;
+            }
+
+            // Nếu đã có ContextMenu đang mở -> đóng lại
+            if (currentContextMenu != null && currentContextMenu.isShowing()) {
+                currentContextMenu.hide();
+            }
+
+            // Tạo ContextMenu mới
+            ContextMenu contextMenu = new ContextMenu();
+            MenuItem editItem = new MenuItem("Chỉnh sửa căn hộ");
+
+            editItem.setOnAction(e -> {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/EditApartmentView.fxml"));
+                    Parent root = loader.load();
+
+                    EditApartmentViewController editController = loader.getController();
+                    editController.setParentController(this);   // set controller cha
+                    editController.setApartment(selectedApartment); // set căn hộ cần edit
+
+                    Stage stage = new Stage();
+                    stage.setTitle("Chỉnh sửa căn hộ");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
+
+            contextMenu.getItems().add(editItem);
+
+            // Lưu context menu mới
+            currentContextMenu = contextMenu;
+
+            // Hiện ContextMenu tại vị trí con trỏ
+            contextMenu.show(apartmentTable, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+
+            // Thêm listener để ẩn ContextMenu nếu click chỗ khác
+            apartmentTable.getScene().addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                // Ẩn menu nếu click trái hoặc phải ở nơi khác
+                if (currentContextMenu != null && currentContextMenu.isShowing()
+                        && (event.getButton() == MouseButton.PRIMARY || event.getButton() == MouseButton.SECONDARY)) {
+                    currentContextMenu.hide();
+                }
+            });
+        }
+    }
+
+
+
 }

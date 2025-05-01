@@ -7,20 +7,16 @@ import com.utc2.apartmentmanagement.Utils.TryCatchUtil;
 import com.utc2.apartmentmanagement.Views.login;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.utc2.apartmentmanagement.Utils.AlertBox.showAlertForExeptionRegister;
@@ -58,15 +54,9 @@ public class RegisterController {
     private Pane imagePane;
     @FXML
     private ImageView imageView;
-    @FXML
-    private ImageView Exit;
 
     @FXML
     public void initialize() {
-        Exit.setOnMouseClicked(event -> {
-            System.exit(0);
-        });
-
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
 

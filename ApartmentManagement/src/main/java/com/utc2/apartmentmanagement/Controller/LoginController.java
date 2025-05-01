@@ -1,32 +1,24 @@
 package com.utc2.apartmentmanagement.Controller;
 
 import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
 import com.utc2.apartmentmanagement.Views.register;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import lombok.Getter;
 
-import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LoginController {
 
@@ -49,17 +41,10 @@ public class LoginController {
     private Button loginButton;
 
     @FXML
-    private ImageView Exit;
-
-    @FXML
     private Button registerButton;
 
     @FXML
     public void initialize() {
-        Exit.setOnMouseClicked(event -> {
-            System.exit(0);
-        });
-
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
         // Gán sự kiện click nút login
@@ -100,17 +85,12 @@ public class LoginController {
             }
         }
     }
-    @Getter
-    private String userName;
-    @Getter
-    private LocalDate lastLogin;
 
     @FXML
     public void handleLogin(ActionEvent event) {
         String userName = usernameField.getText();
         String password = passwordField.getText();
-        this.userName = userName;
-        lastLogin = LocalDate.now();
+
         if (userName.isEmpty() && password.isEmpty()) {
             AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập tên đăng nhập và mật khẩu!");
         } else if (userName.isEmpty()) {
@@ -124,6 +104,12 @@ public class LoginController {
         switch (role_id) {
             case 1 -> {
                 try {
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+                    String formatted = now.format(formatter);
+                    Session.setLastLogin(formatted);
+                    Session.setUserName(userName);
                     // Đóng cửa sổ hiện tại
                     ((Stage) usernameField.getScene().getWindow()).close();
                     // Khởi chạy dashboard
@@ -136,7 +122,6 @@ public class LoginController {
             }
             case 2 -> AlertBox.showAlertForUser("Thông báo","Chào mừng nhân viên!");
             case 3 -> AlertBox.showAlertForUser("Thông báo","Chào mừng cư dân!");
-            default -> AlertBox.showAlertForExeptionRegister("Thông báo!", "Tài khoản này không tồn tại !");
         }
     }
 
