@@ -312,6 +312,7 @@ public class ApartmentViewController implements Initializable {
         // Hiển thị/ẩn nhãn không có dữ liệu
         boolean hasData = false; // TODO: Kiểm tra có dữ liệu hay không
         noContentLabel.setVisible(!hasData);
+        loadDataApartment();
     }
 
     public void handleButtonSearch(ActionEvent event) {

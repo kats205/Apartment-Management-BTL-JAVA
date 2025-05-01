@@ -1,4 +1,4 @@
-//package com.utc2.apartmentmanagement.DAO;
+package com.utc2.apartmentmanagement.DAO;//package com.utc2.apartmentmanagement.DAO;
 //
 //import com.utc2.apartmentmanagement.Model.Report;
 //import com.utc2.apartmentmanagement.Repository.IReportDAO;

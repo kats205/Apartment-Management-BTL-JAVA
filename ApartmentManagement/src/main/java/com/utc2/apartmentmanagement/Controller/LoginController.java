@@ -6,28 +6,17 @@ import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
 import com.utc2.apartmentmanagement.Views.register;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Blend;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.ColorInput;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import lombok.Getter;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

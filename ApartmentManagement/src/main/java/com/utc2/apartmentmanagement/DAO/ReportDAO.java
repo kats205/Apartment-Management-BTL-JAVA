@@ -71,14 +71,14 @@ public class ReportDAO implements IReportDAO {
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, report.getReportType());
             statement.setDate(2, report.getGenerationDate() != null ?
-                    java.sql.Date.valueOf(report.getGenerationDate()) : null);
+                    Date.valueOf(report.getGenerationDate()) : null);
             statement.setInt(3, report.getGeneratedByUserId());
             statement.setString(4, report.getParameters());
             statement.setString(5, report.getFilePath());
             statement.setDate(6, report.getCreatedAt() != null ?
-                    java.sql.Date.valueOf(report.getCreatedAt()) : null);
+                    Date.valueOf(report.getCreatedAt()) : null);
             statement.setDate(7, report.getUpdatedAt() != null ?
-                    java.sql.Date.valueOf(report.getUpdatedAt()) : null);
+                    Date.valueOf(report.getUpdatedAt()) : null);
 
             int affectedRows = statement.executeUpdate();
 
@@ -105,12 +105,12 @@ public class ReportDAO implements IReportDAO {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, report.getReportType());
             statement.setDate(2, report.getGenerationDate() != null ?
-                    java.sql.Date.valueOf(report.getGenerationDate()) : null);
+                    Date.valueOf(report.getGenerationDate()) : null);
             statement.setInt(3, report.getGeneratedByUserId());
             statement.setString(4, report.getParameters());
             statement.setString(5, report.getFilePath());
             statement.setDate(6, report.getUpdatedAt() != null ?
-                    java.sql.Date.valueOf(report.getUpdatedAt()) : null);
+                    Date.valueOf(report.getUpdatedAt()) : null);
             statement.setInt(7, report.getId());
 
             int affectedRows = statement.executeUpdate();
@@ -144,8 +144,8 @@ public class ReportDAO implements IReportDAO {
         String query = "SELECT * FROM reports WHERE generation_date BETWEEN ? AND ? ORDER BY generation_date DESC";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setDate(1, java.sql.Date.valueOf(fromDate));
-            statement.setDate(2, java.sql.Date.valueOf(toDate));
+            statement.setDate(1, Date.valueOf(fromDate));
+            statement.setDate(2, Date.valueOf(toDate));
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {

@@ -6,12 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class settingView extends Application {
+import java.util.Objects;
+
+public class login extends Application {
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/MyProfileView.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/login-view.fxml")));
         primaryStage.setTitle("Apartment Application");
-        primaryStage.setScene(new Scene(root, 1200, 800));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
@@ -19,3 +22,4 @@ public class settingView extends Application {
         launch(args);
     }
 }
+

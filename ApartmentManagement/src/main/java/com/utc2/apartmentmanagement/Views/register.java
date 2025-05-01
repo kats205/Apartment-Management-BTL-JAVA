@@ -6,12 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class settingView extends Application {
+public class register extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/MyProfileView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/register-view.fxml"));
         primaryStage.setTitle("Apartment Application");
-        primaryStage.setScene(new Scene(root, 1200, 800));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
