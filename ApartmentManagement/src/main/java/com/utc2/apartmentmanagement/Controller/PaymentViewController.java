@@ -268,7 +268,6 @@ public class PaymentViewController implements Initializable {
             if (!directory.exists()) {
                 directory.mkdirs();
             }
-
             PdfFont vietnameseFont = PdfFontFactory.createFont("src/main/resources/com/utc2/apartmentmanagement/Font/arial.ttf");
 
             // Tạo file PDF
@@ -280,7 +279,6 @@ public class PaymentViewController implements Initializable {
 
             Color headerColor = new DeviceRgb(209, 224, 227);
             Color textHeadColor = new DeviceRgb(21, 88, 155);
-
 
             float[] columnWidthsHeader = {280F, 280F}; // Điều chỉnh theo khổ giấy
             Table headerTable = new Table(columnWidthsHeader);
@@ -299,7 +297,6 @@ public class PaymentViewController implements Initializable {
                     .setMarginTop(2)
                     .setMarginBottom(2)
                     .setPaddingLeft(20);
-
 
             Cell leftCell = new com.itextpdf.layout.element.Cell().add(left).add(lineWrapper1)
                     .setBorder(Border.NO_BORDER)
@@ -331,16 +328,14 @@ public class PaymentViewController implements Initializable {
             Cell rightCell = new com.itextpdf.layout.element.Cell().add(rightContent)
                     .setBorder(Border.NO_BORDER)  // Loại bỏ viền
                     .setTextAlignment(TextAlignment.CENTER);
-// Thêm vào bảng
+    // Thêm vào bảng
             headerTable.addCell(leftCell);
             headerTable.addCell(rightCell);
 
-// Thêm bảng vào document
+    // Thêm bảng vào document
             document.add(headerTable);
 
             document.add(new Paragraph("BÁO CÁO").setBold().setFontColor(textHeadColor).setFontSize(14).setTextAlignment(TextAlignment.CENTER));
-
-
 
             // Thêm tiêu đề
             document.add(new Paragraph("Danh sách các thanh toán").setBold().setFontColor(textHeadColor).setFontSize(16).setTextAlignment(TextAlignment.CENTER));

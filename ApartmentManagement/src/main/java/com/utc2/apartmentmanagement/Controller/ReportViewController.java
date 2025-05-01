@@ -332,6 +332,7 @@ public class ReportViewController implements Initializable {
 
     private void exportFullReport() {
         // TODO: Xuất toàn bộ báo cáo (bao gồm biểu đồ, bảng dữ liệu và tóm tắt)
+
     }
 
     private void printReport() {
