@@ -301,6 +301,7 @@ public class ApartmentViewController implements Initializable {
             String formattedDate = date.format(formatter);
             Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDate, filePath, LocalDate.now(), LocalDate.now());
             new ReportDAO().saveReport(report);
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Thông báo");
             alert.setHeaderText("Xuất file PDF thành công!");
