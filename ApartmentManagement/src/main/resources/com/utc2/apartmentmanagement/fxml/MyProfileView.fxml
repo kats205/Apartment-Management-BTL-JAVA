@@ -43,7 +43,7 @@
                                         <Image url="@../assets/Profile/Admin/IMG_0466.JPG" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="changeAvatarBtn" mnemonicParsing="false" styleClass="small-button" stylesheets="@../styles/Dashboard.css" text="Thay đổi ảnh">
+                                <Button fx:id="changeAvatarBtn" mnemonicParsing="false" onAction="#handleChangeAvatar" styleClass="small-button" stylesheets="@../styles/Dashboard.css" text="Thay đổi ảnh">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>

@@ -6,14 +6,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Setter;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ResourceBundle;
 
 
@@ -95,5 +103,42 @@ public class SettingController implements Initializable {
         login login = new login();
         Stage stage = new Stage();
         login.start(stage);
+    }
+
+    @FXML
+    public void handleChangeAvatar(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Chọn ảnh đại diện");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(changeAvatarBtn.getScene().getWindow());
+
+        if (selectedFile != null) {
+            try {
+                // Tạo thư mục lưu ảnh (ví dụ: C:/Users/YourName/apartment_app/avatars)
+                Path destinationDir = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars");
+                Files.createDirectories(destinationDir);
+
+                // Đặt tên file mới (giữ tên cũ hoặc đặt lại tuỳ ý)
+                Path destinationFile = destinationDir.resolve(selectedFile.getName());
+
+                // Copy file ảnh vào thư mục đích
+                Files.copy(selectedFile.toPath(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+
+                // Hiển thị ảnh lên ImageView
+                Image image = new Image(destinationFile.toUri().toString());
+                userAvatar.setImage(image);
+
+                // Ghi lại đường dẫn vào Session (hoặc sau này lưu vào file txt/db nếu muốn giữ lâu dài)
+                Session.setAvatarPath(destinationFile.toString());
+
+                System.out.println("Đã thay đổi ảnh đại diện");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
