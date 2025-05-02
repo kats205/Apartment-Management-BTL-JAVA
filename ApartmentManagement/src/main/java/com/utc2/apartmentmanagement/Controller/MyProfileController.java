@@ -4,7 +4,10 @@ import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Views.login;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -17,7 +20,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class SettingController implements Initializable {
+public class MyProfileController implements Initializable {
     @FXML public Button themeButton;
     @FXML public Button saveSettingsButton;
     @FXML public Button resetButton;
@@ -40,47 +43,19 @@ public class SettingController implements Initializable {
     @FXML public PasswordField newPasswordField1;
     @FXML public Button changePasswordBtn1;
     @FXML public Button logoutBtn;
-    private boolean darkMode = false;
-
-
-
-
-    public void handleThemeButton() {
-        Region root = (Region) themeButton.getScene().getRoot();
-
-        if (darkMode) {
-            // Chuyển về Light Mode
-            root.setStyle("-fx-background-color: white; -fx-text-fill: black;");
-
-        } else {
-            // Chuyển sang Dark Mode
-            root.setStyle("-fx-background-color: #2b2b2b; -fx-text-fill: white;");
-//            searchUserField.setStyle("-fx-text-fill: white;");
-        }
-
-        darkMode = !darkMode;
-    }
-
     @Setter
     private DashboardController parentController;
+    @Setter
+    private Stage dashboardStage; // để tắt stage chính
+
     @FXML
     public void handleCloseButton(ActionEvent event) {
-        // Xoá apartment view
-        ((Pane)SettingView.getParent()).getChildren().clear();
-        // Thêm lại dashboard nodes từ controller cha
-        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
+        // Xoá myProfile view
+        ((Stage) changeAvatarBtn.getScene().getWindow()).close();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        String userNameLbel = Session.getUserName();
-//        LocalDate lastLoginLabel = Session.getLastLogin();
-//        userName.setText(userNameLbel);
-//        lastLogin.setText(String.valueOf(lastLoginLabel));
-//        System.out.println("Last login: " + lastLogin);
-//        System.out.println("User name: " + userName);
-
-
         String username = Session.getUserName();
         String lastlogin = Session.getLastLogin();
         System.out.println("Last login: " + lastLogin);
@@ -91,9 +66,18 @@ public class SettingController implements Initializable {
     }
     @FXML
     public void handleLogout() throws Exception {
-        ((Stage) logoutBtn.getScene().getWindow()).close();
-        login login = new login();
+        if (dashboardStage != null) {
+            dashboardStage.close();
+            ((Stage)fullNameField.getScene().getWindow()).close();
+        }
+
+        // Mở lại login
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/login-view.fxml"));
+        Parent root = loader.load();
+
         Stage stage = new Stage();
-        login.start(stage);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Login");
+        stage.show();
     }
 }

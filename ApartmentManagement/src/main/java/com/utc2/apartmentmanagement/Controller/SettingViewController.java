@@ -71,12 +71,18 @@ public class SettingViewController implements Initializable {
     @FXML
     private Button changeAvatarBtn;
 
+    @FXML
+    private ImageView Exit;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String userName = Session.getUserName();
         String lastLogin = Session.getLastLogin();
         System.out.println("Last login: " + lastLogin);
         System.out.println("User name: " + userName);
+        Exit.setOnMouseClicked(event -> {
+            System.exit(0);
+        });
     }
 
     private void loadUserInfo() {
@@ -175,5 +181,9 @@ public class SettingViewController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public void setParentController(DashboardController dashboardController) {
+
     }
 }
