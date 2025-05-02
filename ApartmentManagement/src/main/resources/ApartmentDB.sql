@@ -161,7 +161,10 @@ CREATE TABLE Payment (
     updated_at DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (bill_id) REFERENCES Bill(bill_id)
 );
+SELECT * FROM Payment
 
+SELECT COUNT(*) From Payment WHERE payment_date BETWEEN '2023-05-10' AND '2023-05-15' AND status = 'com'
+SELECT COUNT(*) FROM Payment WHERE payment_date BETWEEN '2023-05-10' AND '2023-05-15'
 -- Bảng MaintenanceRequest (Yêu cầu bảo trì)
 CREATE TABLE MaintenanceRequest (
     request_id INT PRIMARY KEY IDENTITY(1,1),
@@ -435,3 +438,146 @@ INSERT INTO Report (report_type, generation_date, generated_by_user_id, paramete
 (N'Báo Cáo An Ninh', '2023-05-20', 2, N'Tháng 5/2023', '/reports/security_05_2023.pdf');
 
 
+INSERT INTO Resident (apartment_id, full_name, identity_card, date_of_birth, gender, is_primary_resident, move_in_date) VALUES 
+('N1401', N'Nguyễn Văn Phương', '006789012345', '1983-09-18', N'Nam', 1, '2022-08-10'),
+('P1601', N'Trần Thị Hương', '007890123456', '1987-06-22', N'Nữ', 1, '2022-11-05'),
+('R1801', N'Lê Minh Tuấn', '008901234567', '1979-12-03', N'Nam', 1, '2023-01-20');
+
+use Apartment
+go
+
+INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
+('A101', '2023-01-01', '2023-01-15', 2350000, 'paid', 0),
+('A102', '2023-01-01', '2023-01-15', 1750000, 'paid', 0),
+('B201', '2023-01-01', '2023-01-15', 3100000, 'paid', 0),
+('B202', '2023-01-01', '2023-01-15', 2050000, 'paid', 0),
+('C301', '2023-01-01', '2023-01-15', 2700000, 'paid', 0);
+
+-- February 2023
+INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
+('A101', '2023-02-01', '2023-02-15', 2380000, 'paid', 0),
+('A102', '2023-02-01', '2023-02-15', 1780000, 'paid', 0),
+('B201', '2023-02-01', '2023-02-15', 3150000, 'paid', 0),
+('B202', '2023-02-01', '2023-02-15', 2080000, 'paid', 0),
+('C301', '2023-02-01', '2023-02-15', 2750000, 'paid', 0);
+
+-- March 2023
+INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
+('A101', '2023-03-01', '2023-03-15', 2400000, 'paid', 0),
+('A102', '2023-03-01', '2023-03-15', 1800000, 'paid', 0),
+('B201', '2023-03-01', '2023-03-15', 3180000, 'paid', 0),
+('B202', '2023-03-01', '2023-03-15', 2100000, 'paid', 0),
+('C301', '2023-03-01', '2023-03-15', 2780000, 'paid', 0);
+
+-- April 2023
+INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
+('A101', '2023-04-01', '2023-04-15', 2450000, 'paid', 0),
+('A102', '2023-04-01', '2023-04-15', 1830000, 'paid', 0),
+('B201', '2023-04-01', '2023-04-15', 3220000, 'paid', 0),
+('B202', '2023-04-01', '2023-04-15', 2150000, 'paid', 0),
+('C301', '2023-04-01', '2023-04-15', 2820000, 'paid', 0);
+
+-- Update payments for historical bills to 'completed' status
+INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES 
+-- For January bills (assuming bill_id starts from 16 for the new bills)
+(16, 2350000, '2023-01-10', N'Chuyển khoản', 'TRX-JAN-A101', 'completed'),
+(17, 1750000, '2023-01-12', N'Tiền mặt', 'CSH-JAN-A102', 'completed'),
+(18, 3100000, '2023-01-09', N'Thẻ ngân hàng', 'CC-JAN-B201', 'completed'),
+(19, 2050000, '2023-01-14', N'Chuyển khoản', 'TRX-JAN-B202', 'completed'),
+(20, 2700000, '2023-01-11', N'Ví điện tử', 'EW-JAN-C301', 'completed'),
+
+-- For February bills
+(21, 2380000, '2023-02-09', N'Chuyển khoản', 'TRX-FEB-A101', 'completed'),
+(22, 1780000, '2023-02-10', N'Tiền mặt', 'CSH-FEB-A102', 'completed'),
+(23, 3150000, '2023-02-08', N'Thẻ ngân hàng', 'CC-FEB-B201', 'completed'),
+(24, 2080000, '2023-02-12', N'Chuyển khoản', 'TRX-FEB-B202', 'completed'),
+(25, 2750000, '2023-02-11', N'Ví điện tử', 'EW-FEB-C301', 'completed'),
+
+-- For March bills
+(26, 2400000, '2023-03-12', N'Chuyển khoản', 'TRX-MAR-A101', 'completed'),
+(27, 1800000, '2023-03-10', N'Tiền mặt', 'CSH-MAR-A102', 'completed'),
+(28, 3180000, '2023-03-14', N'Thẻ ngân hàng', 'CC-MAR-B201', 'completed'),
+(29, 2100000, '2023-03-11', N'Chuyển khoản', 'TRX-MAR-B202', 'completed'),
+(30, 2780000, '2023-03-13', N'Ví điện tử', 'EW-MAR-C301', 'completed'),
+
+-- For April bills
+(31, 2450000, '2023-04-10', N'Chuyển khoản', 'TRX-APR-A101', 'completed'),
+(32, 1830000, '2023-04-12', N'Tiền mặt', 'CSH-APR-A102', 'completed'),
+(33, 3220000, '2023-04-09', N'Thẻ ngân hàng', 'CC-APR-B201', 'completed'),
+(34, 2150000, '2023-04-14', N'Chuyển khoản', 'TRX-APR-B202', 'completed'),
+(35, 2820000, '2023-04-11', N'Ví điện tử', 'EW-APR-C301', 'completed');
+
+
+SELECT 
+    FORMAT(payment_date, 'yyyy-MM') AS month,
+    status,
+    COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (PARTITION BY FORMAT(payment_date, 'yyyy-MM')) AS percentage
+FROM Payment
+GROUP BY FORMAT(payment_date, 'yyyy-MM'), status
+ORDER BY month, status;
+
+-- Dữ liệu cho tháng 1
+INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
+(1, 2200000, '2023-01-15', N'Chuyển khoản', 'TRX-JAN-PEND1', 'pending'),
+(2, 2100000, '2023-01-16', N'Tiền mặt', 'CSH-JAN-FAIL3', 'failed');
+
+-- Dữ liệu cho tháng 2
+INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
+(3, 1800000, '2023-02-15', N'Thẻ ngân hàng', 'CC-FEB-PEND1', 'pending'),
+(4, 1850000, '2023-02-16', N'Ví điện tử', 'EW-FEB-PEND2', 'pending'),
+(5, 1900000, '2023-02-17', N'Chuyển khoản', 'TRX-FEB-FAIL3', 'failed');
+
+-- Dữ liệu cho tháng 3
+INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
+(6, 2000000, '2023-03-15', N'Ví điện tử', 'EW-MAR-FAIL3', 'failed'),
+(7, 1800000, '2023-03-17', N'Tiền mặt', 'CSH-MAR-PEND1', 'pending');
+
+-- Dữ liệu cho tháng 4
+INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
+(8, 1950000, '2023-04-15', N'Chuyển khoản', 'TRX-APR-FAIL3', 'failed'),
+(9, 1820000, '2023-04-17', N'Thẻ ngân hàng', 'CC-APR-PEND1', 'pending'),
+(10, 1770000, '2023-04-18', N'Ví điện tử', 'EW-APR-PEND2', 'pending');
+
+-- Dữ liệu cho các hóa đơn đã hoàn thành (completed)
+INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES 
+-- Tháng 1
+(11, 2350000, '2023-01-10', N'Chuyển khoản', 'TRX-JAN-A101', 'completed'),
+(12, 1750000, '2023-01-12', N'Tiền mặt', 'CSH-JAN-A102', 'completed'),
+(13, 3100000, '2023-01-09', N'Thẻ ngân hàng', 'CC-JAN-B201', 'completed'),
+(14, 2050000, '2023-01-14', N'Chuyển khoản', 'TRX-JAN-B202', 'completed'),
+(15, 2700000, '2023-01-11', N'Ví điện tử', 'EW-JAN-C301', 'completed'),
+
+-- Tháng 2
+(16, 2380000, '2023-02-09', N'Chuyển khoản', 'TRX-FEB-A101', 'completed'),
+(17, 1780000, '2023-02-10', N'Tiền mặt', 'CSH-FEB-A102', 'completed'),
+(18, 3150000, '2023-02-08', N'Thẻ ngân hàng', 'CC-FEB-B201', 'completed'),
+(19, 2080000, '2023-02-12', N'Chuyển khoản', 'TRX-FEB-B202', 'completed'),
+(20, 2750000, '2023-02-11', N'Ví điện tử', 'EW-FEB-C301', 'completed'),
+
+-- Tháng 3
+(21, 2400000, '2023-03-12', N'Chuyển khoản', 'TRX-MAR-A101', 'completed'),
+(22, 1800000, '2023-03-10', N'Tiền mặt', 'CSH-MAR-A102', 'completed'),
+(23, 3180000, '2023-03-14', N'Thẻ ngân hàng', 'CC-MAR-B201', 'completed'),
+(24, 2100000, '2023-03-11', N'Chuyển khoản', 'TRX-MAR-B202', 'completed'),
+(25, 2780000, '2023-03-13', N'Ví điện tử', 'EW-MAR-C301', 'completed'),
+
+-- Tháng 4
+(26, 2450000, '2023-04-10', N'Chuyển khoản', 'TRX-APR-A101', 'completed'),
+(27, 1830000, '2023-04-12', N'Tiền mặt', 'CSH-APR-A102', 'completed'),
+(28, 3220000, '2023-04-09', N'Thẻ ngân hàng', 'CC-APR-B201', 'completed'),
+(29, 2150000, '2023-04-14', N'Chuyển khoản', 'TRX-APR-B202', 'completed'),
+(30, 2820000, '2023-04-11', N'Ví điện tử', 'EW-APR-C301', 'completed');
+
+
+WITH StatusCounts AS (
+    SELECT 
+        status, 
+        COUNT(*) AS count_status
+    FROM Payment
+    WHERE payment_date BETWEEN '2023-01-01' AND '2023-03-31'
+    GROUP BY status
+)
+SELECT 
+    status,
+    (count_status * 100.0 / (SELECT COUNT(*) FROM Payment WHERE payment_date BETWEEN '2023-01-01' AND '2023-03-31')) AS percentage
+FROM StatusCounts;

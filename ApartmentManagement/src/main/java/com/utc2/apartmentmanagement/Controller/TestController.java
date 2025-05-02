@@ -104,6 +104,7 @@ public class TestController implements Initializable {
         setupDashboardStats();
         setupEventHandlers();
 
+
         mainBorderPane.setBottom(null);
         mainBorderPane.setRight(null);
 

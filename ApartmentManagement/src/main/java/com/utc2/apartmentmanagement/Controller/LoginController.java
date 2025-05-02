@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -22,14 +23,19 @@ import java.time.format.DateTimeFormatter;
 
 public class LoginController {
 
+    public ImageView lockView;
     @FXML
     private AnchorPane rootPane;
-
+    @FXML
+    private TextField visibleField;
     @FXML
     private Pane imagePane;
 
     @FXML
     private ImageView imageView;
+
+    @FXML
+    private ImageView revealView;
 
     @FXML
     private TextField usernameField;
@@ -40,11 +46,16 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+    @FXML ImageView Exit;
+
     @FXML
     private Button registerButton;
 
     @FXML
     public void initialize() {
+        Exit.setOnMouseClicked(event -> {
+            System.exit(0);
+        });
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
         // Nhấn Enter ở passwordField thì login
@@ -53,8 +64,10 @@ public class LoginController {
                 loginButton.fire(); // Gọi lại handleLogin
             }
         });
-    }
+        visibleField.textProperty().bindBidirectional(passwordField.textProperty());
 
+
+    }
     private void setupImagePane() {
         // Sử dụng SVGPath để tạo hình dạng với góc bo tròn ở bên phải
         SVGPath path = new SVGPath();
@@ -81,8 +94,8 @@ public class LoginController {
             }
         }
     }
+    private boolean isPasswordVisible = false;
 
-    @FXML
     public void handleLogin(ActionEvent event) {
         String userName = usernameField.getText();
         String password = passwordField.getText();
@@ -131,6 +144,27 @@ public class LoginController {
             registerUser.start(stage);
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleTogglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+        if (isPasswordVisible) {
+            visibleField.setVisible(true);
+            visibleField.setManaged(true);
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+//            lockView.setImage(new Image(getClass().getResource("@.../assets/Login_register/eyev3.png").toString())); // icon mắt đóng
+            lockView.setVisible(false);
+            revealView.setVisible(true);
+        } else {
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+            visibleField.setVisible(false);
+            visibleField.setManaged(false);
+//            lockView.setImage(new Image(getClass().getResource("@.../assets/Login_register/revealEye.png").toString())); // icon mắt mở
+            lockView.setVisible(true);
+            revealView.setVisible(false);
         }
     }
 }
