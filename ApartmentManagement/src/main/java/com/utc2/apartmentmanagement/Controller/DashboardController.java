@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -22,8 +24,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -45,6 +49,14 @@ public class DashboardController implements Initializable {
     @FXML public Label totalApartmentsLabel;
     @FXML public Label requestsLabel;
     @FXML public Label revenueLabel;
+    @FXML public TableView<Map<String, Object>> recentActivitiesTable;
+    @FXML public TableColumn<Map<String, Object>, String> roleColumn;
+    @FXML public TableColumn<Map<String, Object>, LocalDate> dateColumn;
+    @FXML public TableColumn<Map<String, Object>, LocalDate> timeColumn;
+    @FXML public TableColumn<Map<String, Object>, LocalDate> activityColumn;
+    @FXML public TableColumn<Map<String, Object>, String> userColumn;
+    @FXML public TableColumn<Map<String, Object>, Boolean> statusColumn;
+    @FXML public TableColumn actionColumn;
     @FXML
     private Button ApartmentButton;
 

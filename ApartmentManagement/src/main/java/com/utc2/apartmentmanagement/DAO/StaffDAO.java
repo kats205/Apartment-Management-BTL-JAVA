@@ -163,6 +163,29 @@ public class StaffDAO implements IStaffDAO {
         }
     }
 
+    @Override
+    public List<Map<String, Object>> listStaffRecentActivities() throws SQLException {
+        String sql = "SELECT u.username, r.role_name, s.hire_date, u.active  FROM [User] u\n" +
+                "JOIN role r ON u.role_id = r.role_id\n" +
+                "JOIN Staff s ON s.staff_id = u.user_id";
+        List<Map<String, Object>> listStaff = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, Object> rows = new HashMap<>();
+                rows.put("username", rs.getString("username"));
+                rows.put("role_name", rs.getString("role_name"));
+                rows.put("hire_date", rs.getDate("hire_date"));
+                rows.put("active", rs.getBoolean("active"));
+                listStaff.add(rows);
+            }
+        }catch(SQLException e){
+            throw new SQLException("Error retrieving staff information: " + e.getMessage(), e);
+        }
+        return listStaff;
+    }
+
 
     public boolean updateStaffField(int staffID, String field, Object newValue){
         String sql = "UPDATE Staff SET " + field + " = ?  WHERE staff_id = ?";
