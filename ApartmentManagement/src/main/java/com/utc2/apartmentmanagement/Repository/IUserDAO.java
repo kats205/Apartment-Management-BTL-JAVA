@@ -2,7 +2,9 @@ package com.utc2.apartmentmanagement.Repository;
 
 import com.utc2.apartmentmanagement.Model.User;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface IUserDAO {
     List<User> getAllUser();
@@ -16,4 +18,5 @@ public interface IUserDAO {
     boolean updatePhoneNumber(int userID, String newPhoneNumber);
     boolean updateRoleID(int userID, int newRoleID);
     boolean updateActive(int userID, boolean newActive);
+    List<Map<String, Object>> searchOnChange(String searchText) throws SQLException;
 }

@@ -207,9 +207,11 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Occupied: 98" />
-                              <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Available: 27" />
+                              <Label layoutX="10.0" layoutY="110.0" prefHeight="18.0" prefWidth="58.0" styleClass="stat-detail" text="Occupied:" />
+                              <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Available:" />
                               <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Details" />
+                              <Label fx:id="Occupied" layoutX="70.0" layoutY="111.0" />
+                              <Label fx:id="Available" layoutX="70.0" layoutY="130.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
@@ -226,12 +228,14 @@
                               </ImageView>
                               <Label fx:id="revenueLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="₫258M" textFill="#0a4969">
                                  <font>
-                                    <Font size="36.0" />
+                                    <Font size="28.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Collected: ₫195M" />
-                              <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Outstanding: ₫63M" />
+                              <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Collected: " />
+                              <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Outstanding:" />
                               <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Report" />
+                              <Label fx:id="Collected" layoutX="71.0" layoutY="110.0" />
+                              <Label fx:id="outStanding" layoutX="85.0" layoutY="130.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
@@ -251,9 +255,11 @@
                                     <Font size="36.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Complaints: 18" />
-                              <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Maintenance: 24" />
+                              <Label layoutX="10.0" layoutY="111.0" styleClass="stat-detail" text="Completed:" />
+                              <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Pending:" />
                               <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="Manage Requests" />
+                              <Label fx:id="Completed" layoutX="81.0" layoutY="110.0" />
+                              <Label fx:id="Pending" layoutX="65.0" layoutY="130.0" prefHeight="15.0" prefWidth="0.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
@@ -291,13 +297,13 @@
 
                   <TableView fx:id="recentActivitiesTable" layoutX="45.0" layoutY="370.0" prefHeight="250.0" prefWidth="1040.0">
                      <columns>
-                        <TableColumn fx:id="dateColumn" prefWidth="130.0" text="User" />
-                        <TableColumn fx:id="actionColumn1" prefWidth="130.0" text="Role" />
-                        <TableColumn fx:id="timeColumn" prefWidth="130.0" text="Status" />
-                        <TableColumn fx:id="activityColumn" prefWidth="150.0" text="Action" />
-                        <TableColumn fx:id="userColumn" prefWidth="200.0" text="Activity" />
-                        <TableColumn fx:id="statusColumn" prefWidth="130.0" text="Date" />
-                        <TableColumn fx:id="actionColumn" prefWidth="130.0" text="Time" />
+                        <TableColumn fx:id="userColumn" prefWidth="130.0" text="User" />
+                        <TableColumn fx:id="roleColumn" prefWidth="130.0" text="Role" />
+                        <TableColumn fx:id="statusColumn" prefWidth="130.0" text="Status" />
+                        <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Action" />
+                        <TableColumn fx:id="activityColumn" prefWidth="190.39996337890625" text="Activity" />
+                        <TableColumn fx:id="dateColumn" prefWidth="140.00006103515625" text="Date" />
+                        <TableColumn fx:id="timeColumn" prefWidth="164.800048828125" text="Time" />
                      </columns>
                   </TableView>
                </children>

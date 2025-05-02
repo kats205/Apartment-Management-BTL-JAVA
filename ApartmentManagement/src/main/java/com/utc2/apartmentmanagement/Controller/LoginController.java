@@ -47,10 +47,6 @@ public class LoginController {
     public void initialize() {
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
-        // Gán sự kiện click nút login
-        loginButton.setOnAction(this::handleLogin);
-        // Cho phép nhấn Enter ở bất kỳ input nào
-        loginButton.setDefaultButton(true);
         // Nhấn Enter ở passwordField thì login
         passwordField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
