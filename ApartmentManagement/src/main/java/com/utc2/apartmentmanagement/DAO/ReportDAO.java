@@ -2,12 +2,15 @@ package com.utc2.apartmentmanagement.DAO;
 
 import com.utc2.apartmentmanagement.Model.Report;
 import com.utc2.apartmentmanagement.Repository.IReportDAO;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -229,6 +232,76 @@ public class ReportDAO implements IReportDAO {
 
         return report;
     }
+
+    @Override
+    public ObservableList<PieChart.Data> PieChart(LocalDate fromDate, LocalDate toDate) throws SQLException {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        // Kiểm tra tổng số bản ghi trước để tránh lỗi chia cho 0
+        String countSql = "SELECT COUNT(*) FROM Payment WHERE payment_date BETWEEN ? AND ?";
+        long totalRecords = 0;
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement countStmt = connection.prepareStatement(countSql)) {
+            countStmt.setDate(1, java.sql.Date.valueOf(fromDate));
+            countStmt.setDate(2, java.sql.Date.valueOf(toDate));
+
+            ResultSet countRs = countStmt.executeQuery();
+            if (countRs.next()) {
+                totalRecords = countRs.getLong(1);
+            }
+
+            // Nếu không có dữ liệu, trả về danh sách trống
+            if (totalRecords == 0) {
+                pieChartData.add(new PieChart.Data("Không có dữ liệu", 100));
+                return pieChartData;
+            }
+
+            // Truy vấn chính
+            String sql = "WITH StatusCounts AS (\n" +
+                    "    SELECT \n" +
+                    "        status, \n" +
+                    "        COUNT(*) AS count_status\n" +
+                    "    FROM Payment\n" +
+                    "    WHERE payment_date BETWEEN ? AND ?\n" +
+                    "    GROUP BY status\n" +
+                    ")\n" +
+                    "SELECT \n" +
+                    "    status,\n" +
+                    "    (count_status * 100.0 / (SELECT COUNT(*) FROM Payment WHERE payment_date BETWEEN ? AND ?)) AS percentage\n" +
+                    "FROM StatusCounts;";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setDate(1, java.sql.Date.valueOf(fromDate));
+                preparedStatement.setDate(2, java.sql.Date.valueOf(toDate));
+                preparedStatement.setDate(3, java.sql.Date.valueOf(fromDate));
+                preparedStatement.setDate(4, java.sql.Date.valueOf(toDate));
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Định dạng DecimalFormat để làm tròn số
+                DecimalFormat df = new DecimalFormat("#.##");
+
+                // Lặp qua kết quả trả về và thêm vào danh sách PieChart.Data
+                while (resultSet.next()) {
+                    String status = resultSet.getString("status");
+                    double percentage = resultSet.getDouble("percentage");
+
+                    // Định dạng tên hiển thị có thêm phần trăm
+                    String displayName = status + " (" + df.format(percentage) + "%)";
+
+                    // Thêm dữ liệu vào pieChartData
+                    pieChartData.add(new PieChart.Data(displayName, percentage));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Lỗi khi lấy dữ liệu cho biểu đồ tròn", e);
+        }
+
+        return pieChartData;
+    }
+
+
     public ObservableList<XYChart.Data<String, Number>> getValue(LocalDate fromDate, LocalDate toDate) throws SQLException {
         String sql = "SELECT \n" +
                 "    FORMAT(p.payment_date, 'yyyy-MM') AS Thang,\n" +
@@ -261,4 +334,30 @@ public class ReportDAO implements IReportDAO {
         }
         return data;
     }
+
+    public static void main(String[] args) {
+        Platform.startup(() -> {
+            try {
+                // Tạo đối tượng DAO
+                ReportDAO dao = new ReportDAO();
+
+                // Gọi phương thức với khoảng ngày cụ thể
+                LocalDate fromDate = LocalDate.of(2023, 1, 1);
+                LocalDate toDate = LocalDate.of(2024, 3, 31);
+                ObservableList<PieChart.Data> result = new ReportDAO().PieChart(fromDate, toDate);
+
+                // In kết quả ra console
+                System.out.println("Kết quả PieChart:");
+                for (PieChart.Data data : result) {
+                    System.out.println("Label: " + data.getName() + ", Value: " + data.getPieValue());
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Kết thúc chương trình JavaFX
+            Platform.exit();
+        });
+    }
+
 }

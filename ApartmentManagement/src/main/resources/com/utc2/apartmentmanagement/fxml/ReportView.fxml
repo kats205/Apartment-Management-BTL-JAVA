@@ -76,7 +76,7 @@
                                                         <Font size="16.0" />
                                                     </font>
                                                 </Label>
-                                                <PieChart fx:id="statusChart" prefHeight="345.0" prefWidth="388.0" />
+                                                <PieChart fx:id="apartmentStatusPieChart" prefHeight="345.0" prefWidth="388.0" />
                                             </children>
                                         </VBox>
                                     </children>
