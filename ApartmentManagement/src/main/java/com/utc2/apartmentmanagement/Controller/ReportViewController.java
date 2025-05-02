@@ -2,6 +2,7 @@ package com.utc2.apartmentmanagement.Controller;
 
 import com.utc2.apartmentmanagement.DAO.ReportDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.PDF_Export;
 import com.utc2.apartmentmanagement.Model.Report;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -332,6 +333,17 @@ public class ReportViewController implements Initializable {
 
     private void exportFullReport() {
         // TODO: Xuất toàn bộ báo cáo (bao gồm biểu đồ, bảng dữ liệu và tóm tắt)
+        try {
+            String directoryPath = "src/main/resources/com/utc2/apartmentmanagement/PDF_File/";
+            String filePath = directoryPath + "Report_List.pdf";
+
+
+
+            System.out.println("Xuất PDF Report thành công");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void printReport() {

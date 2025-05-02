@@ -1,7 +1,27 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.LineSeparator;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
+import com.utc2.apartmentmanagement.DAO.ReportDAO;
+import com.utc2.apartmentmanagement.DAO.UserDAO;
 import com.utc2.apartmentmanagement.Model.Apartment;
+import com.utc2.apartmentmanagement.Model.PDF_Export;
+import com.utc2.apartmentmanagement.Model.Report;
+import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Utils.ValidateColumn;
 import com.utc2.apartmentmanagement.Views.EditApartmentView;
@@ -24,10 +44,13 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -301,8 +324,33 @@ public class ApartmentViewController implements Initializable {
 
     @FXML
     private void exportReport() {
-        // TODO: Xuất báo cáo danh sách căn hộ
-    }
+        // TODO: Xuất danh sách căn hộ thành PDF
+        try {
+            String filePath = PDF_Export.exportApartmentList("Apartment_List.pdf");
+            int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+            System.out.println(user_id);
+            LocalDate date = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+            String formattedDate = date.format(formatter);
+            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDate,  filePath, LocalDate.now(), LocalDate.now());
+            new ReportDAO().saveReport(report);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Xuất file PDF thành công!");
+            alert.setContentText("Đã lưu tại:\n" + filePath);
+            alert.showAndWait();
+
+            System.out.println("PDF exported to: " + filePath);
+
+        } catch (Exception e) {
+            // Nếu lỗi thì thông báo lỗi
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Xuất file thất bại");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }    }
 
     private void updateApartmentCount() {
         // TODO: Cập nhật số lượng căn hộ dựa trên dữ liệu hiện tại
