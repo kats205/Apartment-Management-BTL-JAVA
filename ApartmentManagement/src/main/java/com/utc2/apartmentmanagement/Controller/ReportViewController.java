@@ -118,6 +118,9 @@ public class ReportViewController implements Initializable {
     @FXML
     private Button closeButton;
 
+    @FXML
+    private  PieChart apartmentStatusPieChart;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Khởi tạo các thành phần UI
@@ -129,7 +132,50 @@ public class ReportViewController implements Initializable {
         // Tải dữ liệu mặc định
         loadDefaultData();
 
-
+//        apartmentStatusPieChart.setLabelLineLength(10);
+//        apartmentStatusPieChart.setLegendVisible(true);
+//
+//        try {
+//            LocalDate fromDate = fromDatePicker.getValue();
+//            LocalDate toDate = toDatePicker.getValue();
+//
+//            // Kiểm tra giá trị ngày
+//            if (fromDate == null || toDate == null) {
+//                // Hiển thị thông báo lỗi
+//                System.out.println("Vui lòng chọn ngày bắt đầu và ngày kết thúc");
+//                return;
+//            }
+//
+//            // Kiểm tra thứ tự ngày
+//            if (fromDate.isAfter(toDate)) {
+//                System.out.println("Ngày bắt đầu phải trước ngày kết thúc");
+//                return;
+//            }
+//
+//            ObservableList<PieChart.Data> pieChartData = new ReportDAO().PieChart(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 3, 31));
+//            apartmentStatusPieChart.setData(pieChartData);
+//
+//            // Thêm hiệu ứng tương tác sau khi đã nạp dữ liệu
+//            apartmentStatusPieChart.getData().forEach(data -> {
+//                String originalStyle = data.getNode().getStyle(); // Lưu style ban đầu
+//
+//                data.getNode().setOnMouseEntered(event -> {
+//                    // Làm nổi bật phần được chọn
+//                    data.getNode().setStyle("-fx-background-color: derive(" +
+//                            data.getNode().getStyle().replace("-fx-background-color: ", "") +
+//                            ", -30%);");
+//                });
+//
+//                data.getNode().setOnMouseExited(event -> {
+//                    // Trở về màu gốc
+//                    data.getNode().setStyle(originalStyle);
+//                });
+//            });
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            // Hiển thị thông báo lỗi cho người dùng
+//            System.out.println("Lỗi khi truy vấn cơ sở dữ liệu: " + e.getMessage());
+//        }
 
     }
 
@@ -145,8 +191,6 @@ public class ReportViewController implements Initializable {
 
         // Khởi tạo biểu đồ
         initializeCharts();
-
-        initializeTableView();
 
         initialSummary();
     }
@@ -240,7 +284,72 @@ public class ReportViewController implements Initializable {
 
     private void initializeCharts() {
         // TODO: Cấu hình biểu đồ bar chart và pie chart
+        // Cấu hình biểu đồ doanh thu (Bar Chart)
+        setupRevenueChart();
 
+        // Cấu hình biểu đồ trạng thái (Pie Chart)
+        setupStatusPieChart();
+    }
+
+    private void setupRevenueChart() {
+        // Đặt tiêu đề cho biểu đồ
+        // Cấu hình trục X (Tháng)
+        CategoryAxis xAxis = (CategoryAxis) revenueChart.getXAxis();
+        xAxis.setLabel("Tháng");
+        xAxis.setTickLabelRotation(-45); // Xoay nhãn để tránh chồng chéo
+
+        // Cấu hình trục Y (Doanh Thu)
+        javafx.scene.chart.NumberAxis yAxis = (javafx.scene.chart.NumberAxis) revenueChart.getYAxis();
+        yAxis.setLabel("Doanh Thu (VNĐ)");
+        yAxis.setForceZeroInRange(true);
+
+        // Cấu hình khoảng cách giữa các cột
+        revenueChart.setCategoryGap(20);
+        revenueChart.setBarGap(5);
+
+        // Vô hiệu hóa hoạt ảnh để cải thiện hiệu suất
+        revenueChart.setAnimated(false);
+    }
+
+    private void setupStatusPieChart() {
+
+        // Cấu hình chung cho PieChart
+        apartmentStatusPieChart.setLabelLineLength(10);
+        apartmentStatusPieChart.setLegendVisible(true);
+
+        // Thêm hiệu ứng tương tác
+        apartmentStatusPieChart.getData().forEach(data -> {
+            data.getNode().setOnMouseEntered(event -> {
+                // Làm nổi bật phần được chọn
+                data.getNode().setStyle("-fx-background-color: derive(" +
+                        data.getNode().getStyle().replace("-fx-background-color: ", "") +
+                        ", -30%);");
+            });
+
+            data.getNode().setOnMouseExited(event -> {
+                // Trở về màu gốc
+                data.getNode().setStyle("");
+            });
+        });
+        try {
+            LocalDate fromDate = fromDatePicker.getValue();
+            LocalDate toDate = toDatePicker.getValue();
+            ObservableList<PieChart.Data> pieChartData = new ReportDAO().PieChart(fromDate, toDate);
+
+            apartmentStatusPieChart.setData(pieChartData);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exception, có thể hiển thị thông báo lỗi cho người dùng
+        }
+        // Tạo dữ liệu mẫu nếu chưa có
+//        if (apartmentStatusPieChart.getData().isEmpty()) {
+//            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+//                    new PieChart.Data("Đã thanh toán", 65),
+//                    new PieChart.Data("Chưa thanh toán", 25),
+//                    new PieChart.Data("Quá hạn", 10)
+//            );
+//            apartmentStatusPieChart.setData(pieChartData);
+//        }
     }
 
     private void setupEventHandlers() {
@@ -274,7 +383,50 @@ public class ReportViewController implements Initializable {
 
     private void generateReport() throws SQLException {
         // TODO: Tạo báo cáo dựa trên loại báo cáo và khoảng thời gian đã chọn
+        apartmentStatusPieChart.setLabelLineLength(10);
+        apartmentStatusPieChart.setLegendVisible(true);
 
+        try {
+            LocalDate fromDate = fromDatePicker.getValue();
+            LocalDate toDate = toDatePicker.getValue();
+            System.out.println(fromDate + " " + toDate);
+            // Kiểm tra giá trị ngày
+            if (fromDate == null || toDate == null) {
+                // Hiển thị thông báo lỗi
+                System.out.println("Vui lòng chọn ngày bắt đầu và ngày kết thúc");
+                return;
+            }
+
+            // Kiểm tra thứ tự ngày
+            if (fromDate.isAfter(toDate)) {
+                System.out.println("Ngày bắt đầu phải trước ngày kết thúc");
+                return;
+            }
+
+            ObservableList<PieChart.Data> pieChartData = new ReportDAO().PieChart(fromDate, toDate);
+            apartmentStatusPieChart.setData(pieChartData);
+
+            // Thêm hiệu ứng tương tác sau khi đã nạp dữ liệu
+            apartmentStatusPieChart.getData().forEach(data -> {
+                String originalStyle = data.getNode().getStyle(); // Lưu style ban đầu
+
+                data.getNode().setOnMouseEntered(event -> {
+                    // Làm nổi bật phần được chọn
+                    data.getNode().setStyle("-fx-background-color: derive(" +
+                            data.getNode().getStyle().replace("-fx-background-color: ", "") +
+                            ", -30%);");
+                });
+
+                data.getNode().setOnMouseExited(event -> {
+                    // Trở về màu gốc
+                    data.getNode().setStyle(originalStyle);
+                });
+            });
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Hiển thị thông báo lỗi cho người dùng
+            System.out.println("Lỗi khi truy vấn cơ sở dữ liệu: " + e.getMessage());
+        }
         // Cập nhật biểu đồ
         updateCharts();
 

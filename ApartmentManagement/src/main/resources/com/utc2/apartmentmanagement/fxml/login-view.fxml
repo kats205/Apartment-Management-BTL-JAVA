@@ -32,20 +32,6 @@
                 <Image url="@../assets/Login_register/profilev2.png" />
             </image>
         </ImageView>
-
-        <!-- Trường nhập mật khẩu -->
-        <PasswordField fx:id="passwordField" layoutX="553.0" layoutY="275.0" prefHeight="55.0" prefWidth="430.5" promptText="Password" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-color: black;">
-            <font>
-                <Font size="16.0" />
-            </font>
-        </PasswordField>
-
-        <!-- Ikon khóa -->
-        <ImageView fx:id="lockView" fitHeight="30.0" fitWidth="30.0" layoutX="945.0" layoutY="287.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../assets/Login_register/eyev3.png" />
-            </image>
-        </ImageView>
         <Button fx:id="forgotPassword" layoutX="710.0" layoutY="337.0" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-border-color: transparent;" stylesheets="@../styles/login.css" text="Forgot password?">
             <font>
                 <Font name="Cabin Condensed Regular" size="14.0" />
@@ -102,5 +88,25 @@
                 </Label>
             </children>
         </Pane>
+      <TextField fx:id="visibleField" layoutX="553.0" layoutY="275.0" prefHeight="55.0" prefWidth="430.5" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-color: black;" />
+
+        <!-- Trường nhập mật khẩu -->
+        <PasswordField fx:id="passwordField" layoutX="553.0" layoutY="275.0" prefHeight="55.0" prefWidth="430.5" promptText="Password" style="-fx-background-color: #e3e3e3; -fx-text-fill: black; -fx-background-radius: 15px; -fx-border-radius: 15px; -fx-border-color: black;">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </PasswordField>
+
+        <!-- Ikon khóa -->
+        <ImageView fx:id="lockView" fitHeight="30.0" fitWidth="30.0" layoutX="945.0" layoutY="287.0" onMouseClicked="#handleTogglePasswordVisibility" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../assets/Login_register/eyev3.png" />
+            </image>
+        </ImageView>
+      <ImageView fx:id="revealView" fitHeight="30.0" fitWidth="30.0" layoutX="945.0" layoutY="287.0" onMouseClicked="#handleTogglePasswordVisibility" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../assets/Login_register/revealEye.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

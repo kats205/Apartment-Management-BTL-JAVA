@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -25,14 +26,19 @@ import java.time.format.DateTimeFormatter;
 
 public class LoginController {
 
+    public ImageView lockView;
     @FXML
     private AnchorPane rootPane;
-
+    @FXML
+    private TextField visibleField;
     @FXML
     private Pane imagePane;
 
     @FXML
     private ImageView imageView;
+
+    @FXML
+    private ImageView revealView;
 
     @FXML
     private TextField usernameField;
@@ -44,10 +50,16 @@ public class LoginController {
     private Button loginButton;
 
     @FXML
+    ImageView Exit;
+
+    @FXML
     private Button registerButton;
 
     @FXML
     public void initialize() {
+        Exit.setOnMouseClicked(event -> {
+            System.exit(0);
+        });
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
 
@@ -57,6 +69,9 @@ public class LoginController {
                 loginButton.fire(); // Gọi lại handleLogin
             }
         });
+        visibleField.textProperty().bindBidirectional(passwordField.textProperty());
+
+
     }
 
     private void setupImagePane() {
@@ -86,7 +101,8 @@ public class LoginController {
         }
     }
 
-    @FXML
+    private boolean isPasswordVisible = false;
+
     public void handleLogin(ActionEvent event) {
         String userName = usernameField.getText();
         String password = passwordField.getText();
@@ -120,9 +136,9 @@ public class LoginController {
                     e.printStackTrace();
                 }
             }
-            case 2 -> AlertBox.showAlertForUser("Thông báo","Chào mừng nhân viên!");
+            case 2 -> AlertBox.showAlertForUser("Thông báo", "Chào mừng nhân viên!");
             case 3 -> {
-                try{
+                try {
 
                     LocalDateTime now = LocalDateTime.now();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -136,23 +152,45 @@ public class LoginController {
                     ResidentView residentView = new ResidentView();
                     Stage stage = new Stage();
                     residentView.start(stage);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            }
         }
-    @FXML
-    public void goToSignUp(ActionEvent event) {
-        try{
-            ((Stage) usernameField.getScene().getWindow()).close();
-            // Khởi chạy dashboard
-            register registerUser = new register();
-            Stage stage = new Stage();
-            registerUser.start(stage);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
     }
 
+        @FXML
+        public void goToSignUp (ActionEvent event){
+            try {
+                ((Stage) usernameField.getScene().getWindow()).close();
+                // Khởi chạy dashboard
+                register registerUser = new register();
+                Stage stage = new Stage();
+                registerUser.start(stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @FXML
+        private void handleTogglePasswordVisibility () {
+            isPasswordVisible = !isPasswordVisible;
+            if (isPasswordVisible) {
+                visibleField.setVisible(true);
+                visibleField.setManaged(true);
+                passwordField.setVisible(false);
+                passwordField.setManaged(false);
+//            lockView.setImage(new Image(getClass().getResource("@.../assets/Login_register/eyev3.png").toString())); // icon mắt đóng
+                lockView.setVisible(false);
+                revealView.setVisible(true);
+            } else {
+                passwordField.setVisible(true);
+                passwordField.setManaged(true);
+                visibleField.setVisible(false);
+                visibleField.setManaged(false);
+//            lockView.setImage(new Image(getClass().getResource("@.../assets/Login_register/revealEye.png").toString())); // icon mắt mở
+                lockView.setVisible(true);
+                revealView.setVisible(false);
+            }
+        }
+    }
