@@ -1,0 +1,19 @@
+package com.utc2.apartmentmanagement.Views;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class ResidentView extends Application {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/UserDashboard-view.fxml"));
+        primaryStage.setTitle("Apartment Application");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
+
+}

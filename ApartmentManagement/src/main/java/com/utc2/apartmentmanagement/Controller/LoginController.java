@@ -1,9 +1,12 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.ResidentDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.Apartment;
 import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
+import com.utc2.apartmentmanagement.Views.ResidentView;
 import com.utc2.apartmentmanagement.Views.register;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -48,9 +51,9 @@ public class LoginController {
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
         // Gán sự kiện click nút login
-        loginButton.setOnAction(this::handleLogin);
+      //  loginButton.setOnAction(this::handleLogin);
         // Cho phép nhấn Enter ở bất kỳ input nào
-        loginButton.setDefaultButton(true);
+      //  loginButton.setDefaultButton(true);
         // Nhấn Enter ở passwordField thì login
         passwordField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -121,10 +124,28 @@ public class LoginController {
                 }
             }
             case 2 -> AlertBox.showAlertForUser("Thông báo","Chào mừng nhân viên!");
-            case 3 -> AlertBox.showAlertForUser("Thông báo","Chào mừng cư dân!");
-        }
-    }
+            case 3 -> {
+                try{
 
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+                    String formatted = now.format(formatter);
+                    Session.setLastLogin(formatted);
+                    Session.setUserName(userName);
+
+                    // Chuyển sang màn hình cư dân
+                    ((Stage) usernameField.getScene().getWindow()).close();
+                    ResidentView residentView = new ResidentView();
+                    Stage stage = new Stage();
+                    residentView.start(stage);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            default -> AlertBox.showAlertForExeptionRegister("Thông báo!", "Tài khoản này không tồn tại !");
+            }
+        }
     @FXML
     public void goToSignUp(ActionEvent event) {
         try{
@@ -137,4 +158,5 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-}
+    }
+
