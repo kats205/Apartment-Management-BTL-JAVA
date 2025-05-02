@@ -61,6 +61,22 @@ public class ResidentDAO implements IResidentDAO {
         }
         return null;
     }
+    @Override
+    public String getApartmentIdByUserID(int userID) {
+        String sql = "SELECT apartment_id from Resident WHERE user_id = ? ";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1, userID);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "";
+    }
+
 
     @Override
     public boolean deleteResidentByID(int residentID) {

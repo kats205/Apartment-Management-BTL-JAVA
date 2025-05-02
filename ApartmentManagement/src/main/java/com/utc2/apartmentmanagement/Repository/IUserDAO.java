@@ -20,4 +20,5 @@ public interface IUserDAO {
     boolean updateActive(int userID, boolean newActive);
     int getIdByUserName(String userId) throws SQLException;
     List<Map<String, Object>> searchOnChange(String searchText) throws SQLException;
+
 }

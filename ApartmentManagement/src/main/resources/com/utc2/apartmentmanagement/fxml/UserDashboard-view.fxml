@@ -260,6 +260,10 @@
                                         <Label layoutX="10.0" layoutY="100.0" text="Floor:" />
                                         <Label layoutX="10.0" layoutY="120.0" text="Area:" />
                                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../styles/UserDashboard.css" text="View Details" />
+                              <Label fx:id="apartmentIdTf" layoutX="92.0" layoutY="59.0" text="Label" />
+                              <Label fx:id="buildingTF" layoutX="63.0" layoutY="80.0" text="Label" />
+                              <Label fx:id="floorTF" layoutX="49.0" layoutY="99.0" text="Label" />
+                              <Label fx:id="areaTF" layoutX="49.0" layoutY="119.0" text="Label" />
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">

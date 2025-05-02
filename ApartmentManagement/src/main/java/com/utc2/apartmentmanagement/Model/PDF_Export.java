@@ -129,19 +129,6 @@ public class PDF_Export {
 
         Table table = new Table(columnWidths).setWidth(UnitValue.createPercentValue(100)).setTextAlignment(TextAlignment.CENTER);
 
-        //    String sql = "SELECT \n" +
-        //                "    p.payment_id, \n" +
-        //                "    b.bill_id, \n" +
-        //                "    bi.apartment_id, \n" +
-        //                "    p.amount, \n" +
-        //                "    p.payment_method, \n" +
-        //                "    p.status, \n" +
-        //                "    b.item_type, \n" +
-        //                "    b.description\n" +
-        //                "FROM Payment p\n" +
-        //                "JOIN BillItem b ON p.bill_id = b.bill_id\n" +
-        //                "JOIN Bill bi ON p.bill_id = bi.bill_id";
-        // Header
         String[] headers = {"Mã thanh toán", "Mã hóa đơn", "Mã căn hộ", "Số tiền (VNĐ)", "Phương thức", "Trạng thái", "Loại hóa đơn","Chi tiết"};
         for (String header : headers) {
             table.addHeaderCell(new Cell().add(new Paragraph(header))
@@ -290,6 +277,8 @@ public class PDF_Export {
     public static BufferedImage fromFXImage(WritableImage fxIgmage){
         return SwingFXUtils.fromFXImage(fxIgmage,null);
     }
+
+
 
     // Xuất node ra PDF
     public static void exportNodeToPDF(Node node, String filePath) throws Exception {

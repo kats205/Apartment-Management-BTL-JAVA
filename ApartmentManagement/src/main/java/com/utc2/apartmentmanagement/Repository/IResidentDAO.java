@@ -16,4 +16,5 @@ public interface IResidentDAO {
     boolean updateDOB(int residentID, Date newDOB);
     boolean updateGender(int residentID, String newGender);
     boolean updateMoveInDate(int residentID, Date newMoveInDate);
+    String getApartmentIdByUserID(int userID);
 }

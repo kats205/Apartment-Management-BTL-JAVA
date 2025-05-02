@@ -285,7 +285,25 @@ public class ApartmentDAO implements IApartmentDAO {
         return 0;
     }
 
+    @Override
+    public List<Object> getApartmentInfoByApartmentID(String apartmentID) {
+        String sql = "SELECT a.building_id, a.floor, a.area FROM Apartment a WHERE a.apartment_id = ?;";
+        List<Object> objectList = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1,apartmentID);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                objectList.add(rs.getInt("building_id"));
+                objectList.add(rs.getInt("floor"));
+                objectList.add(rs.getDouble("area"));
+            }
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return objectList;
+    }
 
 
     public int countApartment() throws SQLException{
