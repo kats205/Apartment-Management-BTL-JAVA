@@ -7,6 +7,7 @@ import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
 import com.utc2.apartmentmanagement.Views.ResidentView;
+import com.utc2.apartmentmanagement.Views.StaffView;
 import com.utc2.apartmentmanagement.Views.register;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -136,7 +137,25 @@ public class LoginController {
                     e.printStackTrace();
                 }
             }
-            case 2 -> AlertBox.showAlertForUser("Thông báo", "Chào mừng nhân viên!");
+            case 2 -> {
+
+                try {
+
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+                    String formatted = now.format(formatter);
+                    Session.setLastLogin(formatted);
+                    Session.setUserName(userName);
+                    // Chuyển sang màn hình cư dân
+                    ((Stage) usernameField.getScene().getWindow()).close();
+                    StaffView staffView = new StaffView();
+                    Stage stage = new Stage();
+                    staffView.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             case 3 -> {
                 try {
 
