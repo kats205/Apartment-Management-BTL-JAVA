@@ -16,7 +16,12 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
+import com.utc2.apartmentmanagement.DAO.ReportDAO;
+import com.utc2.apartmentmanagement.DAO.UserDAO;
 import com.utc2.apartmentmanagement.Model.Apartment;
+import com.utc2.apartmentmanagement.Model.PDF_Export;
+import com.utc2.apartmentmanagement.Model.Report;
+import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Utils.ValidateColumn;
 import com.utc2.apartmentmanagement.Views.EditApartmentView;
@@ -321,184 +326,25 @@ public class ApartmentViewController implements Initializable {
     private void exportReport() {
         // TODO: Xuất danh sách căn hộ thành PDF
         try {
-            // Đường dẫn mặc định
-            String directoryPath = "src/main/resources/com/utc2/apartmentmanagement/PDF_File/";
-            String filePath = directoryPath + "Apartment_List.pdf";
-            // Tạo thư mục nếu chưa có
-            File directory = new File(directoryPath);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-
-            PdfFont vietnameseFont = PdfFontFactory.createFont("src/main/resources/com/utc2/apartmentmanagement/Font/arial.ttf");
-            PdfFont thongtin = PdfFontFactory.createFont("src/main/resources/com/utc2/apartmentmanagement/Font/times.ttf");
-            // Tạo file PDF
-            PdfWriter writer = new PdfWriter(filePath);
-            PdfDocument pdf = new PdfDocument(writer);
-
-            Document document = new Document(pdf);
-            document.setFont(thongtin);
-
-            Color headerColor = new DeviceRgb(209, 224, 227);
-            Color textHeadColor = new DeviceRgb(21, 88, 155);
-
-
-            float[] columnWidthsHeader = {280F, 280F}; // Điều chỉnh theo khổ giấy
-            Table headerTable = new Table(columnWidthsHeader);
-            headerTable.setWidth(UnitValue.createPercentValue(100));
-
-            // Cột bên trái: Tên chung cư
-            Paragraph left = new Paragraph("CHUNG CƯ ABC")
-                    .setBold()
-                    .setFontSize(12)
-                    .setTextAlignment(TextAlignment.LEFT);
-
-            LineSeparator line = new LineSeparator(new SolidLine());
-            line.setWidth(50);  // Độ dài cố định
-            Paragraph lineWrapper1 = new Paragraph().add(line)
-                    .setTextAlignment(TextAlignment.LEFT)
-                    .setMarginTop(2)
-                    .setMarginBottom(2)
-                    .setPaddingLeft(20);
-
-
-            com.itextpdf.layout.element.Cell leftCell = new com.itextpdf.layout.element.Cell().add(left).add(lineWrapper1)
-                    .setBorder(Border.NO_BORDER)
-                    .setTextAlignment(TextAlignment.LEFT);
-
-// Cột bên phải: Tiêu ngữ + đường kẻ + khẩu hiệu
-            Paragraph right = new Paragraph("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM")
-                    .setBold()
-                    .setTextAlignment(TextAlignment.RIGHT)
-                    .setFontSize(12);
-
-            LineSeparator line1 = new LineSeparator(new SolidLine());
-            line1.setWidth(100);  // Độ dài cố định
-            Paragraph lineWrapper = new Paragraph().add(line1)
-                    .setTextAlignment(TextAlignment.RIGHT)
-                    .setMarginTop(2)
-                    .setMarginBottom(2);
-
-            Paragraph slogan = new Paragraph("Độc lập - Tự do - Hạnh phúc")
-                    .setItalic()
-                    .setTextAlignment(TextAlignment.RIGHT)
-                    .setFontSize(11);
-
-            Paragraph rightContent = new Paragraph()
-                    .add(right)
-                    .add(lineWrapper)
-                    .add(slogan);
-
-            com.itextpdf.layout.element.Cell rightCell = new com.itextpdf.layout.element.Cell().add(rightContent)
-                    .setBorder(Border.NO_BORDER)  // Loại bỏ viền
-                    .setTextAlignment(TextAlignment.CENTER);
-
-// Thêm vào bảng
-            headerTable.addCell(leftCell);
-            headerTable.addCell(rightCell);
-
-// Thêm bảng vào document
-            document.add(headerTable);
-
-
-
-            document.add(new Paragraph("BÁO CÁO").setBold().setFontColor(textHeadColor).setFontSize(14).setTextAlignment(TextAlignment.CENTER));
-
-            // Thêm tiêu đề
-            document.add(new Paragraph("DANH SÁCH CÁC CĂN HỘ CỦA CHUNG CƯ").setBold().setFontColor(textHeadColor).setFontSize(14).setTextAlignment(TextAlignment.CENTER));
-            document.add(new Paragraph(""));
-
-            // Tạo bảng
-            float[] columnWidths = {100F, 80F, 40F, 90F, 120F, 10F, 80F, 80F};
-            Table table = new Table(columnWidths);
-
-            table.setTextAlignment(TextAlignment.CENTER);
-            // Header
-
-            table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph("Mã căn hộ").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph("Tòa nhà").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph("Tầng").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph("Diện tích (m^2)").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph("Số phòng ngủ").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph("Giá thuê (VNĐ)").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph("Trạng thái").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph("Phí bảo trì").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-
-            // Data
-            List<Apartment> apartments = new ApartmentDAO().getAllApartments();
-
-            for (Apartment apt : apartments) {
-                table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph(apt.getApartmentID())));
-                table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph(String.valueOf(apt.getBuildingID()))));
-                table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph(String.valueOf(apt.getFloors()))));
-                table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph(String.format("%.2f", apt.getArea()))));
-                table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph(String.valueOf(apt.getBedRoom()))));
-                table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph(String.format("%.2f", apt.getPriceApartment()))));
-                table.addCell(new com.itextpdf.layout.element.Cell().add(new Paragraph(apt.getStatus())));
-                table.addCell(new Cell().add(new Paragraph(String.format("%.2f", apt.getMaintanceFee()))));
-            }
-
-            // Thêm bảng vào document
-            document.add(table);
-
-
-            // Tổng số phòng
-            List<Apartment> apartmentList = new ApartmentDAO().getAllApartments();
-            int sumApartment = apartmentList.size();
-            // Tổng số phòng từng loại
-            int occupiedRoom = 0; int availableRoom = 0;
-            int maintenanceRoom = 0; int reservedRoom = 0;
-            for (Apartment apartment : apartmentList){
-                if(apartment.getStatus().equals("occupied"))
-                    occupiedRoom++;
-                else if(apartment.getStatus().equals("available"))
-                    availableRoom++;
-
-                else if(apartment.getStatus().equals("maintenance"))
-                    maintenanceRoom++;
-                else if(apartment.getStatus().equals(" reserved"))
-                    reservedRoom++;
-            }
-
-
-            document.add(lineWrapper.setWidth(300)).setTextAlignment(TextAlignment.CENTER);
-
-            String sumApartmentString = "Tổng số phòng: " + sumApartment
-                    + "\nTổng số phòng occupied: " + occupiedRoom
-                    + "\nTổng số phòng available: " + availableRoom
-                    + "\nTổng số phòng maintenance: " + maintenanceRoom
-                    + "\nTổng số phòng reserved: " + reservedRoom;
-
-            document.add(new Paragraph(sumApartmentString).setFontSize(12).setItalic().setTextAlignment(TextAlignment.RIGHT));
-
-            // thêm ngày xuất báo báo
-            // Lấy ngày hiện tại
-            LocalDate today = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String dateString = "Ngày xuất báo cáo: " + today.format(formatter);
-            document.add(new Paragraph(dateString).setFontSize(12).setItalic().setTextAlignment(TextAlignment.LEFT));
-
-
-
-
-            // Đóng tài liệu
-            document.close();
-
-            // Thông báo thành công
+            String filePath = PDF_Export.exportApartmentList("Apartment_List.pdf");
+            int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+            System.out.println(user_id);
+            LocalDate date = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+            String formattedDate = date.format(formatter);
+            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDate,  filePath, LocalDate.now(), LocalDate.now());
+            new ReportDAO().saveReport(report);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Thông báo");
-            alert.setHeaderText(null);
-            alert.setContentText("Xuất file PDF thành công!\nĐã lưu tại: " + filePath);
+            alert.setHeaderText("Xuất file PDF thành công!");
+            alert.setContentText("Đã lưu tại:\n" + filePath);
             alert.showAndWait();
 
-            System.out.println("Xuất báo cáo thành công!!!");
             System.out.println("PDF exported to: " + filePath);
-            System.out.println(filePath);
 
         } catch (Exception e) {
-            e.printStackTrace();
-
             // Nếu lỗi thì thông báo lỗi
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lỗi");
             alert.setHeaderText("Xuất file thất bại");

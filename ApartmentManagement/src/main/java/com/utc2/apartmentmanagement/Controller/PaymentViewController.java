@@ -17,8 +17,9 @@ import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.PaymentDAO;
-import com.utc2.apartmentmanagement.Model.Apartment;
-import com.utc2.apartmentmanagement.Model.Payment;
+import com.utc2.apartmentmanagement.DAO.ReportDAO;
+import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.*;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,6 +38,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -260,145 +262,25 @@ public class PaymentViewController implements Initializable {
 
         // TODO: Xuất danh sách thanh toán thành PDF
         try {
-            // Đường dẫn mặc định
-            String directoryPath = "src/main/resources/com/utc2/apartmentmanagement/PDF_File/";
-            String filePath = directoryPath + "Payment_List.pdf";
-            // Tạo thư mục nếu chưa có
-            File directory = new File(directoryPath);
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-            PdfFont vietnameseFont = PdfFontFactory.createFont("src/main/resources/com/utc2/apartmentmanagement/Font/arial.ttf");
+            String filePath = PDF_Export.exportPaymentList("Payment_List.pdf");
 
-            // Tạo file PDF
-            PdfWriter writer = new PdfWriter(filePath);
-            PdfDocument pdf = new PdfDocument(writer);
+            int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+            System.out.println(user_id);
+            LocalDate date = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+            String formattedDate = date.format(formatter);
+            Report report = new Report("Báo cáo tài chính", LocalDate.now(), user_id, formattedDate,  filePath, LocalDate.now(), LocalDate.now());
+            new ReportDAO().saveReport(report);
 
-            Document document = new Document(pdf);
-            document.setFont(vietnameseFont);
-
-            Color headerColor = new DeviceRgb(209, 224, 227);
-            Color textHeadColor = new DeviceRgb(21, 88, 155);
-
-            float[] columnWidthsHeader = {280F, 280F}; // Điều chỉnh theo khổ giấy
-            Table headerTable = new Table(columnWidthsHeader);
-            headerTable.setWidth(UnitValue.createPercentValue(100));
-
-            // Cột bên trái: Tên chung cư
-            Paragraph left = new Paragraph("CHUNG CƯ ABC")
-                    .setBold()
-                    .setFontSize(12)
-                    .setTextAlignment(TextAlignment.LEFT);
-
-            LineSeparator line = new LineSeparator(new SolidLine());
-            line.setWidth(50);  // Độ dài cố định
-            Paragraph lineWrapper1 = new Paragraph().add(line)
-                    .setTextAlignment(TextAlignment.LEFT)
-                    .setMarginTop(2)
-                    .setMarginBottom(2)
-                    .setPaddingLeft(20);
-
-            Cell leftCell = new com.itextpdf.layout.element.Cell().add(left).add(lineWrapper1)
-                    .setBorder(Border.NO_BORDER)
-                    .setTextAlignment(TextAlignment.LEFT);
-
-// Cột bên phải: Tiêu ngữ + đường kẻ + khẩu hiệu
-            Paragraph right = new Paragraph("CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM")
-                    .setBold()
-                    .setTextAlignment(TextAlignment.RIGHT)
-                    .setFontSize(12);
-
-            LineSeparator line1 = new LineSeparator(new SolidLine());
-            line1.setWidth(100);  // Độ dài cố định
-            Paragraph lineWrapper = new Paragraph().add(line1)
-                    .setTextAlignment(TextAlignment.RIGHT)
-                    .setMarginTop(2)
-                    .setMarginBottom(2);
-
-            Paragraph slogan = new Paragraph("Độc lập - Tự do - Hạnh phúc")
-                    .setItalic()
-                    .setTextAlignment(TextAlignment.RIGHT)
-                    .setFontSize(11);
-
-            Paragraph rightContent = new Paragraph()
-                    .add(right)
-                    .add(lineWrapper)
-                    .add(slogan);
-
-            Cell rightCell = new com.itextpdf.layout.element.Cell().add(rightContent)
-                    .setBorder(Border.NO_BORDER)  // Loại bỏ viền
-                    .setTextAlignment(TextAlignment.CENTER);
-    // Thêm vào bảng
-            headerTable.addCell(leftCell);
-            headerTable.addCell(rightCell);
-
-    // Thêm bảng vào document
-            document.add(headerTable);
-
-            document.add(new Paragraph("BÁO CÁO").setBold().setFontColor(textHeadColor).setFontSize(14).setTextAlignment(TextAlignment.CENTER));
-
-            // Thêm tiêu đề
-            document.add(new Paragraph("Danh sách các thanh toán").setBold().setFontColor(textHeadColor).setFontSize(16).setTextAlignment(TextAlignment.CENTER));
-            document.add(new Paragraph(""));
-
-            // Tạo bảng
-            float[] columnWidths = {60F, 60F, 80F, 80F, 90F, 90F, 70F};
-            Table table = new Table(columnWidths);
-
-
-            // Header
-            table.addCell(new Cell().add(new Paragraph("Mã thanh toán"))
-                    .setBackgroundColor(headerColor)
-                    .setBold()
-            );
-            table.addCell(new Cell().add(new Paragraph("Mã hóa đơn").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new Cell().add(new Paragraph("Ngày thanh toán").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new Cell().add(new Paragraph("Số tiền (VNĐ)").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new Cell().add(new Paragraph("Phương thức").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new Cell().add(new Paragraph("Trạng thái").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-            table.addCell(new Cell().add(new Paragraph("Ngày tạo").setBold().setFontColor(textHeadColor)).setBackgroundColor(headerColor));
-
-
-            // Data
-            List<Payment> payments = new PaymentDAO().getAllPayment();
-
-            for (Payment payment : payments) {
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(payment.getPaymentID()))));
-                table.addCell(new Cell().add(new Paragraph(String.valueOf(payment.getBillID()))));
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String paymentDateStr = payment.getPaymentDate() != null ? dateFormat.format(payment.getPaymentDate()) : "";
-                table.addCell(new Cell().add(new Paragraph(paymentDateStr)));
-
-                table.addCell(new Cell().add(new Paragraph(String.format("%.2f", payment.getAmount()))));
-
-                table.addCell(new Cell().add(new Paragraph(payment.getPaymentMedthod())));
-
-                table.addCell(new Cell().add(new Paragraph(payment.getStatus())));
-
-                String createdDateStr = payment.getCreated_at() != null ? dateFormat.format(payment.getCreated_at()) : "";
-                table.addCell(new Cell().add(new Paragraph(createdDateStr)));
-            }
-
-            // Thêm bảng vào document
-            document.add(table);
-
-            // Đóng tài liệu
-            document.close();
-
-            // Thông báo thành công
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Thông báo");
-            alert.setHeaderText(null);
-            alert.setContentText("Xuất file PDF thành công!\nĐã lưu tại: " + filePath);
+            alert.setHeaderText("Xuất file PDF thành công!");
+            alert.setContentText("Đã lưu tại:\n" + filePath);
             alert.showAndWait();
 
-            System.out.println("Xuất báo cáo thanh toán thành công!!!");
             System.out.println("PDF exported to: " + filePath);
         } catch (Exception e) {
             e.printStackTrace();
-
-            // Nếu lỗi thì thông báo lỗi
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lỗi");
             alert.setHeaderText("Xuất file thất bại");

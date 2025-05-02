@@ -2,6 +2,7 @@ package com.utc2.apartmentmanagement.Repository;
 
 import com.utc2.apartmentmanagement.Model.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserDAO {
@@ -16,4 +17,5 @@ public interface IUserDAO {
     boolean updatePhoneNumber(int userID, String newPhoneNumber);
     boolean updateRoleID(int userID, int newRoleID);
     boolean updateActive(int userID, boolean newActive);
+    int getIdByUserName(String userId) throws SQLException;
 }

@@ -5,13 +5,14 @@ module com.utc2.apartmentmanagement {
     requires kernel; // For com.itextpdf.kernel.pdf
     requires layout; // For com.itextpdf.layout
     requires io;     // For com.itextpdf.io.font
-    requires java.desktop; // For javax.swing.text
+    // For javax.swing.text
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires java.sql;
     requires bcrypt;
     requires itextpdf;
+    requires javafx.swing;
 
     opens com.utc2.apartmentmanagement.Test to javafx.base;
     exports com.utc2.apartmentmanagement.Test;
