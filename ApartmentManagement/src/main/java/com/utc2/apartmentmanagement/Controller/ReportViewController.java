@@ -486,7 +486,7 @@ public class ReportViewController implements Initializable {
     private void exportFullReport() {
         // TODO: Xuất toàn bộ báo cáo (bao gồm biểu đồ, bảng dữ liệu và tóm tắt)
         try {
-            String filePath = PDF_Export.exportNodeToPDF(revenueChart,statusChart,"Report_List.pdf");
+            String filePath = PDF_Export.exportNodeToPDF(revenueChart,apartmentStatusPieChart,"Report_List.pdf");
 
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
