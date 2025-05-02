@@ -11,7 +11,7 @@ module com.utc2.apartmentmanagement {
     requires com.dlsc.formsfx;
     requires java.sql;
     requires bcrypt;
-    requires itextpdf;
+//    requires itextpdf;
 
     opens com.utc2.apartmentmanagement.Views to javafx.fxml;
     exports com.utc2.apartmentmanagement.Views;
