@@ -44,7 +44,9 @@ public class MyProfileController implements Initializable {
     @FXML public Button changePasswordBtn1;
     @FXML public Button logoutBtn;
     @Setter
-    private DashboardController parentController;
+    private DashboardController parentDashBoardController;
+    @Setter
+    private StaffDashboardController parentStaffDashBoard;
     @Setter
     private Stage dashboardStage; // để tắt stage chính
 

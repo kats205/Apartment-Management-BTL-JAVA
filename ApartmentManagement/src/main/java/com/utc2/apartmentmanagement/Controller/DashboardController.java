@@ -389,7 +389,7 @@ public class DashboardController implements Initializable {
 
             // Gán controller
             MyProfileController controller = loader.getController();
-            controller.setParentController(this);
+            controller.setParentDashBoardController(this);
             controller.setDashboardStage((Stage) rootPane.getScene().getWindow()); // Stage của dashboard!
 
             Stage stage = new Stage();
