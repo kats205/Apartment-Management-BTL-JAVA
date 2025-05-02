@@ -5,8 +5,11 @@ import com.utc2.apartmentmanagement.Repository.IPaymentDAO;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.sql.Date;
+import java.util.Map;
+
 public class PaymentDAO implements IPaymentDAO {
     @Override
     public List<Payment> getAllPayment(){
@@ -113,6 +116,39 @@ public class PaymentDAO implements IPaymentDAO {
     }
 
     @Override
+    public List<Map<String, Object>> listPaymentDetail() throws SQLException {
+        String sql = "SELECT \n" +
+                "    p.payment_id, \n" +
+                "    b.bill_id, \n" +
+                "    bi.apartment_id, \n" +
+                "    p.amount, \n" +
+                "    p.payment_method, \n" +
+                "    p.status, \n" +
+                "    b.item_type, \n" +
+                "    b.description\n" +
+                "FROM Payment p\n" +
+                "JOIN BillItem b ON p.bill_id = b.bill_id\n" +
+                "JOIN Bill bi ON p.bill_id = bi.bill_id";
+        List<Map<String, Object>> listPaymentDetail = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, Object> rows = new HashMap<>();
+                rows.put("payment_id", rs.getInt("payment_id"));
+                rows.put("bill_id",rs.getInt("bill_id"));
+                rows.put("apartment_id", rs.getString("apartment_id"));
+                rows.put("amount", rs.getBigDecimal("amount")); // dùng getBigDecimal để chính xác hơn cho DECIMAL
+                rows.put("payment_method", rs.getString("payment_method"));
+                rows.put("status", rs.getString("status"));
+                rows.put("item_type", rs.getString("item_type"));
+                rows.put("description", rs.getString("description"));
+                listPaymentDetail.add(rows);
+            }
+        }
+    return listPaymentDetail;
+    }
+  
     public double totalPaymentFromStatus(String status) throws SQLException {
         String sql = "SELECT SUM(amount) FROM Payment WHERE status = ?";
         try(Connection connection = DatabaseConnection.getConnection();

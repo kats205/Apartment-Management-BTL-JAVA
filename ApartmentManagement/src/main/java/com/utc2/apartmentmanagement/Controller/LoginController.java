@@ -1,9 +1,12 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.ResidentDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.Apartment;
 import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
+import com.utc2.apartmentmanagement.Views.ResidentView;
 import com.utc2.apartmentmanagement.Views.register;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,7 +49,8 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
-    @FXML ImageView Exit;
+    @FXML
+    ImageView Exit;
 
     @FXML
     private Button registerButton;
@@ -58,6 +62,7 @@ public class LoginController {
         });
         // Đảm bảo rằng phần ảnh được bo góc bên phải
         setupImagePane();
+
         // Nhấn Enter ở passwordField thì login
         passwordField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -68,6 +73,7 @@ public class LoginController {
 
 
     }
+
     private void setupImagePane() {
         // Sử dụng SVGPath để tạo hình dạng với góc bo tròn ở bên phải
         SVGPath path = new SVGPath();
@@ -94,6 +100,7 @@ public class LoginController {
             }
         }
     }
+
     private boolean isPasswordVisible = false;
 
     public void handleLogin(ActionEvent event) {
@@ -129,42 +136,61 @@ public class LoginController {
                     e.printStackTrace();
                 }
             }
-            case 2 -> AlertBox.showAlertForUser("Thông báo","Chào mừng nhân viên!");
-            case 3 -> AlertBox.showAlertForUser("Thông báo","Chào mừng cư dân!");
+            case 2 -> AlertBox.showAlertForUser("Thông báo", "Chào mừng nhân viên!");
+            case 3 -> {
+                try {
+
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
+                    String formatted = now.format(formatter);
+                    Session.setLastLogin(formatted);
+                    Session.setUserName(userName);
+
+                    // Chuyển sang màn hình cư dân
+                    ((Stage) usernameField.getScene().getWindow()).close();
+                    ResidentView residentView = new ResidentView();
+                    Stage stage = new Stage();
+                    residentView.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-    @FXML
-    public void goToSignUp(ActionEvent event) {
-        try{
-            ((Stage) usernameField.getScene().getWindow()).close();
-            // Khởi chạy dashboard
-            register registerUser = new register();
-            Stage stage = new Stage();
-            registerUser.start(stage);
-        }catch (Exception e){
-            e.printStackTrace();
+        @FXML
+        public void goToSignUp (ActionEvent event){
+            try {
+                ((Stage) usernameField.getScene().getWindow()).close();
+                // Khởi chạy dashboard
+                register registerUser = new register();
+                Stage stage = new Stage();
+                registerUser.start(stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-    }
-    @FXML
-    private void handleTogglePasswordVisibility() {
-        isPasswordVisible = !isPasswordVisible;
-        if (isPasswordVisible) {
-            visibleField.setVisible(true);
-            visibleField.setManaged(true);
-            passwordField.setVisible(false);
-            passwordField.setManaged(false);
+
+        @FXML
+        private void handleTogglePasswordVisibility () {
+            isPasswordVisible = !isPasswordVisible;
+            if (isPasswordVisible) {
+                visibleField.setVisible(true);
+                visibleField.setManaged(true);
+                passwordField.setVisible(false);
+                passwordField.setManaged(false);
 //            lockView.setImage(new Image(getClass().getResource("@.../assets/Login_register/eyev3.png").toString())); // icon mắt đóng
-            lockView.setVisible(false);
-            revealView.setVisible(true);
-        } else {
-            passwordField.setVisible(true);
-            passwordField.setManaged(true);
-            visibleField.setVisible(false);
-            visibleField.setManaged(false);
+                lockView.setVisible(false);
+                revealView.setVisible(true);
+            } else {
+                passwordField.setVisible(true);
+                passwordField.setManaged(true);
+                visibleField.setVisible(false);
+                visibleField.setManaged(false);
 //            lockView.setImage(new Image(getClass().getResource("@.../assets/Login_register/revealEye.png").toString())); // icon mắt mở
-            lockView.setVisible(true);
-            revealView.setVisible(false);
+                lockView.setVisible(true);
+                revealView.setVisible(false);
+            }
         }
     }
-}

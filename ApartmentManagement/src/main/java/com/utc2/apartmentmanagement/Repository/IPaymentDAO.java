@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface IPaymentDAO {
     List<Payment> getAllPayment();
@@ -18,5 +19,6 @@ public interface IPaymentDAO {
     boolean updateTransactionID(int paymentID, String newTransactionID);
     boolean updateStatusPayment(int paymentID, String newStatus);
     List<Payment> findPaymentByDate(LocalDate fromDate, LocalDate toDate);
+    List<Map<String, Object>> listPaymentDetail() throws SQLException;
     double totalPaymentFromStatus(String status) throws SQLException;
 }

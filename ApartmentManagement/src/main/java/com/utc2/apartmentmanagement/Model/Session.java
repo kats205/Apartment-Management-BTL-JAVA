@@ -23,5 +23,4 @@ public class Session {
         Session.lastLogin = lastLogin;
     }
 
-
 }

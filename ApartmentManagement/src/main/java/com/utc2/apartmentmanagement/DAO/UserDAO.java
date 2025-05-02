@@ -141,6 +141,21 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
+    public int getIdByUserName(String userName) throws SQLException {
+        String sql = "SELECT user_id FROM [User] WHERE username = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,userName);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Lỗi khi lấy user id từ username", e);
+        }
+        return 0;
+    }
+
     public List<Map<String, Object>> searchOnChange(String searchText) throws SQLException {
         String sql = "SELECT s.staff_id, u.username, r.role_name, u.full_name, " +
                 "u.email, u.phone_number, s.department, s.position, u.active " +

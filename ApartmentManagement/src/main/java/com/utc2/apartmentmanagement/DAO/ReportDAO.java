@@ -68,7 +68,7 @@ public class ReportDAO implements IReportDAO {
 
     @Override
     public boolean saveReport(Report report) {
-        String query = "INSERT INTO reports (report_type, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at) " +
+        String query = "INSERT INTO report (report_type, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {

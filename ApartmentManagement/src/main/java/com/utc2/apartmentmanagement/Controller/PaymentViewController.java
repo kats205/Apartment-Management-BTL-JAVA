@@ -1,30 +1,44 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.LineSeparator;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.PaymentDAO;
-import com.utc2.apartmentmanagement.Model.Apartment;
-import com.utc2.apartmentmanagement.Model.Payment;
+import com.utc2.apartmentmanagement.DAO.ReportDAO;
+import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.*;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -243,7 +257,36 @@ public class PaymentViewController implements Initializable {
     }
 
     private void exportReport() {
+
         // TODO: Xuất báo cáo thanh toán
+
+        // TODO: Xuất danh sách thanh toán thành PDF
+        try {
+            String filePath = PDF_Export.exportPaymentList("Payment_List.pdf");
+
+            int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+            System.out.println(user_id);
+            LocalDate date = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+            String formattedDate = date.format(formatter);
+            Report report = new Report("Báo cáo tài chính", LocalDate.now(), user_id, formattedDate,  filePath, LocalDate.now(), LocalDate.now());
+            new ReportDAO().saveReport(report);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Xuất file PDF thành công!");
+            alert.setContentText("Đã lưu tại:\n" + filePath);
+            alert.showAndWait();
+
+            System.out.println("PDF exported to: " + filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Xuất file thất bại");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     private void updatePaymentCount() {

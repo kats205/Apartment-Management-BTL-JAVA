@@ -16,9 +16,8 @@ public class Report {
         // Constructor mặc định
     }
 
-    public Report(int id, String reportType, LocalDate generationDate, int generatedByUserId, String parameters,
+    public Report( String reportType, LocalDate generationDate, int generatedByUserId, String parameters,
                     String filePath, LocalDate createdAt, LocalDate updatedAt) {
-        this.id = id;
         this.reportType = reportType;
         this.generationDate = generationDate;
         this.generatedByUserId = generatedByUserId;
