@@ -135,4 +135,20 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
         }
         return false;
     }
+
+    @Override
+    public int countRequestByStatus(String status) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM MaintenanceRequest WHERE status = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, status);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch(SQLException e){
+            throw new SQLException("Error counting requests by status: " + e.getMessage(), e);
+        }
+        return 0;
+    }
 }

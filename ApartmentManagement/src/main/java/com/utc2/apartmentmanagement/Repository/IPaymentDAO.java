@@ -20,4 +20,5 @@ public interface IPaymentDAO {
     boolean updateStatusPayment(int paymentID, String newStatus);
     List<Payment> findPaymentByDate(LocalDate fromDate, LocalDate toDate);
     List<Map<String, Object>> listPaymentDetail() throws SQLException;
+    double totalPaymentFromStatus(String status) throws SQLException;
 }

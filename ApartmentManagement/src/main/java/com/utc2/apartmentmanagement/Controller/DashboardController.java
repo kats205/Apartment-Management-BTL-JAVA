@@ -1,5 +1,8 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
+import com.utc2.apartmentmanagement.DAO.MaintenanceRequestDAO;
+import com.utc2.apartmentmanagement.DAO.PaymentDAO;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -17,8 +22,12 @@ import lombok.Getter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -30,8 +39,24 @@ public class DashboardController implements Initializable {
     public Button apartment;
     @FXML
     public Button payment;
-    @FXML
-    public Button reportButton;
+    @FXML public Button reportButton;
+    @FXML public Label Occupied;
+    @FXML public Label Available;
+    @FXML public Label Collected;
+    @FXML public Label outStanding;
+    @FXML public Label Pending;
+    @FXML public Label Completed;
+    @FXML public Label totalApartmentsLabel;
+    @FXML public Label requestsLabel;
+    @FXML public Label revenueLabel;
+    @FXML public TableView<Map<String, Object>> recentActivitiesTable;
+    @FXML public TableColumn<Map<String, Object>, String> roleColumn;
+    @FXML public TableColumn<Map<String, Object>, LocalDate> dateColumn;
+    @FXML public TableColumn<Map<String, Object>, LocalDate> timeColumn;
+    @FXML public TableColumn<Map<String, Object>, LocalDate> activityColumn;
+    @FXML public TableColumn<Map<String, Object>, String> userColumn;
+    @FXML public TableColumn<Map<String, Object>, Boolean> statusColumn;
+    @FXML public TableColumn actionColumn;
     @FXML
     private Button ApartmentButton;
 
@@ -62,8 +87,6 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupMenuToggle();
-//        mainBorderPane.setBottom(null); // Hoặc sử dụng Pane rỗng
-//        mainBorderPane.setRight(null);  // Hoặc sử dụng Pane rỗng
 
         dashboardNodes = new ArrayList<>(contentArea.getChildren());
 
@@ -71,39 +94,6 @@ public class DashboardController implements Initializable {
             System.exit(0);
         });
 
-//        slider.setTranslateX(-200);
-//
-//        Menu.setOnMouseClicked(event -> {
-//            TranslateTransition slide = new TranslateTransition();
-//            slide.setDuration(Duration.seconds(0.4));
-//            slide.setNode(slider);
-//
-//            slide.setToX(0);
-//            slide.play();
-//
-//            slider.setTranslateX(-150);
-//
-//            slide.setOnFinished((ActionEvent e)-> {
-//                Menu.setVisible(false);
-//                MenuBack.setVisible(true);
-//            });
-//        });
-//
-//        MenuBack.setOnMouseClicked(event -> {
-//            TranslateTransition slide = new TranslateTransition();
-//            slide.setDuration(Duration.seconds(0.4));
-//            slide.setNode(slider);
-//
-//            slide.setToX(-200);
-//            slide.play();
-//
-//            slider.setTranslateX(0);
-//
-//            slide.setOnFinished((ActionEvent e)-> {
-//                Menu.setVisible(true);
-//                MenuBack.setVisible(false);
-//            });
-//        });
 
         // Thiết lập sự kiện cho nút ApartmentButton
         ApartmentButton.setOnAction(event -> {
@@ -151,52 +141,73 @@ public class DashboardController implements Initializable {
                 e.printStackTrace();
             }
         });
+
+
         // Các thiết lập khác...
+        ApartmentDAO apartment = new ApartmentDAO();
+        try {
+            Occupied.setText(String.valueOf(apartment.countStatusApartment("occupied")));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Available.setText(String.valueOf(apartment.countStatusApartment("available")));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            totalApartmentsLabel.setText(String.valueOf(apartment.countApartment()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
+        PaymentDAO payment = new PaymentDAO();
+        try {
+            double amount = payment.totalPaymentFromStatus("completed");
+            DecimalFormat df = new DecimalFormat("#,##0.00");
+            Collected.setText(df.format(amount));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            double amount = payment.totalPaymentFromStatus("pending");
+            DecimalFormat df = new DecimalFormat("#,##0.00");
+            outStanding.setText(df.format(amount));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        MaintenanceRequestDAO maintenanceRequestDAO = new MaintenanceRequestDAO();
+        try {
+            Completed.setText(String.valueOf(maintenanceRequestDAO.countRequestByStatus("completed")));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Pending.setText(String.valueOf(maintenanceRequestDAO.countRequestByStatus("pending")));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        requestsLabel.setText(String.valueOf(maintenanceRequestDAO.getAllMaintenanceRequest().size()));
+
+
+
+        try {
+            double amountCompleted = payment.totalPaymentFromStatus("completed");
+            double amountPending = payment.totalPaymentFromStatus("pending");
+            DecimalFormat df = new DecimalFormat("#,##0");
+            double total = amountCompleted + amountPending;
+            revenueLabel.setText(df.format(total) + "VNĐ");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
-    // tạo hiệu ứng trượt
-//    private void setupMenuToggle() {
-//        // Initial setup for menu labels
-//        MenuBack.setVisible(false);
-//
-//        // Add click event to both Menu and MenuBack labels
-//        Menu.setOnMouseClicked(event -> toggleSidebar());
-//        MenuBack.setOnMouseClicked(event -> toggleSidebar());
-//    }
-//
-//    private void toggleSidebar() {
-//        // Create translation transition for sidebar
-//        TranslateTransition sidebarTransition = new TranslateTransition(Duration.millis(300), slider);
-//
-//        // Create translation transition for content area
-//        TranslateTransition contentTransition = new TranslateTransition(Duration.millis(300), contentArea);
-//
-//        if (isSidebarVisible) {
-//            // Hide sidebar
-//            sidebarTransition.setToX(-slider.getWidth());
-//            contentTransition.setToX(-slider.getWidth());
-//            // Swap menu labels
-//            Menu.setVisible(false);
-//            MenuBack.setVisible(true);
-//        } else {
-//            // Show sidebar
-//            sidebarTransition.setToX(0);
-//            contentTransition.setToX(150);
-//
-//            // Swap menu labels
-//            Menu.setVisible(true);
-//            MenuBack.setVisible(false);
-//        }
-//
-//        // Play both transitions
-//        sidebarTransition.play();
-//        contentTransition.play();
-//
-//        // Toggle sidebar visibility state
-//        isSidebarVisible = !isSidebarVisible;
-//    }
-
 
     private void setupMenuToggle() {
         // Initial setup for menu labels

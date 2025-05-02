@@ -9,7 +9,9 @@ import com.utc2.apartmentmanagement.Utils.passwordEncryption;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class UserDAO implements IUserDAO {
@@ -115,7 +117,7 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public boolean updateFullName(int userID, String newFullName) {
-        return updateStaffField(userID, "fullname", newFullName);
+        return updateStaffField(userID, "full_name", newFullName);
     }
 
     @Override
@@ -153,6 +155,37 @@ public class UserDAO implements IUserDAO {
         }
         return 0;
     }
+
+    public List<Map<String, Object>> searchOnChange(String searchText) throws SQLException {
+        String sql = "SELECT s.staff_id, u.username, r.role_name, u.full_name, " +
+                "u.email, u.phone_number, s.department, s.position, u.active " +
+                "FROM staff s " +
+                "JOIN [user] u ON u.user_id = s.staff_id " +
+                "JOIN role r ON r.role_id = u.role_id " +
+                "WHERE u.full_name LIKE ?";
+
+        List<Map<String, Object>> result = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, "%" + searchText + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("ID", rs.getInt("staff_id"));
+                row.put("Tendangnhap", rs.getString("username"));
+                row.put("Vaitro", rs.getString("role_name"));
+                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Email", rs.getString("email"));
+                row.put("Sodienthoai", rs.getString("phone_number"));
+                row.put("Phongban", rs.getString("department"));
+                row.put("Chucvu", rs.getNString("position"));
+                row.put("Trangthai", rs.getBoolean("active"));
+                result.add(row);
+            }
+        }
+        return result;
+    }
+
 
 
     public int login (String userName, String passWord){

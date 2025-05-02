@@ -15,4 +15,5 @@ public interface IApartmentDAO {
     boolean updateApartment(Apartment apartment) throws SQLException;
     List<Integer> getAllBuildingId() throws SQLException;
     List<Integer> getAllFloorId() throws SQLException;
+    int countStatusApartment(String status) throws SQLException;
 }

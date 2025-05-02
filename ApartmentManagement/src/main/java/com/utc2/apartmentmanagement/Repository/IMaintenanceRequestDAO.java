@@ -3,6 +3,7 @@ package com.utc2.apartmentmanagement.Repository;
 import com.utc2.apartmentmanagement.Model.MaintenanceRequest;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IMaintenanceRequestDAO {
@@ -17,5 +18,5 @@ public interface IMaintenanceRequestDAO {
     boolean updateCompletionDate(int requestID, Date newCompletionDate);
     boolean deleteMaintenanceRequestByID(int requestID);
     boolean addMaintenanceRequest(MaintenanceRequest maintenanceRequest);
-
+    int countRequestByStatus(String status) throws SQLException;
 }

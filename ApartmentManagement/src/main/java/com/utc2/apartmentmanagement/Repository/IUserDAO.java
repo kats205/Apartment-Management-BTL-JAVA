@@ -4,6 +4,7 @@ import com.utc2.apartmentmanagement.Model.User;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface IUserDAO {
     List<User> getAllUser();
@@ -18,4 +19,5 @@ public interface IUserDAO {
     boolean updateRoleID(int userID, int newRoleID);
     boolean updateActive(int userID, boolean newActive);
     int getIdByUserName(String userId) throws SQLException;
+    List<Map<String, Object>> searchOnChange(String searchText) throws SQLException;
 }

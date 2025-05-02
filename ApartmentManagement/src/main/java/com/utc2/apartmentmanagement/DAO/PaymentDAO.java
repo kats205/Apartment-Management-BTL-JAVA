@@ -148,6 +148,21 @@ public class PaymentDAO implements IPaymentDAO {
         }
     return listPaymentDetail;
     }
+  
+    public double totalPaymentFromStatus(String status) throws SQLException {
+        String sql = "SELECT SUM(amount) FROM Payment WHERE status = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,status);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch (SQLException e){
+            throw new SQLException("Lỗi khi tính tổng tiền thanh toán", e);
+        }
+        return 0;
+    }
 
     public boolean updatePaymentField(int paymentID, String field, Object newValue){
         String sql = "UPDATE payment SET " + field + " = ? , updated_at = ? WHERE payment_id = ?";

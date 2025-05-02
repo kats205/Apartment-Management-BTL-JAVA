@@ -269,6 +269,23 @@ public class ApartmentDAO implements IApartmentDAO {
         return floorList;
     }
 
+    @Override
+    public int countStatusApartment(String status) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Apartment WHERE status = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, status);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch(SQLException e){
+            throw new SQLException("Lỗi khi đếm số lượng căn hộ theo trạng thái", e);
+        }
+        return 0;
+    }
+
+
 
 
     public int countApartment() throws SQLException{
@@ -283,5 +300,9 @@ public class ApartmentDAO implements IApartmentDAO {
             throw new SQLException("Lỗi khi đếm số lượng căn hộ", e);
         }
         return 0;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        System.out.println(new ApartmentDAO().countStatusApartment("available"));
     }
 }
