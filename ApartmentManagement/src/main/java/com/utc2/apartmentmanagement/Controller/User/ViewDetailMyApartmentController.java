@@ -20,6 +20,8 @@ public class ViewDetailMyApartmentController {
     @FXML public Label price;
     @FXML public Label moveInDate;
     @FXML public Label fullNameResident;
+    @FXML public Label apartmentId;
+    @FXML public Label status;
     @FXML public Label floor;
     @FXML public Label area;
     @FXML public Label bedrooms;
@@ -55,6 +57,8 @@ public class ViewDetailMyApartmentController {
         moveInDate.setText(apartmentInf.get("move_in_date").toString());
         price.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())));
         address.setText(apartmentInf.get("address").toString());
+        apartmentId.setText(apartmentInf.get("apartment_id").toString());
+        status.setText(apartmentInf.get("status").toString());
         floor.setText(apartmentInf.get("floor").toString());
         area.setText(apartmentInf.get("area").toString());
         bedrooms.setText(apartmentInf.get("bedrooms").toString());

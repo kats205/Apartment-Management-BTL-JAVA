@@ -19,8 +19,8 @@
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="400.0" spacing="15.0">
                     <children>
-                        <Label fx:id="apartmentIdLabel" styleClass="apartment-id" text="A101" />
-                        <Label fx:id="statusLabel" styleClass="apartment-status" text="occupied">
+                        <Label fx:id="apartmentId" styleClass="apartment-id" text="A101" />
+                        <Label fx:id="status" styleClass="apartment-status" text="occupied">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
