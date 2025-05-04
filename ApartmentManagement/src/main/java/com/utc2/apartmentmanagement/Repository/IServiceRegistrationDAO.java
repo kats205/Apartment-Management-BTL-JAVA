@@ -3,7 +3,9 @@ package com.utc2.apartmentmanagement.Repository;
 import com.utc2.apartmentmanagement.Model.ServiceRegistration;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface IServiceRegistrationDAO {
     List<ServiceRegistration> getAllServiceRegistrations();
@@ -13,5 +15,5 @@ public interface IServiceRegistrationDAO {
     boolean updateStartDate(int id, Date newStartDate);
     boolean updateEndDate(int id, Date newEndDate);
     boolean updateStatus(int id, String newStatus);
-
+    List<Map<String, Object>> getServiceRegistrationByApartmentId(String apartmentId) throws SQLException;
 }

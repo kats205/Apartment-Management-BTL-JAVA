@@ -5,7 +5,9 @@ import com.utc2.apartmentmanagement.Repository.IApartmentDAO;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import static com.utc2.apartmentmanagement.DAO.DatabaseConnection.connection;
 
@@ -305,6 +307,37 @@ public class ApartmentDAO implements IApartmentDAO {
         return objectList;
     }
 
+    @Override
+    public Map<String, Object> getInformation(int userId) throws SQLException {
+        String sql = "SELECT a.apartment_id, a.status, a.floor, a.area, a.bedrooms, a.maintenance_fee,\n" +
+                "\t\tb.address, a.price_apartment, r.move_in_date, r.full_name\n" +
+                "FROM Resident r\n" +
+                "JOIN Apartment a ON r.apartment_id = a.apartment_id\n" +
+                "JOIN Building b ON a.building_id = b.building_id\n" +
+                "WHERE r.user_id = ? ";
+        Map<String, Object> map = new HashMap<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                map.put("apartment_id", rs.getString("apartment_id"));
+                map.put("status", rs.getString("status"));
+                map.put("floor", rs.getInt("floor"));
+                map.put("area", rs.getDouble("area"));
+                map.put("bedrooms", rs.getInt("bedrooms"));
+                map.put("maintenance_fee", rs.getDouble("maintenance_fee"));
+                map.put("address", rs.getNString("address"));
+                map.put("price_apartment", rs.getDouble("price_apartment"));
+                map.put("move_in_date", rs.getDate("move_in_date"));
+                map.put("full_name", rs.getNString("full_name"));
+            }
+        }catch (SQLException e){
+            throw new SQLException("Lỗi khi lấy thông tin căn hộ", e);
+        }
+        return map;
+    }
+
 
     public int countApartment() throws SQLException{
         String sql = "SELECT COUNT(*) FROM Apartment";
@@ -321,6 +354,9 @@ public class ApartmentDAO implements IApartmentDAO {
     }
 
     public static void main(String[] args) throws SQLException {
-        System.out.println(new ApartmentDAO().countStatusApartment("available"));
+        Map<String, Object> map = new ApartmentDAO().getInformation(11);
+        for(Map.Entry<String, Object> entry : map.entrySet()){
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 }

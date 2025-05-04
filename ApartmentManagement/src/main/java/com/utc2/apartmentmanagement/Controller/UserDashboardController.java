@@ -1,5 +1,6 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.Controller.User.MyApartmentController;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.ResidentDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
@@ -209,7 +210,7 @@ public class UserDashboardController implements Initializable {
         List<Apartment> apartmentList = new ApartmentDAO().getAllApartments();
         apartmentIdTf.setText(apartment_id);
         List<Object> objectList = new ApartmentDAO().getApartmentInfoByApartmentID(apartment_id);
-        buildingTF.setText(objectList.getFirst().toString());
+        buildingTF.setText(objectList.get(0).toString());
         floorTF.setText(objectList.get(1).toString());
         areaTF.setText(objectList.get(2).toString());
     }
@@ -218,19 +219,19 @@ public class UserDashboardController implements Initializable {
     private UserDashboardController parentController;
     // load giao diện MyApartment
     public void loadMyApartmentView() throws IOException {
-        System.out.println("Đang cố gắng tải MyApartment.fxml");
+        System.out.println("Đang cố gắng tải MyApartmentView.fxml");
         // khi có giao diện thì gán lại đường dẫn cho phù hợp
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/MyApartment.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/MyApartmentView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
         if (url == null) {
-            System.out.println("Không tìm thấy file MyApartment.fxml");
+            System.out.println("Không tìm thấy file MyApartmentView.fxml");
             return;
         }
 
         Parent ReportView = loader.load();
-        MyApartmentViewController controller = loader.getController();
+        MyApartmentController controller = loader.getController();
         controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
@@ -244,7 +245,7 @@ public class UserDashboardController implements Initializable {
         // Xóa tất cả các view hiện tại và thêm ApartmentView
         contentArea.getChildren().clear();
         contentArea.getChildren().add(ReportView);
-        System.out.println("Đã thêm MyApartment vào contentArea");
+        System.out.println("Đã thêm MyApartmentView vào contentArea");
     }
 
     // load giao diện service
