@@ -29,10 +29,12 @@ import javafx.util.Duration;
 import lombok.Setter;
 
 public class UserDashboardController implements Initializable {
+
     @FXML public Label apartmentIdTf;
     @FXML public Label buildingTF;
     @FXML public Label areaTF;
     @FXML public Label floorTF;
+
     @FXML private AnchorPane rootPane;
     @FXML private ImageView Exit;
     @Override
@@ -40,7 +42,6 @@ public class UserDashboardController implements Initializable {
         Exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
-
 
         // Hiện  thông tin My Apartment
         try {
@@ -56,6 +57,7 @@ public class UserDashboardController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 

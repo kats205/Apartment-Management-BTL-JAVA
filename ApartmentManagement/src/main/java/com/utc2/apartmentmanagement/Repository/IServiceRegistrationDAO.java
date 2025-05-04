@@ -13,5 +13,6 @@ public interface IServiceRegistrationDAO {
     boolean updateStartDate(int id, Date newStartDate);
     boolean updateEndDate(int id, Date newEndDate);
     boolean updateStatus(int id, String newStatus);
+  //  int getTotalServiceRegistration(int apartmentID);
 
 }

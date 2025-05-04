@@ -244,7 +244,6 @@ public class ReportViewController implements Initializable {
         LocalDate firstDayOfMonth = LocalDate.of(now.getYear(), now.getMonth(), 1);
         fromDatePicker.setValue(firstDayOfMonth);
         toDatePicker.setValue(now);
-
     }
 
     private void initializeComboBoxes() {
@@ -486,7 +485,7 @@ public class ReportViewController implements Initializable {
     private void exportFullReport() {
         // TODO: Xuất toàn bộ báo cáo (bao gồm biểu đồ, bảng dữ liệu và tóm tắt)
         try {
-            String filePath = PDF_Export.exportNodeToPDF(revenueChart,apartmentStatusPieChart,"Report_List.pdf");
+            String filePath = PDF_Export.exportReportList(revenueChart,apartmentStatusPieChart,"Report_List.pdf");
 
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

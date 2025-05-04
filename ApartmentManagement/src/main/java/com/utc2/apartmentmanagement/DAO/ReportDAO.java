@@ -5,7 +5,6 @@ import com.utc2.apartmentmanagement.Repository.IReportDAO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
@@ -299,6 +298,39 @@ public class ReportDAO implements IReportDAO {
         }
 
         return pieChartData;
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllReportsWithNamesWhoMakeReport() {
+
+        String sql = "SELECT \n" +
+                "    r.report_type,\n" +
+                "    r.generation_date,\n" +
+                "    u.full_name,\n" +
+                "    r.parameters,\n" +
+                "    r.updated_at\n" +
+                "FROM Report r\n" +
+                "JOIN [User] u ON r.generated_by_user_id = u.user_id;";
+        List<Map<String, Object>> mapList =new ArrayList<>();
+
+        try(Connection connection1 =DatabaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);){
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                Map<String,Object> rows = new HashMap<>();
+                rows.put("report_type", rs.getString("report_type"));
+                rows.put("generation_date", rs.getTimestamp("generation_date"));
+                rows.put("full_name", rs.getString("full_name"));
+                rows.put("parameters", rs.getString("parameters"));
+                rows.put("updated_at", rs.getTimestamp("updated_at"));
+
+                mapList.add(rows);
+            }
+            return  mapList;
+
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

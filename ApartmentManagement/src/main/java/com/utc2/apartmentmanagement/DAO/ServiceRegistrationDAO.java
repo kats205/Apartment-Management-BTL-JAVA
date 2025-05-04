@@ -99,6 +99,17 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
     public boolean updateStatus(int id, String newStatus) {
         return updateServiceRegistrationField(id, "status", newStatus);
     }
+
+//    @Override
+//    public int getTotalServiceRegistration(int apartmentID) {
+//        String sql = "SELECT \n" +
+//                "    COUNT(*) AS total_service_registrations\n" +
+//                "FROM \n" +
+//                "    ServiceRegistration\n" +
+//                "WHERE \n" +
+//                "    apartment_id = 'A101';";
+//    }
+
     public boolean updateServiceRegistrationField(int id, String field, Object newValue){
         String sql = "UPDATE ServiceRegistration SET " + field + " = ?, updated_at = ? WHERE registration_id = ?";
         try(Connection connection = DatabaseConnection.getConnection();
