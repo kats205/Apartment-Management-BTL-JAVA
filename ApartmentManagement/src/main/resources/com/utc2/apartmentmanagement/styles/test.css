@@ -1,0 +1,162 @@
+/* MyApartment.css */
+
+/* Kiểu dáng chung */
+.apartment-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);
+    -fx-border-color: #E3E5EA;
+    -fx-border-radius: 10;
+}
+
+/* ID và Trạng thái căn hộ */
+.apartment-id {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1A936F;
+}
+
+.apartment-status {
+    -fx-font-size: 14px;
+    -fx-padding: 5 10;
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+}
+
+.apartment-status.occupied {
+    -fx-background-color: #1A936F;
+}
+
+.apartment-status.available {
+    -fx-background-color: #3498db;
+}
+
+.apartment-status.maintenance {
+    -fx-background-color: #e67e22;
+}
+
+.apartment-status.reserved {
+    -fx-background-color: #9b59b6;
+}
+
+/* Tên tòa nhà */
+.building-name {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Nhãn và giá trị thông tin */
+.info-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+}
+
+.info-value {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+}
+
+/* Kiểu dáng Tab */
+.apartment-tabs .tab-header-area .tab-header-background {
+    -fx-background-color: #f5f5f5;
+}
+
+.apartment-tabs .tab {
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 8 15;
+}
+
+.apartment-tabs .tab:selected {
+    -fx-background-color: white;
+    -fx-background-radius: 5 5 0 0;
+    -fx-border-color: #E3E5EA #E3E5EA white #E3E5EA;
+    -fx-border-width: 1 1 0 1;
+}
+
+.apartment-tabs .tab-pane {
+    -fx-background-color: white;
+}
+
+.apartment-tabs .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+.apartment-tabs .tab .tab-label {
+    -fx-text-fill: #64748b;
+}
+
+.apartment-tabs .tab:selected .tab-label {
+    -fx-text-fill: #1A936F;
+    -fx-font-weight: bold;
+}
+
+/* Nhãn và giá trị trong tab chi tiết */
+.detail-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748b;
+}
+
+.detail-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: #1e293b;
+}
+
+/* Kiểu dáng bảng */
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #1A936F;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f5f5f5;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f9fafb;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e8f5f0;
+}
+
+/* Nút bấm */
+.view-details-button {
+    -fx-background-color: white;
+    -fx-text-fill: #1A936F;
+    -fx-border-color: #1A936F;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 8 15;
+}
+
+.view-details-button:hover {
+    -fx-background-color: #e8f5f0;
+}
+
+.manage-button {
+    -fx-background-color: #1A936F;
+    -fx-text-fill: white;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 8 15;
+}
+
+.manage-button:hover {
+    -fx-background-color: #11765A;
+}

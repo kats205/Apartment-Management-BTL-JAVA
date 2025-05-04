@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paymentView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.PaymentViewController">
+<AnchorPane fx:id="paymentView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.PaymentViewController">
     <children>
         <Label alignment="CENTER" layoutX="424.0" layoutY="18.0" prefHeight="35.0" prefWidth="282.0" style="-fx-font-weight: bold;" text="THANH TOÁN" textAlignment="CENTER">
             <font>
