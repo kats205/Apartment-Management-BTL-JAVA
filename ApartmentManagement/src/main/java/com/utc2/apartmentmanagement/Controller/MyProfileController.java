@@ -56,6 +56,8 @@ public class MyProfileController implements Initializable {
     @Setter
     private StaffDashboardController parentStaffDashBoard;
     @Setter
+    private UserDashboardController parentUserDashBoard;
+    @Setter
     private Stage dashboardStage; // để tắt stage chính
 
     @FXML
@@ -82,13 +84,16 @@ public class MyProfileController implements Initializable {
         }
 
         // Mở lại login
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/login-view.fxml"));
-        Parent root = loader.load();
-
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/login-view.fxml"));
+//        Parent root = loader.load();
+//
+//        Stage stage = new Stage();
+//        stage.setScene(new Scene(root));
+//        stage.setTitle("Login");
+//        stage.show();
         Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Login");
-        stage.show();
+        login loginView = new login();
+        loginView.start(stage);
     }
 
     @FXML

@@ -54,7 +54,7 @@ public class EditApartmentViewController implements Initializable {
     private ApartmentViewController parentController = new ApartmentViewController();
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<String> statusList = Arrays.asList("Trống", "Đã thuê", "Đang bảo trì", "Không khả dụng");
+        List<String> statusList = Arrays.asList("available", "occupied", "maintenance", "reserved");
         statusComboBox.setItems(FXCollections.observableArrayList(statusList));
         setupValidators();
     }

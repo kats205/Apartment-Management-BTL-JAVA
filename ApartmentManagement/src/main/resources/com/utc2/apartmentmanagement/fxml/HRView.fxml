@@ -52,20 +52,20 @@
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
                                                 <Label prefHeight="25.0" prefWidth="85.0" text="ID:" />
-                                                <TextField fx:id="tfUserId" promptText="ID tự động" />
+                                                <TextField fx:id="tfUserId" editable="false" promptText="ID tự động" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
                                                 <Label prefHeight="25.0" prefWidth="85.0" text="Tên đăng nhập:" />
-                                                <TextField fx:id="tfUsername" promptText="Tên đăng nhập" />
+                                                <TextField fx:id="tfUsername" editable="false" promptText="Tên đăng nhập" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0" />
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
                                                 <Label prefHeight="25.0" prefWidth="85.0" text="Họ và tên:" />
-                                                <TextField fx:id="tfFullName" promptText="Họ và tên" />
+                                                <TextField fx:id="tfFullName" editable="false" promptText="Họ và tên" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
