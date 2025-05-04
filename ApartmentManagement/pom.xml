@@ -87,6 +87,13 @@
       <version>5.5.13.3</version>
     </dependency>
 
+    <!-- Thư viện xuất file Excel -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>5.4.0</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
@@ -100,6 +107,10 @@
       <artifactId>bcrypt</artifactId>
       <version>0.9.0</version>
     </dependency>
+
+
+
+
   </dependencies>
 
   <build>

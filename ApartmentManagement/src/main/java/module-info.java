@@ -13,6 +13,7 @@ module com.utc2.apartmentmanagement {
     requires bcrypt;
     requires itextpdf;
     requires javafx.swing;
+    requires org.apache.poi.ooxml;
 
 
     opens com.utc2.apartmentmanagement.Test to javafx.base;

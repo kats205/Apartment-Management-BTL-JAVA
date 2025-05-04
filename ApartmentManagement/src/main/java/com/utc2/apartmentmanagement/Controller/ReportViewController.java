@@ -36,6 +36,8 @@ import java.util.Map;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.utc2.apartmentmanagement.Model.ExportExcel.*;
+
 public class ReportViewController implements Initializable {
 
     @FXML public TableColumn<Report, String> reportTypeColumn;
@@ -368,7 +370,13 @@ public class ReportViewController implements Initializable {
         printButton.setOnAction(event -> printReport());
 
         // Xử lý sự kiện xuất Excel
-        exportButton.setOnAction(event -> exportToExcel());
+        exportButton.setOnAction(event -> {
+            try {
+                exportToExcel();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         // Nút đóng mặc định không làm gì - sẽ được xử lý bởi DashboardController
     }
@@ -510,8 +518,12 @@ public class ReportViewController implements Initializable {
         // TODO: In báo cáo
     }
 
-    private void exportToExcel() {
-        // TODO: Xuất báo cáo dạng Excel
+    private void exportToExcel() throws Exception {
+        // TODO: Xuất 2 file Excel với 2 biểu đồ khác nhau
+        exportRevenueChart(fromDatePicker.getValue(),toDatePicker.getValue());
+        exportPieChart(fromDatePicker.getValue(),toDatePicker.getValue());
+        System.out.println("Xuất file excel thành công");
+
     }
 
     @Setter
