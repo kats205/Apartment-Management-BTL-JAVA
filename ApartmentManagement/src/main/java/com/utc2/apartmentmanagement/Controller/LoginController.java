@@ -51,7 +51,7 @@ public class LoginController {
     private Button loginButton;
 
     @FXML
-    ImageView Exit;
+    private ImageView Exit;
 
     @FXML
     private Button registerButton;

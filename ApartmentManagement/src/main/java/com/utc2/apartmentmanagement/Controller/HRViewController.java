@@ -137,6 +137,7 @@ public class HRViewController implements Initializable {
 
     public void handleBtnRefresh(ActionEvent actionEvent) throws SQLException {
         setValueCol();
+        cbFilterPosition.setValue("Lọc theo chức vụ");
         List<Map<String, Object>> list = new StaffDAO().getAllStaffInfo();
         setUpTableView(list);
     }
