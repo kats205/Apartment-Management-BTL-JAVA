@@ -486,15 +486,24 @@ public class ReportViewController implements Initializable {
     private void exportFullReport() {
         // TODO: Xuất toàn bộ báo cáo (bao gồm biểu đồ, bảng dữ liệu và tóm tắt)
         try {
-            String directoryPath = "src/main/resources/com/utc2/apartmentmanagement/PDF_File/";
-            String filePath = directoryPath + "Report_List.pdf";
+            String filePath = PDF_Export.exportNodeToPDF(revenueChart,apartmentStatusPieChart,"Report_List.pdf");
 
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Xuất file PDF thành công!");
+            alert.setContentText("Đã lưu tại:\n" + filePath);
+            alert.showAndWait();
 
-            System.out.println("Xuất PDF Report thành công");
+            System.out.println("PDF exported to: " + filePath);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Xuất file thất bại");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 

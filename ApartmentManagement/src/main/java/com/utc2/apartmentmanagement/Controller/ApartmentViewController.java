@@ -1,20 +1,5 @@
 package com.utc2.apartmentmanagement.Controller;
 
-import com.itextpdf.kernel.colors.Color;
-import com.itextpdf.kernel.colors.DeviceRgb;
-import com.itextpdf.kernel.font.PdfFont;
-import com.itextpdf.kernel.font.PdfFontFactory;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.borders.Border;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.LineSeparator;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.properties.TextAlignment;
-import com.itextpdf.layout.properties.UnitValue;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.ReportDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
@@ -23,12 +8,9 @@ import com.utc2.apartmentmanagement.Model.PDF_Export;
 import com.utc2.apartmentmanagement.Model.Report;
 import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
-import com.utc2.apartmentmanagement.Utils.ValidateColumn;
-import com.utc2.apartmentmanagement.Views.EditApartmentView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,8 +25,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -92,9 +72,6 @@ public class ApartmentViewController implements Initializable {
     private TableColumn<Apartment, Integer> bedroomsColumn;
 
     @FXML
-    private TableColumn<Apartment, Integer> bathroomsColumn;
-
-    @FXML
     private TableColumn<Apartment, Double> priceColumn;
 
     @FXML
@@ -113,9 +90,6 @@ public class ApartmentViewController implements Initializable {
     private Button detailButton;
 
     @FXML
-    private Button editButton;
-
-    @FXML
     private Button exportButton;
 
     // Getter cho nút đóng để DashboardController có thể truy cập
@@ -128,12 +102,6 @@ public class ApartmentViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Khởi tạo các thành phần UI
-//        initializeComponents();
-
-        // Thiết lập các sự kiện
-//        setupEventHandlers();
-
         // Tải dữ liệu
         loadData();
 
@@ -154,7 +122,8 @@ public class ApartmentViewController implements Initializable {
         }
         apartmentCountLabel.setText(String.valueOf(totalCount));
     }
-    private void getValueCol(){
+
+    private void getValueCol() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
         idColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
         idColumn.setPrefWidth(140);
@@ -214,34 +183,36 @@ public class ApartmentViewController implements Initializable {
         maintenanceFeeCol.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
         maintenanceFeeCol.setPrefWidth(250);
     }
-    void loadDataApartment(){
+
+    void loadDataApartment() {
         getValueCol();
         List<Apartment> apartmentList = new ApartmentDAO().getAllApartments();
         loadTableListView(apartmentList);
     }
-    private void loadTableListView(List<Apartment> apartmentList){
+
+    private void loadTableListView(List<Apartment> apartmentList) {
         ObservableList<Apartment> apartmentListOb = FXCollections.observableArrayList();
         List<Apartment> apartmentList1 = apartmentList;
         apartmentListOb.addAll(apartmentList1);
         apartmentTable.setItems(apartmentListOb);
     }
 
-    private void loadTableView(Apartment apartment){
+    private void loadTableView(Apartment apartment) {
         ObservableList<Apartment> apartmentList = FXCollections.observableArrayList();
         apartmentList.add(apartment);
         apartmentTable.setItems(apartmentList);
     }
 
-    private void loadIdCB(){
+    private void loadIdCB() {
         List<String> apartmentIdList = new ApartmentDAO().getAllIdApartment();
-        for(String s : apartmentIdList){
+        for (String s : apartmentIdList) {
             buildingComboBox.getItems().add(s);
         }
     }
 
-    private void loadStatusCB(){
+    private void loadStatusCB() {
         List<String> statusList = new ApartmentDAO().getAllStatus();
-        for(String s : statusList){
+        for (String s : statusList) {
             statusComboBox.getItems().add(s);
         }
 
@@ -278,9 +249,6 @@ public class ApartmentViewController implements Initializable {
 
         // Xử lý sự kiện xem chi tiết
         detailButton.setOnAction(event -> viewApartmentDetails());
-
-        // Xử lý sự kiện chỉnh sửa
-
 
         // Xử lý sự kiện xuất báo cáo
         exportButton.setOnAction(event -> exportReport());
@@ -321,7 +289,6 @@ public class ApartmentViewController implements Initializable {
     }
 
 
-
     @FXML
     private void exportReport() {
         // TODO: Xuất danh sách căn hộ thành PDF
@@ -332,8 +299,9 @@ public class ApartmentViewController implements Initializable {
             LocalDate date = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
             String formattedDate = date.format(formatter);
-            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDate,  filePath, LocalDate.now(), LocalDate.now());
+            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDate, filePath, LocalDate.now(), LocalDate.now());
             new ReportDAO().saveReport(report);
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Thông báo");
             alert.setHeaderText("Xuất file PDF thành công!");
@@ -350,7 +318,8 @@ public class ApartmentViewController implements Initializable {
             alert.setHeaderText("Xuất file thất bại");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-        }    }
+        }
+    }
 
     private void updateApartmentCount() {
         // TODO: Cập nhật số lượng căn hộ dựa trên dữ liệu hiện tại
@@ -369,20 +338,17 @@ public class ApartmentViewController implements Initializable {
         String status = statusComboBox.getValue();
         System.out.println("Status: " + status);
 
-        if(apartmentId != null && status == null) {
+        if (apartmentId != null && status == null) {
             Apartment apartment = new ApartmentDAO().findApartmentById(apartmentId);
             loadTableView(apartment);
-        }
-        else if(apartmentId == null && status != null){
+        } else if (apartmentId == null && status != null) {
             List<Apartment> apartmentList = new ApartmentDAO().findApartmentByStatus(status);
             loadTableListView(apartmentList);
-        }
-        else{
+        } else {
             Apartment apartment = new ApartmentDAO().findApartmentByIdAndStatus(apartmentId, status);
-            if(apartment == null){
+            if (apartment == null) {
                 AlertBox.showAlertForUser("Thông báo", "Không tìm thấy căn hộ nào với ID và trạng thái đã chọn");
-            }
-            else{
+            } else {
                 loadTableView(apartment);
             }
         }
@@ -396,7 +362,8 @@ public class ApartmentViewController implements Initializable {
         buildingComboBox.setValue("Chọn tòa nhà");
         statusComboBox.setValue("Chọn trạng thái");
         // Tải lại dữ liệu
-        loadData();    }
+        loadData();
+    }
 
     @Setter
     private DashboardController parentController;
@@ -466,7 +433,4 @@ public class ApartmentViewController implements Initializable {
             });
         }
     }
-
-
-
 }

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="SettingView" prefHeight="480.0" prefWidth="700.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.SettingController">
+<AnchorPane fx:id="SettingView" prefHeight="480.0" prefWidth="700.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.MyProfileController">
     <children>
         <VBox prefHeight="595.0" prefWidth="700.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;">
             <padding>
@@ -43,7 +43,7 @@
                                         <Image url="@../assets/Profile/Admin/IMG_0466.JPG" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="changeAvatarBtn" mnemonicParsing="false" styleClass="small-button" stylesheets="@../styles/Dashboard.css" text="Thay đổi ảnh">
+                                <Button fx:id="changeAvatarBtn" mnemonicParsing="false" onAction="#handleChangeAvatar" styleClass="small-button" stylesheets="@../styles/Dashboard.css" text="Thay đổi ảnh">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>

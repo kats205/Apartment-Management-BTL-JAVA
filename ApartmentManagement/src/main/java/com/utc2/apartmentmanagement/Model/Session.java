@@ -16,6 +16,10 @@ public class Session {
     @Setter
     private static String lastLogin;
 
+    @Setter
+    @Getter
+    private static String avatarPath;
+
     public Session() {}
 
     public Session(String userName, String lastLogin) {
