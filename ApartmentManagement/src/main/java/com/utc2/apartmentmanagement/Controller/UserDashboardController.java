@@ -40,7 +40,25 @@ public class UserDashboardController implements Initializable {
         Exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
+
+
+        // Hiện  thông tin My Apartment
+        try {
+            int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+            String apartment_id = new ResidentDAO().getApartmentIdByUserID(user_id);
+            List<Object> objectList = new ApartmentDAO().getApartmentInfoByApartmentID(apartment_id);
+            apartmentIdTf.setText(apartment_id);
+            buildingTF.setText(String.valueOf(objectList.get(0)));
+            floorTF.setText(String.valueOf(objectList.get(1)));
+            areaTF.setText(String.valueOf(objectList.get(2)));
+
+            System.out.println(apartment_id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
     double x =0, y = 0;
     @FXML
     public void loadMyProfile(ActionEvent actionEvent) {
