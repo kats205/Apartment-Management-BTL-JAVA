@@ -234,7 +234,7 @@
                 </AnchorPane>
             </left>
             <center>
-                <AnchorPane fx:id="contentArea" prefHeight="655.0" prefWidth="1100.0" style="-fx-background-color: #f5f5f5;" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="contentArea" prefHeight="655.0" prefWidth="1100.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                     <children>
                         <Label layoutX="30.0" layoutY="30.0" text="Welcome to your Apartment Dashboard" textFill="#1a936f">
                             <font>
@@ -243,9 +243,9 @@
                         </Label>
                         <HBox layoutX="30.0" layoutY="80.0" prefHeight="200.0" prefWidth="1040.0" spacing="30.0">
                             <children>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10); -fx-border-color: #E3E5EA; -fx-border-radius: 10;">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="20.0" text="My Apartment" textFill="#1a936f">
+                                        <Label layoutX="10.0" layoutY="20.0" prefHeight="30.0" prefWidth="135.0" style="-fx-font-style: bold;" text="My Apartment" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -260,15 +260,15 @@
                                         <Label layoutX="10.0" layoutY="100.0" text="Floor:" />
                                         <Label layoutX="10.0" layoutY="120.0" text="Area:" />
                                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../styles/UserDashboard.css" text="View Details" />
-                              <Label fx:id="apartmentIdTf" layoutX="92.0" layoutY="59.0" text="Label" />
-                              <Label fx:id="buildingTF" layoutX="63.0" layoutY="80.0" text="Label" />
-                              <Label fx:id="floorTF" layoutX="49.0" layoutY="99.0" text="Label" />
-                              <Label fx:id="areaTF" layoutX="49.0" layoutY="119.0" text="Label" />
+                              <Label fx:id="apartmentIdTf" layoutX="90.0" layoutY="60.0" text="Label" />
+                              <Label fx:id="buildingTF" layoutX="61.0" layoutY="80.0" text="Label" />
+                              <Label fx:id="floorTF" layoutX="45.0" layoutY="100.0" text="Label" />
+                              <Label fx:id="areaTF" layoutX="43.0" layoutY="120.0" text="Label" />
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10); -fx-border-color: #E3E5EA; -fx-border-radius: 10;">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="20.0" text="Active Services" textFill="#1a936f">
+                                        <Label layoutX="10.0" layoutY="20.0" prefHeight="36.0" prefWidth="135.0" style="-fx-font-style: bold;" text="Active Services" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -279,14 +279,19 @@
                                             </image>
                                         </ImageView>
                                         <Label layoutX="10.0" layoutY="60.0" text="Total Services:" />
-                                        <Label layoutX="10.0" layoutY="80.0" text="Monthly Cost:" />
-                                        <Label layoutX="10.0" layoutY="100.0" text="Next Payment:" />
+                                        <Label layoutX="10.0" layoutY="100.0" text="Monthly Cost:" />
+                                        <Label layoutX="10.0" layoutY="120.0" text="Next Payment:" />
                                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../styles/UserDashboard.css" text="Manage Services" />
+                              <Label fx:id="apartmentIdTf1" layoutX="90.0" layoutY="60.0" text="Label" />
+                              <Label fx:id="apartmentIdTf2" layoutX="103.0" layoutY="80.0" text="Label" />
+                              <Label fx:id="apartmentIdTf3" layoutX="92.0" layoutY="120.0" text="Label" />
+                              <Label layoutX="10.0" layoutY="80.0" text="Current Services:" />
+                              <Label fx:id="apartmentIdTf21" layoutX="90.0" layoutY="100.0" text="Label" />
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10); -fx-border-color: #E3E5EA; -fx-border-radius: 10;">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="20.0" text="Open Requests" textFill="#1a936f">
+                                        <Label layoutX="10.0" layoutY="20.0" prefHeight="30.0" prefWidth="135.0" style="-fx-font: bold;" text="Open Requests" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -302,16 +307,16 @@
                                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../styles/UserDashboard.css" text="View All Requests" />
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);">
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10); -fx-border-color: #E3E5EA; -fx-border-radius: 10;">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="18.0" text="Recent Payments" textFill="#1a936f">
+                                        <Label layoutX="10.0" layoutY="20.0" prefHeight="30.0" prefWidth="147.0" style="-fx-font-style: bold;" text="Recent Payments" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
                                         </Label>
-                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="157.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fitHeight="75.0" fitWidth="75.0" layoutX="155.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@../assets/UserDashboard/recent_payment.png" />
+                                                <Image url="@../assets/UserDashboard/finance1.png" />
                                             </image>
                                         </ImageView>
                                         <Label layoutX="10.0" layoutY="60.0" text="Last Payment:" />
@@ -329,7 +334,7 @@
                         </Label>
                         <HBox layoutX="30.0" layoutY="350.0" prefHeight="100.0" prefWidth="1040.0" spacing="30.0">
                             <children>
-                                <Button fx:id="registerNewServiceButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="quickActionButton" stylesheets="@../styles/UserDashboard.css" text="Register New Service">
+                                <Button fx:id="registerNewServiceButton" graphicTextGap="0.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="quickActionButton" stylesheets="@../styles/UserDashboard.css" text="Register New Service">
                                     <graphic>
                                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -365,7 +370,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="contactManagementButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="quickActionButton" stylesheets="@../styles/UserDashboard.css" text="Contact Management">
+                                <Button fx:id="contactManagementButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="100.0" prefWidth="200.0" styleClass="quickActionButton" stylesheets="@../styles/UserDashboard.css" text="Contact Management">
                                     <graphic>
                                         <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                             <image>

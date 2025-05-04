@@ -1,0 +1,180 @@
+/* Inherit base styles from UserDashboard.css */
+
+
+/* Tab Pane Styling */
+.services-tab-pane {
+    -fx-background-color: #f5f5f5;
+}
+
+.services-tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #f5f5f5;
+}
+
+.services-tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 25;
+}
+
+.services-tab-pane .tab {
+    -fx-background-color: #e1e1e1;
+    -fx-background-radius: 5 5 0 0;
+    -fx-padding: 10 15;
+}
+
+.services-tab-pane .tab:selected {
+    -fx-background-color: #1A936F;
+}
+
+.services-tab-pane .tab-label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.services-tab-pane .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+/* Table Styling */
+.services-table {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5;
+}
+
+.services-table .column-header {
+    -fx-background-color: #1A936F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.services-table .column-header-background .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.services-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.services-table .table-row-cell:odd {
+    -fx-background-color: #f8f8f8;
+}
+
+.services-table .table-row-cell:hover {
+    -fx-background-color: #e8f5f0;
+}
+
+/* Scroll Pane */
+.services-scroll-pane {
+    -fx-background-color: #f5f5f5;
+    -fx-background: #f5f5f5;
+}
+
+.services-scroll-pane > .viewport {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Service Card Styling */
+.service-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);
+    -fx-border-color: #E3E5EA;
+    -fx-border-radius: 10;
+}
+
+.service-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 10);
+    -fx-background-color: #fafafa;
+}
+
+/* Register Service Button */
+.register-service-button {
+    -fx-background-color: #1A936F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+}
+
+.register-service-button:hover {
+    -fx-background-color: #11765A;
+}
+
+/* Status Pills */
+.status-active {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-padding: 5 10;
+    -fx-font-weight: bold;
+}
+
+.status-pending {
+    -fx-background-color: #FFC107;
+    -fx-text-fill: #333333;
+    -fx-background-radius: 15;
+    -fx-padding: 5 10;
+    -fx-font-weight: bold;
+}
+
+.status-expired {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-padding: 5 10;
+    -fx-font-weight: bold;
+}
+
+.status-cancelled {
+    -fx-background-color: #9E9E9E;
+    -fx-text-fill: white;
+    -fx-background-radius: 15;
+    -fx-padding: 5 10;
+    -fx-font-weight: bold;
+}
+
+/* Cancel Service Button */
+.cancel-service-button {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+}
+
+.cancel-service-button:hover {
+    -fx-background-color: #D32F2F;
+}
+
+/* Service Registration Dialog */
+.service-registration-dialog {
+    -fx-background-color: white;
+    -fx-border-color: #1A936F;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5;
+}
+
+.service-registration-dialog .header {
+    -fx-background-color: #1A936F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+.service-registration-dialog .content {
+    -fx-padding: 20;
+}
+
+.date-picker {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+}
+
+.date-picker:focused {
+    -fx-border-color: #1A936F;
+}

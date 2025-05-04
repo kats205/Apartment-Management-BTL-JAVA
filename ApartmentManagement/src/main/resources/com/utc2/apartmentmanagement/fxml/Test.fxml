@@ -3,305 +3,323 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles/Dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.TestController">
+<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../styles/UserCSS/Services.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.UserServicesController">
     <children>
-        <BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1280.0">
+        <BorderPane prefHeight="655.0" prefWidth="1100.0">
             <top>
-                <AnchorPane prefHeight="65.0" prefWidth="1280.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="100.0" prefWidth="1100.0">
                     <children>
-                        <Pane prefHeight="25.0" prefWidth="1280.0" style="-fx-background-color: #032d4d;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                            <children>
-                                <ImageView fx:id="Exit" fitHeight="22.0" fitWidth="22.0" layoutX="1258.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../assets/Dashboard/exit.png" />
-                                    </image>
-                                </ImageView>
-                                <Label alignment="CENTER" layoutX="10.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
-                                    <font>
-                                        <Font name="System Bold" size="14.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </Pane>
-                        <HBox layoutX="150.0" layoutY="25.0" prefHeight="40.0" prefWidth="1130.0" AnchorPane.bottomAnchor="0.0">
-                            <children>
-                                <Button fx:id="apartment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Apartment">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/dash1.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="payment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Payment">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/data1.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="report" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Report">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/report1.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Button">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/add1.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                            </children>
-                        </HBox>
-                        <Label fx:id="Menu" layoutX="6.0" layoutY="32.0" text="AD'S PANEL">
-                            <graphic>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../assets/UserDashboard/setting.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
+                        <Label layoutX="30.0" layoutY="30.0" text="Apartment Services" textFill="#1a936f">
                             <font>
-                                <Font name="System Bold" size="18.0" />
+                                <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <Label fx:id="MenuBack" layoutX="6.0" layoutY="32.0" text="AD'S PANEL">
-                            <graphic>
-                                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../assets/UserDashboard/setting.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
+                        <Label layoutX="30.0" layoutY="65.0" text="Manage and register for services available in your apartment building" textFill="#666666">
                             <font>
-                                <Font name="System Bold" size="18.0" />
+                                <Font size="14.0" />
                             </font>
                         </Label>
                     </children>
                 </AnchorPane>
             </top>
-            <left>
-                <AnchorPane fx:id="slider" prefHeight="655.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" BorderPane.alignment="CENTER">
-                    <children>
-                        <VBox prefHeight="275.0" prefWidth="150.0">
-                            <children>
-                                <Button fx:id="ApartmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Apartment" textAlignment="CENTER" textFill="WHITE">
-                                    <graphic>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/dash.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <VBox.margin>
-                                        <Insets />
-                                    </VBox.margin>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Button>
-                                <Button fx:id="paymentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Payment" textAlignment="CENTER" textFill="WHITE">
-                                    <graphic>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/data.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Button>
-                                <Button fx:id="reportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Report" textAlignment="CENTER" textFill="WHITE">
-                                    <graphic>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/report.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Button>
-                                <Button fx:id="hrButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
-                                    <graphic>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/HR.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Button>
-                            </children>
-                        </VBox>
-                        <VBox layoutX="-1.0" layoutY="603.0" prefHeight="50.0" prefWidth="150.0">
-                            <children>
-                                <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
-                                    <graphic>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/profile.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Button>
-                            </children>
-                        </VBox>
-                    </children>
-                </AnchorPane>
-            </left>
             <center>
-                <AnchorPane fx:id="contentArea" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
-                    <children>
-                        <Label layoutX="45.0" layoutY="30.0" styleClass="dashboard-title" text="Admin Dashboard Overview" textFill="#032d4d">
-                            <font>
-                                <Font name="System Bold" size="24.0" />
-                            </font>
-                        </Label>
+                <TabPane fx:id="servicesTabPane" prefHeight="555.0" prefWidth="1100.0" styleClass="services-tab-pane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab text="My Services">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <VBox prefHeight="520.0" prefWidth="1100.0" spacing="10.0">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1060.0" spacing="20.0">
+                                                    <children>
+                                                        <Label text="Your Current Services" textFill="#1a936f">
+                                                            <font>
+                                                                <Font name="System Bold" size="18.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label fx:id="activeServicesLabel" text="(5 active services)" textFill="#666666">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                    <padding>
+                                                        <Insets left="20.0" />
+                                                    </padding>
+                                                </HBox>
+                                                <TableView fx:id="servicesTableView" prefHeight="400.0" prefWidth="1060.0" styleClass="services-table">
+                                                    <columns>
+                                                        <TableColumn fx:id="serviceNameColumn" prefWidth="200.0" text="Service Name" />
+                                                        <TableColumn fx:id="descriptionColumn" prefWidth="350.0" text="Description" />
+                                                        <TableColumn fx:id="startDateColumn" prefWidth="120.0" text="Start Date" />
+                                                        <TableColumn fx:id="endDateColumn" prefWidth="120.0" text="End Date" />
+                                                        <TableColumn fx:id="monthlyFeeColumn" prefWidth="120.0" text="Monthly Fee" />
+                                                        <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Status" />
+                                                        <TableColumn fx:id="actionColumn" prefWidth="100.0" text="Action" />
+                                                    </columns>
+                                                    <VBox.margin>
+                                                        <Insets left="20.0" right="20.0" />
+                                                    </VBox.margin>
+                                                </TableView>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="1100.0" spacing="20.0">
+                                                    <children>
+                                                        <Label prefHeight="25.0" prefWidth="155.0" text="Total Monthly Cost:" textFill="#333333">
+                                                            <font>
+                                                                <Font name="System Bold" size="16.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label fx:id="totalMonthlyCostLabel" prefHeight="25.0" prefWidth="150.0" text="1,450,000 VND" textFill="#1a936f">
+                                                            <font>
+                                                                <Font name="System Bold" size="16.0" />
+                                                            </font>
+                                                        </Label>
+                                          <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="cancel-service-button" text="Close">
+                                             <HBox.margin>
+                                                <Insets left="620.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                    <padding>
+                                                        <Insets left="25.0" right="20.0" />
+                                                    </padding>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Register Services">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <ScrollPane fitToWidth="true" prefHeight="520.0" prefWidth="1100.0" styleClass="services-scroll-pane">
+                                            <content>
+                                                <FlowPane fx:id="servicesFlowPane" hgap="20.0" prefWidth="1080.0" vgap="20.0">
+                                                    <padding>
+                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                    </padding>
 
-                        <!-- Statistics Cards Row -->
-                        <HBox layoutX="45.0" layoutY="80.0" prefHeight="200.0" prefWidth="1040.0" spacing="30.0">
-                            <children>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
-                                    <children>
-                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Total Apartments" textFill="#0a4969">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="86.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/dash.png" />
-                                            </image>
-                                        </ImageView>
-                                        <Label fx:id="totalApartmentsLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="125" textFill="#0a4969">
-                                            <font>
-                                                <Font size="36.0" />
-                                            </font>
-                                        </Label>
-                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Occupied: 98" />
-                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Available: 27" />
-                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Details" />
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
-                                    <children>
-                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Monthly Revenue" textFill="#0a4969">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="97.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/data.png" />
-                                            </image>
-                                        </ImageView>
-                                        <Label fx:id="revenueLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="₫258M" textFill="#0a4969">
-                                            <font>
-                                                <Font size="36.0" />
-                                            </font>
-                                        </Label>
-                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Collected: ₫195M" />
-                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Outstanding: ₫63M" />
-                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Report" />
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
-                                    <children>
-                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Active Requests" textFill="#0a4969">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="69.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/report.png" />
-                                            </image>
-                                        </ImageView>
-                                        <Label fx:id="requestsLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="42" textFill="#0a4969">
-                                            <font>
-                                                <Font size="36.0" />
-                                            </font>
-                                        </Label>
-                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Complaints: 18" />
-                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Maintenance: 24" />
-                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="Manage Requests" />
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
-                                    <children>
-                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="System Status" textFill="#0a4969">
-                                            <font>
-                                                <Font name="System Bold" size="18.0" />
-                                            </font>
-                                        </Label>
-                                        <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="77.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../assets/Dashboard/HR.png" />
-                                            </image>
-                                        </ImageView>
-                                        <Label layoutX="10.0" layoutY="60.0" text="All Systems Operational" textFill="#0a4969">
-                                            <font>
-                                                <Font size="16.0" />
-                                            </font>
-                                        </Label>
-                                        <Label layoutX="10.0" layoutY="90.0" styleClass="stat-detail" text="Last Backup: Today, 03:00 AM" />
-                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Active Users: 67" />
-                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Server Load: 32%" />
-                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="System Settings" />
-                                    </children>
-                                </AnchorPane>
-                            </children>
-                        </HBox>
+                                                    <!-- Service Card 1 -->
+                                                    <AnchorPane prefHeight="350.0" prefWidth="300.0" styleClass="service-card">
+                                                        <children>
+                                                            <VBox alignment="TOP_CENTER" prefHeight="350.0" prefWidth="300.0" spacing="10.0">
+                                                                <children>
+                                                                    <ImageView fitHeight="150.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+                                                                        <image>
+                                                                            <Image url="@../images/cleaning_service.jpg" />
+                                                                        </image>
+                                                                    </ImageView>
+                                                                    <Label text="Cleaning Service" textFill="#1a936f">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="18.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label text="250,000 VND / month" textFill="#333333">
+                                                                        <font>
+                                                                            <Font size="14.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label alignment="TOP_LEFT" prefHeight="60.0" prefWidth="280.0" text="Weekly apartment cleaning service with professional equipment and eco-friendly products." textAlignment="JUSTIFY" wrapText="true">
+                                                                        <font>
+                                                                            <Font size="12.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="14.0" />
+                                                                        </font>
+                                                                    </Button>
+                                                                </children>
+                                                                <padding>
+                                                                    <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+                                                                </padding>
+                                                            </VBox>
+                                                        </children>
+                                                    </AnchorPane>
 
-                        <!-- Recent Activities Section -->
-                        <Label layoutX="45.0" layoutY="325.0" styleClass="section-heading" text="Recent Activities" textFill="#0a4969">
-                            <font>
-                                <Font name="System Bold" size="20.0" />
-                            </font>
-                        </Label>
+                                                    <!-- Service Card 2 -->
+                                                    <AnchorPane prefHeight="350.0" prefWidth="300.0" styleClass="service-card">
+                                                        <children>
+                                                            <VBox alignment="TOP_CENTER" prefHeight="350.0" prefWidth="300.0" spacing="10.0">
+                                                                <children>
+                                                                    <ImageView fitHeight="150.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+                                                                        <image>
+                                                                            <Image url="@../images/laundry_service.jpg" />
+                                                                        </image>
+                                                                    </ImageView>
+                                                                    <Label text="Laundry Service" textFill="#1a936f">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="18.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label text="300,000 VND / month" textFill="#333333">
+                                                                        <font>
+                                                                            <Font size="14.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label alignment="TOP_LEFT" prefHeight="60.0" prefWidth="280.0" text="Pick-up and delivery laundry service twice a week with premium detergents." textAlignment="JUSTIFY" wrapText="true">
+                                                                        <font>
+                                                                            <Font size="12.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="14.0" />
+                                                                        </font>
+                                                                    </Button>
+                                                                </children>
+                                                                <padding>
+                                                                    <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+                                                                </padding>
+                                                            </VBox>
+                                                        </children>
+                                                    </AnchorPane>
 
-                        <TableView fx:id="recentActivitiesTable" layoutX="45.0" layoutY="370.0" prefHeight="250.0" prefWidth="1040.0">
-                            <columns>
-                                <TableColumn fx:id="dateColumn" prefWidth="130.0" text="User" />
-                                <TableColumn fx:id="actionColumn1" prefWidth="130.0" text="Role" />
-                                <TableColumn fx:id="timeColumn" prefWidth="130.0" text="Status" />
-                                <TableColumn fx:id="activityColumn" prefWidth="150.0" text="Action" />
-                                <TableColumn fx:id="userColumn" prefWidth="200.0" text="Activity" />
-                                <TableColumn fx:id="statusColumn" prefWidth="130.0" text="Date" />
-                                <TableColumn fx:id="actionColumn" prefWidth="130.0" text="Time" />
-                            </columns>
-                        </TableView>
-                    </children>
-                </AnchorPane>
+                                                    <!-- Service Card 3 -->
+                                                    <AnchorPane prefHeight="350.0" prefWidth="300.0" styleClass="service-card">
+                                                        <children>
+                                                            <VBox alignment="TOP_CENTER" prefHeight="350.0" prefWidth="300.0" spacing="10.0">
+                                                                <children>
+                                                                    <ImageView fitHeight="150.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+                                                                        <image>
+                                                                            <Image url="@../images/grocery_delivery.jpg" />
+                                                                        </image>
+                                                                    </ImageView>
+                                                                    <Label text="Grocery Delivery" textFill="#1a936f">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="18.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label text="200,000 VND / month" textFill="#333333">
+                                                                        <font>
+                                                                            <Font size="14.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label alignment="TOP_LEFT" prefHeight="60.0" prefWidth="280.0" text="Weekly fresh grocery delivery from local markets with quality products." textAlignment="JUSTIFY" wrapText="true">
+                                                                        <font>
+                                                                            <Font size="12.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="14.0" />
+                                                                        </font>
+                                                                    </Button>
+                                                                </children>
+                                                                <padding>
+                                                                    <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+                                                                </padding>
+                                                            </VBox>
+                                                        </children>
+                                                    </AnchorPane>
+
+                                                    <!-- Service Card 4 -->
+                                                    <AnchorPane prefHeight="350.0" prefWidth="300.0" styleClass="service-card">
+                                                        <children>
+                                                            <VBox alignment="TOP_CENTER" prefHeight="350.0" prefWidth="300.0" spacing="10.0">
+                                                                <children>
+                                                                    <ImageView fitHeight="150.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+                                                                        <image>
+                                                                            <Image url="@../images/internet_service.jpg" />
+                                                                        </image>
+                                                                    </ImageView>
+                                                                    <Label text="High-speed Internet" textFill="#1a936f">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="18.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label text="450,000 VND / month" textFill="#333333">
+                                                                        <font>
+                                                                            <Font size="14.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label alignment="TOP_LEFT" prefHeight="60.0" prefWidth="280.0" text="High-speed fiber optic internet with unlimited data and 24/7 technical support." textAlignment="JUSTIFY" wrapText="true">
+                                                                        <font>
+                                                                            <Font size="12.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="14.0" />
+                                                                        </font>
+                                                                    </Button>
+                                                                </children>
+                                                                <padding>
+                                                                    <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+                                                                </padding>
+                                                            </VBox>
+                                                        </children>
+                                                    </AnchorPane>
+
+                                                    <!-- Service Card 5 -->
+                                                    <AnchorPane prefHeight="350.0" prefWidth="300.0" styleClass="service-card">
+                                                        <children>
+                                                            <VBox alignment="TOP_CENTER" prefHeight="350.0" prefWidth="300.0" spacing="10.0">
+                                                                <children>
+                                                                    <ImageView fitHeight="150.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+                                                                        <image>
+                                                                            <Image url="@../images/security_service.jpg" />
+                                                                        </image>
+                                                                    </ImageView>
+                                                                    <Label text="24/7 Security" textFill="#1a936f">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="18.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label text="350,000 VND / month" textFill="#333333">
+                                                                        <font>
+                                                                            <Font size="14.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Label alignment="TOP_LEFT" prefHeight="60.0" prefWidth="280.0" text="Round-the-clock security monitoring with professional guards and emergency response." textAlignment="JUSTIFY" wrapText="true">
+                                                                        <font>
+                                                                            <Font size="12.0" />
+                                                                        </font>
+                                                                    </Label>
+                                                                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
+                                                                        <font>
+                                                                            <Font name="System Bold" size="14.0" />
+                                                                        </font>
+                                                                    </Button>
+                                                                </children>
+                                                                <padding>
+                                                                    <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+                                                                </padding>
+                                                            </VBox>
+                                                        </children>
+                                                    </AnchorPane>
+
+                                                </FlowPane>
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
             </center>
         </BorderPane>
     </children>

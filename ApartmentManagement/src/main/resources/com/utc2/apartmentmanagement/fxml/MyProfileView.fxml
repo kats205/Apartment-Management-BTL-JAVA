@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="SettingView" prefHeight="480.0" prefWidth="700.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.MyProfileController">
+<AnchorPane fx:id="SettingView" prefHeight="480.0" prefWidth="700.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E3E5EA;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.MyProfileController">
     <children>
-        <VBox prefHeight="595.0" prefWidth="700.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;">
+        <VBox layoutX="-9.0" layoutY="3.0" prefHeight="624.0" prefWidth="708.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
@@ -217,10 +217,15 @@
                         </VBox>
                     </children>
                 </HBox>
-                <HBox prefHeight="30.0" prefWidth="658.0" />
-            <Button fx:id="changePasswordBtn1" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" styleClass="primary-button" stylesheets="@../styles/Dashboard.css" text="Đổi mật khẩu" />
+                <HBox prefHeight="60.0" prefWidth="658.0" spacing="20.0">
+               <children>
+                  <Button fx:id="changePasswordBtn1" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" styleClass="primary-button" stylesheets="@../styles/Dashboard.css" text="Đổi mật khẩu" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </VBox.margin></HBox>
                 <Separator prefWidth="200.0" />
-                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="660.0" spacing="15.0">
+                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="660.0" spacing="20.0">
                     <children>
                         <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="200.0" styleClass="logout-button" stylesheets="@../styles/Dashboard.css" text="Đóng" />
                         <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#handleLogout" prefHeight="30.0" prefWidth="200.0" styleClass="logout-button" stylesheets="@../styles/Dashboard.css" text="Đăng xuất" textAlignment="CENTER">
@@ -233,6 +238,9 @@
                             </graphic>
                         </Button>
                     </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
                 </HBox>
             </children>
         </VBox>

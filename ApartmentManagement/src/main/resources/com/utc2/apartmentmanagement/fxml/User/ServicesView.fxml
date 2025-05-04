@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../styles/UserCSS/Services.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.UserServicesController">
+    <children>
+        <BorderPane prefHeight="655.0" prefWidth="1100.0">
+            <top>
+                <AnchorPane prefHeight="100.0" prefWidth="1100.0">
+                    <children>
+                        <Label layoutX="30.0" layoutY="30.0" text="Apartment Services" textFill="#1a936f">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="30.0" layoutY="65.0" text="Manage and register for services available in your apartment building" textFill="#666666">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </top>
+            <center>
+                <TabPane fx:id="servicesTabPane" prefHeight="555.0" prefWidth="1100.0" styleClass="services-tab-pane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab text="My Services">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <VBox prefHeight="520.0" prefWidth="1100.0" spacing="20.0">
+                                            <children>
+                                                <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1060.0" spacing="20.0">
+                                                    <children>
+                                                        <Label text="Your Current Services" textFill="#1a936f">
+                                                            <font>
+                                                                <Font name="System Bold" size="18.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label fx:id="activeServicesLabel" text="(5 active services)" textFill="#666666">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                    <padding>
+                                                        <Insets left="20.0" />
+                                                    </padding>
+                                                </HBox>
+                                                <TableView fx:id="servicesTableView" prefHeight="400.0" prefWidth="1060.0" styleClass="services-table">
+                                                    <columns>
+                                                        <TableColumn fx:id="serviceNameColumn" prefWidth="200.0" text="Service Name" />
+                                                        <TableColumn fx:id="descriptionColumn" prefWidth="350.0" text="Description" />
+                                                        <TableColumn fx:id="startDateColumn" prefWidth="120.0" text="Start Date" />
+                                                        <TableColumn fx:id="endDateColumn" prefWidth="120.0" text="End Date" />
+                                                        <TableColumn fx:id="monthlyFeeColumn" prefWidth="120.0" text="Monthly Fee" />
+                                                        <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Status" />
+                                                        <TableColumn fx:id="actionColumn" prefWidth="100.0" text="Action" />
+                                                    </columns>
+                                                    <VBox.margin>
+                                                        <Insets left="20.0" right="20.0" />
+                                                    </VBox.margin>
+                                                </TableView>
+                                                <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="1060.0" spacing="20.0">
+                                                    <children>
+                                                        <Label text="Total Monthly Cost:" textFill="#333333">
+                                                            <font>
+                                                                <Font name="System Bold" size="16.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label fx:id="totalMonthlyCostLabel" text="1,450,000 VND" textFill="#1a936f">
+                                                            <font>
+                                                                <Font name="System Bold" size="16.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                    <padding>
+                                                        <Insets right="20.0" />
+                                                    </padding>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Register Services">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <ScrollPane fitToWidth="true" prefHeight="520.0" prefWidth="1100.0" styleClass="services-scroll-pane">
+                                            <content>
+                                                <FlowPane fx:id="servicesFlowPane" hgap="20.0" prefWidth="1080.0" vgap="20.0">
+                                                    <padding>
+                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                    </padding>
+                                                </FlowPane>
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

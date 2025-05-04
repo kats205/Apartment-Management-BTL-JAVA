@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="myApartmentPane" prefHeight="655.0" prefWidth="1100.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MyApartmentController">
+    <children>
+        <Label layoutX="105.0" layoutY="30.0" text="My Apartments" textFill="#1a936f">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="105.0" layoutY="73.0" text="View and manage your property information" textFill="#64748b">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <ScrollPane fx:id="apartmentsScrollPane" fitToWidth="true" layoutX="90.0" layoutY="116.0" prefHeight="525.0" prefWidth="900.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <content>
+                <VBox fx:id="apartmentsContainer" prefHeight="464.0" prefWidth="900.0" spacing="25.0">
+                    <!-- Apartment Card Template (to be created programmatically) -->
+                    <AnchorPane prefHeight="464.0" prefWidth="900.0" styleClass="apartment-card" stylesheets="@../../styles/MyApartment.css">
+                        <children>
+                            <HBox prefHeight="432.0" prefWidth="830.0" spacing="10.0">
+                                <children>
+                                    <ImageView fitHeight="200.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../../assets/view-3d-graphic-apartment-complex.jpg" />
+                                        </image>
+                              <HBox.margin>
+                                 <Insets />
+                              </HBox.margin>
+                                    </ImageView>
+                                    <VBox prefHeight="432.0" prefWidth="224.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                                        <children>
+                                            <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                                <children>
+                                                    <Label styleClass="apartment-id" text="A101" />
+                                                    <Label styleClass="apartment-status" text="occupied" />
+                                                </children>
+                                            </HBox>
+                                            <Label styleClass="building-name" text="Chung Cư KBT" />
+                                            <HBox spacing="50.0">
+                                                <children>
+                                                    <VBox spacing="5.0">
+                                                        <children>
+                                                            <Label styleClass="info-label" text="Floor" />
+                                                            <Label styleClass="info-value" text="1" />
+                                                        </children>
+                                                    </VBox>
+                                                    <VBox spacing="5.0">
+                                                        <children>
+                                                            <Label styleClass="info-label" text="Area" />
+                                                            <Label styleClass="info-value" text="75.5 m²" />
+                                                        </children>
+                                                    </VBox>
+                                                    <VBox spacing="5.0">
+                                                        <children>
+                                                            <Label styleClass="info-label" text="Bedrooms" />
+                                                            <Label styleClass="info-value" text="2" />
+                                                        </children>
+                                                    </VBox>
+                                                    <VBox spacing="5.0">
+                                                        <children>
+                                                            <Label styleClass="info-label" text="Maintenance Fee" />
+                                                            <Label styleClass="info-value" text="1,500,000 VND" />
+                                                        </children>
+                                                    </VBox>
+                                                </children>
+                                            </HBox>
+                                            <TabPane fx:id="apartmentTabs" prefHeight="200.0" prefWidth="672.0" styleClass="apartment-tabs">
+                                                <tabs>
+                                                    <Tab text="Details">
+                                                        <content>
+                                                            <AnchorPane>
+                                                                <children>
+                                                                    <VBox spacing="10.0">
+                                                                        <children>
+                                                                            <HBox spacing="50.0">
+                                                                                <children>
+                                                                                    <VBox spacing="5.0">
+                                                                                        <children>
+                                                                                            <Label styleClass="detail-label" text="Building Address" />
+                                                                                            <Label styleClass="detail-value" text="123 Đường Lê Văn Lương, Quận 7, TP.HCM" wrapText="true" />
+                                                                                        </children>
+                                                                                    </VBox>
+                                                                                    <VBox spacing="5.0">
+                                                                                        <children>
+                                                                                            <Label styleClass="detail-label" text="Property Value" />
+                                                                                            <Label styleClass="detail-value" text="1,510,000,000 VND" />
+                                                                                        </children>
+                                                                                    </VBox>
+                                                                                </children>
+                                                                            </HBox>
+                                                                            <HBox spacing="50.0">
+                                                                                <children>
+                                                                                    <VBox spacing="5.0">
+                                                                                        <children>
+                                                                                            <Label styleClass="detail-label" text="Move-in Date" />
+                                                                                            <Label styleClass="detail-value" text="01/06/2022" />
+                                                                                        </children>
+                                                                                    </VBox>
+                                                                                    <VBox spacing="5.0">
+                                                                                        <children>
+                                                                                            <Label styleClass="detail-label" text="Primary Resident" />
+                                                                                            <Label styleClass="detail-value" text="Vũ Đức Cư" />
+                                                                                        </children>
+                                                                                    </VBox>
+                                                                                </children>
+                                                                            </HBox>
+                                                                        </children>
+                                                                        <padding>
+                                                                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                        </padding>
+                                                                    </VBox>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                    </Tab>
+                                                    <Tab text="Bills">
+                                                        <content>
+                                                            <AnchorPane>
+                                                                <children>
+                                                                    <TableView prefHeight="150.0">
+                                                                        <columns>
+                                                                            <TableColumn prefWidth="100.0" text="Bill ID" />
+                                                                            <TableColumn prefWidth="100.0" text="Date" />
+                                                                            <TableColumn prefWidth="120.0" text="Due Date" />
+                                                                            <TableColumn prefWidth="150.0" text="Amount" />
+                                                                            <TableColumn prefWidth="100.0" text="Status" />
+                                                                        </columns>
+                                                                    </TableView>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                    </Tab>
+                                                    <Tab text="Services">
+                                                        <content>
+                                                            <AnchorPane>
+                                                                <children>
+                                                                    <TableView prefHeight="150.0">
+                                                                        <columns>
+                                                                            <TableColumn prefWidth="150.0" text="Service Name" />
+                                                                            <TableColumn prefWidth="100.0" text="Start Date" />
+                                                                            <TableColumn prefWidth="100.0" text="End Date" />
+                                                                            <TableColumn prefWidth="120.0" text="Price" />
+                                                                            <TableColumn prefWidth="100.0" text="Status" />
+                                                                        </columns>
+                                                                    </TableView>
+                                                                </children>
+                                                            </AnchorPane>
+                                                        </content>
+                                                    </Tab>
+                                                </tabs>
+                                            </TabPane>
+                                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                                <children>
+                                                    <Button mnemonicParsing="false" styleClass="view-details-button" text="View Full Details" />
+                                                    <Button mnemonicParsing="false" styleClass="manage-button" text="Manage Apartment" />
+                                                </children>
+                                            </HBox>
+                                        </children>
+                                        <padding>
+                                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                        </padding>
+                                    </VBox>
+                                </children>
+                        <padding>
+                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </padding>
+                            </HBox>
+                        </children>
+                        <padding>
+                            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                        </padding>
+                    </AnchorPane>
+                </VBox>
+            </content>
+            <padding>
+                <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
+            </padding>
+        </ScrollPane>
+    </children>
+</AnchorPane>
