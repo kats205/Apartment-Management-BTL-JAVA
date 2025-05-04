@@ -210,7 +210,7 @@ public class RegisterController {
             // Nếu không có lỗi thì mới tiếp tục
             boolean hasError = validateForm();
             if (!hasError) {
-                if (new UserDAO().addUser(new User(user_name, pass_word, full_name, email, phone_number, 3, true))) {
+                if (new UserDAO().addUser(new User(user_name, pass_word, full_name, email, phone_number, 1, true))) {
                     showAlertForExeptionRegister("Thông báo!", "Đăng ký tài khoản thành công!");
                     // Đóng form hiện tại
                     ((Stage) warningEmail.getScene().getWindow()).close();

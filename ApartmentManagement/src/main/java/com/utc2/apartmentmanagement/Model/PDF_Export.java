@@ -281,13 +281,11 @@ public class PDF_Export {
             String filePath = directoryPath + "Apartment_List.pdf";
             createDirectoryIfNeeded(directoryPath);
 
-            PdfFont arial = createVietnameseFont("src/main/resources/com/utc2/apartmentmanagement/Font/arial.ttf");
-            PdfFont times = createVietnameseFont("src/main/resources/com/utc2/apartmentmanagement/Font/times.ttf");
+
 
             PdfWriter writer = new PdfWriter(filePath);
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
-            document.setFont(times);
 
             Color headerColor = new DeviceRgb(209, 224, 227);
             Color textColor = new DeviceRgb(21, 88, 155);
@@ -325,7 +323,7 @@ public class PDF_Export {
         Document document = new Document(pdf);
 
         // Thiết lập font tiếng Việt
-        document.setFont(createVietnameseFont());
+//        document.setFont(createVietnameseFont());
 
         // Tạo nội dung
         document.add(createHeaderSection());
@@ -436,8 +434,6 @@ public class PDF_Export {
         Color headerColor = new DeviceRgb(209, 224, 227);
         Color textColor = new DeviceRgb(21, 88, 155);
 
-        // Thiết lập font tiếng Việt
-        document.setFont(createVietnameseFont());
 
         // Tạo nội dung
         document.add(createHeaderSection());

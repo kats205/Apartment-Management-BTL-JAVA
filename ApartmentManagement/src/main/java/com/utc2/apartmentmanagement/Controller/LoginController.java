@@ -118,15 +118,16 @@ public class LoginController {
 
         UserDAO userDAO = new UserDAO();
         int role_id = userDAO.login(userName, password);
+
+        // lấy thông tin người dùng vừa đăng nhập và thời gian hiện tại
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formatted = now.format(formatter);
+        Session.setLastLogin(formatted);
+        Session.setUserName(userName);
         switch (role_id) {
             case 1 -> {
                 try {
-                    LocalDateTime now = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-                    String formatted = now.format(formatter);
-                    Session.setLastLogin(formatted);
-                    Session.setUserName(userName);
                     // Đóng cửa sổ hiện tại
                     ((Stage) usernameField.getScene().getWindow()).close();
                     // Khởi chạy dashboard
@@ -140,13 +141,6 @@ public class LoginController {
             case 2 -> {
 
                 try {
-
-                    LocalDateTime now = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-                    String formatted = now.format(formatter);
-                    Session.setLastLogin(formatted);
-                    Session.setUserName(userName);
                     // Chuyển sang màn hình cư dân
                     ((Stage) usernameField.getScene().getWindow()).close();
                     StaffView staffView = new StaffView();
@@ -158,14 +152,6 @@ public class LoginController {
             }
             case 3 -> {
                 try {
-
-                    LocalDateTime now = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-                    String formatted = now.format(formatter);
-                    Session.setLastLogin(formatted);
-                    Session.setUserName(userName);
-
                     // Chuyển sang màn hình cư dân
                     ((Stage) usernameField.getScene().getWindow()).close();
                     ResidentView residentView = new ResidentView();
@@ -191,6 +177,7 @@ public class LoginController {
             }
         }
 
+        // hàm hiển thị và ẩn mật khẩu
         @FXML
         private void handleTogglePasswordVisibility () {
             isPasswordVisible = !isPasswordVisible;

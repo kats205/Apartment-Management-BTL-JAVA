@@ -1,5 +1,6 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.UserDAO;
 import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Views.login;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
@@ -51,8 +53,11 @@ public class MyProfileController implements Initializable {
     @FXML public PasswordField newPasswordField1;
     @FXML public Button changePasswordBtn1;
     @FXML public Button logoutBtn;
+    @FXML public AnchorPane rootPane;
     @Setter
     private DashboardController parentDashBoardController;
+    @Setter
+    private UserDashboardController parentUserDashBoardController;
     @Setter
     private StaffDashboardController parentStaffDashBoard;
     @Setter
@@ -66,13 +71,30 @@ public class MyProfileController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // set tên và thời gian đăng nhập của người dùng
+        setInformationUser();
+        // set lại avatar cho người dùng
+        try {
+            String filePath = new UserDAO().getAvatarPathByUserId(Session.getUserName());
+            if(filePath!=null){
+                Path pathImage = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars", filePath);
+                Image image = new Image(pathImage.toUri().toString());
+                userAvatar.setImage(image);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    private void setInformationUser(){
         String username = Session.getUserName();
         String lastlogin = Session.getLastLogin();
         System.out.println("Last login: " + lastLogin);
         System.out.println("User name: " + userName);
         userName.setText(username);
         lastLogin.setText(lastlogin);
-
     }
     @FXML
     public void handleLogout() throws Exception {
@@ -95,35 +117,45 @@ public class MyProfileController implements Initializable {
     public void handleChangeAvatar(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Chọn ảnh đại diện");
+
+// Lọc file chỉ cho phép chọn ảnh
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
 
+// Mở cửa sổ chọn file ảnh
         File selectedFile = fileChooser.showOpenDialog(changeAvatarBtn.getScene().getWindow());
 
         if (selectedFile != null) {
             try {
-                // Tạo thư mục lưu ảnh (ví dụ: C:/Users/YourName/apartment_app/avatars)
+                // Thư mục đích: C:/Users/<Tên người dùng>/apartment_app/avatars
                 Path destinationDir = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars");
-                Files.createDirectories(destinationDir);
+                Files.createDirectories(destinationDir); // Tạo thư mục nếu chưa có
 
-                // Đặt tên file mới (giữ tên cũ hoặc đặt lại tuỳ ý)
-                Path destinationFile = destinationDir.resolve(selectedFile.getName());
-
-                // Copy file ảnh vào thư mục đích
+                // Tên file mới (giữ nguyên hoặc có thể đổi tên nếu muốn)
+                int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+                String newFileName = "user_" + user_id + "_" + selectedFile.getName(); // Gợi ý đặt tên duy nhất
+                Path destinationFile = destinationDir.resolve(newFileName);
+                Session.setAvatarPath(newFileName);
+                // Copy ảnh vào thư mục
                 Files.copy(selectedFile.toPath(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
-
-                // Hiển thị ảnh lên ImageView
+                //Lưu tên ảnh vào database tương ứng với user_id
+                if(new UserDAO().updateAvatar(user_id, newFileName)){
+                    System.out.println("Đã cập nhật ảnh đại diện vào database!");
+                }
+                // Hiển thị ảnh mới lên ImageView
                 Image image = new Image(destinationFile.toUri().toString());
                 userAvatar.setImage(image);
 
-                // Ghi lại đường dẫn vào Session (hoặc sau này lưu vào file txt/db nếu muốn giữ lâu dài)
+                // Lưu đường dẫn vào Session (hoặc DB nếu bạn muốn lưu lâu dài)
                 Session.setAvatarPath(destinationFile.toString());
 
-                System.out.println("Đã thay đổi ảnh đại diện");
+                System.out.println("Đã thay đổi ảnh đại diện thành công!");
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }

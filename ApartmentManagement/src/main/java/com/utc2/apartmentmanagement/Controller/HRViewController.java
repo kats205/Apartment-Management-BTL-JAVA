@@ -19,6 +19,7 @@ import lombok.Setter;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -159,54 +160,41 @@ public class HRViewController implements Initializable {
 
     @FXML
     public void handleBtnUpdate(ActionEvent actionEvent) {
-        Map<String, Object> updateStaff = handleClickTVUsers();
         UserDAO user = new UserDAO();
         RoleDAO role = new RoleDAO();
-        if(updateStaff != null){
-            int userId = Integer.parseInt(updateStaff.get("ID").toString());
 
-            // Kiểm tra username
-            if (tfUsername.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Tên đăng nhập không được để trống!");
-                return;
-            }
-            user.updateUserName(userId, tfUsername.getText());
-
-            // Kiểm tra họ tên
-            if (tfFullName.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Họ tên không được để trống!");
-                return;
-            }
-            user.updateFullName(userId, tfFullName.getText());
-
-            // Kiểm tra email
-            if (!tfEmail.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Email không hợp lệ!");
-                return;
-            }
-            user.updateEmail(userId, tfEmail.getText());
-
-            // Kiểm tra số điện thoại
-            if (!tfPhone.getText().matches("^\\d{9,11}$")) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Số điện thoại phải là số và có độ dài từ 9 đến 11 chữ số!");
-                return;
-            }
-            user.updatePhoneNumber(userId, tfPhone.getText());
-
-            // Kiểm tra vai trò
-            if (tfRole.getText().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Vai trò không được để trống!");
-                return;
-            }
-            role.updateRoleName(userId, tfRole.getText());
-
-            // Trạng thái hoạt động
-            user.updateActive(userId, cbActive.isSelected());
-
-            // Hiển thị thông báo thành công
-            showAlert(Alert.AlertType.INFORMATION, "Thành công", "Cập nhật người dùng thành công!");
+        int userId = Integer.parseInt(tfUserId.getText());
+        // Kiểm tra các trường bắt buộc
+        if (tfUsername.getText().isEmpty() || tfFullName.getText().isEmpty() || tfEmail.getText().isEmpty() ||
+                tfPhone.getText().isEmpty() || tfRole.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng điền đầy đủ tất cả các trường!");
+            return;
         }
+
+        // Kiểm tra định dạng email
+        if (!tfEmail.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Email không hợp lệ!");
+            return;
+        }
+
+        // Kiểm tra định dạng số điện thoại
+        if (!tfPhone.getText().matches("^\\d{9,11}$")) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Số điện thoại phải là số và có độ dài từ 9 đến 11 chữ số!");
+            return;
+        }
+
+        // Nếu mọi kiểm tra đều hợp lệ, tiến hành cập nhật
+        user.updateUserName(userId, tfUsername.getText());
+        user.updateFullName(userId, tfFullName.getText());
+        user.updateEmail(userId, tfEmail.getText());
+        user.updatePhoneNumber(userId, tfPhone.getText());
+        role.updateRoleName(userId, tfRole.getText());
+        user.updateActive(userId, cbActive.isSelected());
+
+        showAlert(Alert.AlertType.INFORMATION, "Thành công", "Cập nhật người dùng thành công!");
+        loadDataStaff(); // Tải lại dữ liệu
     }
+
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

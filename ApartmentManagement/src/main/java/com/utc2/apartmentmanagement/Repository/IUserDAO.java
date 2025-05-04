@@ -18,7 +18,8 @@ public interface IUserDAO {
     boolean updatePhoneNumber(int userID, String newPhoneNumber);
     boolean updateRoleID(int userID, int newRoleID);
     boolean updateActive(int userID, boolean newActive);
-    int getIdByUserName(String userId) throws SQLException;
+    int getIdByUserName(String userName) throws SQLException;
     List<Map<String, Object>> searchOnChange(String searchText) throws SQLException;
-
+    boolean updateAvatar(int user_id, String filePath) throws SQLException;
+    String getAvatarPathByUserId(String userName) throws SQLException;
 }

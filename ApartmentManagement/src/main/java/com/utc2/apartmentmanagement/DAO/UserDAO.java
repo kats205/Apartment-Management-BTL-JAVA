@@ -186,6 +186,34 @@ public class UserDAO implements IUserDAO {
         return result;
     }
 
+    @Override
+    public boolean updateAvatar(int user_id, String filePath) throws SQLException {
+        String sql = "UPDATE [User] SET avatar_filename = ? WHERE user_id = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(2, user_id);
+            stmt.setString(1, filePath);
+            return stmt.executeUpdate() > 0;
+        }catch(SQLException e){
+            throw new SQLException("Lỗi khi cập nhật avatar", e);
+        }
+    }
+
+    @Override
+    public String getAvatarPathByUserId(String userName) throws SQLException {
+        String sql = "SELECT avatar_filename FROM [User] WHERE username = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, userName);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getString("avatar_filename");
+            }
+        }catch (SQLException e){
+            throw new SQLException("Lỗi khi lấy đường dẫn avatar", e);
+        }
+        return "";
+    }
 
 
     public int login (String userName, String passWord){
