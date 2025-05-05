@@ -59,7 +59,7 @@ public class PaymentViewController implements Initializable {
     private Button searchButton;
 
     @FXML
-    private Button newPaymentButton;
+    private Button refreshBtn;
 
     @FXML
     private TableView<Payment> paymentTable;
@@ -214,7 +214,7 @@ public class PaymentViewController implements Initializable {
 //        searchButton.setOnAction(event -> searchPayments());
 
         // Xử lý sự kiện tạo thanh toán mới
-        newPaymentButton.setOnAction(event -> createNewPayment());
+//        refreshBtn.setOnAction(event -> createNewPayment());
 
         // Xử lý sự kiện xem chi tiết
 //        detailButton.setOnAction(event -> viewPaymentDetails());
@@ -401,7 +401,10 @@ public class PaymentViewController implements Initializable {
             }
         }
     }
-
+    @FXML
+    public void handleRefreshBtn(){
+        loadDataColumn();
+    }
     public void handleSearchButton(ActionEvent actionEvent) {
     }
 }

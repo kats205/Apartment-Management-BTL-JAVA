@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.scene.Node;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -40,7 +41,6 @@ public class UserDashboardController implements Initializable {
     @FXML public Label buildingTF;
     @FXML public Label areaTF;
     @FXML public Label floorTF;
-
 
 
     // AnchorPane giao diện màn hình chính
@@ -65,7 +65,6 @@ public class UserDashboardController implements Initializable {
     @FXML private Button MyProfileTop;
     @FXML private Button ReportIcidentLeft;
     @FXML private Button MyProfileLeft;
-
 
 
     // Button xử lý sự kiện đóng MyApartmentView

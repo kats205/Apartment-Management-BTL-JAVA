@@ -42,6 +42,7 @@ public class DashboardController implements Initializable {
     public Button payment;
     @FXML public Button reportButton;
 
+    @FXML public Button hrButton;
     @FXML public Label Occupied;
 
     @FXML public Label Available;
@@ -79,8 +80,7 @@ public class DashboardController implements Initializable {
     @FXML
     private Button ApartmentButton;
 
-    @FXML
-    private ImageView Exit;
+
 
     @FXML
     private Label Menu;
@@ -103,15 +103,19 @@ public class DashboardController implements Initializable {
     @FXML
     private BorderPane mainBorderPane;
 
+    @FXML
+    private ImageView Exit;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Exit.setOnMouseClicked(event -> {
+            System.exit(0);
+        });
         setupMenuToggle();
 
         dashboardNodes = new ArrayList<>(contentArea.getChildren());
 
-        Exit.setOnMouseClicked(event -> {
-            System.exit(0);
-        });
+
 
 
         // Thiết lập sự kiện cho nút ApartmentButton

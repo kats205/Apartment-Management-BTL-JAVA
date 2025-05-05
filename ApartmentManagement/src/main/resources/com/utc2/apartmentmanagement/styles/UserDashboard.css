@@ -56,13 +56,15 @@
 /* Quick Action Buttons */
 .quickActionButton {
     -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);
+    -fx-border-color: #E3E5EA;
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+
     -fx-text-fill: #1A936F;
     -fx-font-weight: bold;
     -fx-content-display: top;
-    -fx-alignment: center;
-    -fx-cursor: hand;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);
 }
 
 .quickActionButton:hover {

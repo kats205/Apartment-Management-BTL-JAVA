@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="reportView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.ReportViewController">
+<AnchorPane fx:id="reportView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: white;" stylesheets="@../styles/Report.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.ReportViewController">
     <children>
         <Label alignment="CENTER" layoutX="425.0" layoutY="25.0" prefHeight="35.0" prefWidth="280.0" style="-fx-font-weight: bold;" text="BÁO CÁO THỐNG KÊ" textAlignment="CENTER">
             <font>
