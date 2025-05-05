@@ -21,9 +21,9 @@
     <children>
         <BorderPane prefHeight="655.0" prefWidth="1100.0">
             <top>
-                <AnchorPane prefHeight="100.0" prefWidth="1100.0">
+                <AnchorPane prefHeight="100.0" prefWidth="1100.0" style="-fx-background-color: white;">
                     <children>
-                        <Label layoutX="30.0" layoutY="30.0" text="Apartment Services" textFill="#1a936f">
+                        <Label layoutX="30.0" layoutY="30.0" text="Resident's Services" textFill="#1a936f">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>

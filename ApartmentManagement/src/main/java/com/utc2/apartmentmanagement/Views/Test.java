@@ -12,9 +12,9 @@ import java.util.Objects;
 public class Test extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/ServicesView.fxml")));
+        Parent root = FXMLLoader.load((getClass().getResource("/com/utc2/apartmentmanagement/fxml/test.fxml")));
         primaryStage.setTitle("Apartment Application");
-        primaryStage.setScene(new Scene(root, 1280, 720));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
