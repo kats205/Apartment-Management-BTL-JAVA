@@ -14,7 +14,6 @@ module com.utc2.apartmentmanagement {
     requires itextpdf;
     requires javafx.swing;
 
-
     opens com.utc2.apartmentmanagement.Test to javafx.base;
     exports com.utc2.apartmentmanagement.Test;
     opens com.utc2.apartmentmanagement.Views to javafx.fxml;
@@ -23,4 +22,7 @@ module com.utc2.apartmentmanagement {
     exports com.utc2.apartmentmanagement.Controller;
     exports com.utc2.apartmentmanagement.Model;
     opens com.utc2.apartmentmanagement.Model to javafx.base;
+    opens com.utc2.apartmentmanagement.Controller.User to javafx.fxml;
+    exports com.utc2.apartmentmanagement.Controller.User;
+
 }
