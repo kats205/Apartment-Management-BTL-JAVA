@@ -522,9 +522,28 @@ public class ReportViewController implements Initializable {
         // TODO: Xuất 2 file Excel với 2 biểu đồ khác nhau
         exportRevenueChart(fromDatePicker.getValue(),toDatePicker.getValue());
         exportPieChart(fromDatePicker.getValue(),toDatePicker.getValue());
-        System.out.println("Xuất file excel thành công");
+        String filePath = "com/utc2/apartmentmanagement/PDF_File/";
+        try{
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText("Xuất file Excel thành công!");
+        alert.setContentText("Đã lưu tại:\n" + filePath);
+        alert.showAndWait();
 
-    }
+        System.out.println("PDF exported to: " + filePath);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Xuất file thất bại");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+            System.out.println("Xuất file excel thành công");
+
+        }
 
     @Setter
     private DashboardController parentController;
