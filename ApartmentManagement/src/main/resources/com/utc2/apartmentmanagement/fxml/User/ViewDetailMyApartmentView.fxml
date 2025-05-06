@@ -19,13 +19,8 @@
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="17.0" prefWidth="400.0" spacing="15.0">
                     <children>
-<<<<<<< HEAD
                         <Label fx:id="apartmentId" styleClass="apartment-id" text="A101" />
                         <Label fx:id="status" styleClass="apartment-status" text="occupied">
-=======
-                        <Label fx:id="apartmentIdLabel" styleClass="apartment-id" text="A101" />
-                        <Label fx:id="statusLabel" styleClass="apartment-status" text="occupied">
->>>>>>> origin/main
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
@@ -41,7 +36,6 @@
                         <GridPane hgap="20.0" prefHeight="250.0" prefWidth="400.0" vgap="10.0" HBox.hgrow="ALWAYS">
                             <children>
                                 <Label text="Building Address:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-<<<<<<< HEAD
                                 <Label fx:id="address" text="123 Đường Lê Văn Lương, Quận 7, TP.HCM" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                                 <Label text="Floor:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
@@ -64,30 +58,6 @@
 
                                 <Label text="Move-in Date:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
                                 <Label fx:id="moveInDate" text="01/06/2022" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-=======
-                                <Label fx:id="addressLabel" text="123 Đường Lê Văn Lương, Quận 7, TP.HCM" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-                                <Label text="Floor:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                <Label fx:id="floorLabel" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                                <Label text="Area:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <Label fx:id="areaLabel" text="75.5 m²" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                                <Label text="Bedrooms:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                <Label fx:id="bedroomsLabel" text="2" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-                                <Label text="Maintenance Fee:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                                <Label fx:id="maintenanceFeeLabel" text="1,500,000 VND" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-
-                                <Label text="Property Value:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                                <Label fx:id="propertyValueLabel" text="1,510,000,000 VND" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-
-                                <Label text="Primary Resident:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                                <Label fx:id="primaryResidentLabel" text="Vũ Đức Cư" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-
-                                <Label text="Move-in Date:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-                                <Label fx:id="moveInDateLabel" text="01/06/2022" GridPane.columnIndex="1" GridPane.rowIndex="7" />
->>>>>>> origin/main
                             </children>
                      <columnConstraints>
                         <ColumnConstraints />

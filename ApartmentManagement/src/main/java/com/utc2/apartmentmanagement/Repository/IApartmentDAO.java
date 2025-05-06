@@ -19,4 +19,5 @@ public interface IApartmentDAO {
     int countStatusApartment(String status) throws SQLException;
     List<Object> getApartmentInfoByApartmentID(String apartmentID);
     Map<String, Object> getInformation(int userId) throws SQLException;
+    
 }

@@ -22,4 +22,6 @@ public interface IUserDAO {
     List<Map<String, Object>> searchOnChange(String searchText) throws SQLException;
     boolean updateAvatar(int user_id, String filePath) throws SQLException;
     String getAvatarPathByUserId(String userName) throws SQLException;
+    String getPasswordByUserId(int userId);
+    boolean updatePassword(int userId, String newPassword);
 }

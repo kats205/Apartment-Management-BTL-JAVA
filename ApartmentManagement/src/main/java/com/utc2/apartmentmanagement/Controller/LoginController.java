@@ -1,8 +1,8 @@
 package com.utc2.apartmentmanagement.Controller;
 
-import com.utc2.apartmentmanagement.DAO.ResidentDAO;
+import com.utc2.apartmentmanagement.DAO.RoleDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
-import com.utc2.apartmentmanagement.Model.Apartment;
+import com.utc2.apartmentmanagement.Model.Role;
 import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -125,6 +124,21 @@ public class LoginController {
         String formatted = now.format(formatter);
         Session.setLastLogin(formatted);
         Session.setUserName(userName);
+        Session.setPassWord(password);
+        Role role = new RoleDAO().getRoleById(role_id);
+        if(role == null){
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
+            return;
+        }
+        String roleName = role.getRoleName();
+        System.out.println("roleName " + roleName);
+        if(roleName != null){
+        Session.setRoleName(new RoleDAO().getRoleById(role_id).getRoleName());
+        }
+        else{
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
+            return;
+        }
         switch (role_id) {
             case 1 -> {
                 try {
@@ -141,7 +155,7 @@ public class LoginController {
             case 2 -> {
 
                 try {
-                    // Chuyển sang màn hình cư dân
+                    // Chuyển sang màn hình staff
                     ((Stage) usernameField.getScene().getWindow()).close();
                     StaffView staffView = new StaffView();
                     Stage stage = new Stage();

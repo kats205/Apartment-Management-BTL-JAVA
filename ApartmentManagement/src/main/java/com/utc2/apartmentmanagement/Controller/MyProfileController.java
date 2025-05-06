@@ -1,7 +1,13 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.ManagerDAO;
+import com.utc2.apartmentmanagement.DAO.StaffDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
 import com.utc2.apartmentmanagement.Model.Session;
+import com.utc2.apartmentmanagement.Model.Staff;
+import com.utc2.apartmentmanagement.Model.User;
+import com.utc2.apartmentmanagement.Utils.AlertBox;
+import com.utc2.apartmentmanagement.Utils.passwordEncryption;
 import com.utc2.apartmentmanagement.Views.login;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +33,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -53,6 +61,7 @@ public class MyProfileController implements Initializable {
     @FXML public PasswordField newPasswordField1;
     @FXML public Button changePasswordBtn1;
     @FXML public Button logoutBtn;
+    @FXML public Label roleName;
     @FXML public AnchorPane rootPane;
     @Setter
     private DashboardController parentDashBoardController;
@@ -87,7 +96,11 @@ public class MyProfileController implements Initializable {
             throw new RuntimeException(e);
         }
 
-
+        try {
+            initInformation();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setInformationUser(){
@@ -97,6 +110,7 @@ public class MyProfileController implements Initializable {
         System.out.println("User name: " + userName);
         userName.setText(username);
         lastLogin.setText(lastlogin);
+        roleName.setText(Session.getRoleName());
     }
     @FXML
     public void handleLogout() throws Exception {
@@ -105,14 +119,6 @@ public class MyProfileController implements Initializable {
             ((Stage)fullNameField.getScene().getWindow()).close();
         }
 
-        // Mở lại login
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/login-view.fxml"));
-//        Parent root = loader.load();
-//
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(root));
-//        stage.setTitle("Login");
-//        stage.show();
         Stage stage = new Stage();
         login loginView = new login();
         loginView.start(stage);
@@ -163,5 +169,110 @@ public class MyProfileController implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+    public void initInformation() throws SQLException {
+        int userId = new UserDAO().getIdByUserName(Session.getUserName());
+        User user = new UserDAO().getUserByID(userId);
+
+        switch (user.getRoleID()) {
+            case 1 -> loadManagerInfo(userId);
+            case 2 -> loadStaffInfo(user);
+            default -> System.out.println("Không xác định được vai trò người dùng.");
+        }
+    }
+
+    // Hàm xử lý Staff (role_id = 2)
+    private void loadStaffInfo(User user) throws SQLException {
+        Staff staff = new StaffDAO().getStaffByUserId(user.getUserID());
+        if (staff == null) {
+            System.out.println("Không có thông tin staff.");
+            return;
+        }
+
+        fullNameField.setText(user.getFullName());
+        emailField.setText(user.getEmail());
+        phoneField.setText(user.getPhoneNumber());
+        officeField.setText(staff.getDepartment());
+    }
+
+    // Hàm xử lý Manager (role_id = 1)
+    private void loadManagerInfo(int userId) throws SQLException {
+        Map<String, Object> infoMap = new ManagerDAO().getManagerByUserId(userId);
+        if (infoMap == null || infoMap.isEmpty()) {
+            System.out.println("Không có thông tin manager.");
+            return;
+        }
+
+        fullNameField.setText(String.valueOf(infoMap.get("full_name")));
+        emailField.setText(String.valueOf(infoMap.get("email")));
+        phoneField.setText(String.valueOf(infoMap.get("phone_number")));
+        officeField.setText(String.valueOf(infoMap.get("office")));
+    }
+
+    public void handleSaveProfileBtn(ActionEvent actionEvent) throws SQLException {
+        int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+        String FullName = fullNameField.getText();
+        String email = emailField.getText();
+        String phone = phoneField.getText();
+        String office = officeField.getText();
+        UserDAO update = new UserDAO();
+        if(update.updatePhoneNumber(user_id, phone) && update.updateEmail(user_id, email) && update.updateFullName(user_id, FullName) && new StaffDAO().updateDepartment(user_id, office)){
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Cập nhật thông tin thành công!");
+        }
+        else{
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Cập nhật thông tin không thành công!");
+        }
+    }
+
+    public void handleChangePassword(ActionEvent actionEvent) throws Exception {
+        // password vừa nhập
+        String currentPassword = currentPasswordField.getText();
+        String newPassword = newPasswordField1.getText();
+        String confirmPassword = confirmPasswordField.getText();
+
+        if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Mật khẩu mới không khớp!");
+            return;
+        }
+
+        UserDAO userDAO = new UserDAO();
+        int user_id = userDAO.getIdByUserName(Session.getUserName());
+        // password dưới database
+        String currentPasswordInDB = userDAO.getPasswordByUserId(user_id);
+
+        // vì password được hash bằng bcrypt nên ở đây cần check lại
+        // Nếu bạn lưu mật khẩu đã mã hóa (băm), bạn cần so sánh đã hash lại
+        if (!passwordEncryption.checkPassword(currentPassword, currentPasswordInDB)) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Mật khẩu hiện tại không đúng!");
+            return;
+        }
+        // Thay đổi mật khẩu
+        boolean updated = userDAO.updatePassword(user_id, newPassword);
+        if (updated) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Đổi mật khẩu thành công");
+            alert.setHeaderText("Bạn đã đổi mật khẩu thành công.");
+            alert.setContentText("Bạn có muốn đăng xuất và đăng nhập lại không?");
+            ButtonType buttonYes = new ButtonType("Đăng xuất");
+            ButtonType buttonNo = new ButtonType("Tiếp tục sử dụng");
+            alert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == buttonYes) {
+                handleLogout(); // giả định có phương thức chuyển scene
+            } else {
+                currentPasswordField.clear();
+                newPasswordField1.clear();
+                confirmPasswordField.clear();
+            }
+        } else {
+            AlertBox.showAlertForExeptionRegister("Lỗi", "Đổi mật khẩu thất bại!");
+        }
+
     }
 }

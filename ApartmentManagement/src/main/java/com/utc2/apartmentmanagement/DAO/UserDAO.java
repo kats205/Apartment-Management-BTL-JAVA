@@ -278,9 +278,41 @@ public class UserDAO implements IUserDAO {
         }
         return false;
     }
+    @Override
+    public String getPasswordByUserId(int userId) {
+        String sql = "SELECT password FROM [User] WHERE user_id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("password");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    public boolean updatePassword(int userId, String newPassword) {
+        String sql = "UPDATE [User] SET password = ? WHERE user_id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, passwordEncryption.hashPassword(newPassword));
+            stmt.setInt(2, userId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 
 //    public boolean logout(){
 //
 //    }
+
+    public static void main(String[] args) {
+        System.out.println(new UserDAO().login("baokhanh123", "123Baokhanh"));
+    }
 }

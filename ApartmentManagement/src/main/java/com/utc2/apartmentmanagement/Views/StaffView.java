@@ -14,7 +14,7 @@ public class StaffView extends Application {
     double x,y = 0;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/StaffDashboard-view.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/Staff/StaffDashboard-view.fxml")));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(event -> {
             x = event.getSceneX();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -92,13 +93,16 @@
                                 <TableView fx:id="reportTable" layoutY="10.0" onMouseClicked="#getSelectedApartment" prefHeight="375.0" prefWidth="1020.0" stylesheets="@../styles/Dashboard.css">
                                     <columns>
                                         <TableColumn fx:id="reportTypeColumn" prefWidth="130.0" text="Loại báo cáo" />
-                                        <TableColumn fx:id="generationDateColumn" prefWidth="140.0" text="Ngày tạo báo cáo" />
-                                        <TableColumn fx:id="generatedByUserIdColumn" prefWidth="140.0" text="Người tạo báo cáo" />
+                                        <TableColumn fx:id="generationDateColumn" prefWidth="150.0" text="Ngày tạo báo cáo" />
+                                        <TableColumn fx:id="generatedByUserIdColumn" prefWidth="150.0" text="Người tạo báo cáo" />
                                         <TableColumn fx:id="parametersColumn" prefWidth="100.0" text="Tham số" />
                                         <TableColumn fx:id="filePathColumn" prefWidth="200.0" text="Đường dẫn tệp" />
-                                        <TableColumn fx:id="createdAtColumn" prefWidth="130.0" text="Ngày tạo" />
+                                        <TableColumn fx:id="createdAtColumn" prefWidth="140.0" text="Ngày tạo" />
                                         <TableColumn fx:id="updatedAtColumn" prefWidth="130.0" text="Ngày cập nhật" />
                                     </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
                                 </TableView>
                             </children>
                         </AnchorPane>
@@ -167,6 +171,9 @@
                                             </children>
                                         </HBox>
                                     </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
                                 </VBox>
                             </children>
                         </AnchorPane>

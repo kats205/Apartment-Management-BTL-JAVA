@@ -48,6 +48,9 @@
                 <TableColumn fx:id="createDateColumn" prefWidth="130.0" text="Ngày tạo" />
                 <TableColumn fx:id="transactionIdColumn" prefWidth="160.00006103515625" text="Mã giao dịch" />
             </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
         </TableView>
         <Label fx:id="noContentLabel" alignment="CENTER" layoutX="80.0" layoutY="20.0" prefHeight="30.0" prefWidth="236.0" style="-fx-background-color: transparent; -fx-opacity: 0;" text="Không có dữ liệu" textFill="#757575" visible="true" />
         <Label layoutX="44.0" layoutY="580.0" text="Tổng số giao dịch:">

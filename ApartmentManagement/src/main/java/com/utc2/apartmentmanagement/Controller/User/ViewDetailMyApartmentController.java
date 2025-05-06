@@ -93,16 +93,20 @@ public class ViewDetailMyApartmentController {
 
         DecimalFormat df = new DecimalFormat("#,###", symbols);
         df.setMaximumFractionDigits(0);
-        fullNameResident.setText(apartmentInf.get("full_name").toString());
-        moveInDate.setText(apartmentInf.get("move_in_date").toString());
-        price.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())));
-        address.setText(apartmentInf.get("address").toString());
-        apartmentId.setText(apartmentInf.get("apartment_id").toString());
-        status.setText(apartmentInf.get("status").toString());
-        floor.setText(apartmentInf.get("floor").toString());
-        area.setText(apartmentInf.get("area").toString());
-        bedrooms.setText(apartmentInf.get("bedrooms").toString());
-        maintenanceFee.setText(df.format(Double.parseDouble(apartmentInf.get("maintenance_fee").toString())));
+        if(apartmentInf.isEmpty()){
+            System.out.println("Không có thông tin căn hộ nào");
+        }else{
+            fullNameResident.setText(apartmentInf.get("full_name").toString());
+            moveInDate.setText(apartmentInf.get("move_in_date").toString());
+            price.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())) + " VNĐ");
+            address.setText(apartmentInf.get("address").toString());
+            apartmentId.setText(apartmentInf.get("apartment_id").toString());
+            status.setText(apartmentInf.get("status").toString());
+            floor.setText(apartmentInf.get("floor").toString());
+            area.setText(apartmentInf.get("area").toString() + " m2");
+            bedrooms.setText(apartmentInf.get("bedrooms").toString());
+            maintenanceFee.setText(df.format(Double.parseDouble(apartmentInf.get("maintenance_fee").toString())) + " VNĐ");
+        }
     }
 
 

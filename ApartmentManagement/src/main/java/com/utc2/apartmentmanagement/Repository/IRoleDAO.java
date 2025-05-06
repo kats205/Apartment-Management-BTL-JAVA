@@ -11,4 +11,5 @@ public interface IRoleDAO {
     boolean deleteRole(int id);
     boolean updateRoleName(int id, String newName);
     boolean updateRoleDescription(int id, String newDescription);
+
 }

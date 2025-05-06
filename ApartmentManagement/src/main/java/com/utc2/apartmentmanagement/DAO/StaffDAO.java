@@ -186,6 +186,23 @@ public class StaffDAO implements IStaffDAO {
         return listStaff;
     }
 
+    @Override
+    public Staff getStaffByUserId(int userId) throws SQLException {
+        String sql = "SELECT * FROM Staff WHERE staff_id = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return new Staff(rs.getInt("staff_id"), rs.getString("department"), rs.getNString("position"),
+                        rs.getDate("hire_date"), rs.getInt("manager_id"));
+            }
+        } catch (SQLException e) {
+           throw new SQLException("Error retrieving staff by user ID: " + e.getMessage(), e);
+        }
+        return null;
+    }
+
 
     public boolean updateStaffField(int staffID, String field, Object newValue){
         String sql = "UPDATE Staff SET " + field + " = ?  WHERE staff_id = ?";

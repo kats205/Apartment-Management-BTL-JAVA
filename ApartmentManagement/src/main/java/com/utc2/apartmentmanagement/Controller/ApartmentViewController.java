@@ -204,17 +204,21 @@ public class ApartmentViewController implements Initializable {
     }
 
     private void loadIdCB() {
+        buildingComboBox.getItems().clear();
+        buildingComboBox.getItems().add("Chọn tòa nhà");
+
         List<String> apartmentIdList = new ApartmentDAO().getAllIdApartment();
-        for (String s : apartmentIdList) {
-            buildingComboBox.getItems().add(s);
-        }
+        buildingComboBox.getItems().addAll(apartmentIdList);
+        buildingComboBox.getSelectionModel().selectFirst(); // Chọn "Chọn tòa nhà"
     }
 
     private void loadStatusCB() {
+        statusComboBox.getItems().clear();
+        statusComboBox.getItems().add("Chọn trạng thái"); // Thêm lựa chọn mặc định
+
         List<String> statusList = new ApartmentDAO().getAllStatus();
-        for (String s : statusList) {
-            statusComboBox.getItems().add(s);
-        }
+        statusComboBox.getItems().addAll(statusList);
+        statusComboBox.getSelectionModel().selectFirst(); // Chọn "Chọn trạng thái"
 
     }
 
@@ -272,12 +276,10 @@ public class ApartmentViewController implements Initializable {
 
     private void refreshData() {
         // Xóa các lựa chọn trong ComboBox
-        buildingComboBox.getSelectionModel().clearSelection();
-        statusComboBox.getSelectionModel().clearSelection();
-        buildingComboBox.setValue("Chọn tòa nhà");
-        statusComboBox.setValue("Chọn trạng thái");
-        // Tải lại dữ liệu
+        buildingComboBox.getSelectionModel().selectFirst();
+        statusComboBox.getSelectionModel().selectFirst();
         loadData();
+
     }
 
     private void addNewApartment() {
@@ -334,9 +336,14 @@ public class ApartmentViewController implements Initializable {
 
     public void handleButtonSearch(ActionEvent event) {
         String apartmentId = buildingComboBox.getValue();
-        System.out.println("Apartment ID: " + apartmentId);
+        if ("Chọn tòa nhà".equals(apartmentId)) {
+            apartmentId = null;
+        }
+
         String status = statusComboBox.getValue();
-        System.out.println("Status: " + status);
+        if ("Chọn trạng thái".equals(status)) {
+            status = null;
+        }
 
         if (apartmentId != null && status == null) {
             Apartment apartment = new ApartmentDAO().findApartmentById(apartmentId);

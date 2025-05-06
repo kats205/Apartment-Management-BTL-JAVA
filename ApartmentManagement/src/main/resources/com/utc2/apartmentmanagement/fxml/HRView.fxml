@@ -147,12 +147,12 @@
                         <Insets />
                      </VBox.margin>
                         </HBox>
-                        <TableView fx:id="tvUsers" fixedCellSize="0.0" onMouseClicked="#handleClickTVUsers" prefHeight="488.0" prefWidth="810.0" stylesheets="@../styles/Dashboard.css">
+                        <TableView fx:id="tvUsers" fixedCellSize="0.0" onMouseClicked="#handleClickTVUsers" prefHeight="488.0" prefWidth="810.0" stylesheets="@../styles/Dashboard.css" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn fx:id="colUserId" prefWidth="50.0" text="ID" />
                                 <TableColumn fx:id="colUsername" prefWidth="120.0" text="Tên đăng nhập" />
-                                <TableColumn fx:id="colRole" text="Vai trò" />
-                                <TableColumn fx:id="colFullName" prefWidth="120.0" text="Họ và tên" />
+                                <TableColumn fx:id="colRole" prefWidth="100.0" text="Vai trò" />
+                                <TableColumn fx:id="colFullName" prefWidth="140.0" text="Họ và tên" />
                                 <TableColumn fx:id="colEmail" prefWidth="150.0" text="Email" />
                                 <TableColumn fx:id="colPhone" prefWidth="120.0" text="Số điện thoại" />
                                 <TableColumn fx:id="colDepartment" prefWidth="100.0" text="Phòng ban" />

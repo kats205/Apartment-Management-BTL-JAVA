@@ -104,7 +104,7 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
 
     @Override
     public List<Map<String, Object>> getServiceRegistrationByApartmentId(String apartmentId) throws SQLException{
-        String sql = "SELECT s.service_name, sr.start_date, sr.end_date, s.price_service, sr.status FROM serviceRegistration sr \n" +
+        String sql = "SELECT s.service_name, sr.start_date, sr.end_date, s.price_service, sr.status, s.description FROM serviceRegistration sr \n" +
                 "JOIN Apartment a ON sr.apartment_id = a.apartment_id\n" +
                 "JOIN Service s ON sr.service_id = s.service_id\n" +
                 "WHERE a.apartment_id = ? ";
@@ -120,6 +120,7 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
                 rows.put("end_date", rs.getDate("end_date"));
                 rows.put("price_service", rs.getDouble("price_service"));
                 rows.put("status", rs.getString("status"));
+                rows.put("description", rs.getNString("description"));
                 list.add(rows);
             }
         }catch (SQLException e){

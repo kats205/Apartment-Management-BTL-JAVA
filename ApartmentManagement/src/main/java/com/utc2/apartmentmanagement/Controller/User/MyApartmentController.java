@@ -89,6 +89,7 @@ public class MyApartmentController implements Initializable {
         // Thêm lại dashboard nodes từ controller cha
         parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
+
     private String apartment_id;
     private void getInformationResident() throws SQLException {
         String userName = Session.getUserName();
@@ -99,6 +100,10 @@ public class MyApartmentController implements Initializable {
 
         DecimalFormat df = new DecimalFormat("#,###", symbols);
         df.setMaximumFractionDigits(0);
+        if(apartmentInf.isEmpty()){
+            System.out.println("No apartment information found for user ID: " + userId);
+            return;
+        }
         fullNameResident.setText(apartmentInf.get("full_name").toString());
         moveInDate.setText(apartmentInf.get("move_in_date").toString());
         price.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())));
@@ -106,9 +111,9 @@ public class MyApartmentController implements Initializable {
         apartmentId.setText(apartmentInf.get("apartment_id").toString());
         status.setText(apartmentInf.get("status").toString());
         floor.setText(apartmentInf.get("floor").toString());
-        area.setText(apartmentInf.get("area").toString());
+        area.setText(apartmentInf.get("area").toString() + " m2");
         bedrooms.setText(apartmentInf.get("bedrooms").toString());
-        maintenanceFee.setText(df.format(Double.parseDouble(apartmentInf.get("maintenance_fee").toString())));
+        maintenanceFee.setText(df.format(Double.parseDouble(apartmentInf.get("maintenance_fee").toString())) + " VNĐ");
         apartment_id = apartmentInf.get("apartment_id").toString();
     }
 
@@ -117,6 +122,8 @@ public class MyApartmentController implements Initializable {
             Object value = cellData.getValue().get("service_name");
             return new SimpleStringProperty(value != null ? value.toString() : "null");
         });
+        serviceNameCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
         startDateCol.setCellValueFactory(cellData -> {
             Object dateObj = cellData.getValue().get("start_date");
             if (dateObj instanceof Date) {
@@ -125,6 +132,7 @@ public class MyApartmentController implements Initializable {
             }
             return new SimpleObjectProperty<>(null);
         });
+        startDateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         endDateCol.setCellValueFactory(cellData -> {
             Object dateObj = cellData.getValue().get("end_date");
@@ -134,13 +142,15 @@ public class MyApartmentController implements Initializable {
             }
             return new SimpleObjectProperty<>(null);
         });
+        endDateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
 
         priceCol.setCellValueFactory(cellData -> {
             Object priceObj = cellData.getValue().get("price_service");
             if (priceObj != null) {
                 if (priceObj instanceof Double) {
                     Double price = (Double) priceObj;
-                    return new SimpleStringProperty(String.format("%,.0f", price));
+                    return new SimpleStringProperty(String.format("%,.0f", price) + " VNĐ");
                 } else {
                     // Fallback for other number types
                     return new SimpleStringProperty(priceObj.toString());
@@ -149,11 +159,14 @@ public class MyApartmentController implements Initializable {
                 return new SimpleStringProperty("null");
             }
         });
+        priceCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         statusCol.setCellValueFactory(cellData -> {
             Object value = cellData.getValue().get("status");
             return new SimpleStringProperty(value != null ? value.toString() : "null");
         });
+        statusCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
     }
 
     private void getRegistrationByResident() throws SQLException {
@@ -182,11 +195,13 @@ public class MyApartmentController implements Initializable {
             java.sql.Date date = (java.sql.Date) data.getValue().get("payment_date");
             return new ReadOnlyObjectWrapper<>(date.toLocalDate());
         });
+        dateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         dueDateCol.setCellValueFactory(data -> {
             java.sql.Date date = (java.sql.Date) data.getValue().get("due_date");
             return new ReadOnlyObjectWrapper<>(date != null ? date.toLocalDate() : null);
         });
+        dueDateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         AmountCol.setCellValueFactory(data -> {
             double price = (double) data.getValue().get("total_amount");
@@ -194,10 +209,13 @@ public class MyApartmentController implements Initializable {
             symbols.setGroupingSeparator('.');
             DecimalFormat df = new DecimalFormat("#,###", symbols);
             df.setMaximumFractionDigits(0);
-            return new SimpleStringProperty(df.format(price));
+            return new SimpleStringProperty(df.format(price) + " VNĐ");
         });
+        AmountCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         statusBillCol.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("status")));
+        statusBillCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
     }
 
     private void getBillByResident() throws SQLException {
@@ -230,6 +248,7 @@ public class MyApartmentController implements Initializable {
         }
     }
     double x = 0, y = 0;
+    @FXML
     public void handleViewDetailsBtn(ActionEvent actionEvent) {
         try {
             URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/ViewDetailMyApartmentView.fxml");

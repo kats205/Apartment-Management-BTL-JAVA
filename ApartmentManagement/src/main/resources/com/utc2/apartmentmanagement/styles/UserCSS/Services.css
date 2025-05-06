@@ -3,11 +3,13 @@
 
 /* Tab Pane Styling */
 .services-tab-pane {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: white;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
 .services-tab-pane .tab-header-area .tab-header-background {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: white;
 }
 
 .services-tab-pane .tab-header-area {
@@ -40,15 +42,19 @@
     -fx-background-radius: 5;
     -fx-border-color: #e0e0e0;
     -fx-border-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);
 }
 
 .services-table .column-header {
     -fx-background-color: #1A936F;
     -fx-text-fill: white;
     -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
 }
 
 .services-table .column-header-background .label {
+    -fx-font-size: 14px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
@@ -57,6 +63,8 @@
     -fx-background-color: white;
     -fx-border-color: #f0f0f0;
     -fx-border-width: 0 0 1 0;
+    -fx-font-size: 13px;
+    -fx-font-family: "Segoe UI", sans-serif;
 }
 
 .services-table .table-row-cell:odd {
@@ -69,8 +77,9 @@
 
 /* Scroll Pane */
 .services-scroll-pane {
-    -fx-background-color: #f5f5f5;
-    -fx-background: #f5f5f5;
+    -fx-background-color: white;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);
 }
 
 .services-scroll-pane > .viewport {
