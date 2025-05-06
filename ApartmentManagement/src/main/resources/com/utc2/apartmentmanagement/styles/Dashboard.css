@@ -142,7 +142,7 @@
     -fx-font-size: 13px;
     -fx-font-family: "Segoe UI", sans-serif;
     -fx-background-color: transparent;
-    -fx-transition: -fx-background-color 0.2s ease-in-out;
+    -fx-transition: -fx-background-color 0.1s ease-in-out;
 }
 
 .table-view .table-row-cell:hover {
@@ -154,7 +154,13 @@
     -fx-text-fill: #000000;
 }
 
-
+.table-view .column-header {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-text-fill: #333333;
+    -fx-alignment: CENTER-LEFT;
+}
 
 /* Scrollbar styling */
 .scroll-bar:vertical,

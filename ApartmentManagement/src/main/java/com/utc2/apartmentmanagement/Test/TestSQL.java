@@ -11,7 +11,7 @@ public class TestSQL extends Application {
     double x,y = 0;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/UserDashboard-view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/UserDashboard-view.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(event -> {
             x = event.getSceneX();

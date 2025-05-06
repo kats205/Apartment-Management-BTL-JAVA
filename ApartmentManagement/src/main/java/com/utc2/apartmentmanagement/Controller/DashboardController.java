@@ -373,33 +373,33 @@ public class DashboardController implements Initializable {
         System.out.println("Đã thêm ReportView vào contentArea");
     }
 
-    public void handleButtonSetting(ActionEvent actionEvent) throws IOException {
-        System.out.println("Đang cố gắng tải SettingView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/SettingView.fxml");
-        System.out.println("URL: " + (url != null ? url.toString() : "null"));
-
-        FXMLLoader loader = new FXMLLoader(url);
-        if (url == null) {
-            System.out.println("Không tìm thấy file SettingView.fxml");
-            return;
-        }
-
-        Parent SettingView = loader.load();
-
-        // In ra để debug
-        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
-
-        // Thiết lập kích thước view để lấp đầy contentArea
-        AnchorPane.setTopAnchor(SettingView, 0.0);
-        AnchorPane.setRightAnchor(SettingView, 0.0);
-        AnchorPane.setBottomAnchor(SettingView, 0.0);
-        AnchorPane.setLeftAnchor(SettingView, 0.0);
-
-        // Xóa tất cả các view hiện tại và thêm ApartmentView
-        contentArea.getChildren().clear();
-        contentArea.getChildren().add(SettingView);
-        System.out.println("Đã thêm ReportView vào contentArea");
-    }
+//    public void handleButtonSetting(ActionEvent actionEvent) throws IOException {
+//        System.out.println("Đang cố gắng tải SettingView.fxml");
+//        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/SettingView.fxml");
+//        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+//
+//        FXMLLoader loader = new FXMLLoader(url);
+//        if (url == null) {
+//            System.out.println("Không tìm thấy file SettingView.fxml");
+//            return;
+//        }
+//
+//        Parent SettingView = loader.load();
+//
+//        // In ra để debug
+//        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+//
+//        // Thiết lập kích thước view để lấp đầy contentArea
+//        AnchorPane.setTopAnchor(SettingView, 0.0);
+//        AnchorPane.setRightAnchor(SettingView, 0.0);
+//        AnchorPane.setBottomAnchor(SettingView, 0.0);
+//        AnchorPane.setLeftAnchor(SettingView, 0.0);
+//
+//        // Xóa tất cả các view hiện tại và thêm ApartmentView
+//        contentArea.getChildren().clear();
+//        contentArea.getChildren().add(SettingView);
+//        System.out.println("Đã thêm ReportView vào contentArea");
+//    }
         double x,y = 0;
     @FXML
     public void loadMyProfile() {
