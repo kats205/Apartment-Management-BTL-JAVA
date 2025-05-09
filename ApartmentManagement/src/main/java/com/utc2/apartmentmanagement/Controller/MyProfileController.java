@@ -216,12 +216,18 @@ public class MyProfileController implements Initializable {
         String phone = phoneField.getText();
         String office = officeField.getText();
         UserDAO update = new UserDAO();
-        if(update.updatePhoneNumber(user_id, phone) && update.updateEmail(user_id, email) && update.updateFullName(user_id, FullName) && new StaffDAO().updateDepartment(user_id, office)){
+        StaffDAO staffDAO = new StaffDAO();
+        boolean phoneUpdated = update.updatePhoneNumber(user_id, phone);
+        boolean emailUpdated = update.updateEmail(user_id, email);
+        boolean nameUpdated = update.updateFullName(user_id, FullName);
+        boolean deptUpdated = staffDAO.updateDepartment(user_id, office);
+
+        if (phoneUpdated && emailUpdated && nameUpdated && deptUpdated) {
             AlertBox.showAlertForExeptionRegister("Thông báo!", "Cập nhật thông tin thành công!");
-        }
-        else{
+        } else {
             AlertBox.showAlertForExeptionRegister("Thông báo!", "Cập nhật thông tin không thành công!");
         }
+
     }
 
     public void handleChangePassword(ActionEvent actionEvent) throws Exception {

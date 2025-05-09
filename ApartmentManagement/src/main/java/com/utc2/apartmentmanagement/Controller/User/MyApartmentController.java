@@ -106,7 +106,7 @@ public class MyApartmentController implements Initializable {
         }
         fullNameResident.setText(apartmentInf.get("full_name").toString());
         moveInDate.setText(apartmentInf.get("move_in_date").toString());
-        price.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())));
+        price.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())) + " VNĐ");
         address.setText(apartmentInf.get("address").toString());
         apartmentId.setText(apartmentInf.get("apartment_id").toString());
         status.setText(apartmentInf.get("status").toString());
