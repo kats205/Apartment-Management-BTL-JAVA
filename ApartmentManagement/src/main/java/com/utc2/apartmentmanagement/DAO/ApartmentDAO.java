@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//import static com.utc2.apartmentmanagement.DAO.DatabaseConnection.connection;
-
 
 public class ApartmentDAO implements IApartmentDAO {
     @Override

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả thanh toán</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .payment-result {
+            max-width: 800px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            background-color: white;
+            text-align: center;
+        }
+        .success { color: #28a745; }
+        .failure { color: #dc3545; }
+        .details {
+            margin-top: 20px;
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        table td { padding: 8px; border-bottom: 1px solid #eee; }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+    <link rel="icon" href="com/utc2/apartmentmanagement/Images/logo.png" type="image/png">
+</head>
+<body>
+<div class="payment-result">
+    <h1 class="success">Thanh toán thành công!</h1>
+    <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>
+
+    <div class="details">
+        <h3>Chi tiết giao dịch:</h3>
+        <table>
+            <tr>
+                <td>Mã giao dịch:</td>
+                <td>62503088</td>
+            </tr>
+            <tr>
+                <td>Số tiền:</td>
+                <td>10,000,000 VND</td>
+            </tr>
+            <tr>
+                <td>Ngày thanh toán:</td>
+                <td>2025-05-11 15:51:59</td>
+            </tr>
+            <tr>
+                <td>Nội dung thanh toán:</td>
+                <td>Thanh toán đơn hàng: 62503088</td>
+            </tr>
+            <tr>
+                <td>Ngân hàng:</td>
+                <td>NCB</td>
+            </tr>
+        </table>
+    </div>
+
+    <a href="javascript:window.close();" class="btn">Đóng cửa sổ</a>
+</div>
+
+<script>
+    // Script để tự đóng cổng sau vài giây (tùy chọn)
+    setTimeout(function() {
+        window.close();  // Tự động đóng cửa sổ sau 30 giây
+    }, 30000); // 30 giây
+</script>
+</body>
+</html>

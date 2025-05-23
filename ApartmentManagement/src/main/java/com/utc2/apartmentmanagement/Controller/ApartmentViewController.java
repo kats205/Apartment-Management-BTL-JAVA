@@ -40,7 +40,6 @@ public class ApartmentViewController implements Initializable {
     public AnchorPane apartmentView;
     @FXML
     private ComboBox<String> buildingComboBox;
-
     @FXML
     private ComboBox<String> statusComboBox;
 
@@ -140,7 +139,7 @@ public class ApartmentViewController implements Initializable {
         areaColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
         areaColumn.setPrefWidth(140);
 
-        areaColumn.setCellFactory(column -> new TableCell<Apartment, Double>() {
+        areaColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
@@ -160,7 +159,7 @@ public class ApartmentViewController implements Initializable {
         priceColumn.setStyle("-fx-font-size: 14px; -fx-alignment: CENTER;");
         priceColumn.setPrefWidth(200);
 
-        priceColumn.setCellFactory(column -> new TableCell<Apartment, Double>() {
+        priceColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
@@ -192,8 +191,7 @@ public class ApartmentViewController implements Initializable {
 
     private void loadTableListView(List<Apartment> apartmentList) {
         ObservableList<Apartment> apartmentListOb = FXCollections.observableArrayList();
-        List<Apartment> apartmentList1 = apartmentList;
-        apartmentListOb.addAll(apartmentList1);
+        apartmentListOb.addAll(apartmentList);
         apartmentTable.setItems(apartmentListOb);
     }
 

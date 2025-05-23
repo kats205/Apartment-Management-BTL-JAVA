@@ -88,8 +88,12 @@ public class MyProfileController implements Initializable {
         try {
             String filePath = new UserDAO().getAvatarPathByUserId(Session.getUserName());
             if(filePath!=null){
-                Path pathImage = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars", filePath);
-                Image image = new Image(pathImage.toUri().toString());
+                Path pathImage = Paths.get(System.getProperty("user.home"), "apartment", "avatars", filePath);
+                String s = pathImage.toUri().toString();
+                if(s==null || s.isEmpty()){
+                    s = "com/utc2/apartmentmanagement/assets/Profile/Admin/IMG_0466.JPG";
+                }
+                Image image = new Image(s);
                 userAvatar.setImage(image);
             }
         } catch (SQLException e) {
@@ -140,7 +144,7 @@ public class MyProfileController implements Initializable {
         if (selectedFile != null) {
             try {
                 // Thư mục đích: C:/Users/<Tên người dùng>/apartment_app/avatars
-                Path destinationDir = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars");
+                Path destinationDir = Paths.get(System.getProperty("user.home"), "apartment", "avatars");
                 Files.createDirectories(destinationDir); // Tạo thư mục nếu chưa có
 
                 // Tên file mới (giữ nguyên hoặc có thể đổi tên nếu muốn)

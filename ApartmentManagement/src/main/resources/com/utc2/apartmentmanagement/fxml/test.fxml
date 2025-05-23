@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="root" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PageManagerController">
+    <left>
+        <VBox spacing="10" style="-fx-background-color: #1F2C4C;" prefWidth="250">
+            <padding>
+                <Insets bottom="20" left="20" right="20" top="20" />
+            </padding>
+            <children>
+                <StackPane alignment="CENTER">
+                    <children>
+                        <Label fx:id="logo">
+                            <graphic>
+                                <ImageView fitHeight="80" fitWidth="80">
+                                    <image>
+                                        <Image url="@/public/img/logo-icon.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Label>
+                    </children>
+                </StackPane>
+                <Separator />
+                <Button fx:id="btnDashboard" contentDisplay="LEFT" maxWidth="Infinity" styleClass="button-sidebar" style="-fx-background-color: transparent;" text="Tổng quan">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@/public/img/house-black-silhouette-without-door (1).png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnDevice" contentDisplay="LEFT" maxWidth="Infinity" styleClass="button-sidebar" style="-fx-background-color: transparent;" text="Quản lý thiết bị">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@/public/img/device.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnRoom" contentDisplay="LEFT" maxWidth="Infinity" styleClass="button-sidebar" style="-fx-background-color: transparent;" text="Quản lý phòng">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@/public/img/room (2).png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnMaintenance" contentDisplay="LEFT" maxWidth="Infinity" styleClass="button-sidebar" style="-fx-background-color: transparent;" text="Quản lý bảo trì">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@/public/img/maintanance.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnStatistical" contentDisplay="LEFT" maxWidth="Infinity" styleClass="button-sidebar" style="-fx-background-color: transparent;" text="Thống kê">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@/public/img/trend.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnSetting" contentDisplay="LEFT" maxWidth="Infinity" styleClass="button-sidebar" style="-fx-background-color: transparent;" text="Cài đặt">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@/public/img/settings (1).png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </children>
+        </VBox>
+    </left>
+    <center>
+        <StackPane fx:id="contentPane" />
+    </center>
+</BorderPane>
