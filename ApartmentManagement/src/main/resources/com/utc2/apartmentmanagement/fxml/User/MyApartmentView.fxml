@@ -31,7 +31,7 @@
             <content>
                 <VBox fx:id="apartmentsContainer" prefHeight="464.0" prefWidth="900.0" spacing="25.0">
                     <!-- Apartment Card Template (to be created programmatically) -->
-                    <AnchorPane prefHeight="464.0" prefWidth="900.0" styleClass="apartment-card" stylesheets="@../../styles/MyApartment.css">
+                    <AnchorPane prefHeight="464.0" prefWidth="900.0" styleClass="apartment-card" stylesheets="@../../styles/UserCSS/MyApartment.css">
                         <children>
                             <HBox prefHeight="432.0" prefWidth="830.0" spacing="10.0">
                                 <children>

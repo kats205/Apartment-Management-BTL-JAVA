@@ -6,6 +6,9 @@
 .label {
     -fx-font-size: 13px;
 }
+.button, .button-secondary {
+    -fx-transition: all 0.2s ease;
+}
 
 .button {
     -fx-font-size: 13px;

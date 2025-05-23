@@ -30,6 +30,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -296,10 +297,10 @@ public class ApartmentViewController implements Initializable {
             String filePath = PDF_Export.exportApartmentList("Apartment_List.pdf");
             int user_id = new UserDAO().getIdByUserName(Session.getUserName());
             System.out.println(user_id);
-            LocalDate date = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-            String formattedDate = date.format(formatter);
-            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDate, filePath, LocalDate.now(), LocalDate.now());
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            String formattedDateTime = dateTime.format(formatter);
+            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDateTime, filePath, LocalDate.now(), LocalDate.now());
             new ReportDAO().saveReport(report);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
