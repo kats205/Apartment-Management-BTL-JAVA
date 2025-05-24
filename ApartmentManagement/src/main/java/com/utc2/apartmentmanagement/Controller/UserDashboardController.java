@@ -1,5 +1,6 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.Controller.User.ComplaintsController;
 import com.utc2.apartmentmanagement.Controller.User.FileComplaintController;
 import com.utc2.apartmentmanagement.Controller.User.MyApartmentController;
 import com.utc2.apartmentmanagement.Controller.User.ServicesController;
@@ -103,11 +104,10 @@ public class UserDashboardController implements Initializable {
         dashboardNodes = new ArrayList<>(contentArea.getChildren());
     }
 
-    private void setOnActionForApartment(){
-        // set sự kiện cho button nằm bên sideBar
-        ViewDetailApartment.setOnAction(e -> {;
+    private void setOnActionForApartment() {
+        myApartment.setOnAction(e -> {;
             try {
-                loadMyApartmentView();
+                loadServiceView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -115,14 +115,14 @@ public class UserDashboardController implements Initializable {
         // set sự kiện cho button nằm header nav
         myApartmentButton.setOnAction(e -> {;
             try {
-                loadMyApartmentView();
+                loadServiceView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
-        myApartment.setOnAction(e -> {;
+        ViewDetailApartment.setOnAction(e -> {;
             try {
-                loadMyApartmentView();
+                loadServiceView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -295,32 +295,32 @@ public class UserDashboardController implements Initializable {
     }
 
     public void loadComplaintView() throws IOException {
-        System.out.println("Đang cố gắng tải ComplaintView.fxml");
+        System.out.println("Đang cố gắng tải Complaints.fxml");
         // khi có giao diện thì gán lại đường dẫn cho phù hợp
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/FileComplaint.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/Complaints.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
         if (url == null) {
-            System.out.println("Không tìm thấy file ComplaintView.fxml");
+            System.out.println("Không tìm thấy file Complaints.fxml");
             return;
         }
 
-        Parent ReportView = loader.load();
-        FileComplaintController controller = loader.getController();
+        Parent ComplaintsView = loader.load();
+        ComplaintsController controller = loader.getController();
         controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
         // Thiết lập kích thước view để lấp đầy contentArea
-        AnchorPane.setTopAnchor(ReportView, 0.0);
-        AnchorPane.setRightAnchor(ReportView, 0.0);
-        AnchorPane.setBottomAnchor(ReportView, 0.0);
-        AnchorPane.setLeftAnchor(ReportView, 0.0);
+        AnchorPane.setTopAnchor(ComplaintsView, 0.0);
+        AnchorPane.setRightAnchor(ComplaintsView, 0.0);
+        AnchorPane.setBottomAnchor(ComplaintsView, 0.0);
+        AnchorPane.setLeftAnchor(ComplaintsView, 0.0);
 
         // Xóa tất cả các view hiện tại và thêm ApartmentView
         contentArea.getChildren().clear();
-        contentArea.getChildren().add(ReportView);
+        contentArea.getChildren().add(ComplaintsView);
         System.out.println("Đã thêm ComplaintView vào contentArea");
     }
 
@@ -389,5 +389,10 @@ public class UserDashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public void loadMyProfile(ActionEvent actionEvent) {
     }
 }

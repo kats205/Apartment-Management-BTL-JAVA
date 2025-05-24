@@ -68,12 +68,11 @@
                                                 <TableView fx:id="servicesTableView" prefHeight="400.0" prefWidth="1060.0" styleClass="services-table">
                                                     <columns>
                                                         <TableColumn fx:id="serviceNameColumn" prefWidth="200.0" text="Service Name" />
-                                                        <TableColumn fx:id="descriptionColumn" prefWidth="350.0" text="Description" />
-                                                        <TableColumn fx:id="startDateColumn" prefWidth="120.0" text="Start Date" />
-                                                        <TableColumn fx:id="endDateColumn" prefWidth="120.0" text="End Date" />
-                                                        <TableColumn fx:id="monthlyFeeColumn" prefWidth="120.0" text="Monthly Fee" />
-                                                        <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Status" />
-                                                        <TableColumn fx:id="actionColumn" prefWidth="100.0" text="Action" />
+                                                        <TableColumn fx:id="descriptionColumn" prefWidth="178.93344116210938" text="Description" />
+                                                        <TableColumn fx:id="startDateColumn" prefWidth="212.26657104492188" text="Start Date" />
+                                                        <TableColumn fx:id="endDateColumn" prefWidth="120.00006103515625" text="End Date" />
+                                                        <TableColumn fx:id="priceColumn" prefWidth="163.199951171875" text="Price" />
+                                                        <TableColumn fx:id="statusColumn" prefWidth="181.066650390625" text="Status" />
                                                     </columns>
                                                     <VBox.margin>
                                                         <Insets left="20.0" right="20.0" />
@@ -91,7 +90,7 @@
                                                                 <Font name="System Bold" size="16.0" />
                                                             </font>
                                                         </Label>
-                                                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="cancel-service-button" text="Close">
+                                                        <Button fx:id="CloseBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="cancel-service-button" text="Close">
                                                             <HBox.margin>
                                                                 <Insets left="620.0" />
                                                             </HBox.margin>

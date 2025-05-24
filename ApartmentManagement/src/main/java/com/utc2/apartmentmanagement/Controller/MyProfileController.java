@@ -181,6 +181,7 @@ public class MyProfileController implements Initializable {
         switch (user.getRoleID()) {
             case 1 -> loadManagerInfo(userId);
             case 2 -> loadStaffInfo(user);
+            case 3 -> loadResidentInfo(user);
             default -> System.out.println("Không xác định được vai trò người dùng.");
         }
     }
@@ -197,6 +198,19 @@ public class MyProfileController implements Initializable {
         emailField.setText(user.getEmail());
         phoneField.setText(user.getPhoneNumber());
         officeField.setText(staff.getDepartment());
+    }
+
+    // Hàm xử lý resident(role_id = 3)
+    private void loadResidentInfo(User user) throws SQLException {
+        Staff staff = new StaffDAO().getStaffByUserId(user.getUserID());
+        if (staff == null) {
+            System.out.println("Không có thông tin staff.");
+            return;
+        }
+
+        fullNameField.setText(user.getFullName());
+        emailField.setText(user.getEmail());
+        phoneField.setText(user.getPhoneNumber());
     }
 
     // Hàm xử lý Manager (role_id = 1)

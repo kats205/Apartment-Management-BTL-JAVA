@@ -247,7 +247,7 @@
                                         <Label layoutX="10.0" layoutY="80.0" text="Building:" />
                                         <Label layoutX="10.0" layoutY="100.0" text="Floor:" />
                                         <Label layoutX="10.0" layoutY="120.0" text="Area:" />
-                                        <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="View Details" />
+                                        <Button fx:id="ViewDetailApartment" layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="View Details" />
                                         <Label fx:id="apartmentIdTf" layoutX="90.0" layoutY="60.0" text="Label" />
                                         <Label fx:id="buildingTF" layoutX="61.0" layoutY="80.0" text="Label" />
                                         <Label fx:id="floorTF" layoutX="45.0" layoutY="100.0" text="Label" />
@@ -269,7 +269,7 @@
                                         <Label layoutX="10.0" layoutY="60.0" text="Total Services:" />
                                         <Label layoutX="10.0" layoutY="100.0" text="Monthly Cost:" />
                                         <Label layoutX="10.0" layoutY="120.0" text="Next Payment:" />
-                                        <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Manage Services" />
+                                        <Button fx:id="ViewDetailservice" layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Manage Services" />
                                         <Label fx:id="apartmentIdTf1" layoutX="90.0" layoutY="60.0" text="Label" />
                                         <Label fx:id="apartmentIdTf2" layoutX="103.0" layoutY="80.0" text="Label" />
                                         <Label fx:id="apartmentIdTf3" layoutX="92.0" layoutY="120.0" text="Label" />
