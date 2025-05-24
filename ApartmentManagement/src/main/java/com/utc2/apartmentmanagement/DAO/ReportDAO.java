@@ -243,8 +243,8 @@ public class ReportDAO implements IReportDAO {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement countStmt = connection.prepareStatement(countSql)) {
-            countStmt.setDate(1, java.sql.Date.valueOf(fromDate));
-            countStmt.setDate(2, java.sql.Date.valueOf(toDate));
+            countStmt.setDate(1, Date.valueOf(fromDate));
+            countStmt.setDate(2, Date.valueOf(toDate));
 
             ResultSet countRs = countStmt.executeQuery();
             if (countRs.next()) {
@@ -272,10 +272,10 @@ public class ReportDAO implements IReportDAO {
                     "FROM StatusCounts;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setDate(1, java.sql.Date.valueOf(fromDate));
-                preparedStatement.setDate(2, java.sql.Date.valueOf(toDate));
-                preparedStatement.setDate(3, java.sql.Date.valueOf(fromDate));
-                preparedStatement.setDate(4, java.sql.Date.valueOf(toDate));
+                preparedStatement.setDate(1, Date.valueOf(fromDate));
+                preparedStatement.setDate(2, Date.valueOf(toDate));
+                preparedStatement.setDate(3, Date.valueOf(fromDate));
+                preparedStatement.setDate(4, Date.valueOf(toDate));
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 // Định dạng DecimalFormat để làm tròn số

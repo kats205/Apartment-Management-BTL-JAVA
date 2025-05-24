@@ -204,7 +204,7 @@ public class ServicesController implements Initializable {
             if (registerButton != null) {
                 registerButton.setOnAction(event -> {
                     // Trích xuất thông tin dịch vụ từ thẻ
-                    VBox cardVBox = (VBox) ((javafx.scene.layout.AnchorPane) card).getChildren().get(0);
+                    VBox cardVBox = (VBox) ((AnchorPane) card).getChildren().get(0);
 
                     String serviceName = getServiceName(cardVBox);
                     String price = getServicePrice(cardVBox);
@@ -220,8 +220,8 @@ public class ServicesController implements Initializable {
 
     // Tìm nút đăng ký trong một thẻ dịch vụ
     private Button findRegisterButton(javafx.scene.Node card) {
-        if (card instanceof javafx.scene.layout.AnchorPane) {
-            VBox vbox = (VBox) ((javafx.scene.layout.AnchorPane) card).getChildren().get(0);
+        if (card instanceof AnchorPane) {
+            VBox vbox = (VBox) ((AnchorPane) card).getChildren().get(0);
             return (Button) vbox.getChildren().stream()
                     .filter(node -> node instanceof Button)
                     .findFirst()

@@ -64,8 +64,7 @@ public class MyApartmentController implements Initializable {
     @FXML public TableColumn<Map<String, Object>, LocalDate> dueDateCol;
     @FXML public TableColumn<Map<String, Object>, String> AmountCol;
     @FXML public TableColumn<Map<String, Object>, String> statusBillCol;
-    @FXML
-    private AnchorPane myApartmentPane;
+
 
     @FXML private Button ViewFullDetailsBtn;
 
@@ -192,13 +191,13 @@ public class MyApartmentController implements Initializable {
         billIdCol.setCellValueFactory(data -> new SimpleObjectProperty<>((Integer) data.getValue().get("bill_id")));
 
         dateCol.setCellValueFactory(data -> {
-            java.sql.Date date = (java.sql.Date) data.getValue().get("payment_date");
+            Date date = (Date) data.getValue().get("payment_date");
             return new ReadOnlyObjectWrapper<>(date.toLocalDate());
         });
         dateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         dueDateCol.setCellValueFactory(data -> {
-            java.sql.Date date = (java.sql.Date) data.getValue().get("due_date");
+            Date date = (Date) data.getValue().get("due_date");
             return new ReadOnlyObjectWrapper<>(date != null ? date.toLocalDate() : null);
         });
         dueDateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");

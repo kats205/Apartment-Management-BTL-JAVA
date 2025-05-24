@@ -64,7 +64,7 @@ public class LoginController {
         setupImagePane();
 
         // Nhấn Enter ở passwordField thì login
-        passwordField.setOnKeyPressed(event -> {
+        rootPane.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 loginButton.fire(); // Gọi lại handleLogin
             }

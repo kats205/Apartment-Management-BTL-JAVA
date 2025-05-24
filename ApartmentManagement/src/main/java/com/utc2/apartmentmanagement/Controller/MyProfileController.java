@@ -88,8 +88,12 @@ public class MyProfileController implements Initializable {
         try {
             String filePath = new UserDAO().getAvatarPathByUserId(Session.getUserName());
             if(filePath!=null){
-                Path pathImage = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars", filePath);
-                Image image = new Image(pathImage.toUri().toString());
+                Path pathImage = Paths.get(System.getProperty("user.home"), "apartment", "avatars", filePath);
+                String s = pathImage.toUri().toString();
+                if(s==null || s.isEmpty()){
+                    s = "com/utc2/apartmentmanagement/assets/Profile/Admin/IMG_0466.JPG";
+                }
+                Image image = new Image(s);
                 userAvatar.setImage(image);
             }
         } catch (SQLException e) {
@@ -140,7 +144,7 @@ public class MyProfileController implements Initializable {
         if (selectedFile != null) {
             try {
                 // Thư mục đích: C:/Users/<Tên người dùng>/apartment_app/avatars
-                Path destinationDir = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars");
+                Path destinationDir = Paths.get(System.getProperty("user.home"), "apartment", "avatars");
                 Files.createDirectories(destinationDir); // Tạo thư mục nếu chưa có
 
                 // Tên file mới (giữ nguyên hoặc có thể đổi tên nếu muốn)
@@ -177,6 +181,7 @@ public class MyProfileController implements Initializable {
         switch (user.getRoleID()) {
             case 1 -> loadManagerInfo(userId);
             case 2 -> loadStaffInfo(user);
+            case 3 -> loadResidentInfo(user);
             default -> System.out.println("Không xác định được vai trò người dùng.");
         }
     }
@@ -193,6 +198,19 @@ public class MyProfileController implements Initializable {
         emailField.setText(user.getEmail());
         phoneField.setText(user.getPhoneNumber());
         officeField.setText(staff.getDepartment());
+    }
+
+    // Hàm xử lý resident(role_id = 3)
+    private void loadResidentInfo(User user) throws SQLException {
+        Staff staff = new StaffDAO().getStaffByUserId(user.getUserID());
+        if (staff == null) {
+            System.out.println("Không có thông tin staff.");
+            return;
+        }
+
+        fullNameField.setText(user.getFullName());
+        emailField.setText(user.getEmail());
+        phoneField.setText(user.getPhoneNumber());
     }
 
     // Hàm xử lý Manager (role_id = 1)
