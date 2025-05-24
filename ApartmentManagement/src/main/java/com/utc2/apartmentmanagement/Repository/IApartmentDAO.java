@@ -4,6 +4,7 @@ import com.utc2.apartmentmanagement.Model.Apartment;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface IApartmentDAO {
     List<Apartment> getAllApartments();
@@ -17,4 +18,6 @@ public interface IApartmentDAO {
     List<Integer> getAllFloorId() throws SQLException;
     int countStatusApartment(String status) throws SQLException;
     List<Object> getApartmentInfoByApartmentID(String apartmentID);
+    Map<String, Object> getInformation(int userId) throws SQLException;
+    
 }

@@ -1,20 +1,36 @@
 package com.utc2.apartmentmanagement.Controller.User;
 
+import com.utc2.apartmentmanagement.Controller.UserDashboardController;
+import com.utc2.apartmentmanagement.DAO.ResidentDAO;
+import com.utc2.apartmentmanagement.DAO.ServiceRegistrationDAO;
+import com.utc2.apartmentmanagement.DAO.UserDAO;
+import com.utc2.apartmentmanagement.Model.Session;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.util.Callback;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Optional;
+import lombok.Setter;
 
-public class ServicesViewController {
+import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+public class ServicesViewController implements Initializable {
 
     @FXML
     private TabPane servicesTabPane;
@@ -26,31 +42,127 @@ public class ServicesViewController {
     private Label totalMonthlyCostLabel;
 
     @FXML
-    private TableView<?> servicesTableView;
+    private TableView<Map<String, Object>> servicesTableView;
 
     @FXML
-    private TableColumn<?, ?> serviceNameColumn;
+    private TableColumn<Map<String, Object>, String> serviceNameColumn;
 
     @FXML
-    private TableColumn<?, ?> descriptionColumn;
+    private TableColumn<Map<String, Object>, String> descriptionColumn;
 
     @FXML
-    private TableColumn<?, ?> startDateColumn;
+    private TableColumn<Map<String, Object>, LocalDate> startDateColumn;
 
     @FXML
-    private TableColumn<?, ?> endDateColumn;
+    private TableColumn<Map<String, Object>, LocalDate> endDateColumn;
+
 
     @FXML
-    private TableColumn<?, ?> monthlyFeeColumn;
+    private TableColumn<Map<String, Object>, String> statusColumn;
 
     @FXML
-    private TableColumn<?, ?> statusColumn;
-
-    @FXML
-    private TableColumn<?, ?> actionColumn;
+    private TableColumn<Map<String, Object>, String> priceColumn;
 
     @FXML
     private FlowPane servicesFlowPane;
+
+    @FXML private Button CloseBtn;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        CloseBtn.setOnAction(this::handleCloseButton);
+        try {
+            getRegistrationByResident();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setUpColumnForRegistration(){
+        serviceNameColumn.setCellValueFactory(cellData -> {
+            Object value = cellData.getValue().get("service_name");
+            return new SimpleStringProperty(value != null ? value.toString() : "null");
+        });
+        serviceNameColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        startDateColumn.setCellValueFactory(cellData -> {
+            Object dateObj = cellData.getValue().get("start_date");
+            if (dateObj instanceof Date) {
+                Date date = (Date) dateObj;
+                return new SimpleObjectProperty<>(date.toLocalDate());
+            }
+            return new SimpleObjectProperty<>(null);
+        });
+        startDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        endDateColumn.setCellValueFactory(cellData -> {
+            Object dateObj = cellData.getValue().get("end_date");
+            if (dateObj instanceof Date) {
+                Date date = (Date) dateObj;
+                return new SimpleObjectProperty<>(date.toLocalDate());
+            }
+            return new SimpleObjectProperty<>(null);
+        });
+        endDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        priceColumn.setCellValueFactory(cellData -> {
+            Object priceObj = cellData.getValue().get("price_service");
+            if (priceObj != null) {
+                if (priceObj instanceof Double) {
+                    Double price = (Double) priceObj;
+                    return new SimpleStringProperty(String.format("%,.0f", price) + " VNĐ");
+                } else {
+                    // Fallback for other number types
+                    return new SimpleStringProperty(priceObj.toString());
+                }
+            } else {
+                return new SimpleStringProperty("null");
+            }
+        });
+        priceColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        statusColumn.setCellValueFactory(cellData -> {
+            Object value = cellData.getValue().get("status");
+            return new SimpleStringProperty(value != null ? value.toString() : "null");
+        });
+        statusColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        descriptionColumn.setCellValueFactory(cellData -> {
+            Object value = cellData.getValue().get("description");
+            return new SimpleStringProperty(value != null ? value.toString() : "null");
+        });
+        descriptionColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+    }
+
+
+    private void getRegistrationByResident() throws SQLException {
+        int userId = new UserDAO().getIdByUserName(Session.getUserName());
+        String apartment_id = new ResidentDAO().getApartmentIdByUserID(userId);
+        System.out.println("Apartment ID: " + apartment_id);
+
+        // Step 1: Configure the table columns FIRST
+        setUpColumnForRegistration();
+
+        // Step 2: THEN get and set the data
+        List<Map<String, Object>> result = new ServiceRegistrationDAO().getServiceRegistrationByApartmentId(apartment_id);
+
+        // Debug: Print the data to verify
+        System.out.println("Result size: " + result.size());
+        if (!result.isEmpty()) {
+            System.out.println("First row keys: " + result.get(0).keySet());
+        }
+        ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
+        servicesTableView.setItems(observableList);
+
+        activeServicesLabel.setText(result.size() + " active services");
+        double total = 0;
+        for(Map<String, Object> map : result){
+            if(map.get("status").equals("active")){
+                total += (double) map.get("price_service");
+            }
+        }
+        totalMonthlyCostLabel.setText(String.format("%,.0f", total) + "VNĐ");
+    }
 
     // Khởi tạo controller
     public void initialize() {
@@ -58,6 +170,21 @@ public class ServicesViewController {
         setupTableView();
         updateTotalMonthlyCost();
     }
+
+    @Setter
+    private UserDashboardController parentController;
+
+    @FXML
+    private AnchorPane ServiceView;
+
+
+    public void handleCloseButton(ActionEvent event) {
+        // Xoá apartment view
+        ((Pane) ServiceView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
+    }
+
 
     // Thiết lập các thẻ dịch vụ và gán sự kiện cho nút đăng ký
     private void setupServiceCards() {
@@ -224,4 +351,6 @@ public class ServicesViewController {
         // Giá trị mẫu
         activeServicesLabel.setText("(5 active services)");
     }
+
+
 }

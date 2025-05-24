@@ -41,24 +41,41 @@ public class DashboardController implements Initializable {
     @FXML
     public Button payment;
     @FXML public Button reportButton;
+
     @FXML public Button hrButton;
     @FXML public Label Occupied;
+
     @FXML public Label Available;
+
     @FXML public Label Collected;
+
     @FXML public Label outStanding;
+
     @FXML public Label Pending;
+
     @FXML public Label Completed;
+
     @FXML public Label totalApartmentsLabel;
+
     @FXML public Label requestsLabel;
+
     @FXML public Label revenueLabel;
+
     @FXML public TableView<Map<String, Object>> recentActivitiesTable;
+
     @FXML public TableColumn<Map<String, Object>, String> roleColumn;
+
     @FXML public TableColumn<Map<String, Object>, LocalDate> dateColumn;
+
     @FXML public TableColumn<Map<String, Object>, LocalDate> timeColumn;
+
     @FXML public TableColumn<Map<String, Object>, LocalDate> activityColumn;
+
     @FXML public TableColumn<Map<String, Object>, String> userColumn;
+
     @FXML public TableColumn<Map<String, Object>, Boolean> statusColumn;
     @FXML public TableColumn actionColumn;
+
     @FXML public AnchorPane rootPane;
     @FXML
     private Button ApartmentButton;

@@ -6,7 +6,9 @@ import com.utc2.apartmentmanagement.Repository.IServiceRegistrationDAO;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
 
@@ -99,6 +101,34 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
     public boolean updateStatus(int id, String newStatus) {
         return updateServiceRegistrationField(id, "status", newStatus);
     }
+
+    @Override
+    public List<Map<String, Object>> getServiceRegistrationByApartmentId(String apartmentId) throws SQLException{
+        String sql = "SELECT s.service_name, sr.start_date, sr.end_date, s.price_service, sr.status, s.description FROM serviceRegistration sr \n" +
+                "JOIN Apartment a ON sr.apartment_id = a.apartment_id\n" +
+                "JOIN Service s ON sr.service_id = s.service_id\n" +
+                "WHERE a.apartment_id = ? ";
+        List<Map<String, Object>> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, apartmentId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, Object> rows = new HashMap<>();
+                rows.put("service_name", rs.getString("service_name"));
+                rows.put("start_date", rs.getDate("start_date"));
+                rows.put("end_date", rs.getDate("end_date"));
+                rows.put("price_service", rs.getDouble("price_service"));
+                rows.put("status", rs.getString("status"));
+                rows.put("description", rs.getNString("description"));
+                list.add(rows);
+            }
+        }catch (SQLException e){
+            throw new SQLException("Error retrieving service registration by apartment ID", e);
+        }
+        return list;
+    }
+
     public boolean updateServiceRegistrationField(int id, String field, Object newValue){
         String sql = "UPDATE ServiceRegistration SET " + field + " = ?, updated_at = ? WHERE registration_id = ?";
         try(Connection connection = DatabaseConnection.getConnection();
@@ -125,5 +155,12 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        List<Map<String, Object>> list = new ServiceRegistrationDAO().getServiceRegistrationByApartmentId("C302");
+        for(Map<String, Object> map : list){
+            System.out.println(map);
+        }
     }
 }

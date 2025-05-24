@@ -1,13 +1,13 @@
 package com.utc2.apartmentmanagement.DAO;
 
+import com.utc2.apartmentmanagement.Model.Staff;
 import lombok.Getter;
 import com.utc2.apartmentmanagement.Model.Manager;
 import com.utc2.apartmentmanagement.Repository.IManagerDAO;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 public class ManagerDAO implements IManagerDAO {
     @Override
@@ -69,6 +69,30 @@ public class ManagerDAO implements IManagerDAO {
     public boolean updateStartDate(int managerID, Date newStartDate) {
         return updateManagerField(managerID, "start_date", newStartDate);
     }
+
+
+    @Override
+    public Map<String, Object> getManagerByUserId(int userId) {
+        String sql = "SELECT u.full_name, u.email, u.phone_number, m.office FROM [user] u\n" +
+                "JOIN manager m ON u.user_id = m.manager_id\n" +
+                "WHERE m.manager_id = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                Map<String, Object> information = new HashMap<>();
+                information.put("full_name", rs.getString("full_name"));
+                information.put("email", rs.getString("email"));
+                information.put("phone_number", rs.getString("phone_number"));
+                information.put("office", rs.getString("office"));
+                return information;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public boolean updateManagerField(int managerID, String field, Object newValue){
         String SQL = "UPDATE Manager SET " + field + " = ? WHERE manager_id = ?";
         try(Connection connection = DatabaseConnection.getConnection();
@@ -86,6 +110,4 @@ public class ManagerDAO implements IManagerDAO {
         }
         return false;
     }
-
-
 }

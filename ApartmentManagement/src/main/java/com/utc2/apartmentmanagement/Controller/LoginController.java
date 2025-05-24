@@ -1,8 +1,8 @@
 package com.utc2.apartmentmanagement.Controller;
 
-import com.utc2.apartmentmanagement.DAO.ResidentDAO;
+import com.utc2.apartmentmanagement.DAO.RoleDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
-import com.utc2.apartmentmanagement.Model.Apartment;
+import com.utc2.apartmentmanagement.Model.Role;
 import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
@@ -118,15 +117,31 @@ public class LoginController {
 
         UserDAO userDAO = new UserDAO();
         int role_id = userDAO.login(userName, password);
+
+        // lấy thông tin người dùng vừa đăng nhập và thời gian hiện tại
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formatted = now.format(formatter);
+        Session.setLastLogin(formatted);
+        Session.setUserName(userName);
+        Session.setPassWord(password);
+        Role role = new RoleDAO().getRoleById(role_id);
+        if(role == null){
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
+            return;
+        }
+        String roleName = role.getRoleName();
+        System.out.println("roleName " + roleName);
+        if(roleName != null){
+        Session.setRoleName(new RoleDAO().getRoleById(role_id).getRoleName());
+        }
+        else{
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
+            return;
+        }
         switch (role_id) {
             case 1 -> {
                 try {
-                    LocalDateTime now = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-                    String formatted = now.format(formatter);
-                    Session.setLastLogin(formatted);
-                    Session.setUserName(userName);
                     // Đóng cửa sổ hiện tại
                     ((Stage) usernameField.getScene().getWindow()).close();
                     // Khởi chạy dashboard
@@ -140,14 +155,7 @@ public class LoginController {
             case 2 -> {
 
                 try {
-
-                    LocalDateTime now = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-                    String formatted = now.format(formatter);
-                    Session.setLastLogin(formatted);
-                    Session.setUserName(userName);
-                    // Chuyển sang màn hình cư dân
+                    // Chuyển sang màn hình staff
                     ((Stage) usernameField.getScene().getWindow()).close();
                     StaffView staffView = new StaffView();
                     Stage stage = new Stage();
@@ -158,14 +166,6 @@ public class LoginController {
             }
             case 3 -> {
                 try {
-
-                    LocalDateTime now = LocalDateTime.now();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-                    String formatted = now.format(formatter);
-                    Session.setLastLogin(formatted);
-                    Session.setUserName(userName);
-
                     // Chuyển sang màn hình cư dân
                     ((Stage) usernameField.getScene().getWindow()).close();
                     ResidentView residentView = new ResidentView();
@@ -191,6 +191,7 @@ public class LoginController {
             }
         }
 
+        // hàm hiển thị và ẩn mật khẩu
         @FXML
         private void handleTogglePasswordVisibility () {
             isPasswordVisible = !isPasswordVisible;

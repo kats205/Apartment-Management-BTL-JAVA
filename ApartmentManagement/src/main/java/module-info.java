@@ -25,4 +25,5 @@ module com.utc2.apartmentmanagement {
     opens com.utc2.apartmentmanagement.Controller.User to javafx.fxml;
     exports com.utc2.apartmentmanagement.Controller.User;
 
+
 }

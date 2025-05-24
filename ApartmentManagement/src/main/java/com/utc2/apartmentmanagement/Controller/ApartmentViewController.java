@@ -30,6 +30,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -204,17 +205,21 @@ public class ApartmentViewController implements Initializable {
     }
 
     private void loadIdCB() {
+        buildingComboBox.getItems().clear();
+        buildingComboBox.getItems().add("Chọn tòa nhà");
+
         List<String> apartmentIdList = new ApartmentDAO().getAllIdApartment();
-        for (String s : apartmentIdList) {
-            buildingComboBox.getItems().add(s);
-        }
+        buildingComboBox.getItems().addAll(apartmentIdList);
+        buildingComboBox.getSelectionModel().selectFirst(); // Chọn "Chọn tòa nhà"
     }
 
     private void loadStatusCB() {
+        statusComboBox.getItems().clear();
+        statusComboBox.getItems().add("Chọn trạng thái"); // Thêm lựa chọn mặc định
+
         List<String> statusList = new ApartmentDAO().getAllStatus();
-        for (String s : statusList) {
-            statusComboBox.getItems().add(s);
-        }
+        statusComboBox.getItems().addAll(statusList);
+        statusComboBox.getSelectionModel().selectFirst(); // Chọn "Chọn trạng thái"
 
     }
 
@@ -272,12 +277,10 @@ public class ApartmentViewController implements Initializable {
 
     private void refreshData() {
         // Xóa các lựa chọn trong ComboBox
-        buildingComboBox.getSelectionModel().clearSelection();
-        statusComboBox.getSelectionModel().clearSelection();
-        buildingComboBox.setValue("Chọn tòa nhà");
-        statusComboBox.setValue("Chọn trạng thái");
-        // Tải lại dữ liệu
+        buildingComboBox.getSelectionModel().selectFirst();
+        statusComboBox.getSelectionModel().selectFirst();
         loadData();
+
     }
 
     private void addNewApartment() {
@@ -296,10 +299,10 @@ public class ApartmentViewController implements Initializable {
             String filePath = PDF_Export.exportApartmentList("Apartment_List.pdf");
             int user_id = new UserDAO().getIdByUserName(Session.getUserName());
             System.out.println(user_id);
-            LocalDate date = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-            String formattedDate = date.format(formatter);
-            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDate, filePath, LocalDate.now(), LocalDate.now());
+            LocalDateTime dateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            String formattedDateTime = dateTime.format(formatter);
+            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDateTime, filePath, LocalDate.now(), LocalDate.now());
             new ReportDAO().saveReport(report);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -334,9 +337,14 @@ public class ApartmentViewController implements Initializable {
 
     public void handleButtonSearch(ActionEvent event) {
         String apartmentId = buildingComboBox.getValue();
-        System.out.println("Apartment ID: " + apartmentId);
+        if ("Chọn tòa nhà".equals(apartmentId)) {
+            apartmentId = null;
+        }
+
         String status = statusComboBox.getValue();
-        System.out.println("Status: " + status);
+        if ("Chọn trạng thái".equals(status)) {
+            status = null;
+        }
 
         if (apartmentId != null && status == null) {
             Apartment apartment = new ApartmentDAO().findApartmentById(apartmentId);

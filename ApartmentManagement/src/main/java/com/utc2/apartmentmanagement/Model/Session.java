@@ -19,7 +19,12 @@ public class Session {
     @Setter
     @Getter
     private static String avatarPath;
-
+    @Setter
+    @Getter
+    private static String roleName;
+    @Setter
+    @Getter
+    private static String passWord;
     public Session() {}
 
     public Session(String userName, String lastLogin) {

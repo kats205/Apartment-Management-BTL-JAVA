@@ -1,6 +1,13 @@
 package com.utc2.apartmentmanagement.Controller;
 
+import com.utc2.apartmentmanagement.DAO.ManagerDAO;
+import com.utc2.apartmentmanagement.DAO.StaffDAO;
+import com.utc2.apartmentmanagement.DAO.UserDAO;
 import com.utc2.apartmentmanagement.Model.Session;
+import com.utc2.apartmentmanagement.Model.Staff;
+import com.utc2.apartmentmanagement.Model.User;
+import com.utc2.apartmentmanagement.Utils.AlertBox;
+import com.utc2.apartmentmanagement.Utils.passwordEncryption;
 import com.utc2.apartmentmanagement.Views.login;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +32,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -51,8 +61,12 @@ public class MyProfileController implements Initializable {
     @FXML public PasswordField newPasswordField1;
     @FXML public Button changePasswordBtn1;
     @FXML public Button logoutBtn;
+    @FXML public Label roleName;
+    @FXML public AnchorPane rootPane;
     @Setter
     private DashboardController parentDashBoardController;
+    @Setter
+    private UserDashboardController parentUserDashBoardController;
     @Setter
     private StaffDashboardController parentStaffDashBoard;
     @Setter
@@ -68,13 +82,35 @@ public class MyProfileController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // set tên và thời gian đăng nhập của người dùng
+        setInformationUser();
+        // set lại avatar cho người dùng
+        try {
+            String filePath = new UserDAO().getAvatarPathByUserId(Session.getUserName());
+            if(filePath!=null){
+                Path pathImage = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars", filePath);
+                Image image = new Image(pathImage.toUri().toString());
+                userAvatar.setImage(image);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            initInformation();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void setInformationUser(){
         String username = Session.getUserName();
         String lastlogin = Session.getLastLogin();
         System.out.println("Last login: " + lastLogin);
         System.out.println("User name: " + userName);
         userName.setText(username);
         lastLogin.setText(lastlogin);
-
+        roleName.setText(Session.getRoleName());
     }
     @FXML
     public void handleLogout() throws Exception {
@@ -83,14 +119,6 @@ public class MyProfileController implements Initializable {
             ((Stage)fullNameField.getScene().getWindow()).close();
         }
 
-        // Mở lại login
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/login-view.fxml"));
-//        Parent root = loader.load();
-//
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(root));
-//        stage.setTitle("Login");
-//        stage.show();
         Stage stage = new Stage();
         login loginView = new login();
         loginView.start(stage);
@@ -100,36 +128,157 @@ public class MyProfileController implements Initializable {
     public void handleChangeAvatar(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Chọn ảnh đại diện");
+
+// Lọc file chỉ cho phép chọn ảnh
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
 
+// Mở cửa sổ chọn file ảnh
         File selectedFile = fileChooser.showOpenDialog(changeAvatarBtn.getScene().getWindow());
 
         if (selectedFile != null) {
             try {
-                // Tạo thư mục lưu ảnh (ví dụ: C:/Users/YourName/apartment_app/avatars)
+                // Thư mục đích: C:/Users/<Tên người dùng>/apartment_app/avatars
                 Path destinationDir = Paths.get(System.getProperty("user.home"), "apartment_app", "avatars");
-                Files.createDirectories(destinationDir);
+                Files.createDirectories(destinationDir); // Tạo thư mục nếu chưa có
 
-                // Đặt tên file mới (giữ tên cũ hoặc đặt lại tuỳ ý)
-                Path destinationFile = destinationDir.resolve(selectedFile.getName());
-
-                // Copy file ảnh vào thư mục đích
+                // Tên file mới (giữ nguyên hoặc có thể đổi tên nếu muốn)
+                int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+                String newFileName = "user_" + user_id + "_" + selectedFile.getName(); // Gợi ý đặt tên duy nhất
+                Path destinationFile = destinationDir.resolve(newFileName);
+                Session.setAvatarPath(newFileName);
+                // Copy ảnh vào thư mục
                 Files.copy(selectedFile.toPath(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
-
-                // Hiển thị ảnh lên ImageView
+                //Lưu tên ảnh vào database tương ứng với user_id
+                if(new UserDAO().updateAvatar(user_id, newFileName)){
+                    System.out.println("Đã cập nhật ảnh đại diện vào database!");
+                }
+                // Hiển thị ảnh mới lên ImageView
                 Image image = new Image(destinationFile.toUri().toString());
                 userAvatar.setImage(image);
 
-                // Ghi lại đường dẫn vào Session (hoặc sau này lưu vào file txt/db nếu muốn giữ lâu dài)
+                // Lưu đường dẫn vào Session (hoặc DB nếu bạn muốn lưu lâu dài)
                 Session.setAvatarPath(destinationFile.toString());
 
-                System.out.println("Đã thay đổi ảnh đại diện");
+                System.out.println("Đã thay đổi ảnh đại diện thành công!");
 
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
+    }
+    public void initInformation() throws SQLException {
+        int userId = new UserDAO().getIdByUserName(Session.getUserName());
+        User user = new UserDAO().getUserByID(userId);
+
+        switch (user.getRoleID()) {
+            case 1 -> loadManagerInfo(userId);
+            case 2 -> loadStaffInfo(user);
+            default -> System.out.println("Không xác định được vai trò người dùng.");
+        }
+    }
+
+    // Hàm xử lý Staff (role_id = 2)
+    private void loadStaffInfo(User user) throws SQLException {
+        Staff staff = new StaffDAO().getStaffByUserId(user.getUserID());
+        if (staff == null) {
+            System.out.println("Không có thông tin staff.");
+            return;
+        }
+
+        fullNameField.setText(user.getFullName());
+        emailField.setText(user.getEmail());
+        phoneField.setText(user.getPhoneNumber());
+        officeField.setText(staff.getDepartment());
+    }
+
+    // Hàm xử lý Manager (role_id = 1)
+    private void loadManagerInfo(int userId) throws SQLException {
+        Map<String, Object> infoMap = new ManagerDAO().getManagerByUserId(userId);
+        if (infoMap == null || infoMap.isEmpty()) {
+            System.out.println("Không có thông tin manager.");
+            return;
+        }
+
+        fullNameField.setText(String.valueOf(infoMap.get("full_name")));
+        emailField.setText(String.valueOf(infoMap.get("email")));
+        phoneField.setText(String.valueOf(infoMap.get("phone_number")));
+        officeField.setText(String.valueOf(infoMap.get("office")));
+    }
+
+    public void handleSaveProfileBtn(ActionEvent actionEvent) throws SQLException {
+        int user_id = new UserDAO().getIdByUserName(Session.getUserName());
+        String FullName = fullNameField.getText();
+        String email = emailField.getText();
+        String phone = phoneField.getText();
+        String office = officeField.getText();
+        UserDAO update = new UserDAO();
+        StaffDAO staffDAO = new StaffDAO();
+        boolean phoneUpdated = update.updatePhoneNumber(user_id, phone);
+        boolean emailUpdated = update.updateEmail(user_id, email);
+        boolean nameUpdated = update.updateFullName(user_id, FullName);
+        boolean deptUpdated = staffDAO.updateDepartment(user_id, office);
+
+        if (phoneUpdated && emailUpdated && nameUpdated && deptUpdated) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Cập nhật thông tin thành công!");
+        } else {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Cập nhật thông tin không thành công!");
+        }
+
+    }
+
+    public void handleChangePassword(ActionEvent actionEvent) throws Exception {
+        // password vừa nhập
+        String currentPassword = currentPasswordField.getText();
+        String newPassword = newPasswordField1.getText();
+        String confirmPassword = confirmPasswordField.getText();
+
+        if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Mật khẩu mới không khớp!");
+            return;
+        }
+
+        UserDAO userDAO = new UserDAO();
+        int user_id = userDAO.getIdByUserName(Session.getUserName());
+        // password dưới database
+        String currentPasswordInDB = userDAO.getPasswordByUserId(user_id);
+
+        // vì password được hash bằng bcrypt nên ở đây cần check lại
+        // Nếu bạn lưu mật khẩu đã mã hóa (băm), bạn cần so sánh đã hash lại
+        if (!passwordEncryption.checkPassword(currentPassword, currentPasswordInDB)) {
+            AlertBox.showAlertForExeptionRegister("Thông báo!", "Mật khẩu hiện tại không đúng!");
+            return;
+        }
+        // Thay đổi mật khẩu
+        boolean updated = userDAO.updatePassword(user_id, newPassword);
+        if (updated) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Đổi mật khẩu thành công");
+            alert.setHeaderText("Bạn đã đổi mật khẩu thành công.");
+            alert.setContentText("Bạn có muốn đăng xuất và đăng nhập lại không?");
+            ButtonType buttonYes = new ButtonType("Đăng xuất");
+            ButtonType buttonNo = new ButtonType("Tiếp tục sử dụng");
+            alert.getButtonTypes().setAll(buttonYes, buttonNo);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == buttonYes) {
+                handleLogout(); // giả định có phương thức chuyển scene
+            } else {
+                currentPasswordField.clear();
+                newPasswordField1.clear();
+                confirmPasswordField.clear();
+            }
+        } else {
+            AlertBox.showAlertForExeptionRegister("Lỗi", "Đổi mật khẩu thất bại!");
+        }
+
     }
 }

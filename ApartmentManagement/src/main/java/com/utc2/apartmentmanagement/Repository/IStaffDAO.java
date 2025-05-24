@@ -19,4 +19,5 @@ public interface IStaffDAO {
     List<String> listPosition() throws SQLException;
     List<Map<String, Object>> filterStaffByRoleName(String position) throws SQLException;
     List<Map<String, Object>> listStaffRecentActivities() throws SQLException;
+    Staff getStaffByUserId(int userId) throws SQLException;
 }
