@@ -1,7 +1,7 @@
 package com.utc2.apartmentmanagement.Controller;
 
 import com.utc2.apartmentmanagement.Controller.User.MyApartmentController;
-import com.utc2.apartmentmanagement.Controller.User.ServicesViewController;
+import com.utc2.apartmentmanagement.Controller.User.ServicesController;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.ResidentDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
@@ -252,7 +252,7 @@ public class UserDashboardController implements Initializable {
     public void loadServiceView() throws IOException {
         System.out.println("Đang cố gắng tải Service.fxml");
         // khi có giao diện thì gán lại đường dẫn cho phù hợp
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/ServicesView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/Services.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
@@ -262,7 +262,7 @@ public class UserDashboardController implements Initializable {
         }
 
         Parent ReportView = loader.load();
-        ServicesViewController controller = loader.getController();
+        ServicesController controller = loader.getController();
         controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));

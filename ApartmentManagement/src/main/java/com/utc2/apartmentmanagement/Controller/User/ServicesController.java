@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class ServicesViewController implements Initializable {
+public class ServicesController implements Initializable {
 
     @FXML
     private TabPane servicesTabPane;

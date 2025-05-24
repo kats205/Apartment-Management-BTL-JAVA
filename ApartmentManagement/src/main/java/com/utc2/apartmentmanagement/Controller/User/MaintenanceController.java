@@ -2,7 +2,7 @@ package com.utc2.apartmentmanagement.Controller.User;
 
 import javafx.event.ActionEvent;
 
-public class FileComplaintController {
+public class MaintenanceController {
     public void handleUploadPhoto(ActionEvent event) {
     }
 
