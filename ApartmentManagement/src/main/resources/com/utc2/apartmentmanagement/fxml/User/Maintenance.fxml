@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Maintenance.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.TestController">
+<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Maintenance.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MaintenanceController">
     <children>
         <BorderPane prefHeight="638.0" prefWidth="1100.0">
             <center>
@@ -29,11 +29,14 @@
                             <content>
                                 <VBox prefHeight="665.0" prefWidth="1050.0" spacing="20.0" styleClass="form-container">
                                     <children>
-                                        <Label styleClass="section-title" text="Complaint Information">
+                                        <!-- Section Title -->
+                                        <Label styleClass="section-title" text="Maintenance Request Information">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
                                         </Label>
+
+                                        <!-- Basic Information Grid -->
                                         <GridPane hgap="20.0" vgap="15.0">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
@@ -47,38 +50,72 @@
                                                 <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <Label styleClass="form-label" text="Complaint Type:" />
-                                                <ComboBox fx:id="complaintTypeComboBox" maxWidth="1.7976931348623157E308" promptText="Select Complaint Type" styleClass="form-field" GridPane.columnIndex="1" />
+                                                <!-- Row 1 -->
+                                                <Label styleClass="form-label" text="Issue Type:" />
+                                                <ComboBox fx:id="issueTypeComboBox" maxWidth="1.7976931348623157E308" promptText="Select issue type" styleClass="form-field" GridPane.columnIndex="1" />
+
                                                 <Label styleClass="form-label" text="Priority:" GridPane.columnIndex="2" />
-                                                <ComboBox fx:id="priorityComboBox" maxWidth="1.7976931348623157E308" promptText="Select Priority" styleClass="form-field" GridPane.columnIndex="3" />
+                                                <ComboBox fx:id="priorityComboBox" maxWidth="1.7976931348623157E308" promptText="Select priority level" styleClass="form-field" GridPane.columnIndex="3" />
+
+                                                <!-- Row 2 -->
                                                 <Label styleClass="form-label" text="Apartment ID:" GridPane.rowIndex="1" />
                                                 <TextField fx:id="apartmentIdTextField" editable="false" maxWidth="1.7976931348623157E308" styleClass="form-field-readonly" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
                                                 <Label styleClass="form-label" text="Resident ID:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                 <TextField fx:id="residentIdTextField" editable="false" maxWidth="1.7976931348623157E308" styleClass="form-field-readonly" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                                <Label fx:id="serviceLabel" styleClass="form-label" text="Service:" GridPane.rowIndex="2" />
-                                                <ComboBox fx:id="serviceComboBox" maxWidth="1.7976931348623157E308" promptText="Select Service" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label fx:id="registrationLabel" styleClass="form-label" text="Registration ID:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                <TextField fx:id="registrationIdTextField" editable="false" maxWidth="1.7976931348623157E308" styleClass="form-field-readonly" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+                                                <!-- Row 3 -->
+                                                <Label styleClass="form-label" text="Location:" GridPane.rowIndex="2" />
+                                                <ComboBox fx:id="locationComboBox" maxWidth="1.7976931348623157E308" promptText="Select location in apartment" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                                <Label styleClass="form-label" text="Request Date:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                <DatePicker fx:id="requestDatePicker" editable="false" maxWidth="1.7976931348623157E308" promptText="Auto-filled with today's date" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                             </children>
                                         </GridPane>
+
+                                        <!-- Subject/Title Section -->
                                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="992.0" spacing="20.0">
                                             <children>
-                                                <Label styleClass="form-label" text="Subject:" />
-                                                <TextField fx:id="subjectTextField" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="267.0" promptText="Enter a brief subject for your complaint" styleClass="form-field" />
-                                                <Label styleClass="form-label" text="Date:">
-                                                    <HBox.margin>
-                                                        <Insets left="145.0" />
-                                                    </HBox.margin>
-                                                </Label>
-                                                <DatePicker fx:id="complaintDatePicker" prefHeight="40.0" prefWidth="226.0" promptText="Select Date" styleClass="form-field" />
+                                                <Label styleClass="form-label" text="Subject:" minWidth="120.0" />
+                                                <TextField fx:id="subjectTextField" maxWidth="1.7976931348623157E308" prefHeight="40.0" HBox.hgrow="ALWAYS" promptText="Brief description of the maintenance issue (e.g., Broken door lock, Water leak)" styleClass="form-field" />
                                             </children>
                                         </HBox>
+
+                                        <!-- Detailed Description -->
                                         <VBox spacing="5.0">
                                             <children>
-                                                <Label styleClass="form-label" text="Description:" />
-                                                <TextArea fx:id="descriptionTextArea" prefHeight="120.0" prefWidth="992.0" promptText="Please provide detailed information about your complaint..." styleClass="form-field" wrapText="true" />
+                                                <Label styleClass="form-label" text="Detailed Description:" />
+                                                <TextArea fx:id="descriptionTextArea" prefHeight="120.0" prefWidth="992.0" promptText="Please provide detailed information about the maintenance issue:&#10;• When did the problem start?&#10;• What is the current condition?&#10;• How severe is the impact?&#10;• Any attempts to fix it?&#10;• Additional relevant information..." styleClass="form-field" wrapText="true" />
                                             </children>
                                         </VBox>
+
+                                        <!-- Contact Information Section -->
+                                        <Label styleClass="section-title" text="Contact Information">
+                                            <font>
+                                                <Font name="System Bold" size="16.0" />
+                                            </font>
+                                        </Label>
+
+                                        <GridPane hgap="20.0" vgap="15.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="320.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="320.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label styleClass="form-label" text="Phone Number:" />
+                                                <TextField fx:id="phoneNumberTextField" maxWidth="1.7976931348623157E308" promptText="Your contact number" styleClass="form-field" GridPane.columnIndex="1" />
+
+                                                <Label styleClass="form-label" text="Available Time:" GridPane.columnIndex="2" />
+                                                <ComboBox fx:id="availableTimeComboBox" maxWidth="1.7976931348623157E308" promptText="When can maintenance visit?" styleClass="form-field" GridPane.columnIndex="3" />
+                                            </children>
+                                        </GridPane>
+
+                                        <!-- Photo Upload Section -->
                                         <VBox spacing="5.0">
                                             <children>
                                                 <Label styleClass="form-label" text="Attach Photos (optional):" />
@@ -91,23 +128,48 @@
                                                             <graphic>
                                                                 <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@../../assets/UserDashboard/Complaint/external-link.png" />
+                                                                        <Image url="@../../assets/icons/camera.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </graphic>
                                                         </Button>
                                                         <Label fx:id="photoNameLabel" styleClass="file-name-label" text="No file selected" />
+                                                        <Label styleClass="file-info-label" text="(Supports JPG, PNG, PDF - Max 5MB)" />
                                                     </children>
                                                 </HBox>
                                             </children>
                                         </VBox>
+
+                                        <!-- Important Notes Box -->
+                                        <VBox spacing="5.0" styleClass="note-box">
+                                            <padding>
+                                                <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                            </padding>
+                                            <children>
+                                                <Label styleClass="note-title" text="Important Notes:">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label styleClass="note-content" text="• Urgent requests: Will be addressed within 2-4 hours" wrapText="true" />
+                                                <Label styleClass="note-content" text="• High priority: Will be addressed within 24 hours" wrapText="true" />
+                                                <Label styleClass="note-content" text="• Medium priority: Will be addressed within 2-3 days" wrapText="true" />
+                                                <Label styleClass="note-content" text="• Low priority: Will be addressed within 5-7 days" wrapText="true" />
+                                                <Label styleClass="note-content" text="• Please ensure someone is available during the scheduled maintenance visit" wrapText="true" />
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Action Buttons -->
                                         <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="992.0" spacing="15.0">
                                             <children>
-                                                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" prefHeight="30.0" prefWidth="100.0" styleClass="cancel-button" text="Cancel" />
-                                                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="30.0" prefWidth="100.0" styleClass="submit-button" text="Submit" />
+                                                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" prefHeight="35.0" prefWidth="100.0" styleClass="cancel-button" text="Cancel" />
+                                                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="35.0" prefWidth="120.0" styleClass="submit-button" text="Submit Request" />
                                             </children>
                                         </HBox>
                                     </children>
+                                    <padding>
+                                        <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+                                    </padding>
                                 </VBox>
                             </content>
                         </ScrollPane>
@@ -115,9 +177,9 @@
                 </AnchorPane>
             </center>
             <top>
-                <AnchorPane prefHeight="50.0" prefWidth="1100.0" style="-fx-background-color: linear-gradient(to right, #1A936F, #88d498);;" styleClass="header-container" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="50.0" prefWidth="1100.0" style="-fx-background-color: linear-gradient(to right, #1A936F, #88d498);" styleClass="header-container" BorderPane.alignment="CENTER">
                     <children>
-                        <Label layoutX="459.0" layoutY="11.0" styleClass="header-title" text="File a Complaint" textAlignment="CENTER">
+                        <Label layoutX="420.0" layoutY="11.0" styleClass="header-title" text="Maintenance Request" textAlignment="CENTER">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>

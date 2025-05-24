@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Test extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load((getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/Complaints.fxml")));
+        Parent root = FXMLLoader.load((getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/Maintenance.fxml")));
         // Complaints  Services Maintenance
         primaryStage.setTitle("Apartment Application");
         primaryStage.setScene(new Scene(root));
