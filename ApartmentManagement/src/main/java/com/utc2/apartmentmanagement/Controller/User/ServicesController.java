@@ -66,15 +66,20 @@ public class ServicesController implements Initializable {
     @FXML
     private FlowPane servicesFlowPane;
 
-    @FXML
-    private Button CancelBtn;
 
     @FXML
-    private Button CloseBtn;
+    private Button CancelBtn1, CancelBtn2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        CloseBtn.setOnAction(this::handleCloseButton);
+        CancelBtn1.setOnAction(this::handleCloseButton);
+        try {
+            getRegistrationByResident();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        CancelBtn2.setOnAction(this::handleCloseButton);
         try {
             getRegistrationByResident();
         } catch (SQLException e) {
