@@ -7,14 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.util.Callback;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Optional;
 
-public class ServicesViewController {
+import java.time.LocalDate;
+
+public class ServicesController {
 
     @FXML
     private TabPane servicesTabPane;

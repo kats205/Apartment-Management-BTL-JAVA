@@ -33,7 +33,6 @@
 /* Header Section Styles */
 .header-container {
     -fx-background-color: linear-gradient(to right, #1A936F, #88d498);
-    -fx-padding: 15px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
 }
 
