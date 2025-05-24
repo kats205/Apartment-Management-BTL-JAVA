@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Complaints.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.ComplaintsController">
+    <children>
+        <BorderPane prefHeight="655.0" prefWidth="1100.0">
+            <!-- Header Section -->
+            <top>
+                <AnchorPane prefHeight="60.0" prefWidth="1100.0" style="-fx-background-color: white;">
+                    <children>
+                        <Label layoutX="408.0" layoutY="14.0" text="Complaints Management" textFill="#1a936f">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </top>
+
+            <!-- Main Content -->
+            <center>
+                <TabPane fx:id="complaintsTabPane" prefHeight="555.0" prefWidth="1100.0" styleClass="complaints-tab-pane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <!-- Maintenance Complaints Tab -->
+                        <Tab text="Maintenance Requests">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="1100.0">
+                                    <children>
+                                        <VBox fillWidth="false" prefHeight="520.0" prefWidth="1100.0" spacing="15.0">
+                                            <children>
+                                                <!-- Tab Header -->
+                                                <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1060.0" spacing="20.0">
+                                                    <children>
+                                                        <Label text="Maintenance Requests" textFill="#1a936f">
+                                                            <font>
+                                                                <Font name="System Bold" size="18.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label fx:id="maintenanceCountLabel" text="(3 active requests)" textFill="#666666">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets left="20.0" />
+                                                    </padding>
+                                                </HBox>
+
+                                                <!-- Filter Section -->
+                                                <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="50.0" prefWidth="1100.0" spacing="15.0" style="-fx-background-color: white;" styleClass="filter-container" VBox.vgrow="ALWAYS">
+                                                    <children>
+                                                        <Label prefHeight="19.0" prefWidth="45.0" styleClass="filter-label" text="Status:">
+                                                            <HBox.margin>
+                                                                <Insets left="20.0" />
+                                                            </HBox.margin></Label>
+                                                        <ComboBox fx:id="maintenanceStatusFilter" prefHeight="27.0" prefWidth="150.0" promptText="All Status" styleClass="filter-combo" />
+                                                        <Label prefHeight="19.0" prefWidth="50.0" styleClass="filter-label" text="Priority:" />
+                                                        <ComboBox fx:id="maintenancePriorityFilter" prefHeight="27.0" prefWidth="120.0" promptText="All Priority" styleClass="filter-combo" />
+                                                        <Label prefHeight="19.0" prefWidth="70.0" styleClass="filter-label" text="Apartment:" />
+                                                        <TextField fx:id="maintenanceApartmentFilter" prefHeight="27.0" prefWidth="160.0" promptText="Search" styleClass="filter-text" />
+                                                        <Button fx:id="filterMaintenanceButton" mnemonicParsing="false" onAction="#handleFilterMaintenance" prefHeight="29.0" prefWidth="70.0" styleClass="filter-button" text="Filter" />
+                                                        <Button fx:id="clearMaintenanceFilterButton" mnemonicParsing="false" onAction="#handleClearMaintenanceFilter" prefHeight="29.0" prefWidth="70.0" styleClass="clear-filter-button" text="Clear" />
+                                                        <Region prefHeight="29.0" prefWidth="99.0" HBox.hgrow="ALWAYS" />
+                                                        <Button fx:id="refreshMaintenanceButton" mnemonicParsing="false" onAction="#handleRefreshMaintenance" prefHeight="29.0" prefWidth="80.0" styleClass="refresh-button" text="Refresh">
+                                                            <HBox.margin>
+                                                                <Insets right="20.0" />
+                                                            </HBox.margin></Button>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets />
+                                                    </VBox.margin>
+                                                </HBox>
+
+                                                <!-- Action Buttons -->
+                                                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1060.0" spacing="12.0">
+                                                    <children>
+                                                        <Button fx:id="addMaintenanceButton" mnemonicParsing="false" onAction="#handleAddMaintenance" styleClass="action-button-primary" text="New Request" />
+                                                        <Button fx:id="editMaintenanceButton" mnemonicParsing="false" onAction="#handleEditMaintenance" styleClass="action-button-secondary" text="Edit Request" />
+                                                        <Button fx:id="deleteMaintenanceButton" mnemonicParsing="false" onAction="#handleDeleteMaintenance" styleClass="action-button-danger" text="Delete Request" />
+                                                    </children>
+                                                    <padding>
+                                                        <Insets left="20.0" right="20.0" />
+                                                    </padding>
+                                                </HBox>
+
+                                                <!-- Maintenance Table -->
+                                                <TableView fx:id="maintenanceTable" prefHeight="340.0" prefWidth="1060.0" styleClass="data-table">
+                                                    <columns>
+                                                        <TableColumn fx:id="maintenanceIdColumn" prefWidth="80.0" text="ID" />
+                                                        <TableColumn fx:id="maintenanceApartmentColumn" prefWidth="100.0" text="Apartment" />
+                                                        <TableColumn fx:id="maintenanceResidentColumn" prefWidth="150.0" text="Resident" />
+                                                        <TableColumn fx:id="maintenanceDescriptionColumn" prefWidth="250.0" text="Description" />
+                                                        <TableColumn fx:id="maintenanceStatusColumn" prefWidth="100.0" text="Status" />
+                                                        <TableColumn fx:id="maintenancePriorityColumn" prefWidth="80.0" text="Priority" />
+                                                        <TableColumn fx:id="maintenanceRequestDateColumn" prefWidth="120.0" text="Request Date" />
+                                                        <TableColumn fx:id="maintenanceStaffColumn" prefWidth="120.0" text="Assigned To" />
+                                                    </columns>
+                                                    <VBox.margin>
+                                                        <Insets left="20.0" right="20.0" />
+                                                    </VBox.margin>
+                                                </TableView>
+
+                                                <!-- Footer -->
+                                                <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="1100.0" spacing="10.0">
+                                                    <padding>
+                                                        <Insets right="20.0" />
+                                                    </padding>
+                                                    <children>
+                                                        <Button fx:id="closeMaintenanceButton" mnemonicParsing="false" onAction="#handleClose" styleClass="close-button" text="Close" />
+                                                    </children>
+                                                </HBox>
+                                            </children>
+                                            <padding>
+                                                <Insets top="10.0" />
+                                            </padding>
+                                        </VBox>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+
+                        <!-- Service Complaints Tab -->
+                        <Tab text="Service Complaints">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="1100.0">
+                                    <children>
+                                        <VBox fillWidth="false" prefHeight="520.0" prefWidth="1100.0" spacing="15.0">
+                                            <children>
+                                                <!-- Tab Header -->
+                                                <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1060.0" spacing="20.0">
+                                                    <children>
+                                                        <Label text="Service Complaints" textFill="#1a936f">
+                                                            <font>
+                                                                <Font name="System Bold" size="18.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label fx:id="serviceComplaintsCountLabel" text="(2 active complaints)" textFill="#666666">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets left="20.0" />
+                                                    </padding>
+                                                </HBox>
+
+                                                <!-- Filter Section -->
+                                                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1100.0" spacing="15.0" styleClass="filter-container">
+                                                    <children>
+                                                        <Label prefHeight="19.0" prefWidth="49.0" styleClass="filter-label" text="Status:">
+                                                            <HBox.margin>
+                                                                <Insets left="20.0" />
+                                                            </HBox.margin></Label>
+                                                        <ComboBox fx:id="serviceStatusFilter" prefHeight="27.0" prefWidth="150.0" promptText="All Status" styleClass="filter-combo" />
+                                                        <Label prefHeight="19.0" prefWidth="83.0" styleClass="filter-label" text="Service Type:" />
+                                                        <ComboBox fx:id="serviceTypeFilter" prefHeight="27.0" prefWidth="130.0" promptText="All Services" styleClass="filter-combo" />
+                                                        <Label prefHeight="19.0" prefWidth="74.0" styleClass="filter-label" text="Apartment:" />
+                                                        <TextField fx:id="serviceApartmentFilter" prefHeight="27.0" prefWidth="160.0" promptText="Search" styleClass="filter-text" />
+                                                        <Button fx:id="filterServiceButton" mnemonicParsing="false" onAction="#handleFilterService" prefWidth="70.0" styleClass="filter-button" text="Filter" />
+                                                        <Button fx:id="clearServiceFilterButton" mnemonicParsing="false" onAction="#handleClearServiceFilter" prefWidth="70.0" styleClass="clear-filter-button" text="Clear" />
+                                                        <Region prefHeight="29.0" prefWidth="63.0" HBox.hgrow="ALWAYS" />
+                                                        <Button fx:id="refreshServiceButton" mnemonicParsing="false" onAction="#handleRefreshService" prefHeight="29.0" prefWidth="81.0" styleClass="refresh-button" text="Refresh">
+                                                            <HBox.margin>
+                                                                <Insets right="20.0" />
+                                                            </HBox.margin></Button>
+                                                    </children>
+                                                </HBox>
+
+                                                <!-- Action Buttons -->
+                                                <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1060.0" spacing="12.0">
+                                                    <children>
+                                                        <Button fx:id="addServiceComplaintButton" mnemonicParsing="false" onAction="#handleAddServiceComplaint" styleClass="action-button-primary" text="New Complaint" />
+                                                        <Button fx:id="editServiceComplaintButton" mnemonicParsing="false" onAction="#handleEditServiceComplaint" styleClass="action-button-secondary" text="Edit Complaint" />
+                                                        <Button fx:id="deleteServiceComplaintButton" mnemonicParsing="false" onAction="#handleDeleteServiceComplaint" styleClass="action-button-danger" text="Delete Complaint" />
+                                                    </children>
+                                                    <padding>
+                                                        <Insets left="20.0" right="20.0" />
+                                                    </padding>
+                                                </HBox>
+
+                                                <!-- Service Table -->
+                                                <TableView fx:id="serviceTable" prefHeight="340.0" prefWidth="1060.0" styleClass="data-table">
+                                                    <columns>
+                                                        <TableColumn fx:id="serviceComplaintIdColumn" prefWidth="80.0" text="ID" />
+                                                        <TableColumn fx:id="serviceNameColumn" prefWidth="150.0" text="Service Name" />
+                                                        <TableColumn fx:id="serviceApartmentColumn" prefWidth="100.0" text="Apartment" />
+                                                        <TableColumn fx:id="serviceComplaintDescColumn" prefWidth="250.0" text="Complaint Description" />
+                                                        <TableColumn fx:id="serviceStatusColumn" prefWidth="100.0" text="Status" />
+                                                        <TableColumn fx:id="serviceSeverityColumn" prefWidth="100.0" text="Severity" />
+                                                        <TableColumn fx:id="serviceSubmitDateColumn" prefWidth="120.0" text="Submit Date" />
+                                                        <TableColumn fx:id="serviceResolutionDateColumn" prefWidth="120.0" text="Resolution Date" />
+                                                    </columns>
+                                                    <VBox.margin>
+                                                        <Insets left="20.0" right="20.0" />
+                                                    </VBox.margin>
+                                                </TableView>
+
+                                                <!-- Footer -->
+                                                <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="1100.0" spacing="10.0">
+                                                    <children>
+                                                        <Button fx:id="closeServiceButton" mnemonicParsing="false" onAction="#handleClose" styleClass="close-button" text="Close" />
+                                                    </children>
+                                                    <padding>
+                                                        <Insets right="20.0" />
+                                                    </padding>
+                                                </HBox>
+                                            </children>
+                                            <padding>
+                                                <Insets top="10.0" />
+                                            </padding>
+                                        </VBox>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                    <padding>
+                        <Insets top="15.0" />
+                    </padding>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

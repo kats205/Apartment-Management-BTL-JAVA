@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ServiceView" prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Services.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.ServicesViewController">
+<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Services.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.ServicesController">
     <children>
         <BorderPane prefHeight="655.0" prefWidth="1100.0">
             <top>
@@ -67,12 +67,13 @@
                                                 </HBox>
                                                 <TableView fx:id="servicesTableView" prefHeight="400.0" prefWidth="1060.0" styleClass="services-table">
                                                     <columns>
-                                                        <TableColumn fx:id="serviceNameColumn" prefWidth="223.9999656677246" text="Service Name" />
-                                                        <TableColumn fx:id="descriptionColumn" prefWidth="233.33335876464844" text="Description" />
-                                                        <TableColumn fx:id="priceColumn" prefWidth="140.800048828125" text="Price" />
-                                                        <TableColumn fx:id="startDateColumn" prefWidth="192.00006103515625" text="Start Date" />
-                                                        <TableColumn fx:id="endDateColumn" prefWidth="164.7999267578125" text="End Date " />
-                                          <TableColumn fx:id="statusColumn" prefWidth="104.00006103515625" text="Status " />
+                                                        <TableColumn fx:id="serviceNameColumn" prefWidth="200.0" text="Service Name" />
+                                                        <TableColumn fx:id="descriptionColumn" prefWidth="350.0" text="Description" />
+                                                        <TableColumn fx:id="startDateColumn" prefWidth="120.0" text="Start Date" />
+                                                        <TableColumn fx:id="endDateColumn" prefWidth="120.0" text="End Date" />
+                                                        <TableColumn fx:id="monthlyFeeColumn" prefWidth="120.0" text="Monthly Fee" />
+                                                        <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Status" />
+                                                        <TableColumn fx:id="actionColumn" prefWidth="100.0" text="Action" />
                                                     </columns>
                                                     <VBox.margin>
                                                         <Insets left="20.0" right="20.0" />
@@ -90,11 +91,11 @@
                                                                 <Font name="System Bold" size="16.0" />
                                                             </font>
                                                         </Label>
-                                          <Button fx:id="CloseBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="cancel-service-button" text="Close">
-                                             <HBox.margin>
-                                                <Insets left="620.0" />
-                                             </HBox.margin>
-                                          </Button>
+                                                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" styleClass="cancel-service-button" text="Close">
+                                                            <HBox.margin>
+                                                                <Insets left="620.0" />
+                                                            </HBox.margin>
+                                                        </Button>
                                                     </children>
                                                     <VBox.margin>
                                                         <Insets />
@@ -111,11 +112,11 @@
                         </Tab>
                         <Tab text="Register Services">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="513.0" prefWidth="1130.0">
                                     <children>
-                                        <ScrollPane fitToWidth="true" layoutX="6.0" layoutY="-3.0" prefHeight="520.0" prefWidth="1022.0" styleClass="services-scroll-pane">
+                                        <ScrollPane fitToWidth="true" layoutX="6.0" layoutY="-3.0" prefHeight="520.0" prefWidth="1075.0" styleClass="services-scroll-pane">
                                             <content>
-                                                <FlowPane fx:id="servicesFlowPane" hgap="30.0" prefHeight="774.0" prefWidth="1045.0" vgap="30.0">
+                                                <FlowPane fx:id="servicesFlowPane" hgap="50.0" prefHeight="774.0" prefWidth="1051.0" style="-fx-background-color: white;" vgap="30.0">
                                                     <padding>
                                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                     </padding>
@@ -161,7 +162,7 @@
                                                     <!-- Service Card 2 -->
                                                     <AnchorPane prefHeight="350.0" prefWidth="300.0" styleClass="service-card">
                                                         <children>
-                                                            <VBox alignment="TOP_CENTER" prefHeight="350.0" prefWidth="300.0" spacing="10.0">
+                                                            <VBox alignment="TOP_CENTER" layoutX="1.0" layoutY="-12.0" prefHeight="350.0" prefWidth="300.0" spacing="10.0">
                                                                 <children>
                                                                     <ImageView fitHeight="150.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
                                                                         <image>

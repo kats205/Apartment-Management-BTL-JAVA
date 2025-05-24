@@ -14,20 +14,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../styles/Dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.StaffDashboardController">
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../styles/StaffCSS/StaffDashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.StaffDashboardController">
     <children>
         <BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1280.0">
             <top>
                 <AnchorPane prefHeight="65.0" prefWidth="1280.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                     <children>
-                        <Pane prefHeight="25.0" prefWidth="1280.0" style="-fx-background-color: #0C6E4D;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <Pane prefHeight="25.0" prefWidth="1280.0" style="-fx-background-color: #2c3e50;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                             <children>
                                 <ImageView fx:id="Exit" fitHeight="22.0" fitWidth="22.0" layoutX="1258.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../../assets/Dashboard/exit.png" />
                                     </image>
                                 </ImageView>
-                                <Label alignment="CENTER" layoutX="10.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
+                                <Label alignment="CENTER" layoutX="10.0" prefHeight="25.0" style="-fx-text-fill: #f39c12;" text="Apartment Management System" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
@@ -36,7 +36,7 @@
                         </Pane>
                         <HBox layoutX="150.0" layoutY="25.0" prefHeight="40.0" prefWidth="1130.0" AnchorPane.bottomAnchor="0.0">
                             <children>
-                                <Button fx:id="services" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../../styles/Dashboard.css" text="Services">
+                                <Button fx:id="services" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Services">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -45,7 +45,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="complaints" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../../styles/Dashboard.css" text="Complaints">
+                                <Button fx:id="complaints" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Complaints">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -54,7 +54,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="residents" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../../styles/Dashboard.css" text="Residents">
+                                <Button fx:id="residents" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Residents">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -63,7 +63,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="maintenance" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../../styles/Dashboard.css" text="Maintenance">
+                                <Button fx:id="maintenance" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Maintenance">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -74,7 +74,7 @@
                                 </Button>
                             </children>
                         </HBox>
-                        <Label fx:id="Menu" layoutX="6.0" layoutY="32.0" text="STAFF PANEL">
+                        <Label fx:id="Menu" layoutX="6.0" layoutY="32.0" styleClass="staff-panel-label" text="STAFF PANEL">
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -86,7 +86,7 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <Label fx:id="MenuBack" layoutX="6.0" layoutY="32.0" text="STAFF PANEL">
+                        <Label fx:id="MenuBack" layoutX="6.0" layoutY="32.0" styleClass="staff-panel-label" text="STAFF PANEL">
                             <graphic>
                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -102,11 +102,11 @@
                 </AnchorPane>
             </top>
             <left>
-                <AnchorPane fx:id="slider" prefHeight="655.0" prefWidth="180.0" style="-fx-background-color: #0C8C5F;" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="slider" prefHeight="655.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" BorderPane.alignment="CENTER">
                     <children>
                         <VBox prefHeight="275.0" prefWidth="180.0" AnchorPane.leftAnchor="0.0">
                             <children>
-                                <Button fx:id="servicesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0C8C5F;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Services" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="servicesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Services" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -121,7 +121,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="complaintsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0C8C5F;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Complaints" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="complaintsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Complaints" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -133,7 +133,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="residentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0C8C5F;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Residents" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="residentsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Residents" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -145,7 +145,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="maintenanceButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0C8C5F;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Maintenance" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="maintenanceButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Maintenance" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -157,7 +157,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                                <Button fx:id="approvalButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #0C8C5F;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Approvals" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="approvalButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Approvals" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -172,8 +172,8 @@
                             </children>
                         </VBox>
                         <VBox layoutX="-1.0" layoutY="603.0" prefHeight="50.0" prefWidth="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-                     <children>
-                                <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadMyProfile" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #0C8C5F;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
+                            <children>
+                                <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadMyProfile" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="My Profile" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -185,15 +185,15 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                     </children>
+                            </children>
                         </VBox>
                     </children>
                 </AnchorPane>
             </left>
             <center>
-                <AnchorPane fx:id="contentArea" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #f5f5f5;" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="contentArea" prefHeight="655.0" prefWidth="1130.0" styleClass="staff-content-area" BorderPane.alignment="CENTER">
                     <children>
-                        <Label layoutX="40.0" layoutY="30.0" styleClass="dashboard-title" text="Staff Dashboard Overview" textFill="#0c6e4d">
+                        <Label layoutX="40.0" layoutY="30.0" styleClass="staff-dashboard-title" text="Staff Dashboard Overview">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
@@ -202,9 +202,9 @@
                         <!-- Statistics Cards Row -->
                         <HBox layoutX="40.0" layoutY="80.0" prefHeight="200.0" prefWidth="1040.0" spacing="30.0">
                             <children>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="staff-stat-card">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Service Requests" textFill="#0c6e4d">
+                                        <Label layoutX="10.0" layoutY="20.0" styleClass="staff-stat-title" text="Service Requests">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -214,21 +214,21 @@
                                                 <Image url="@../../assets/Dashboard/dash.png" />
                                             </image>
                                         </ImageView>
-                                        <Label fx:id="totalServicesLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="48" textFill="#0c6e4d">
+                                        <Label fx:id="totalServicesLabel" layoutX="10.0" layoutY="60.0" styleClass="staff-stat-value" text="48">
                                             <font>
                                                 <Font size="36.0" />
                                             </font>
                                         </Label>
-                                        <Label layoutX="10.0" layoutY="110.0" prefHeight="18.0" prefWidth="58.0" styleClass="stat-detail" text="Active:" />
-                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Completed:" />
-                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Details" />
-                                        <Label fx:id="activeServices" layoutX="70.0" layoutY="111.0" />
-                                        <Label fx:id="completedServices" layoutX="80.0" layoutY="130.0" />
+                                        <Label layoutX="10.0" layoutY="110.0" prefHeight="18.0" prefWidth="58.0" styleClass="staff-stat-detail" text="Active:" />
+                                        <Label layoutX="10.0" layoutY="130.0" styleClass="staff-stat-detail" text="Completed:" />
+                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="staffActionButton" text="View Details" />
+                                        <Label fx:id="activeServices" layoutX="70.0" layoutY="111.0" styleClass="staff-stat-detail" text="25" />
+                                        <Label fx:id="completedServices" layoutX="80.0" layoutY="130.0" styleClass="staff-stat-detail" text="23" />
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="staff-stat-card">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Complaints" textFill="#0c6e4d">
+                                        <Label layoutX="10.0" layoutY="20.0" styleClass="staff-stat-title" text="Complaints">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -238,21 +238,21 @@
                                                 <Image url="@../../assets/Dashboard/report.png" />
                                             </image>
                                         </ImageView>
-                                        <Label fx:id="complaintsLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="32" textFill="#0c6e4d">
+                                        <Label fx:id="complaintsLabel" layoutX="10.0" layoutY="60.0" styleClass="staff-stat-value" text="32">
                                             <font>
                                                 <Font size="36.0" />
                                             </font>
                                         </Label>
-                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Resolved: " />
-                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Pending:" />
-                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="View Complaints" />
-                                        <Label fx:id="resolvedComplaints" layoutX="71.0" layoutY="110.0" />
-                                        <Label fx:id="pendingComplaints" layoutX="85.0" layoutY="130.0" />
+                                        <Label layoutX="10.0" layoutY="110.0" styleClass="staff-stat-detail" text="Resolved: " />
+                                        <Label layoutX="10.0" layoutY="130.0" styleClass="staff-stat-detail" text="Pending:" />
+                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="staffActionButton" text="View Complaints" />
+                                        <Label fx:id="resolvedComplaints" layoutX="71.0" layoutY="110.0" styleClass="staff-stat-detail" text="20" />
+                                        <Label fx:id="pendingComplaints" layoutX="85.0" layoutY="130.0" styleClass="staff-stat-detail" text="12" />
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="staff-stat-card">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Maintenance" textFill="#0c6e4d">
+                                        <Label layoutX="10.0" layoutY="20.0" styleClass="staff-stat-title" text="Maintenance">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -262,21 +262,21 @@
                                                 <Image url="@../../assets/Dashboard/data.png" />
                                             </image>
                                         </ImageView>
-                                        <Label fx:id="maintenanceLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="17" textFill="#0c6e4d">
+                                        <Label fx:id="maintenanceLabel" layoutX="10.0" layoutY="60.0" styleClass="staff-stat-value" text="17">
                                             <font>
                                                 <Font size="36.0" />
                                             </font>
                                         </Label>
-                                        <Label layoutX="10.0" layoutY="111.0" styleClass="stat-detail" text="Scheduled:" />
-                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Emergency:" />
-                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="Schedule Tasks" />
-                                        <Label fx:id="scheduledMaintenance" layoutX="81.0" layoutY="110.0" />
-                                        <Label fx:id="emergencyMaintenance" layoutX="80.0" layoutY="130.0" />
+                                        <Label layoutX="10.0" layoutY="111.0" styleClass="staff-stat-detail" text="Scheduled:" />
+                                        <Label layoutX="10.0" layoutY="130.0" styleClass="staff-stat-detail" text="Emergency:" />
+                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="staffActionButton" text="Schedule Tasks" />
+                                        <Label fx:id="scheduledMaintenance" layoutX="81.0" layoutY="110.0" styleClass="staff-stat-detail" text="12" />
+                                        <Label fx:id="emergencyMaintenance" layoutX="80.0" layoutY="130.0" styleClass="staff-stat-detail" text="5" />
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="stat-card">
+                                <AnchorPane prefHeight="200.0" prefWidth="250.0" styleClass="staff-stat-card">
                                     <children>
-                                        <Label layoutX="10.0" layoutY="20.0" styleClass="stat-title" text="Resident Info" textFill="#0c6e4d">
+                                        <Label layoutX="10.0" layoutY="20.0" styleClass="staff-stat-title" text="Resident Info">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -286,28 +286,28 @@
                                                 <Image url="@../../assets/Dashboard/HR.png" />
                                             </image>
                                         </ImageView>
-                                        <Label layoutX="10.0" layoutY="60.0" text="Total Residents: 213" textFill="#0c6e4d">
+                                        <Label layoutX="10.0" layoutY="60.0" styleClass="staff-stat-value-small" text="Total Residents: 213">
                                             <font>
                                                 <Font size="16.0" />
                                             </font>
                                         </Label>
-                                        <Label layoutX="10.0" layoutY="90.0" styleClass="stat-detail" text="New Residents: 7" />
-                                        <Label layoutX="10.0" layoutY="110.0" styleClass="stat-detail" text="Active Contracts: 189" />
-                                        <Label layoutX="10.0" layoutY="130.0" styleClass="stat-detail" text="Expiring Soon: 12" />
-                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="actionButton" text="Resident Directory" />
+                                        <Label layoutX="10.0" layoutY="90.0" styleClass="staff-stat-detail" text="New Residents: 7" />
+                                        <Label layoutX="10.0" layoutY="110.0" styleClass="staff-stat-detail" text="Active Contracts: 189" />
+                                        <Label layoutX="10.0" layoutY="130.0" styleClass="staff-stat-detail" text="Expiring Soon: 12" />
+                                        <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="staffActionButton" text="Resident Directory" />
                                     </children>
                                 </AnchorPane>
                             </children>
                         </HBox>
 
                         <!-- Pending Approvals Section -->
-                        <Label layoutX="40.0" layoutY="325.0" styleClass="section-heading" text="Pending Approvals" textFill="#0c6e4d">
+                        <Label layoutX="40.0" layoutY="325.0" styleClass="staff-section-heading" text="Pending Approvals">
                             <font>
                                 <Font name="System Bold" size="20.0" />
                             </font>
                         </Label>
 
-                        <TableView fx:id="pendingApprovalsTable" layoutX="40.0" layoutY="370.0" prefHeight="245.0" prefWidth="1040.0">
+                        <TableView fx:id="pendingApprovalsTable" layoutX="40.0" layoutY="370.0" prefHeight="245.0" prefWidth="1040.0" styleClass="staff-table">
                             <columns>
                                 <TableColumn fx:id="requestIdColumn" prefWidth="100.0" text="Request ID" />
                                 <TableColumn fx:id="residentColumn" prefWidth="130.0" text="Resident" />
