@@ -32,23 +32,16 @@
 
 /* Header Section Styles */
 .header-container {
-    -fx-background-color: linear-gradient(to right, #1A936F, #88d498);
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+    -fx-background-color: white;
+    /*-fx-background-color: linear-gradient(to right, #1A936F, #88d498); */
 }
 
-.header-title {
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1);
-}
 
 /* Content Section Styles */
 .form-container {
     -fx-background-color: white;
     -fx-background-radius: 8px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);
-    -fx-padding: 25px;
     -fx-spacing: 20px;
 }
 
@@ -158,9 +151,9 @@
 }
 
 .cancel-button {
-    -fx-background-color: white;
-    -fx-text-fill: #495057;
-    -fx-border-color: #ced4da;
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+
     -fx-border-radius: 5px;
 }
 
