@@ -66,7 +66,12 @@ public class ServicesController implements Initializable {
     @FXML
     private FlowPane servicesFlowPane;
 
-    @FXML private Button CloseBtn;
+    @FXML
+    private Button CancelBtn;
+
+    @FXML
+    private Button CloseBtn;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CloseBtn.setOnAction(this::handleCloseButton);
