@@ -34,7 +34,7 @@
                         </Pane>
                         <HBox layoutX="178.0" layoutY="26.0" prefHeight="40.0" prefWidth="1100.0">
                             <children>
-                                <Button fx:id="MyApartmentTop" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="My Apartment">
+                                <Button fx:id="myApartment" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="My Apartment">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -43,7 +43,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="serviceTop" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Services">
+                                <Button fx:id="services" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Services">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -52,7 +52,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="ComplaintTop" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Complaints">
+                                <Button fx:id="complaint" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Complaints">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -61,7 +61,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="reportIcidentTop" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Report Incident">
+                                <Button fx:id="incident" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Report Incident">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -70,7 +70,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="MyProfileTop" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="My Profile">
+                                <Button fx:id="profile" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="My Profile">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -113,7 +113,7 @@
                     <children>
                         <VBox prefHeight="385.0" prefWidth="180.0">
                             <children>
-                                <Button fx:id="MyApartmentLeft" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="My Apartment" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="myApartmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="My Apartment" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -128,23 +128,11 @@
                                         <Insets left="15.0" />
                                     </padding>
                                 </Button>
-                                <Button fx:id="serviceLeft" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Services" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="servicesButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Services" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../../assets/UserDashboard/service.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <padding>
-                                        <Insets left="15.0" />
-                                    </padding>
-                                </Button>
-                                <Button fx:id="registerServiceButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Register Service" textAlignment="CENTER" textFill="WHITE">
-                                    <graphic>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../../assets/UserDashboard/register_service.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -176,7 +164,7 @@
                                         <Insets left="15.0" />
                                     </padding>
                                 </Button>
-                                <Button fx:id="ReportIcidentLeft" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Report Incident" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="incidentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Report Incident" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -204,7 +192,7 @@
                         </VBox>
                         <VBox layoutY="555.0" prefHeight="100.0" prefWidth="180.0">
                             <children>
-                                <Button fx:id="MyProfileLeft" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadMyProfile" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="50.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -260,10 +248,10 @@
                                         <Label layoutX="10.0" layoutY="100.0" text="Floor:" />
                                         <Label layoutX="10.0" layoutY="120.0" text="Area:" />
                                         <Button fx:id="ViewDetailApartment" layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="View Details" />
-                                        <Label fx:id="apartmentIdTf" layoutX="90.0" layoutY="60.0" text="Label" />
-                                        <Label fx:id="buildingTF" layoutX="61.0" layoutY="80.0" text="Label" />
-                                        <Label fx:id="floorTF" layoutX="45.0" layoutY="100.0" text="Label" />
-                                        <Label fx:id="areaTF" layoutX="43.0" layoutY="120.0" text="Label" />
+                              <Label fx:id="apartmentIdTf" layoutX="90.0" layoutY="60.0" text="Label" />
+                              <Label fx:id="buildingTF" layoutX="61.0" layoutY="80.0" text="Label" />
+                              <Label fx:id="floorTF" layoutX="45.0" layoutY="100.0" text="Label" />
+                              <Label fx:id="areaTF" layoutX="43.0" layoutY="120.0" text="Label" />
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10); -fx-border-color: #E3E5EA; -fx-border-radius: 10;">
@@ -282,11 +270,11 @@
                                         <Label layoutX="10.0" layoutY="100.0" text="Monthly Cost:" />
                                         <Label layoutX="10.0" layoutY="120.0" text="Next Payment:" />
                                         <Button fx:id="ViewDetailservice" layoutX="20.0" layoutY="150.0" mnemonicParsing="false" styleClass="userActionButton" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Manage Services" />
-                                        <Label fx:id="apartmentIdTf1" layoutX="90.0" layoutY="60.0" text="Label" />
-                                        <Label fx:id="apartmentIdTf2" layoutX="103.0" layoutY="80.0" text="Label" />
-                                        <Label fx:id="apartmentIdTf3" layoutX="92.0" layoutY="120.0" text="Label" />
-                                        <Label layoutX="10.0" layoutY="80.0" text="Current Services:" />
-                                        <Label fx:id="apartmentIdTf21" layoutX="90.0" layoutY="100.0" text="Label" />
+                              <Label fx:id="apartmentIdTf1" layoutX="90.0" layoutY="60.0" text="Label" />
+                              <Label fx:id="apartmentIdTf2" layoutX="103.0" layoutY="80.0" text="Label" />
+                              <Label fx:id="apartmentIdTf3" layoutX="92.0" layoutY="120.0" text="Label" />
+                              <Label layoutX="10.0" layoutY="80.0" text="Current Services:" />
+                              <Label fx:id="apartmentIdTf21" layoutX="90.0" layoutY="100.0" text="Label" />
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10); -fx-border-color: #E3E5EA; -fx-border-radius: 10;">
