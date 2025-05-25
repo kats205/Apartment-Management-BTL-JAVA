@@ -17,18 +17,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class ViewDetailMyApartmentController {
-    @FXML public Label address;
-    @FXML public Label price;
-    @FXML public Label moveInDate;
-    @FXML public Label fullNameResident;
-    @FXML public Label apartmentId;
-    @FXML public Label status;
-    @FXML public Label floor;
-    @FXML public Label area;
-    @FXML public Label bedrooms;
-    @FXML public Label maintenanceFee;
-
-
     @FXML
     private Label apartmentIdLabel;
 
@@ -96,16 +84,18 @@ public class ViewDetailMyApartmentController {
         if(apartmentInf.isEmpty()){
             System.out.println("Không có thông tin căn hộ nào");
         }else{
-            fullNameResident.setText(apartmentInf.get("full_name").toString());
-            moveInDate.setText(apartmentInf.get("move_in_date").toString());
-            price.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())) + " VNĐ");
-            address.setText(apartmentInf.get("address").toString());
-            apartmentId.setText(apartmentInf.get("apartment_id").toString());
-            status.setText(apartmentInf.get("status").toString());
-            floor.setText(apartmentInf.get("floor").toString());
-            area.setText(apartmentInf.get("area").toString() + " m2");
-            bedrooms.setText(apartmentInf.get("bedrooms").toString());
-            maintenanceFee.setText(df.format(Double.parseDouble(apartmentInf.get("maintenance_fee").toString())) + " VNĐ");
+            primaryResidentLabel.setText(apartmentInf.get("full_name").toString());
+            moveInDateLabel.setText(apartmentInf.get("move_in_date").toString());
+            propertyValueLabel.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())) + " VNĐ");
+            addressLabel.setText(apartmentInf.get("address").toString());
+            apartmentIdLabel.setText(apartmentInf.get("apartment_id").toString());
+            statusLabel.setText(apartmentInf.get("status").toString());
+            floorLabel.setText(apartmentInf.get("floor").toString());
+            areaLabel.setText(apartmentInf.get("area").toString() + " m2");
+            bedroomsLabel.setText(apartmentInf.get("bedrooms").toString());
+            maintenanceFeeLabel.setText(df.format(Double.parseDouble(apartmentInf.get("maintenance_fee").toString())) + " VNĐ");
+
+
         }
     }
 

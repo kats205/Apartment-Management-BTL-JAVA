@@ -1,15 +1,22 @@
 package com.utc2.apartmentmanagement.Controller.User;
 
+import com.utc2.apartmentmanagement.Controller.UserDashboardController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
+import lombok.Setter;
+
 import java.io.File;
 import java.time.LocalDate;
 
 public class MaintenanceController {
 
+    @FXML public AnchorPane maintenanceView;
     @FXML private ComboBox<String> issueTypeComboBox;
     @FXML private ComboBox<String> priorityComboBox;
     @FXML private ComboBox<String> locationComboBox;
@@ -29,6 +36,9 @@ public class MaintenanceController {
     @FXML private Button cancelButton;
 
     private File selectedFile;
+
+    @Setter
+    private UserDashboardController parentController;
 
     @FXML
     private void initialize() {
@@ -156,8 +166,10 @@ public class MaintenanceController {
 
         if (alert.showAndWait().get() == ButtonType.OK) {
             // Close the window
-            Stage stage = (Stage) cancelButton.getScene().getWindow();
-            stage.close();
+            // Xoá ComplaintView
+            ((Pane) maintenanceView.getParent()).getChildren().clear();
+            // Thêm lại dashboard nodes từ controller cha
+            parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
         }
     }
 

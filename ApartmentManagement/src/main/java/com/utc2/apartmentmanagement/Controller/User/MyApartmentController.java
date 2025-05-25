@@ -64,8 +64,7 @@ public class MyApartmentController implements Initializable {
     @FXML public TableColumn<Map<String, Object>, LocalDate> dueDateCol;
     @FXML public TableColumn<Map<String, Object>, String> AmountCol;
     @FXML public TableColumn<Map<String, Object>, String> statusBillCol;
-    @FXML
-    private AnchorPane myApartmentPane;
+
 
     @FXML private Button ViewFullDetailsBtn;
 

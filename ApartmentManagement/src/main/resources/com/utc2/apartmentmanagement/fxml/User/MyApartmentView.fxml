@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="myApartmentPane" prefHeight="655.0" prefWidth="1100.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MyApartmentController">
+<AnchorPane fx:id="MyApartmentPane" prefHeight="655.0" prefWidth="1100.0" style="-fx-background-color: #f5f5f5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MyApartmentController">
     <children>
         <Label layoutX="105.0" layoutY="30.0" text="My Apartments" textFill="#1a936f">
             <font>
@@ -47,8 +47,8 @@
                                         <children>
                                             <HBox alignment="CENTER_LEFT" spacing="15.0">
                                                 <children>
-                                                    <Label styleClass="apartment-id" text="A101" />
-                                                    <Label styleClass="apartment-status" text="occupied" />
+                                                    <Label fx:id="apartmentId" styleClass="apartment-id" text="A101" />
+                                                    <Label fx:id="status" styleClass="apartment-status" text="occupied" />
                                                 </children>
                                             </HBox>
                                             <Label styleClass="building-name" text="Chung Cư KBT" />
@@ -57,25 +57,25 @@
                                                     <VBox spacing="5.0">
                                                         <children>
                                                             <Label styleClass="info-label" text="Floor" />
-                                                            <Label styleClass="info-value" text="1" />
+                                                            <Label fx:id="floor" styleClass="info-value" text="1" />
                                                         </children>
                                                     </VBox>
                                                     <VBox spacing="5.0">
                                                         <children>
                                                             <Label styleClass="info-label" text="Area" />
-                                                            <Label styleClass="info-value" text="75.5 m²" />
+                                                            <Label fx:id="area" styleClass="info-value" text="75.5 m²" />
                                                         </children>
                                                     </VBox>
                                                     <VBox spacing="5.0">
                                                         <children>
                                                             <Label styleClass="info-label" text="Bedrooms" />
-                                                            <Label styleClass="info-value" text="2" />
+                                                            <Label fx:id="bedrooms" styleClass="info-value" text="2" />
                                                         </children>
                                                     </VBox>
                                                     <VBox spacing="5.0">
                                                         <children>
                                                             <Label styleClass="info-label" text="Maintenance Fee" />
-                                                            <Label styleClass="info-value" text="1,500,000 VND" />
+                                                            <Label fx:id="maintenanceFee" styleClass="info-value" text="1,500,000 VND" />
                                                         </children>
                                                     </VBox>
                                                 </children>
@@ -93,13 +93,13 @@
                                                                                     <VBox spacing="5.0">
                                                                                         <children>
                                                                                             <Label styleClass="detail-label" text="Building Address" />
-                                                                                            <Label styleClass="detail-value" text="123 Đường Lê Văn Lương, Quận 7, TP.HCM" wrapText="true" />
+                                                                                            <Label fx:id="address" styleClass="detail-value" text="123 Đường Lê Văn Lương, Quận 7, TP.HCM" wrapText="true" />
                                                                                         </children>
                                                                                     </VBox>
                                                                                     <VBox spacing="5.0">
                                                                                         <children>
                                                                                             <Label styleClass="detail-label" text="Property Value" />
-                                                                                            <Label styleClass="detail-value" text="1,510,000,000 VND" />
+                                                                                            <Label fx:id="price" styleClass="detail-value" text="1,510,000,000 VND" />
                                                                                         </children>
                                                                                     </VBox>
                                                                                 </children>
@@ -109,13 +109,13 @@
                                                                                     <VBox spacing="5.0">
                                                                                         <children>
                                                                                             <Label styleClass="detail-label" text="Move-in Date" />
-                                                                                            <Label styleClass="detail-value" text="01/06/2022" />
+                                                                                            <Label fx:id="moveInDate" styleClass="detail-value" text="01/06/2022" />
                                                                                         </children>
                                                                                     </VBox>
                                                                                     <VBox spacing="5.0">
                                                                                         <children>
                                                                                             <Label styleClass="detail-label" text="Primary Resident" />
-                                                                                            <Label styleClass="detail-value" text="Vũ Đức Cư" />
+                                                                                            <Label fx:id="fullNameResident" styleClass="detail-value" text="Vũ Đức Cư" />
                                                                                         </children>
                                                                                     </VBox>
                                                                                 </children>
@@ -133,13 +133,13 @@
                                                         <content>
                                                             <AnchorPane>
                                                                 <children>
-                                                                    <TableView prefHeight="150.0">
+                                                                    <TableView fx:id="tableBills" prefHeight="150.0">
                                                                         <columns>
-                                                                            <TableColumn prefWidth="100.0" text="Bill ID" />
-                                                                            <TableColumn prefWidth="100.0" text="Date" />
-                                                                            <TableColumn prefWidth="120.0" text="Due Date" />
-                                                                            <TableColumn prefWidth="150.0" text="Amount" />
-                                                                            <TableColumn prefWidth="100.0" text="Status" />
+                                                                            <TableColumn fx:id="billIdCol" prefWidth="100.0" text="Bill ID" />
+                                                                            <TableColumn fx:id="dateCol" prefWidth="100.0" text="Date" />
+                                                                            <TableColumn fx:id="dueDateCol" prefWidth="120.0" text="Due Date" />
+                                                                            <TableColumn fx:id="AmountCol" prefWidth="150.0" text="Amount" />
+                                                                            <TableColumn fx:id="statusBillCol" prefWidth="100.0" text="Status" />
                                                                         </columns>
                                                                     </TableView>
                                                                 </children>
@@ -150,13 +150,13 @@
                                                         <content>
                                                             <AnchorPane>
                                                                 <children>
-                                                                    <TableView prefHeight="150.0">
+                                                                    <TableView fx:id="tableService" prefHeight="150.0">
                                                                         <columns>
-                                                                            <TableColumn prefWidth="150.0" text="Service Name" />
-                                                                            <TableColumn prefWidth="100.0" text="Start Date" />
-                                                                            <TableColumn prefWidth="100.0" text="End Date" />
-                                                                            <TableColumn prefWidth="120.0" text="Price" />
-                                                                            <TableColumn prefWidth="100.0" text="Status" />
+                                                                            <TableColumn fx:id="serviceNameCol" prefWidth="150.0" text="Service Name" />
+                                                                            <TableColumn fx:id="startDateCol" prefWidth="100.0" text="Start Date" />
+                                                                            <TableColumn fx:id="endDateCol" prefWidth="100.0" text="End Date" />
+                                                                            <TableColumn fx:id="priceCol" prefWidth="120.0" text="Price" />
+                                                                            <TableColumn fx:id="statusCol" prefWidth="100.0" text="Status" />
                                                                         </columns>
                                                                     </TableView>
                                                                 </children>
@@ -167,7 +167,7 @@
                                             </TabPane>
                                             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                                                 <children>
-                                                    <Button mnemonicParsing="false" styleClass="view-details-button" text="View Full Details" />
+                                                    <Button mnemonicParsing="false" onAction="#handleViewDetailsBtn" styleClass="view-details-button" text="View Full Details" />
                                                     <Button mnemonicParsing="false" styleClass="manage-button" text="Manage Apartment" />
                                                 </children>
                                             </HBox>

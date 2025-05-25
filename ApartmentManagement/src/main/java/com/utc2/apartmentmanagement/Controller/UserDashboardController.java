@@ -1,9 +1,6 @@
 package com.utc2.apartmentmanagement.Controller;
 
-import com.utc2.apartmentmanagement.Controller.User.ComplaintsController;
-import com.utc2.apartmentmanagement.Controller.User.FileComplaintController;
-import com.utc2.apartmentmanagement.Controller.User.MyApartmentController;
-import com.utc2.apartmentmanagement.Controller.User.ServicesController;
+import com.utc2.apartmentmanagement.Controller.User.*;
 import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.ResidentDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
@@ -107,7 +104,7 @@ public class UserDashboardController implements Initializable {
     private void setOnActionForApartment() {
         myApartment.setOnAction(e -> {;
             try {
-                loadServiceView();
+                loadMyApartmentView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -115,14 +112,14 @@ public class UserDashboardController implements Initializable {
         // set sự kiện cho button nằm header nav
         myApartmentButton.setOnAction(e -> {;
             try {
-                loadServiceView();
+                loadMyApartmentView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
         ViewDetailApartment.setOnAction(e -> {;
             try {
-                loadServiceView();
+                loadMyApartmentView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -166,8 +163,8 @@ public class UserDashboardController implements Initializable {
             }
         });
         complaintButton.setOnAction(e -> {;
-            try {
-                loadComplaintView();
+                try {
+                    loadComplaintView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -325,32 +322,32 @@ public class UserDashboardController implements Initializable {
     }
 
     public void loadReportIncidentView() throws IOException {
-        System.out.println("Đang cố gắng tải ReportIncidentView.fxml");
+        System.out.println("Đang cố gắng tải Maintenance.fxml");
         // khi có giao diện thì gán lại đường dẫn cho phù hợp
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/ReportIncidentView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/Maintenance.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
         if (url == null) {
-            System.out.println("Không tìm thấy file ReportIncidentView.fxml");
+            System.out.println("Không tìm thấy file Maintenance.fxml");
             return;
         }
 
-        Parent ReportView = loader.load();
-        ReportController controller = loader.getController();
+        Parent Maintenance = loader.load();
+        MaintenanceController controller = loader.getController();
         controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
         // Thiết lập kích thước view để lấp đầy contentArea
-        AnchorPane.setTopAnchor(ReportView, 0.0);
-        AnchorPane.setRightAnchor(ReportView, 0.0);
-        AnchorPane.setBottomAnchor(ReportView, 0.0);
-        AnchorPane.setLeftAnchor(ReportView, 0.0);
+        AnchorPane.setTopAnchor(Maintenance, 0.0);
+        AnchorPane.setRightAnchor(Maintenance, 0.0);
+        AnchorPane.setBottomAnchor(Maintenance, 0.0);
+        AnchorPane.setLeftAnchor(Maintenance, 0.0);
 
         // Xóa tất cả các view hiện tại và thêm ApartmentView
         contentArea.getChildren().clear();
-        contentArea.getChildren().add(ReportView);
+        contentArea.getChildren().add(Maintenance);
         System.out.println("Đã thêm ReportIncidentView vào contentArea");
     }
 

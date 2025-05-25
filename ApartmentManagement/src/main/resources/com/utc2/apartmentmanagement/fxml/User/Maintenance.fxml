@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Maintenance.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MaintenanceController">
+<AnchorPane fx:id="maintenanceView" prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Maintenance.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MaintenanceController">
     <children>
         <BorderPane prefHeight="638.0" prefWidth="1100.0">
             <center>
