@@ -163,8 +163,8 @@ public class UserDashboardController implements Initializable {
             }
         });
         complaintButton.setOnAction(e -> {;
-                try {
-                    loadComplaintView();
+            try {
+                loadComplaintView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
