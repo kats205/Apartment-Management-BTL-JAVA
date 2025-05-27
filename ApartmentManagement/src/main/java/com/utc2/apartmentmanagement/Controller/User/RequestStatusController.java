@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import lombok.Setter;
 
-public class ComplaintsController {
+public class RequestStatusController {
     @FXML public TabPane complaintsTabPane;
     @FXML public Label maintenanceCountLabel;
     @FXML public ComboBox maintenanceStatusFilter;

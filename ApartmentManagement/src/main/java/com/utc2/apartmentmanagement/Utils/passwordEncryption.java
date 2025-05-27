@@ -10,4 +10,7 @@ public class passwordEncryption {
         return BCrypt.verifyer().verify(password.toCharArray(), hashPassWord).verified;
     }
 
+    public static void main(String[] args) {
+        System.out.println(hashPassword("Resident@123"));
+    }
 }

@@ -133,13 +133,12 @@
                                                         <content>
                                                             <AnchorPane>
                                                                 <children>
-                                                                    <TableView fx:id="tableBills" prefHeight="150.0">
+                                                                    <TableView fx:id="tableBills" prefHeight="150.0" prefWidth="570.0">
                                                                         <columns>
-                                                                            <TableColumn fx:id="billIdCol" prefWidth="100.0" text="Bill ID" />
-                                                                            <TableColumn fx:id="dateCol" prefWidth="100.0" text="Date" />
-                                                                            <TableColumn fx:id="dueDateCol" prefWidth="120.0" text="Due Date" />
-                                                                            <TableColumn fx:id="AmountCol" prefWidth="150.0" text="Amount" />
-                                                                            <TableColumn fx:id="statusBillCol" prefWidth="100.0" text="Status" />
+                                                                            <TableColumn fx:id="billIdCol" prefWidth="142.5" text="Bill ID" />
+                                                                            <TableColumn fx:id="dateCol" prefWidth="142.5" text="Date" />
+                                                                            <TableColumn fx:id="AmountCol" prefWidth="142.5" text="Amount" />
+                                                                            <TableColumn fx:id="statusBillCol" prefWidth="142.5" text="Status" />
                                                                         </columns>
                                                                     </TableView>
                                                                 </children>
@@ -152,9 +151,9 @@
                                                                 <children>
                                                                     <TableView fx:id="tableService" prefHeight="150.0">
                                                                         <columns>
-                                                                            <TableColumn fx:id="serviceNameCol" prefWidth="150.0" text="Service Name" />
-                                                                            <TableColumn fx:id="startDateCol" prefWidth="100.0" text="Start Date" />
-                                                                            <TableColumn fx:id="endDateCol" prefWidth="100.0" text="End Date" />
+                                                                            <TableColumn fx:id="serviceNameCol" prefWidth="150.40000838041306" text="Service Name" />
+                                                                            <TableColumn fx:id="startDateCol" prefWidth="120.0" text="Start Date" />
+                                                                            <TableColumn fx:id="endDateCol" prefWidth="80.800048828125" text="End Date" />
                                                                             <TableColumn fx:id="priceCol" prefWidth="120.0" text="Price" />
                                                                             <TableColumn fx:id="statusCol" prefWidth="100.0" text="Status" />
                                                                         </columns>

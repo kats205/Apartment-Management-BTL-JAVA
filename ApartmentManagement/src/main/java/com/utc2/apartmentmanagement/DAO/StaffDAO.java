@@ -102,11 +102,11 @@ public class StaffDAO implements IStaffDAO {
                 row.put("ID", rs.getInt("staff_id"));
                 row.put("Tendangnhap", rs.getString("username"));
                 row.put("Vaitro", rs.getString("role_name"));
-                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Hoten", rs.getString("full_name"));
                 row.put("Email", rs.getString("email"));
                 row.put("Sodienthoai", rs.getString("phone_number"));
                 row.put("Phongban", rs.getString("department"));
-                row.put("Chucvu", rs.getNString("position"));
+                row.put("Chucvu", rs.getString("position"));
                 row.put("Trangthai", rs.getBoolean("active"));
                 list.add(row);
             }
@@ -124,7 +124,7 @@ public class StaffDAO implements IStaffDAO {
         PreparedStatement stmt = connection.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                positionList.add(rs.getNString("position"));
+                positionList.add(rs.getString("position"));
             }
         }catch (SQLException e){
             throw new SQLException("Error retrieving position list: " + e.getMessage(), e);
@@ -149,11 +149,11 @@ public class StaffDAO implements IStaffDAO {
                 row.put("ID", rs.getInt("staff_id"));
                 row.put("Tendangnhap", rs.getString("username"));
                 row.put("Vaitro", rs.getString("role_name"));
-                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Hoten", rs.getString("full_name"));
                 row.put("Email", rs.getString("email"));
                 row.put("Sodienthoai", rs.getString("phone_number"));
                 row.put("Phongban", rs.getString("department"));
-                row.put("Chucvu", rs.getNString("position"));
+                row.put("Chucvu", rs.getString("position"));
                 row.put("Trangthai", rs.getBoolean("active"));
                 list.add(row);
             }
@@ -194,7 +194,7 @@ public class StaffDAO implements IStaffDAO {
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                return new Staff(rs.getInt("staff_id"), rs.getString("department"), rs.getNString("position"),
+                return new Staff(rs.getInt("staff_id"), rs.getString("department"), rs.getString("position"),
                         rs.getDate("hire_date"), rs.getInt("manager_id"));
             }
         } catch (SQLException e) {

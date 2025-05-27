@@ -40,7 +40,7 @@ public class UserDashboardController implements Initializable {
     @FXML public Label floorTF;
     @FXML public AnchorPane rootPane;
     @FXML public Button services;
-    @FXML public Button complaint;
+    @FXML public Button request;
     @FXML public Button incident;
     @FXML public Button profile;
     @FXML public Label Menu;
@@ -50,7 +50,7 @@ public class UserDashboardController implements Initializable {
     @FXML public Button servicesButton;
     @FXML public Button viewPaymentButton;
     @FXML public Button incidentButton;
-    @FXML public Button statusButton;
+    @FXML public Button requestStatusButton;
     @FXML public Button profileButton;
     @FXML public Button helpButton;
     @FXML public Label apartmentIdTf1;
@@ -92,7 +92,7 @@ public class UserDashboardController implements Initializable {
         //setup sự kiện cho service
         setOnActionForService();
         //setup sự kiện cho ComPlaint
-        setOnActionForComPlaint();
+        setOnActionForRequestStatus();
         //setup sự kiện cho MyProfile
         setOnActionForMyProfile();
         //setup sự kiện cho ReportIncident
@@ -153,18 +153,18 @@ public class UserDashboardController implements Initializable {
     }
 
 
-    private void setOnActionForComPlaint(){
+    private void setOnActionForRequestStatus(){
         // set sự kiện cho button nằm bên sideBar
-        complaint.setOnAction(e -> {;
+        requestStatusButton.setOnAction(e -> {;
             try {
-                loadComplaintView();
+                loadRequestStatusView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
-        complaintButton.setOnAction(e -> {;
+        request.setOnAction(e -> {;
             try {
-                loadComplaintView();
+                loadRequestStatusView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -225,6 +225,8 @@ public class UserDashboardController implements Initializable {
             areaTF.setText(objectList.get(2).toString());
         }
     }
+
+    //
 
     @Setter
     private UserDashboardController parentController;
@@ -291,20 +293,20 @@ public class UserDashboardController implements Initializable {
         System.out.println("Đã thêm Service vào contentArea");
     }
 
-    public void loadComplaintView() throws IOException {
-        System.out.println("Đang cố gắng tải Complaints.fxml");
+    public void loadRequestStatusView() throws IOException {
+        System.out.println("Đang cố gắng tải RequestStatusView.fxml");
         // khi có giao diện thì gán lại đường dẫn cho phù hợp
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/Complaints.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/RequestStatusView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
         if (url == null) {
-            System.out.println("Không tìm thấy file Complaints.fxml");
+            System.out.println("Không tìm thấy file RequestStatusView.fxml");
             return;
         }
 
         Parent ComplaintsView = loader.load();
-        ComplaintsController controller = loader.getController();
+        RequestStatusController controller = loader.getController();
         controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
@@ -318,7 +320,7 @@ public class UserDashboardController implements Initializable {
         // Xóa tất cả các view hiện tại và thêm ApartmentView
         contentArea.getChildren().clear();
         contentArea.getChildren().add(ComplaintsView);
-        System.out.println("Đã thêm ComplaintView vào contentArea");
+        System.out.println("Đã thêm RequestStatusView vào contentArea");
     }
 
     public void loadReportIncidentView() throws IOException {
@@ -352,18 +354,22 @@ public class UserDashboardController implements Initializable {
     }
 
     double x = 0, y = 0;
+    private Stage MyProfileView;
     public void loadMyProfileView() throws IOException {
+        if(MyProfileView != null && MyProfileView.isShowing()){
+            return;
+        }
         try {
             URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/MyProfileView.fxml");
             FXMLLoader loader = new FXMLLoader(url);
             Parent root = loader.load();
-
             // Gán controller
             MyProfileController controller = loader.getController();
             controller.setParentUserDashBoardController(this);
             controller.setDashboardStage((Stage) contentArea.getScene().getWindow()); // Stage của dashboard!
 
             Stage stage = new Stage();
+            MyProfileView = stage;
             stage.initStyle(StageStyle.UNDECORATED);
 
             // Kéo cửa sổ

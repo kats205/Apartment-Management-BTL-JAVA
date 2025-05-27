@@ -1,5 +1,7 @@
 package com.utc2.apartmentmanagement.Model;
 
+import lombok.ToString;
+
 import java.time.LocalDate;
 
 public class Report {

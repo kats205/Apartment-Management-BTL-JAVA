@@ -124,7 +124,7 @@ public class ReportViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Khởi tạo các thành phần UI
-        initializeComponents();
+            initializeComponents();
 
         // Thiết lập các sự kiện
         setupEventHandlers();
@@ -198,7 +198,7 @@ public class ReportViewController implements Initializable {
     public void initialSummary(){
         List<Report> reportList = new ReportDAO().getAllReports();
         int totalReport = reportList.size();
-        String newestReport = reportList.getLast().getReportType();
+        String newestReport = reportList.get(totalReport-1).getReportType();
         // Map 1: Đếm số lần mỗi loại báo cáo
         Map<String, Integer> reportTypeCountMap = new HashMap<>();
 

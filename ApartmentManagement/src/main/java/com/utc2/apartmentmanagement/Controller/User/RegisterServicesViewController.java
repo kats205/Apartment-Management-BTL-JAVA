@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 public class RegisterServicesViewController {
-
     @FXML
     private Label headerLabel;
 

@@ -57,7 +57,7 @@ public class UserDAO implements IUserDAO {
             stmt.setInt(1,userID);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                return new User(rs.getInt("user_id"), rs.getString( "username"),rs.getString( "password"), rs.getNString( "full_name"),
+                return new User(rs.getInt("user_id"), rs.getString( "username"),rs.getString( "password"), rs.getString( "full_name"),
                         rs.getString( "email"), rs.getString( "phone_number"), rs.getInt( "role_id"), rs.getBoolean( "active"));
             }
         }catch(SQLException e){
@@ -174,11 +174,11 @@ public class UserDAO implements IUserDAO {
                 row.put("ID", rs.getInt("staff_id"));
                 row.put("Tendangnhap", rs.getString("username"));
                 row.put("Vaitro", rs.getString("role_name"));
-                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Hoten", rs.getString("full_name"));
                 row.put("Email", rs.getString("email"));
                 row.put("Sodienthoai", rs.getString("phone_number"));
                 row.put("Phongban", rs.getString("department"));
-                row.put("Chucvu", rs.getNString("position"));
+                row.put("Chucvu", rs.getString("position"));
                 row.put("Trangthai", rs.getBoolean("active"));
                 result.add(row);
             }
@@ -313,6 +313,8 @@ public class UserDAO implements IUserDAO {
 //    }
 
     public static void main(String[] args) {
-        System.out.println(new UserDAO().login("baokhanh123", "123Baokhanh"));
+        User user = new UserDAO().getUserByID(7);
+        System.out.println(user);
+
     }
 }

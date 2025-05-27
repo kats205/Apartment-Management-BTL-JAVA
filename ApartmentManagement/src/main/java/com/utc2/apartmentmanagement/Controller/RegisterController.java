@@ -5,6 +5,7 @@ import com.utc2.apartmentmanagement.Model.User;
 import com.utc2.apartmentmanagement.Utils.StringUtils;
 import com.utc2.apartmentmanagement.Utils.TryCatchUtil;
 import com.utc2.apartmentmanagement.Views.login;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import static com.utc2.apartmentmanagement.Utils.AlertBox.showAlertForExeptionRegister;
 
@@ -76,6 +78,8 @@ public class RegisterController {
                 registerButton.fire(); // Gọi lại handleLogin
             }
         });
+
+        setupRealTimeValidation();
     }
 
     private void setupImagePane() {
@@ -135,68 +139,276 @@ public class RegisterController {
         registerFullname.setStyle(null);
     }
 
-    //hàm show warning
-    private void showWarning(Label label, TextField field, String message) {
-        label.setText(message);
-        label.setStyle("-fx-text-fill: red;");
-        label.setVisible(true);
-        field.setStyle("-fx-border-color: red;");
+    private void setupRealTimeValidation() {
+        // Username validation
+        registerUserName.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateUsernameRealTime(newValue);
+        });
+
+        // Password validation
+        registerPassWord.textProperty().addListener((observable, oldValue, newValue) -> {
+            validatePasswordRealTime(newValue);
+            // Cũng validate confirm password khi password thay đổi
+            if (!registerReEnterPW.getText().isEmpty()) {
+                validateConfirmPasswordRealTime(registerReEnterPW.getText());
+            }
+        });
+
+        // Confirm password validation
+        registerReEnterPW.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateConfirmPasswordRealTime(newValue);
+        });
+
+        // Full name validation
+        registerFullname.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateFullNameRealTime(newValue);
+        });
+
+        // Email validation
+        registerEmail.textProperty().addListener((observable, oldValue, newValue) -> {
+            validateEmailRealTime(newValue);
+        });
+
+        // Phone validation
+        registerPhoneNumber.textProperty().addListener((observable, oldValue, newValue) -> {
+            validatePhoneRealTime(newValue);
+        });
     }
 
-    private boolean validateForm(){
-        boolean hasError = false;
-        String user_name = registerUserName.getText();
-        String pass_word = registerPassWord.getText();
-        String re_password = registerReEnterPW.getText();
-        String full_name = StringUtils.capitalizeName(registerFullname.getText());
-        String phone_number = registerPhoneNumber.getText();
-        String email = registerEmail.getText();
-        // lấy ra mảng username để check tính unique
-        List<String> userNameList = UserDAO.getAllValuesofColumn("username");
-        //Lấy ra mảng email để check tính unique
-        List<String> emailList = UserDAO.getAllValuesofColumn("email");
-        // Bắt ngoại lệ cho từng field
-        if (userNameList.contains(user_name)) {
-            showWarning(warningUsername, registerUserName, "Tên người dùng này đã tồn tại! Vui lòng nhập lại!");
-            hasError = true;
-        }
-        if(user_name.isEmpty()){
+    // 2. REAL-TIME USERNAME VALIDATION
+    private void validateUsernameRealTime(String username) {
+        // Reset style trước
+        clearWarning(warningUsername, registerUserName);
+
+        if (username == null || username.trim().isEmpty()) {
             showWarning(warningUsername, registerUserName, "Tên người dùng không được trống!");
-            hasError = true;
+            return;
         }
-        if(!TryCatchUtil.validateFullName(full_name)){
-            showWarning(warningFullname, registerFullname, "Họ tên không đúng định dạng!");
-            hasError = true;
+
+        if (username.length() <= 6) {
+            showWarning(warningUsername, registerUserName, "Tên người dùng phải có ít nhất 7 ký tự!");
+            return;
         }
-        if (!TryCatchUtil.validatePassword(pass_word)) {
+
+        // Kiểm tra định dạng (chỉ chữ, số, underscore)
+        if (!username.matches("^[a-zA-Z0-9_]+$")) {
+            showWarning(warningUsername, registerUserName, "Tên người dùng chỉ được chứa chữ cái, số và dấu gạch dưới!");
+            return;
+        }
+
+        // Kiểm tra trùng lặp (async để không block UI)
+        checkUsernameExists(username);
+    }
+
+    // 3. KIỂM TRA USERNAME TỒN TẠI (ASYNC)
+    private void checkUsernameExists(String username) {
+        CompletableFuture.supplyAsync(() -> {
+            try {
+                List<String> userNameList = UserDAO.getAllValuesofColumn("username");
+                return userNameList.contains(username);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }).thenAccept(exists -> {
+            Platform.runLater(() -> {
+                if (exists) {
+                    showWarning(warningUsername, registerUserName, "Tên người dùng này đã tồn tại! Vui lòng nhập lại!");
+                } else {
+                    showSuccess(warningUsername, registerUserName, "Tên người dùng khả dụng!");
+                }
+            });
+        });
+    }
+
+    // 4. REAL-TIME PASSWORD VALIDATION
+    private void validatePasswordRealTime(String password) {
+        clearWarning(warningPassword, registerPassWord);
+
+        if (password == null || password.isEmpty()) {
+            showWarning(warningPassword, registerPassWord, "Mật khẩu không được trống!");
+            return;
+        }
+
+        if (!TryCatchUtil.validatePassword(password)) {
             showWarning(warningPassword, registerPassWord, "Mật khẩu phải từ 6 đến 12 ký tự và có ít nhất 1 chữ hoa!");
-            hasError = true;
+            return;
+        }
+
+        showSuccess(warningPassword, registerPassWord, "Mật khẩu hợp lệ!");
+    }
+
+    // 5. REAL-TIME CONFIRM PASSWORD VALIDATION
+    private void validateConfirmPasswordRealTime(String confirmPassword) {
+        clearWarning(warningReEnterPW, registerReEnterPW);
+
+        if (confirmPassword == null || confirmPassword.isEmpty()) {
+            showWarning(warningReEnterPW, registerReEnterPW, "Vui lòng nhập lại mật khẩu!");
+            return;
+        }
+
+        String password = registerPassWord.getText();
+        if (!password.equals(confirmPassword)) {
+            showWarning(warningReEnterPW, registerReEnterPW, "Mật khẩu không khớp!");
+            return;
+        }
+
+        showSuccess(warningReEnterPW, registerReEnterPW, "Mật khẩu khớp!");
+    }
+
+    // 6. REAL-TIME FULLNAME VALIDATION
+    private void validateFullNameRealTime(String fullName) {
+        clearWarning(warningFullname, registerFullname);
+
+        if (fullName == null || fullName.trim().isEmpty()) {
+            showWarning(warningFullname, registerFullname, "Họ tên không được trống!");
+            return;
+        }
+
+        String capitalizedName = StringUtils.capitalizeName(fullName);
+        if (!TryCatchUtil.validateFullName(capitalizedName)) {
+            showWarning(warningFullname, registerFullname, "Họ tên không đúng định dạng!");
+            return;
+        }
+
+        // Tự động format tên
+        if (!fullName.equals(capitalizedName)) {
+            Platform.runLater(() -> registerFullname.setText(capitalizedName));
+        }
+
+        showSuccess(warningFullname, registerFullname, "Họ tên hợp lệ!");
+    }
+
+    // 7. REAL-TIME EMAIL VALIDATION
+    private void validateEmailRealTime(String email) {
+        clearWarning(warningEmail, registerEmail);
+
+        if (email == null || email.trim().isEmpty()) {
+            showWarning(warningEmail, registerEmail, "Email không được trống!");
+            return;
         }
 
         if (!TryCatchUtil.validateEmail(email)) {
             showWarning(warningEmail, registerEmail, "Email không đúng định dạng!");
-            hasError = true;
+            return;
         }
 
-        if (!TryCatchUtil.validatePhone(phone_number)) {
-            showWarning(warningPhoneNumber, registerPhoneNumber, "Số điện thoại không đúng định dạng!");
-            hasError = true;
-        }
-
-        if (emailList.contains(email)) {
-            showWarning(warningEmail, registerEmail, "Email này đã tồn tại! Vui lòng nhập lại!");
-            hasError = true;
-        }
-        if(re_password.isEmpty()){
-            showWarning(warningReEnterPW, registerReEnterPW, "Vui lòng nhập lại mật khẩu!");
-            hasError = true;
-        }
-        if (!pass_word.equals(re_password)) {
-            showWarning(warningReEnterPW, registerReEnterPW, "Mật khẩu không khớp!");
-            hasError = true;
-        }
-        return hasError;
+        // Kiểm tra trùng lặp email (async)
+        checkEmailExists(email);
     }
+
+    // 8. KIỂM TRA EMAIL TỒN TẠI (ASYNC)
+    private void checkEmailExists(String email) {
+        CompletableFuture.supplyAsync(() -> {
+            try {
+                List<String> emailList = UserDAO.getAllValuesofColumn("email");
+                return emailList.contains(email);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }).thenAccept(exists -> {
+            Platform.runLater(() -> {
+                if (exists) {
+                    showWarning(warningEmail, registerEmail, "Email này đã tồn tại! Vui lòng nhập lại!");
+                } else {
+                    showSuccess(warningEmail, registerEmail, "Email khả dụng!");
+                }
+            });
+        });
+    }
+
+    // 9. REAL-TIME PHONE VALIDATION
+    private void validatePhoneRealTime(String phoneNumber) {
+        clearWarning(warningPhoneNumber, registerPhoneNumber);
+
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
+            showWarning(warningPhoneNumber, registerPhoneNumber, "Số điện thoại không được trống!");
+            return;
+        }
+
+        if (!TryCatchUtil.validatePhone(phoneNumber)) {
+            showWarning(warningPhoneNumber, registerPhoneNumber, "Số điện thoại không đúng định dạng!");
+            return;
+        }
+
+        showSuccess(warningPhoneNumber, registerPhoneNumber, "Số điện thoại hợp lệ!");
+    }
+
+    // 10. HELPER METHODS
+    private void showWarning(Label warningLabel, TextField textField, String message) {
+        warningLabel.setText(message);
+        warningLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
+        warningLabel.setVisible(true);
+        textField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+    }
+
+    private void showSuccess(Label warningLabel, TextField textField, String message) {
+        warningLabel.setText(message);
+        warningLabel.setStyle("-fx-text-fill: green; -fx-font-size: 12px;");
+        warningLabel.setVisible(true);
+        textField.setStyle("-fx-border-color: green; -fx-border-width: 2px;");
+    }
+
+    private void clearWarning(Label warningLabel, TextField textField) {
+        warningLabel.setVisible(false);
+        textField.setStyle("-fx-border-color: transparent;");
+    }
+
+    // 11. FINAL VALIDATION TRƯỚC KHI SUBMIT (CẢI TIẾN)
+    private boolean validateForm() {
+        boolean hasError = false;
+
+        // Validate tất cả fields một lần nữa
+        String username = registerUserName.getText();
+        String password = registerPassWord.getText();
+        String confirmPassword = registerReEnterPW.getText();
+        String fullName = StringUtils.capitalizeName(registerFullname.getText());
+        String phoneNumber = registerPhoneNumber.getText();
+        String email = registerEmail.getText();
+
+        // Kiểm tra từng field và tổng hợp lỗi
+        if (username.isEmpty() || username.length() <= 6) {
+            hasError = true;
+        }
+
+        if (!TryCatchUtil.validatePassword(password)) {
+            hasError = true;
+        }
+
+        if (confirmPassword.isEmpty() || !password.equals(confirmPassword)) {
+            hasError = true;
+        }
+
+        if (!TryCatchUtil.validateFullName(fullName)) {
+            hasError = true;
+        }
+
+        if (!TryCatchUtil.validateEmail(email)) {
+            hasError = true;
+        }
+
+        if (!TryCatchUtil.validatePhone(phoneNumber)) {
+            hasError = true;
+        }
+
+        // Kiểm tra trùng lặp (synchronous cho final check)
+        try {
+            List<String> userNameList = UserDAO.getAllValuesofColumn("username");
+            List<String> emailList = UserDAO.getAllValuesofColumn("email");
+
+            if (userNameList.contains(username) || emailList.contains(email)) {
+                hasError = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            hasError = true;
+        }
+
+        return !hasError; // Return true if no error
+    }
+
+
     @FXML
     public void handleRegister(ActionEvent actionEvent) {
         String user_name = registerUserName.getText();
@@ -210,7 +422,7 @@ public class RegisterController {
             // Nếu không có lỗi thì mới tiếp tục
             boolean hasError = validateForm();
             if (!hasError) {
-                if (new UserDAO().addUser(new User(user_name, pass_word, full_name, email, phone_number, 2, true))) {
+                if (new UserDAO().addUser(new User(user_name, pass_word, full_name, email, phone_number, 3, true))) {
                     showAlertForExeptionRegister("Thông báo!", "Đăng ký tài khoản thành công!");
                     // Đóng form hiện tại
                     ((Stage) warningEmail.getScene().getWindow()).close();

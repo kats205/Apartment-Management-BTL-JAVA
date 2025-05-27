@@ -120,13 +120,33 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
                 rows.put("end_date", rs.getDate("end_date"));
                 rows.put("price_service", rs.getDouble("price_service"));
                 rows.put("status", rs.getString("status"));
-                rows.put("description", rs.getNString("description"));
+                rows.put("description", rs.getString("description"));
                 list.add(rows);
             }
         }catch (SQLException e){
             throw new SQLException("Error retrieving service registration by apartment ID", e);
         }
         return list;
+    }
+
+    @Override
+    public int getServiceRegistrationCountByApartmentId(String apartmentId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Service s\n" +
+                "JOIN ServiceRegistration sr ON sr.service_id = s.service_id\n" +
+                "WHERE sr.apartment_id = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, apartmentId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+            else{
+                return 0;
+            }
+        }catch(SQLException e){
+            throw new SQLException("Error retrieving service registration count by apartment ID", e);
+        }
     }
 
     public boolean updateServiceRegistrationField(int id, String field, Object newValue){

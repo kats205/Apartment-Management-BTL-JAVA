@@ -114,13 +114,13 @@ public class ApartmentViewController implements Initializable {
         // load data apartment
         loadDataApartment();
 
-        int totalCount;
-        try {
-            totalCount = new ApartmentDAO().countApartment();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        apartmentCountLabel.setText(String.valueOf(totalCount));
+//        int totalCount;
+//        try {
+//            totalCount = new ApartmentDAO().countApartment();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        apartmentCountLabel.setText(String.valueOf(totalCount));
     }
 
     private void getValueCol() {
@@ -194,12 +194,14 @@ public class ApartmentViewController implements Initializable {
         ObservableList<Apartment> apartmentListOb = FXCollections.observableArrayList();
         apartmentListOb.addAll(apartmentList);
         apartmentTable.setItems(apartmentListOb);
+        apartmentCountLabel.setText(String.valueOf(apartmentList.size()));
     }
 
     private void loadTableView(Apartment apartment) {
         ObservableList<Apartment> apartmentList = FXCollections.observableArrayList();
         apartmentList.add(apartment);
         apartmentTable.setItems(apartmentList);
+        apartmentCountLabel.setText("1");
     }
 
     private void loadIdCB() {

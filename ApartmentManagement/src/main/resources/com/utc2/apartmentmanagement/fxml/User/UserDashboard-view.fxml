@@ -61,7 +61,7 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="complaint" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Complaints">
+                                <Button fx:id="request" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: white;" styleClass="userMenuItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Request">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -164,19 +164,7 @@
                                         <Insets left="15.0" />
                                     </padding>
                                 </Button>
-                                <Button fx:id="complaintButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Complaints" textAlignment="CENTER" textFill="WHITE">
-                                    <graphic>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../../assets/UserDashboard/report_incident.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <padding>
-                                        <Insets left="15.0" />
-                                    </padding>
-                                </Button>
-                                <Button fx:id="statusButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Request Status" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="requestStatusButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Request Status" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>

@@ -152,7 +152,7 @@ public class BillsDAO implements IBillDAO {
 
     @Override
     public List<Map<String, Object>> getBillByApartmentId(String apartmentId) throws SQLException {
-        String sql = "SELECT b.bill_id, b.due_date, b.total_amount, b.status, p.payment_date FROM Bill b\n" +
+        String sql = "SELECT b.bill_id, b.total_amount, b.status, p.payment_date FROM Bill b\n" +
                 "JOIN Payment p ON p.bill_id = b.bill_id\n" +
                 "JOIN Apartment a ON a.apartment_id = b.apartment_id\n" +
                 "WHERE a.apartment_id = ?";
@@ -164,7 +164,6 @@ public class BillsDAO implements IBillDAO {
             while(rs.next()){
                 Map<String, Object> rows = new HashMap<>();
                 rows.put("bill_id", rs.getInt("bill_id"));
-                rows.put("due_date", rs.getDate("due_date"));
                 rows.put("total_amount", rs.getDouble("total_amount"));
                 rows.put("status", rs.getString("status"));
                 rows.put("payment_date", rs.getDate("payment_date"));

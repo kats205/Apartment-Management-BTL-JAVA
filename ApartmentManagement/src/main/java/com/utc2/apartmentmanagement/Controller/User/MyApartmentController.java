@@ -68,7 +68,6 @@ public class MyApartmentController implements Initializable {
 
     @FXML private Button ViewFullDetailsBtn;
 
-
     @FXML
     private VBox apartmentsContainer;
 
@@ -99,6 +98,7 @@ public class MyApartmentController implements Initializable {
 
         DecimalFormat df = new DecimalFormat("#,###", symbols);
         df.setMaximumFractionDigits(0);
+
         if(apartmentInf.isEmpty()){
             System.out.println("No apartment information found for user ID: " + userId);
             return;
@@ -122,7 +122,7 @@ public class MyApartmentController implements Initializable {
             return new SimpleStringProperty(value != null ? value.toString() : "null");
         });
         serviceNameCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
+        serviceNameCol.setPrefWidth(180);
         startDateCol.setCellValueFactory(cellData -> {
             Object dateObj = cellData.getValue().get("start_date");
             if (dateObj instanceof Date) {
@@ -160,12 +160,12 @@ public class MyApartmentController implements Initializable {
         });
         priceCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
+
         statusCol.setCellValueFactory(cellData -> {
             Object value = cellData.getValue().get("status");
             return new SimpleStringProperty(value != null ? value.toString() : "null");
         });
         statusCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
     }
 
     private void getRegistrationByResident() throws SQLException {
@@ -189,6 +189,7 @@ public class MyApartmentController implements Initializable {
 
     private void setUpColumnForBill(){
         billIdCol.setCellValueFactory(data -> new SimpleObjectProperty<>((Integer) data.getValue().get("bill_id")));
+        billIdCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         dateCol.setCellValueFactory(data -> {
             Date date = (Date) data.getValue().get("payment_date");
@@ -196,11 +197,6 @@ public class MyApartmentController implements Initializable {
         });
         dateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
-        dueDateCol.setCellValueFactory(data -> {
-            Date date = (Date) data.getValue().get("due_date");
-            return new ReadOnlyObjectWrapper<>(date != null ? date.toLocalDate() : null);
-        });
-        dueDateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         AmountCol.setCellValueFactory(data -> {
             double price = (double) data.getValue().get("total_amount");
@@ -214,7 +210,6 @@ public class MyApartmentController implements Initializable {
 
         statusBillCol.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("status")));
         statusBillCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
     }
 
     private void getBillByResident() throws SQLException {
@@ -238,7 +233,6 @@ public class MyApartmentController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
 //        load data về bill
         try {
             getBillByResident();
@@ -285,7 +279,6 @@ public class MyApartmentController implements Initializable {
             // Hiệu ứng hover cho nút đóng
             closeButton.setOnMouseEntered(e -> closeButton.setStyle("-fx-background-color: #FF5555; -fx-text-fill: white; -fx-font-weight: bold;"));
             closeButton.setOnMouseExited(e -> closeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-weight: bold;"));
-
             header.getChildren().add(closeButton);
 
             // Đặt header và nội dung vào BorderPane

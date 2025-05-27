@@ -34,6 +34,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -85,20 +86,7 @@ public class MyProfileController implements Initializable {
         // set tên và thời gian đăng nhập của người dùng
         setInformationUser();
         // set lại avatar cho người dùng
-        try {
-            String filePath = new UserDAO().getAvatarPathByUserId(Session.getUserName());
-            if(filePath!=null){
-                Path pathImage = Paths.get(System.getProperty("user.home"), "apartment", "avatars", filePath);
-                String s = pathImage.toUri().toString();
-                if(s==null || s.isEmpty()){
-                    s = "com/utc2/apartmentmanagement/assets/Profile/Admin/IMG_0466.JPG";
-                }
-                Image image = new Image(s);
-                userAvatar.setImage(image);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        loadCurrentAvatar();
 
         try {
             initInformation();
@@ -128,49 +116,149 @@ public class MyProfileController implements Initializable {
         loginView.start(stage);
     }
 
+    // 1. Tải ảnh avatar hiện tại
+    private void loadCurrentAvatar() {
+        try {
+            String fileName = new UserDAO().getAvatarPathByUserId(Session.getUserName());
+            if (fileName != null && !fileName.isEmpty()) {
+                // Tạo đường dẫn đến file ảnh
+                Path imagePath = Paths.get("uploads", "avatars", fileName);
+
+                if (Files.exists(imagePath)) {
+                    // Nếu file tồn tại, load ảnh
+                    Image image = new Image(imagePath.toUri().toString());
+                    userAvatar.setImage(image);
+                } else {
+                    // Nếu file không tồn tại, dùng ảnh mặc định
+                    loadDefaultAvatar();
+                }
+            } else {
+                // Nếu chưa có ảnh trong DB, dùng ảnh mặc định
+                loadDefaultAvatar();
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi tải ảnh avatar: " + e.getMessage());
+            loadDefaultAvatar();
+        }
+    }
+
+    // 2. Load ảnh mặc định
+    private void loadDefaultAvatar() {
+        try {
+            // Đường dẫn ảnh mặc định trong resources
+            String defaultImagePath = "/com/utc2/apartmentmanagement/assets/Profile/Admin/IMG_0466.JPG";
+            Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(defaultImagePath)));
+            userAvatar.setImage(defaultImage);
+        } catch (Exception e) {
+            System.err.println("Không thể load ảnh mặc định: " + e.getMessage());
+        }
+    }
+
+    // 4. Xóa ảnh cũ
+    private void deleteOldAvatar(int userId) {
+        try {
+            String oldFileName = new UserDAO().getAvatarPathByUserId(Session.getUserName());
+            if (oldFileName != null && !oldFileName.isEmpty()) {
+                Path oldFilePath = Paths.get("uploads", "avatars", oldFileName);
+                if (Files.exists(oldFilePath)) {
+                    Files.delete(oldFilePath);
+                    System.out.println("Đã xóa ảnh cũ: " + oldFileName);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Không thể xóa ảnh cũ: " + e.getMessage());
+            // Không throw exception vì đây không phải lỗi nghiêm trọng
+        }
+    }
+
+
+    // 5. Lấy extension của file
+    private String getFileExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
+            return fileName.substring(lastDotIndex).toLowerCase();
+        }
+        return ".jpg"; // default extension
+    }
+
+    // 8. Validation kích thước file (optional)
+    private boolean isValidImageSize(File file) {
+        long maxSize = 5 * 1024 * 1024; // 5MB
+        return file.length() <= maxSize;
+    }
+
+    // 9. Validation định dạng ảnh (optional)
+    private boolean isValidImageFormat(File file) {
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") ||
+                fileName.endsWith(".png") || fileName.endsWith(".gif") ||
+                fileName.endsWith(".bmp");
+    }
+
     @FXML
     public void handleChangeAvatar(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Chọn ảnh đại diện");
 
-// Lọc file chỉ cho phép chọn ảnh
+        // Lọc file chỉ cho phép chọn ảnh
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
         );
 
-// Mở cửa sổ chọn file ảnh
+        // Mở cửa sổ chọn file ảnh
         File selectedFile = fileChooser.showOpenDialog(changeAvatarBtn.getScene().getWindow());
 
         if (selectedFile != null) {
             try {
-                // Thư mục đích: C:/Users/<Tên người dùng>/apartment_app/avatars
-                Path destinationDir = Paths.get(System.getProperty("user.home"), "apartment", "avatars");
-                Files.createDirectories(destinationDir); // Tạo thư mục nếu chưa có
-
-                // Tên file mới (giữ nguyên hoặc có thể đổi tên nếu muốn)
-                int user_id = new UserDAO().getIdByUserName(Session.getUserName());
-                String newFileName = "user_" + user_id + "_" + selectedFile.getName(); // Gợi ý đặt tên duy nhất
-                Path destinationFile = destinationDir.resolve(newFileName);
-                Session.setAvatarPath(newFileName);
-                // Copy ảnh vào thư mục
-                Files.copy(selectedFile.toPath(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
-                //Lưu tên ảnh vào database tương ứng với user_id
-                if(new UserDAO().updateAvatar(user_id, newFileName)){
-                    System.out.println("Đã cập nhật ảnh đại diện vào database!");
+                // 1. Tạo thư mục uploads/avatars nếu chưa tồn tại
+                Path destinationDir = Paths.get("uploads", "avatars");
+                if (!Files.exists(destinationDir)) {
+                    Files.createDirectories(destinationDir);
+                    System.out.println("Đã tạo thư mục: " + destinationDir.toAbsolutePath());
                 }
-                // Hiển thị ảnh mới lên ImageView
-                Image image = new Image(destinationFile.toUri().toString());
-                userAvatar.setImage(image);
 
-                // Lưu đường dẫn vào Session (hoặc DB nếu bạn muốn lưu lâu dài)
-                Session.setAvatarPath(destinationFile.toString());
+                // 2. Lấy thông tin user
+                int userId = new UserDAO().getIdByUserName(Session.getUserName());
+                System.out.println("User ID(Lấy thông tin user): " + userId);
+                // 3. Xóa ảnh cũ (nếu có)
+                deleteOldAvatar(userId);
 
-                System.out.println("Đã thay đổi ảnh đại diện thành công!");
+                // 4. Tạo tên file mới (unique)
+                String fileExtension = getFileExtension(selectedFile.getName());
+                String newFileName = "user_" + userId + "_" + System.currentTimeMillis() + fileExtension;
+                Path destinationFile = destinationDir.resolve(newFileName);
+
+                // 5. Copy ảnh vào thư mục
+                Files.copy(selectedFile.toPath(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Đã copy ảnh đến: " + destinationFile.toAbsolutePath());
+
+                // 6. Cập nhật database
+                UserDAO userDAO = new UserDAO();
+                if (userDAO.updateAvatar(userId, newFileName)) {
+                    System.out.println("Đã cập nhật ảnh đại diện vào database!");
+
+                    // 7. Hiển thị ảnh mới lên ImageView
+                    Image newImage = new Image(destinationFile.toUri().toString());
+                    userAvatar.setImage(newImage);
+
+                    // 8. Cập nhật Session
+                    Session.setAvatarPath(newFileName);
+
+                    // 9. Thông báo thành công
+                    AlertBox.showAlert("Thành công", "Đã thay đổi ảnh đại diện thành công!");
+
+                } else {
+                    // Nếu cập nhật DB thất bại, xóa file đã copy
+                    Files.deleteIfExists(destinationFile);
+                    AlertBox.showAlert("Lỗi", "Không thể cập nhật ảnh đại diện vào database!");
+                }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println("Lỗi I/O: " + e.getMessage());
+                AlertBox.showAlert("Lỗi", "Không thể lưu file ảnh: " + e.getMessage());
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                System.err.println("Lỗi SQL: " + e.getMessage());
+                AlertBox.showAlert("Lỗi", "Lỗi database: " + e.getMessage());
             }
         }
     }

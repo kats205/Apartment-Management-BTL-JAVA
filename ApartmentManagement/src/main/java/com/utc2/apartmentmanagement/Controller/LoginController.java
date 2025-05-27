@@ -4,7 +4,6 @@ import com.utc2.apartmentmanagement.DAO.RoleDAO;
 import com.utc2.apartmentmanagement.DAO.UserDAO;
 import com.utc2.apartmentmanagement.Model.Role;
 import com.utc2.apartmentmanagement.Model.Session;
-import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Views.Main;
 import com.utc2.apartmentmanagement.Views.ResidentView;
 import com.utc2.apartmentmanagement.Views.StaffView;
@@ -23,6 +22,7 @@ import javafx.event.ActionEvent;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import static com.utc2.apartmentmanagement.Utils.AlertBox.showAlert;
 
 public class LoginController {
 
@@ -108,11 +108,11 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (userName.isEmpty() && password.isEmpty()) {
-            AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập tên đăng nhập và mật khẩu!");
+            showAlert("Thông báo!", "Vui lòng nhập tên đăng nhập và mật khẩu!");
         } else if (userName.isEmpty()) {
-            AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập tên đăng nhập!");
+            showAlert("Thông báo!", "Vui lòng nhập tên đăng nhập!");
         } else if (password.isEmpty()) {
-            AlertBox.showAlertForExeptionRegister("Thông báo!", "Vui lòng nhập mật khẩu!");
+            showAlert("Thông báo!", "Vui lòng nhập mật khẩu!");
         }
 
         UserDAO userDAO = new UserDAO();
@@ -127,7 +127,7 @@ public class LoginController {
         Session.setPassWord(password);
         Role role = new RoleDAO().getRoleById(role_id);
         if(role == null){
-            AlertBox.showAlertForExeptionRegister("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
+            showAlert("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
             return;
         }
         String roleName = role.getRoleName();
@@ -136,7 +136,7 @@ public class LoginController {
         Session.setRoleName(new RoleDAO().getRoleById(role_id).getRoleName());
         }
         else{
-            AlertBox.showAlertForExeptionRegister("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
+            showAlert("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
             return;
         }
         switch (role_id) {

@@ -336,28 +336,35 @@ public class ReportDAO implements IReportDAO {
     }
 
     public static void main(String[] args) {
-        Platform.startup(() -> {
-            try {
-                // Tạo đối tượng DAO
-                ReportDAO dao = new ReportDAO();
+//        Platform.startup(() -> {
+//            try {
+//                // Tạo đối tượng DAO
+//                ReportDAO dao = new ReportDAO();
+//
+//                // Gọi phương thức với khoảng ngày cụ thể
+//                LocalDate fromDate = LocalDate.of(2023, 1, 1);
+//                LocalDate toDate = LocalDate.of(2024, 3, 31);
+//                ObservableList<PieChart.Data> result = new ReportDAO().PieChart(fromDate, toDate);
+//
+//                // In kết quả ra console
+//                System.out.println("Kết quả PieChart:");
+//                for (PieChart.Data data : result) {
+//                    System.out.println("Label: " + data.getName() + ", Value: " + data.getPieValue());
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//
+//            // Kết thúc chương trình JavaFX
+//            Platform.exit();
+//        });
 
-                // Gọi phương thức với khoảng ngày cụ thể
-                LocalDate fromDate = LocalDate.of(2023, 1, 1);
-                LocalDate toDate = LocalDate.of(2024, 3, 31);
-                ObservableList<PieChart.Data> result = new ReportDAO().PieChart(fromDate, toDate);
-
-                // In kết quả ra console
-                System.out.println("Kết quả PieChart:");
-                for (PieChart.Data data : result) {
-                    System.out.println("Label: " + data.getName() + ", Value: " + data.getPieValue());
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            // Kết thúc chương trình JavaFX
-            Platform.exit();
-        });
+        List<Report> reports = new ReportDAO().getAllReports();
+        if(reports.isEmpty()){
+            System.out.println("Không có bản ghi");
+        }
+        for(Report report : reports){
+            System.out.println(report.getReportType());
+        }
     }
-
 }
