@@ -60,37 +60,51 @@
 }
 
 /* Tab Styling */
+/* Tab Pane Styling */
+.apartment-tabs {
+    -fx-background-color: white;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 .apartment-tabs .tab-header-area .tab-header-background {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: white;
+}
+
+.apartment-tabs .tab-header-area {
+    -fx-background-color: white;
+    -fx-padding: 0 20 0 20;
 }
 
 .apartment-tabs .tab {
-    -fx-background-color: #f5f5f5;
-    -fx-padding: 8 15;
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 5 5 0 0;
+    -fx-padding: 10 20 10 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
 }
 
 .apartment-tabs .tab:selected {
-    -fx-background-color: white;
-    -fx-background-radius: 5 5 0 0;
-    -fx-border-color: #E3E5EA #E3E5EA white #E3E5EA;
-    -fx-border-width: 1 1 0 1;
-}
-
-.apartment-tabs .tab-pane {
-    -fx-background-color: white;
-}
-
-.apartment-tabs .tab:selected .focus-indicator {
-    -fx-border-color: transparent;
-}
-
-.apartment-tabs .tab .tab-label {
-    -fx-text-fill: #64748b;
+    -fx-background-color: #1a936f;
+    -fx-text-fill: white;
 }
 
 .apartment-tabs .tab:selected .tab-label {
-    -fx-text-fill: #1A936F;
-    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.apartment-tabs .tab:hover {
+    -fx-background-color: #2aa881;
+    -fx-text-fill: white;
+}
+
+.apartment-tabs .tab:hover .tab-label {
+    -fx-text-fill: white;
+}
+
+.apartment-tabs .tab-content-area {
+    -fx-background-color: white;
+    -fx-padding: 0;
 }
 
 /* Detail Labels and Values in Tabs */
@@ -106,30 +120,54 @@
 
 /* Table Styling */
 .table-view {
-    -fx-background-color: transparent;
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-border-radius: 5 0 0 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);
 }
 
 .table-view .column-header {
-    -fx-background-color: #f5f5f5;
-    -fx-text-fill: #1A936F;
+    -fx-background-color: #1A936F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-padding: 10 5 10 5;
+    -fx-border-color: #ddd;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .column-header-background .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: #f8f9fa;
 }
 
-.table-row-cell {
+.table-view .table-row-cell {
     -fx-background-color: white;
-    -fx-border-color: transparent;
+    -fx-border-color: transparent transparent #f0f0f0 transparent;
+    -fx-border-width: 0 0 1 0;
 }
 
-.table-row-cell:odd {
-    -fx-background-color: #f9fafb;
+.table-view .table-row-cell:hover {
+    -fx-background-color: #f8f9fa;
 }
 
-.table-row-cell:hover {
-    -fx-background-color: #e8f5f0;
+.table-view .table-row-cell:selected {
+    -fx-background-color: #e3f2eb;
+    -fx-text-fill: #333333;
+}
+
+.table-view .table-cell {
+    -fx-padding: 8 5 8 5;
+    -fx-font-size: 13px;
 }
 
 /* Buttons */
@@ -160,4 +198,31 @@
 
 .manage-button:hover {
     -fx-background-color: #11765A;
+}
+
+.cancel-button {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-border-radius: 5px;
+    -fx-transition: all 0.2s ease;
+}
+
+.cancel-button {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-border-radius: 5px;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #f1f3f5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.cancel-button:pressed {
+    -fx-background-color: #e9ecef;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
 }

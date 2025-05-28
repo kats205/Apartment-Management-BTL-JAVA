@@ -1,0 +1,392 @@
+/* Main Container Styling */
+.main-container {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Tab Pane Styling */
+.request-status-tab-pane {
+    -fx-background-color: white;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.request-status-tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: white;
+}
+
+.request-status-tab-pane .tab-header-area {
+    -fx-background-color: white;
+    -fx-padding: 0 20 0 20;
+}
+
+.request-status-tab-pane .tab {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 5 5 0 0;
+    -fx-padding: 10 20 10 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.request-status-tab-pane .tab:selected {
+    -fx-background-color: #1a936f;
+    -fx-text-fill: white;
+}
+
+.request-status-tab-pane .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.request-status-tab-pane .tab:hover {
+    -fx-background-color: #2aa881;
+    -fx-text-fill: white;
+}
+
+.request-status-tab-pane .tab:hover .tab-label {
+    -fx-text-fill: white;
+}
+
+.request-status-tab-pane .tab-content-area {
+    -fx-background-color: white;
+    -fx-padding: 0;
+}
+
+/* Filter Container */
+.filter-container {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+}
+
+.filter-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+}
+
+.filter-combo {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.filter-combo:hover {
+    -fx-border-color: #1a936f;
+}
+
+.filter-text {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.filter-text:focused {
+    -fx-border-color: #1a936f;
+}
+
+/* Button Styling */
+.filter-button, .clear-filter-button, .refresh-button {
+    -fx-background-color: #1a936f;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 5 15 5 15;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+}
+
+.filter-button:hover, .refresh-button:hover {
+    -fx-background-color: #147a5c;
+}
+
+.clear-filter-button {
+    -fx-background-color: #6c757d;
+}
+
+.clear-filter-button:hover {
+    -fx-background-color: #5a6268;
+}
+
+/* Action Buttons */
+.action-button-primary {
+    -fx-background-color: #1a936f;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.action-button-primary:hover {
+    -fx-background-color: #147a5c;
+}
+
+.action-button-secondary {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.action-button-secondary:hover {
+    -fx-background-color: #5a6268;
+}
+
+.action-button-danger {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+
+.action-button-danger:hover {
+    -fx-background-color: #c82333;
+}
+
+/* Cancel Button */
+.cancel-button {
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-border-radius: 5px;
+    -fx-transition: all 0.2s ease;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #c82333;
+}
+
+.fixed-button {
+    -fx-pref-height: 30px;
+}
+
+/* Hint Label */
+.hint-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+}
+
+/* Table Styling */
+.data-table {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-border-radius: 5 0 0 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);
+}
+
+.data-table .column-header {
+    -fx-background-color: #1A936F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-padding: 10 5 10 5;
+    -fx-border-color: #ddd;
+    -fx-border-width: 0 0 1 0;
+}
+
+.data-table .column-header-background .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.data-table .column-header-background {
+    -fx-background-color: #f8f9fa;
+}
+
+.data-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #f0f0f0 transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.data-table .table-row-cell:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+.data-table .table-row-cell:selected {
+    -fx-background-color: #e3f2eb;
+    -fx-text-fill: #333333;
+}
+
+.data-table .table-cell {
+    -fx-padding: 8 5 8 5;
+    -fx-font-size: 13px;
+}
+
+/* Right-click context menu styling */
+.context-menu {
+    -fx-background-color: white;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 3);
+}
+
+.context-menu .menu-item {
+    -fx-background-color: white;
+    -fx-text-fill: #333333;
+    -fx-padding: 8 15 8 15;
+    -fx-font-size: 13px;
+}
+
+.context-menu .menu-item:hover {
+    -fx-background-color: #f8f9fa;
+}
+
+.context-menu .menu-item:focused {
+    -fx-background-color: #e3f2eb;
+}
+
+/* Cancel context menu item styling */
+.cancel-menu-item {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+}
+
+.cancel-menu-item:hover {
+    -fx-background-color: #ffe6e6;
+    -fx-text-fill: #c82333;
+}
+
+/* Scrollbar Styling */
+.scroll-bar:vertical {
+    -fx-background-color: #f0f0f0;
+    -fx-pref-width: 12;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 6;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #a0a0a0;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: #f0f0f0;
+    -fx-pref-height: 12;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 6;
+}
+
+/* Status Styling for Table Cells */
+.status-pending {
+    -fx-text-fill: #ffc107;
+    -fx-font-weight: bold;
+}
+
+.status-assigned {
+    -fx-text-fill: #17a2b8;
+    -fx-font-weight: bold;
+}
+
+.status-in-progress {
+    -fx-text-fill: #007bff;
+    -fx-font-weight: bold;
+}
+
+.status-completed {
+    -fx-text-fill: #28a745;
+    -fx-font-weight: bold;
+}
+
+.status-cancelled {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+}
+
+/* Priority Styling */
+.priority-urgent {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+    -fx-background-color: #ffe6e6;
+    -fx-background-radius: 3;
+    -fx-padding: 2 6 2 6;
+}
+
+.priority-high {
+    -fx-text-fill: #fd7e14;
+    -fx-font-weight: bold;
+    -fx-background-color: #fff3cd;
+    -fx-background-radius: 3;
+    -fx-padding: 2 6 2 6;
+}
+
+.priority-medium {
+    -fx-text-fill: #ffc107;
+    -fx-font-weight: bold;
+    -fx-background-color: #fff8e1;
+    -fx-background-radius: 3;
+    -fx-padding: 2 6 2 6;
+}
+
+.priority-low {
+    -fx-text-fill: #28a745;
+    -fx-font-weight: bold;
+    -fx-background-color: #e8f5e8;
+    -fx-background-radius: 3;
+    -fx-padding: 2 6 2 6;
+}
+
+/* Severity Styling */
+.severity-critical {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+    -fx-background-color: #ffe6e6;
+    -fx-background-radius: 3;
+    -fx-padding: 2 6 2 6;
+}
+
+.severity-high {
+    -fx-text-fill: #fd7e14;
+    -fx-font-weight: bold;
+    -fx-background-color: #fff3cd;
+    -fx-background-radius: 3;
+    -fx-padding: 2 6 2 6;
+}
+
+.severity-medium {
+    -fx-text-fill: #ffc107;
+    -fx-font-weight: bold;
+    -fx-background-color: #fff8e1;
+    -fx-background-radius: 3;
+    -fx-padding: 2 6 2 6;
+}
+
+.severity-low {
+    -fx-text-fill: #28a745;
+    -fx-font-weight: bold;
+    -fx-background-color: #e8f5e8;
+    -fx-background-radius: 3;
+    -fx-padding: 2 6 2 6;
+}
+
+/* Highlight rows with pending status for easy identification */
+.data-table .table-row-cell.pending-row {
+    -fx-background-color: #fffacd;
+}
+
+.data-table .table-row-cell.pending-row:hover {
+    -fx-background-color: #fff8c4;
+}
+
+.data-table .table-row-cell.pending-row:selected {
+    -fx-background-color: #f0e68c;
+}

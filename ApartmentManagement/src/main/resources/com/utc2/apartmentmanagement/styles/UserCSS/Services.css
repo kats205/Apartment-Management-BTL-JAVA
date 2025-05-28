@@ -76,14 +76,68 @@
 }
 
 /* Scroll Pane */
-.services-scroll-pane {
-    -fx-background-color: white;
-
+.scroll-pane {
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);
+    -fx-background-color: transparent;
 }
 
-.services-scroll-pane > .viewport {
-    -fx-background-color: #f5f5f5;
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: #f0f8f0;
+    -fx-pref-width: 14;
+    -fx-background-radius: 7px;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #1A936F;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #147a5c;
+    -fx-effect: dropshadow(three-pass-box, rgba(26,147,111,0.3), 3, 0, 0, 0);
+}
+
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #0d6952;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: #f0f8f0;
+    -fx-pref-height: 14;
+    -fx-background-radius: 7px;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #1A936F;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+}
+
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #147a5c;
+    -fx-effect: dropshadow(three-pass-box, rgba(26,147,111,0.3), 3, 0, 0, 0);
+}
+
+.scroll-bar:horizontal .thumb:pressed {
+    -fx-background-color: #0d6952;
+}
+
+/* Scrollbar track styling */
+.scroll-bar:vertical .track {
+    -fx-background-color: #f0f8f0;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+}
+
+.scroll-bar:horizontal .track {
+    -fx-background-color: #f0f8f0;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
 }
 
 /* Service Card Styling */
@@ -154,6 +208,7 @@
     -fx-font-size: 14px;
     -fx-cursor: hand;
     -fx-background-radius: 5;
+    -fx-transition: all 0.2s ease;
 }
 
 .cancel-service-button:hover {

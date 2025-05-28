@@ -50,7 +50,7 @@ public class RequestStatusController {
     @FXML public TableColumn serviceSubmitDateColumn;
     @FXML public TableColumn serviceResolutionDateColumn;
     @FXML public Button closeServiceButton;
-    public AnchorPane ComplaintView;
+    @FXML public AnchorPane RequestStatusView;
 
     @Setter
     private UserDashboardController parentController;
@@ -78,29 +78,29 @@ public class RequestStatusController {
     }
 
 
-    public void handleClose(ActionEvent event) {
-        // Xoá ComplaintView
-        ((Pane) ComplaintView.getParent()).getChildren().clear();
-        // Thêm lại dashboard nodes từ controller cha
-        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
-    }
-
-    public void handleFilterService(ActionEvent event) {
-    }
-
-    public void handleClearServiceFilter(ActionEvent event) {
-    }
-
-    public void handleRefreshService(ActionEvent event) {
-    }
-
-    public void handleAddServiceComplaint(ActionEvent event) {
-    }
-
     public void handleEditServiceComplaint(ActionEvent event) {
     }
 
-    public void handleDeleteServiceComplaint(ActionEvent event) {
 
+    public void handleViewMaintenanceDetails(ActionEvent actionEvent) {
+    }
+
+    public void handleEditMaintenanceRequest(ActionEvent actionEvent) {
+    }
+
+    public void handleRefreshMyMaintenance(ActionEvent actionEvent) {
+    }
+
+    public void handleViewServiceComplaintDetails(ActionEvent actionEvent) {
+    }
+
+    public void handleRefreshMyService(ActionEvent actionEvent) {
+    }
+
+    public void handleCancel(ActionEvent actionEvent) {
+        // Xoá RequestStatusView
+        ((Pane) RequestStatusView.getParent()).getChildren().clear();
+        // Thêm lại dashboard nodes từ controller cha
+        parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
 }

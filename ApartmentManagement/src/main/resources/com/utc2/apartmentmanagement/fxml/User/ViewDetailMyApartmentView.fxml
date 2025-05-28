@@ -21,18 +21,18 @@
                     <children>
                         <Label fx:id="apartmentIdLabel" styleClass="apartment-id" text="A101" />
                         <Label fx:id="statusLabel" styleClass="apartment-status" text="occupied">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font></Label>
                     </children>
                 </HBox>
                 <Label fx:id="buildingNameLabel" styleClass="building-name" text="Chung Cư Xanh" />
                 <HBox alignment="TOP_RIGHT" prefHeight="250.0" prefWidth="729.0" spacing="30.0">
                     <children>
                         <ImageView fx:id="apartmentImage" fitHeight="250.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../assets/view-3d-graphic-apartment-complex.jpg" />
-                     </image></ImageView>
+                            <image>
+                                <Image url="@../../assets/view-3d-graphic-apartment-complex.jpg" />
+                            </image></ImageView>
                         <GridPane hgap="20.0" prefHeight="250.0" prefWidth="400.0" vgap="10.0" HBox.hgrow="ALWAYS">
                             <children>
                                 <Label text="Building Address:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
@@ -59,20 +59,20 @@
                                 <Label text="Move-in Date:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
                                 <Label fx:id="moveInDateLabel" text="01/06/2022" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                             </children>
-                     <columnConstraints>
-                        <ColumnConstraints />
-                        <ColumnConstraints />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                     </rowConstraints>
+                            <columnConstraints>
+                                <ColumnConstraints />
+                                <ColumnConstraints />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
                         </GridPane>
                     </children>
                 </HBox>
