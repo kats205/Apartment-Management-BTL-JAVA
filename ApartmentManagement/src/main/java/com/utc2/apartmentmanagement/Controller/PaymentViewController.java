@@ -180,6 +180,7 @@ public class PaymentViewController implements Initializable {
         List<Payment> paymentList = new PaymentDAO().getAllPayment();
         payments.addAll(paymentList);
         paymentTable.setItems(payments);
+        paymentCountLabel.setText(paymentList.size()+"");
     }
     private void initializeComponents() {
         // Khởi tạo DatePicker

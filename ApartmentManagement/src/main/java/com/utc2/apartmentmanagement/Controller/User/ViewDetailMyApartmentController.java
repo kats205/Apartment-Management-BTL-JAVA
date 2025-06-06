@@ -58,9 +58,6 @@ public class ViewDetailMyApartmentController {
 
     private NumberFormat currencyFormat;
 
-    /**
-     * Khởi tạo controller
-     */
     @FXML
     public void initialize() throws SQLException {
 
@@ -94,11 +91,8 @@ public class ViewDetailMyApartmentController {
             areaLabel.setText(apartmentInf.get("area").toString() + " m2");
             bedroomsLabel.setText(apartmentInf.get("bedrooms").toString());
             maintenanceFeeLabel.setText(df.format(Double.parseDouble(apartmentInf.get("maintenance_fee").toString())) + " VNĐ");
-
-
         }
     }
-
 
     private void closeWindow() {
         // Lấy cửa sổ chứa controller này

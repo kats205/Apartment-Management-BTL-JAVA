@@ -24,7 +24,7 @@ public class ServiceDAO implements IServiceDAO {
                         rs.getString("description"),
                         rs.getDouble("price_service"),
                         rs.getString("unit"),
-                        rs.getBoolean("is_available")));
+                        rs.getBoolean("is_active")));
             }
         }catch (SQLException e){
             e.printStackTrace();

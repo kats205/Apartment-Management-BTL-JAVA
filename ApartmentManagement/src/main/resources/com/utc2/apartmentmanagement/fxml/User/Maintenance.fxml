@@ -21,11 +21,11 @@
 
 <AnchorPane fx:id="maintenanceView" prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Maintenance.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MaintenanceController">
     <children>
-        <BorderPane prefHeight="655.0" prefWidth="1100.0">
+        <BorderPane prefHeight="638.0" prefWidth="1100.0">
             <center>
-                <AnchorPane prefHeight="845.0" prefWidth="1100.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="576.0" prefWidth="1100.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                     <children>
-                        <ScrollPane fitToWidth="true" layoutX="10.0" layoutY="10.0" prefHeight="550.0" prefWidth="1080.0">
+                        <ScrollPane fitToWidth="true" layoutX="25.0" layoutY="10.0" prefHeight="595.0" prefWidth="1050.0">
                             <content>
                                 <VBox prefHeight="820.0" prefWidth="1036.0" spacing="20.0" styleClass="form-container">
                                     <children>
@@ -81,31 +81,6 @@
                                             </children>
                                         </HBox>
 
-                                        <!-- Photo Upload Section -->
-                                        <VBox spacing="5.0">
-                                            <children>
-                                                <Label styleClass="form-label" text="Attach Photos (optional):" />
-                                                <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="upload-box">
-                                                    <padding>
-                                                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
-                                                    </padding>
-                                                    <children>
-                                                        <Button fx:id="uploadPhotoButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleUploadPhoto" prefHeight="30.0" prefWidth="130.0" styleClass="upload-button" text="Choose File">
-                                                            <graphic>
-                                                                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                                                                    <image>
-                                                                        <Image url="@../../assets/UserDashboard/Maintenance/cloud-computing.png" />
-                                                                    </image>
-                                                                </ImageView>
-                                                            </graphic>
-                                                        </Button>
-                                                        <Label fx:id="photoNameLabel" styleClass="file-name-label" text="No file selected" />
-                                                        <Label styleClass="file-info-label" text="(Supports JPG, PNG, PDF - Max 5MB)" />
-                                                    </children>
-                                                </HBox>
-                                            </children>
-                                        </VBox>
-
                                         <!-- Detailed Description -->
                                         <VBox spacing="5.0">
                                             <children>
@@ -140,72 +115,61 @@
                                             </children>
                                         </GridPane>
 
-                                        <!-- Priority Note Section -->
-                                        <VBox styleClass="section">
+                                        <!-- Photo Upload Section -->
+                                        <VBox spacing="5.0">
                                             <children>
-                                                <VBox prefHeight="164.0" prefWidth="1028.0" spacing="8.0" styleClass="priority-note-box">
+                                                <Label styleClass="form-label" text="Attach Photos (optional):" />
+                                                <HBox alignment="CENTER_LEFT" spacing="15.0" styleClass="upload-box">
+                                                    <padding>
+                                                        <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                                    </padding>
                                                     <children>
-                                                        <Label styleClass="priority-note-title" text="📋 Important Notes:" />
-                                                        <VBox spacing="4.0">
-                                                            <children>
-                                                                <Label styleClass="priority-note-text" text="• ">
-                                                                    <graphic>
-                                                                        <HBox spacing="5.0">
-                                                                            <children>
-                                                                                <Label styleClass="priority-level-low" text="Low:" />
-                                                                                <Label styleClass="priority-note-text" text="Minor issues that don't affect daily living (cosmetic problems, non-essential repairs). Will be addressed within 5-7 days" />
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </graphic>
-                                                                </Label>
-                                                                <Label styleClass="priority-note-text" text="• ">
-                                                                    <graphic>
-                                                                        <HBox spacing="5.0">
-                                                                            <children>
-                                                                                <Label styleClass="priority-level-medium" text="Medium:" />
-                                                                                <Label styleClass="priority-note-text" text="Issues that cause inconvenience but are manageable (minor leaks, appliance malfunctions). Will be addressed within 2-3 days" />
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </graphic>
-                                                                </Label>
-                                                                <Label styleClass="priority-note-text" text="• ">
-                                                                    <graphic>
-                                                                        <HBox spacing="5.0">
-                                                                            <children>
-                                                                                <Label styleClass="priority-level-high" text="High:" />
-                                                                                <Label styleClass="priority-note-text" text="Problems that significantly impact comfort or safety (heating/cooling issues, major leaks). Will be addressed within 24 hours" />
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </graphic>
-                                                                </Label>
-                                                                <Label styleClass="priority-note-text" text="• ">
-                                                                    <graphic>
-                                                                        <HBox spacing="5.0">
-                                                                            <children>
-                                                                                <Label styleClass="priority-level-urgent" text="Urgent:" />
-                                                                                <Label styleClass="priority-note-text" text="Emergency situations requiring immediate attention (no power/water, security concerns, hazardous conditions). Will be addressed within 2-4 hours" />
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </graphic>
-                                                                </Label>
-                                                            </children>
-                                                        </VBox>
+                                                        <Button fx:id="uploadPhotoButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleUploadPhoto" prefHeight="40.0" prefWidth="139.0" styleClass="upload-button" text="Choose File">
+                                                            <graphic>
+                                                                <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                                                                    <image>
+                                                                        <Image url="@../../assets/icons/camera.png" />
+                                                                    </image>
+                                                                </ImageView>
+                                                            </graphic>
+                                                        </Button>
+                                                        <Label fx:id="photoNameLabel" styleClass="file-name-label" text="No file selected" />
+                                                        <Label styleClass="file-info-label" text="(Supports JPG, PNG, PDF - Max 5MB)" />
                                                     </children>
-                                                </VBox>
+                                                </HBox>
+                                            </children>
+                                        </VBox>
+
+                                        <!-- Important Notes Box -->
+                                        <VBox spacing="5.0" styleClass="note-box">
+                                            <padding>
+                                                <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                            </padding>
+                                            <children>
+                                                <Label styleClass="note-title" text="Important Notes:">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label styleClass="note-content" text="• Urgent requests: Will be addressed within 2-4 hours" wrapText="true" />
+                                                <Label styleClass="note-content" text="• High priority: Will be addressed within 24 hours" wrapText="true" />
+                                                <Label styleClass="note-content" text="• Medium priority: Will be addressed within 2-3 days" wrapText="true" />
+                                                <Label styleClass="note-content" text="• Low priority: Will be addressed within 5-7 days" wrapText="true" />
+                                                <Label styleClass="note-content" text="• Please ensure someone is available during the scheduled maintenance visit" wrapText="true" />
                                             </children>
                                         </VBox>
 
                                         <!-- Action Buttons -->
-                                        <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="998.0" spacing="15.0">
+                                        <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="992.0" spacing="15.0">
                                             <children>
-                                                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" prefHeight="28.0" prefWidth="90.0" styleClass="cancel-button" text="Cancel" />
-                                                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="35.0" prefWidth="150.0" styleClass="submit-button" text="Submit Request" />
+                                                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" prefHeight="35.0" prefWidth="100.0" styleClass="cancel-button" text="Cancel" />
+                                                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="35.0" prefWidth="120.0" styleClass="submit-button" text="Submit Request" />
                                             </children>
                                         </HBox>
                                     </children>
-                           <padding>
-                              <Insets bottom="20.0" left="25.0" right="25.0" top="10.0" />
-                           </padding>
+                                    <padding>
+                                        <Insets bottom="20.0" left="25.0" right="25.0" />
+                                    </padding>
                                 </VBox>
                             </content>
                         </ScrollPane>
@@ -213,18 +177,13 @@
                 </AnchorPane>
             </center>
             <top>
-                <AnchorPane prefHeight="80.0" prefWidth="1100.0" styleClass="header-container" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="60.0" prefWidth="1100.0" styleClass="header-container" BorderPane.alignment="CENTER">
                     <children>
-                        <Label layoutX="408.0" layoutY="20.0" prefHeight="35.0" styleClass="header-title" text="Maintenance Request" textAlignment="CENTER" textFill="#1a936f">
+                        <Label layoutX="421.0" layoutY="15.0" prefHeight="35.0" styleClass="header-title" text="Maintenance Request" textAlignment="CENTER" textFill="#1a936f">
                             <font>
-                                <Font name="System Bold" size="28.0" />
+                                <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                  <Label layoutX="342.0" layoutY="60.0" styleClass="subtitle" text="Submit maintenance requests for your apartment or common areas">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
                     </children>
                 </AnchorPane>
             </top>

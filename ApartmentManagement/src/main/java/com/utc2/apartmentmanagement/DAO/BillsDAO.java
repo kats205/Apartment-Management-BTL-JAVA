@@ -19,7 +19,7 @@ public class BillsDAO implements IBillDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 billsList.add(new Bills(rs.getInt("bill_id"), rs.getString("apartment_id"), rs.getDate("billing_date"),
-                        rs.getDate("due_date"), rs.getDouble("total_amount"), rs.getString("status"), rs.getDouble("late_fee"),
+                         rs.getDouble("total_amount"), rs.getString("status"), rs.getDouble("late_fee"),
                         rs.getDate("created_at"), rs.getDate("updated_at")));
             }
         } catch (SQLException e) {
@@ -30,14 +30,13 @@ public class BillsDAO implements IBillDAO {
 
     @Override
     public boolean addBill(Bills bill) {
-        String sql = "INSERT INTO Bill(bill_id, apartment_id, billing_date, due_date, total_amount, status, late_fee, created_at, updated_at)" +
+        String sql = "INSERT INTO Bill(bill_id, apartment_id, billing_date, total_amount, status, late_fee, created_at, updated_at)" +
                 "VALUES ( ? , ? , ? , ? , ?, ? , ? , ? , ?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, bill.getBillID());
             stmt.setString(2, bill.getApartmentID());
             stmt.setDate(3, bill.getBillingDate());
-            stmt.setDate(4, bill.getDueDate());
             stmt.setDouble(5, bill.getTotalAmount());
             stmt.setString(6, bill.getStatus());
             stmt.setDouble(7, bill.getLate_fee());
@@ -61,7 +60,6 @@ public class BillsDAO implements IBillDAO {
                 return new Bills(rs.getInt("billID"),
                         rs.getString("apartment_id"),
                         rs.getDate("billing_date"),
-                        rs.getDate("due_date"),
                         rs.getDouble("total_amount"),
                         rs.getString("status"),
                         rs.getDouble("late_fee"),

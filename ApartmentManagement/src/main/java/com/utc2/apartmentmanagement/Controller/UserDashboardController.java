@@ -40,7 +40,6 @@ public class UserDashboardController implements Initializable {
     @FXML public Label floorTF;
     @FXML public AnchorPane rootPane;
     @FXML public Button services;
-    @FXML public Button request;
     @FXML public Button complaints;
     @FXML public Button profile;
     @FXML public Label Menu;
@@ -50,7 +49,7 @@ public class UserDashboardController implements Initializable {
     @FXML public Button servicesButton;
     @FXML public Button viewPaymentButton;
     @FXML public Button complaintsButton;
-    @FXML public Button statusButton;
+    @FXML public Button request;
     @FXML public Button profileButton;
     @FXML public Button helpButton;
     @FXML public Label apartmentIdTf1;
@@ -158,13 +157,14 @@ public class UserDashboardController implements Initializable {
 
     private void setOnActionForRequestStatus(){
         // set sự kiện cho button nằm bên sideBar
-        statusButton.setOnAction(e -> {;
+        request.setOnAction(e -> {;
             try {
                 loadRequestStatusView();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
+
     }
 
 

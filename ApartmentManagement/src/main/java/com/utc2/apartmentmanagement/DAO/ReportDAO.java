@@ -68,7 +68,7 @@ public class ReportDAO implements IReportDAO {
 
     @Override
     public boolean saveReport(Report report) {
-        String query = "INSERT INTO report (report_type, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at) " +
+        String query = "INSERT INTO report (report_name, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -102,7 +102,7 @@ public class ReportDAO implements IReportDAO {
 
     @Override
     public boolean updateReport(Report report) {
-        String query = "UPDATE reports SET report_type = ?, generation_date = ?, generated_by_user_id = ?, " +
+        String query = "UPDATE reports SET report_name = ?, generation_date = ?, generated_by_user_id = ?, " +
                 "parameters = ?, file_path = ?, updated_at = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -166,7 +166,7 @@ public class ReportDAO implements IReportDAO {
     @Override
     public List<Report> getReportsByType(String reportType) {
         List<Report> reports = new ArrayList<>();
-        String query = "SELECT * FROM reports WHERE report_type = ? ORDER BY generation_date DESC";
+        String query = "SELECT * FROM reports WHERE report_name = ? ORDER BY generation_date DESC";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, reportType);
@@ -209,7 +209,7 @@ public class ReportDAO implements IReportDAO {
     public Report mapResultSetToReport(ResultSet resultSet) throws SQLException {
         Report report = new Report();
         report.setId(resultSet.getInt("report_id"));
-        report.setReportType(resultSet.getString("report_type"));
+        report.setReportType(resultSet.getString("report_name"));
 
         Date generationDate = resultSet.getDate("generation_date");
         if (generationDate != null) {

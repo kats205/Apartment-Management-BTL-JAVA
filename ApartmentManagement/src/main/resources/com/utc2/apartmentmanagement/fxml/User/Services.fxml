@@ -151,7 +151,7 @@
                                                                                     <Font size="12.0" />
                                                                                 </font>
                                                                             </Label>
-                                                                            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
+                                                                            <Button fx:id="registerService" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
                                                                                 <font>
                                                                                     <Font name="System Bold" size="14.0" />
                                                                                 </font>

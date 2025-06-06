@@ -15,7 +15,6 @@ public class Bills {
     private int billID;
     private String apartmentID;
     private Date billingDate;
-    private Date dueDate;
     private double totalAmount;
     private String status;
     private double late_fee;
