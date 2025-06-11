@@ -6,7 +6,9 @@ import com.utc2.apartmentmanagement.Repository.IMaintenanceRequestDAO;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
     @Override
@@ -178,5 +180,56 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
             e.printStackTrace();
             System.out.println(" Lỗi khi lưu dữ liệu: " + e.getMessage());
         }
+    }
+
+    @Override
+    public List<Map<String, Object>> getMaintenanceRequestsByResidentId(int residentID){
+        List<Map<String, Object>> requestList = new ArrayList<>();
+        String sql = "SELECT * FROM MaintenanceRequest WHERE resident_id = ?";
+
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setInt(1,residentID);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Map<String,Object> rows = new HashMap<>();
+
+                rows.put("request_id",rs.getInt("request_id"));
+                rows.put("apartment_id", rs.getString("apartment_id"));
+                rows.put("resident_id",rs.getInt("resident_id"));
+                rows.put("request_date", rs.getDate("request_date"));
+                rows.put("description",rs.getString("description"));
+                rows.put("status",rs.getString("status"));
+                rows.put("priority", rs.getString("priority"));
+                rows.put("assigned_staff_id",rs.getInt("assigned_staff_id"));
+                rows.put("completion_date",rs.getDate("completion_date"));
+                requestList.add(rows);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return requestList;
+    }
+
+    @Override
+    public int getTotalMaintenaceRequestByResidentID(int resident_id) {
+        String sql = "SELECT COUNT(*) AS total_requests FROM MaintenanceRequest WHERE resident_id = ? ";
+
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)){
+
+            stmt.setInt(1,resident_id);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 }

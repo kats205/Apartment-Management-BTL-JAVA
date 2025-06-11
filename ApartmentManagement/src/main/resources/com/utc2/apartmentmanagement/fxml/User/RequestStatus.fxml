@@ -54,7 +54,7 @@
                                                       <Font name="System Bold" size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="myMaintenanceCountLabel" text="(5 total requests)" textFill="#666666">
+                                                <Label fx:id="maintenanceCountLabel" text="(5 total requests)" textFill="#666666">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -89,16 +89,16 @@
                                                 <Insets />
                                              </VBox.margin>
                                           </HBox>
-                                          <TableView fx:id="myMaintenanceTable" prefHeight="504.0" prefWidth="1060.0" styleClass="data-table">
+                                          <TableView fx:id="maintenanceTable" prefHeight="504.0" prefWidth="1060.0" styleClass="data-table">
                                              <columns>
-                                                <TableColumn fx:id="myMaintenanceIdColumn" prefWidth="120.0" text="Request ID" />
+                                                <TableColumn fx:id="maintenanceIdColumn" prefWidth="120.0" text="Request ID" />
                                                 <TableColumn fx:id="myMaintenanceIssueTypeColumn" prefWidth="100.0" text="Issue Type" />
-                                                <TableColumn fx:id="myMaintenanceDescriptionColumn" prefWidth="230.0" text="Description" />
-                                                <TableColumn fx:id="myMaintenanceStatusColumn" prefWidth="100.0" text="Status" />
-                                                <TableColumn fx:id="myMaintenancePriorityColumn" prefWidth="80.0" text="Priority" />
-                                                <TableColumn fx:id="myMaintenanceRequestDateColumn" prefWidth="120.0" text="Request Date" />
-                                                <TableColumn fx:id="myMaintenanceAssignedStaffColumn" prefWidth="150.0" text="Assigned Staff" />
-                                                <TableColumn fx:id="myMaintenanceCompletionDateColumn" prefWidth="120.0" text="Completion Date" />
+                                                <TableColumn fx:id="maintenanceDescriptionColumn" prefWidth="230.0" text="Description" />
+                                                <TableColumn fx:id="maintenanceStatusColumn" prefWidth="100.0" text="Status" />
+                                                <TableColumn fx:id="maintenancePriorityColumn" prefWidth="80.0" text="Priority" />
+                                                <TableColumn fx:id="maintenanceRequestDateColumn" prefWidth="120.0" text="Request Date" />
+                                                <TableColumn fx:id="maintenanceAssignedStaffColumn" prefWidth="150.0" text="Assigned Staff" />
+                                                <TableColumn fx:id="maintenanceCompletionDateColumn" prefWidth="120.0" text="Completion Date" />
                                              </columns>
                                              <VBox.margin>
                                                 <Insets left="20.0" right="20.0" />
