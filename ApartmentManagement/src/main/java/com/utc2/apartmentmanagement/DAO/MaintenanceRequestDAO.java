@@ -151,4 +151,32 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
         }
         return 0;
     }
+
+    @Override // lưu sau khi gửi yêu cầu bảo trì
+    public void saveMaintenaceRequest(String apartmentID, String residentID, LocalDate requestDate, String description,String priority) {
+        // status mặc định ban đầu là pending
+        // assgin staff là NULL,
+        // completion_date NULL,
+        String sql = "INSERT INTO MaintenanceRequest " +
+                "(apartment_id, resident_id, request_date, description, priority, created_at, updated_at, status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, apartmentID);
+            stmt.setString(2, residentID);
+            stmt.setDate(3, Date.valueOf(requestDate));
+            stmt.setString(4, description);
+            stmt.setString(5, priority);
+            stmt.setDate(6, Date.valueOf(LocalDate.now()));
+            stmt.setDate(7, Date.valueOf(LocalDate.now()));
+            stmt.setString(8, "pending");
+
+            stmt.executeUpdate();
+            System.out.println(" Dữ liệu đã được lưu thành công.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(" Lỗi khi lưu dữ liệu: " + e.getMessage());
+        }
+    }
 }

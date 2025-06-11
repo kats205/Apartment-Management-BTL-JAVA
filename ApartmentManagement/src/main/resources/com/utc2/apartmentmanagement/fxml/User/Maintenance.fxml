@@ -19,18 +19,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Maintenance.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MaintenanceController">
+<AnchorPane fx:id="maintenanceView" prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Maintenance.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MaintenanceController">
     <children>
         <BorderPane prefHeight="638.0" prefWidth="1100.0">
             <center>
-                <AnchorPane prefHeight="733.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="576.0" prefWidth="1100.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                     <children>
                         <ScrollPane fitToWidth="true" layoutX="25.0" layoutY="10.0" prefHeight="595.0" prefWidth="1050.0">
                             <content>
-                                <VBox prefHeight="665.0" prefWidth="1050.0" spacing="20.0" styleClass="form-container">
+                                <VBox prefHeight="820.0" prefWidth="1036.0" spacing="20.0" styleClass="form-container">
                                     <children>
                                         <!-- Section Title -->
-                                        <Label styleClass="section-title" text="Maintenance Request Information">
+                                        <Label styleClass="section-title" text="Maintenance Request Information" textFill="#1a936f">
                                             <font>
                                                 <Font name="System Bold" size="18.0" />
                                             </font>
@@ -55,7 +55,7 @@
                                                 <ComboBox fx:id="issueTypeComboBox" maxWidth="1.7976931348623157E308" promptText="Select issue type" styleClass="form-field" GridPane.columnIndex="1" />
 
                                                 <Label styleClass="form-label" text="Priority:" GridPane.columnIndex="2" />
-                                                <ComboBox fx:id="priorityComboBox" maxWidth="1.7976931348623157E308" promptText="Select priority level" styleClass="form-field" GridPane.columnIndex="3" />
+                                                <ComboBox fx:id="priorityComboBox" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="316.0" promptText="Select priority level" styleClass="form-field" GridPane.columnIndex="3" />
 
                                                 <!-- Row 2 -->
                                                 <Label styleClass="form-label" text="Apartment ID:" GridPane.rowIndex="1" />
@@ -76,8 +76,8 @@
                                         <!-- Subject/Title Section -->
                                         <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="992.0" spacing="20.0">
                                             <children>
-                                                <Label styleClass="form-label" text="Subject:" minWidth="120.0" />
-                                                <TextField fx:id="subjectTextField" maxWidth="1.7976931348623157E308" prefHeight="40.0" HBox.hgrow="ALWAYS" promptText="Brief description of the maintenance issue (e.g., Broken door lock, Water leak)" styleClass="form-field" />
+                                                <Label minWidth="120.0" styleClass="form-label" text="Subject:" />
+                                                <TextField fx:id="subjectTextField" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="Brief description of the maintenance issue (e.g., Broken door lock, Water leak)" styleClass="form-field" HBox.hgrow="ALWAYS" />
                                             </children>
                                         </HBox>
 
@@ -168,7 +168,7 @@
                                         </HBox>
                                     </children>
                                     <padding>
-                                        <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+                                        <Insets bottom="20.0" left="25.0" right="25.0" />
                                     </padding>
                                 </VBox>
                             </content>
@@ -177,9 +177,9 @@
                 </AnchorPane>
             </center>
             <top>
-                <AnchorPane prefHeight="50.0" prefWidth="1100.0" style="-fx-background-color: linear-gradient(to right, #1A936F, #88d498);" styleClass="header-container" BorderPane.alignment="CENTER">
+                <AnchorPane prefHeight="60.0" prefWidth="1100.0" styleClass="header-container" BorderPane.alignment="CENTER">
                     <children>
-                        <Label layoutX="420.0" layoutY="11.0" styleClass="header-title" text="Maintenance Request" textAlignment="CENTER">
+                        <Label layoutX="421.0" layoutY="15.0" prefHeight="35.0" styleClass="header-title" text="Maintenance Request" textAlignment="CENTER" textFill="#1a936f">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>

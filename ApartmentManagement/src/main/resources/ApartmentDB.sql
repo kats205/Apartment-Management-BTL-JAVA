@@ -1,35 +1,37 @@
-﻿CREATE DATABASE Apartment;
+﻿CREATE DATABASE Apartment_Remake;
 GO
-
-USE Apartment;
-GO
-
+use Apartment_Remake;
+use master
+drop database Apartment_Remake;
+-- sửa không dấu hết
+-- căn hộ không có người ở -> trạng thái là null
+-- nb
 
 -- Bảng Role (Vai trò)
 CREATE TABLE Role (
     role_id INT PRIMARY KEY IDENTITY(1,1),
     role_name VARCHAR(50) NOT NULL,
-    description NVARCHAR(MAX), 
+    description VARCHAR(MAX),
 );
 -- Bảng User (Người dùng)
 CREATE TABLE [User] (
     user_id INT PRIMARY KEY IDENTITY(1,1),
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    full_name NVARCHAR(100) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE CHECK (email LIKE '%@%.%'),
-    phone_number VARCHAR(20) CHECK (phone_number LIKE '0[0-9]%' AND LEN(phone_number) = 10),
-    role_id INT NOT NULL, 
+    phone_number VARCHAR(20) CHECK (phone_number LIKE '0[0-9]%' AND LEN(phone_number) = 10) UNIQUE,
+    role_id INT NOT NULL,
     active BIT DEFAULT 1,
+	avatar_filename VARCHAR(255) NULL,
     created_at DATETIME2 DEFAULT GETDATE(), -- dùng để lưu thời điểm tạo bản ghi
     updated_at DATETIME2 DEFAULT GETDATE(), -- dùng để lưu thời điểm khi có sự cập nhật bản ghi
     FOREIGN KEY (role_id) REFERENCES Role(role_id) -- role_id là khóa ngoại trong user để xác định role của 1 user
 );
 
-
 CREATE TABLE Manager(
 	manager_id INT PRIMARY KEY,
-	office NVARCHAR(100) NOT NULL,
+	office VARCHAR(100) NOT NULL,
 	start_date DATE NOT NULL, -- ngày bổ nhiệm
 	FOREIGN KEY (manager_id) REFERENCES [User](user_id)
 )
@@ -37,13 +39,13 @@ CREATE TABLE Manager(
 CREATE TABLE Staff (
     staff_id INT PRIMARY KEY,
     department VARCHAR(50) NOT NULL, -- văn phòng làm việc của nhân viên
-    position NVARCHAR(50) NOT NULL, -- chức vụ của nhân viên
+    position VARCHAR(50) NOT NULL, -- chức vụ của nhân viên
     hire_date DATE NOT NULL, -- ngày nhân viên được tuyển dụng
 	manager_id INT, -- người quản lý trực tiếp nhân viên này
-	degree NVARCHAR(100) NOT NULL,
-	certificate NVARCHAR(100) NOT NULL,
+	degree VARCHAR(100),
+	certificate VARCHAR(100),
     FOREIGN KEY (staff_id) REFERENCES [User](user_id),
-	FOREIGN KEY (manager_id) REFERENCES Manager(manager_id) 
+	FOREIGN KEY (manager_id) REFERENCES Manager(manager_id)
 );
 
 
@@ -51,7 +53,7 @@ CREATE TABLE Staff (
 CREATE TABLE Building (
     building_id INT PRIMARY KEY IDENTITY(1,1),
     building_name VARCHAR(100) NOT NULL,
-    address NVARCHAR(MAX) NOT NULL,
+    address VARCHAR(MAX) NOT NULL,
     total_floors INT NOT NULL,
     total_apartments INT NOT NULL,
     completion_date DATE,
@@ -78,10 +80,10 @@ CREATE TABLE Apartment (
 CREATE TABLE Resident (
     resident_id INT PRIMARY KEY IDENTITY(1,1),
     apartment_id VARCHAR(20) NOT NULL,
-    full_name NVARCHAR(100) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
     identity_card VARCHAR(20) NOT NULL UNIQUE CHECK (identity_card NOT LIKE '%[^0-9]%'), -- chỉ cho phép số
     date_of_birth DATE,
-    gender NVARCHAR(10),
+    gender BIT default 0, 	-- 0 là nữ , 1 là nam
 --    phone_number VARCHAR(20),
 --    email VARCHAR(100),
 	-- Vì hệ thống phân quyền có resident nên 2 thuuộc tính này sẽ được lấy ra dựa vào user_id
@@ -98,10 +100,10 @@ CREATE TABLE Resident (
 CREATE TABLE Service (
     service_id INT PRIMARY KEY IDENTITY(1,1),
     service_name VARCHAR(100) NOT NULL,
-    description NVARCHAR(MAX),
+    description TEXT,
     price_service DECIMAL(10,2) NOT NULL, -- Đã sửa tên cột và kiểu dữ liệu
     unit VARCHAR(20) NOT NULL, -- đơn vị thuê dịch vụ (tháng, năm, lượt)
-    is_available BIT DEFAULT 1, -- quản lý trạng thái dịch vụ (1: đang được thuê, 0: chưa được thuê) 
+    is_active BIT DEFAULT 1, -- quản lý trạng thái dịch vụ (1: đang được thuê, 0: chưa được thuê)
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE() -- tạo trigger để tự động update
 );
@@ -110,14 +112,18 @@ CREATE TABLE Service (
 CREATE TABLE ServiceRegistration (
     registration_id INT PRIMARY KEY IDENTITY(1,1),
     service_id INT NOT NULL,
-    apartment_id VARCHAR(20) NOT NULL,
+    resident_id INT NOT NULL,
+	apartment_id VARCHAR(20) NOT NULL,
     start_date DATE NOT NULL,
-    end_date DATE,
+    end_date DATE NOT NULL,
     status VARCHAR(20) NOT NULL CHECK (status IN ('active', 'cancelled', 'expired')),
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE(),
+	registered_by INT NOT NULL,
     FOREIGN KEY (service_id) REFERENCES Service(service_id),
-    FOREIGN KEY (apartment_id) REFERENCES Apartment(apartment_id)
+    FOREIGN KEY (resident_id) REFERENCES Resident(resident_id),
+    FOREIGN KEY (apartment_id) REFERENCES Apartment(apartment_id),
+	FOREIGN KEY (registered_by) REFERENCES Resident(resident_id)
 );
 
 -- Bảng Bill (Hóa đơn)
@@ -125,13 +131,14 @@ CREATE TABLE Bill (
     bill_id INT PRIMARY KEY IDENTITY(1,1),
     apartment_id VARCHAR(20) NOT NULL,
     billing_date DATE NOT NULL,
-    due_date DATE NOT NULL,
     total_amount DECIMAL(10,2) NOT NULL,
     status VARCHAR(20) NOT NULL CHECK (status IN ('pending', 'paid', 'overdue', 'cancelled')),
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE(),
-    late_fee DECIMAL(10,2) DEFAULT 0, -- phí trễ hạn của bill tính 10% cho mỗi ngày trễ hạn, nên tạo thêm trigger để tự động câp nhật phí trễ hạn
-    FOREIGN KEY (apartment_id) REFERENCES Apartment(apartment_id)
+	billed_to INT NOT NULL,
+	late_fee DECIMAL(10,2) DEFAULT 0, -- phí trễ hạn của bill tính 10% cho mỗi ngày trễ hạn, nên tạo thêm trigger để tự động câp nhật phí trễ hạn
+    FOREIGN KEY (apartment_id) REFERENCES Apartment(apartment_id),
+	FOREIGN KEY (billed_to) REFERENCES Resident(resident_id)
 );
 
 -- Bảng BillItem (Chi tiết hóa đơn)
@@ -139,7 +146,7 @@ CREATE TABLE BillItem (
     item_id INT PRIMARY KEY IDENTITY(1,1),
     bill_id INT NOT NULL,
     item_type VARCHAR(50) NOT NULL,
-    description TEXT,
+    description VARCHAR(MAX),
     amount FLOAT NOT NULL,
     quantity FLOAT NOT NULL DEFAULT 1,
     total FLOAT NOT NULL,
@@ -154,24 +161,36 @@ CREATE TABLE Payment (
     bill_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     payment_date DATE NOT NULL,
-    payment_method VARCHAR(50) NOT NULL,
+    payment_method VARCHAR(50) NOT NULL, -- VNPay, Tiền mặt, chuyển khoảng
     transaction_id VARCHAR(100),
     status VARCHAR(20) NOT NULL CHECK (status IN ('pending', 'completed', 'failed', 'refunded')),
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (bill_id) REFERENCES Bill(bill_id)
 );
-SELECT * FROM Payment
 
-SELECT COUNT(*) From Payment WHERE payment_date BETWEEN '2023-05-10' AND '2023-05-15' AND status = 'com'
-SELECT COUNT(*) FROM Payment WHERE payment_date BETWEEN '2023-05-10' AND '2023-05-15'
+CREATE TABLE VnpayReturn (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    payment_id INT NOT NULL UNIQUE,
+    vnp_txn_ref VARCHAR(50) NOT NULL,
+    vnp_transaction_no VARCHAR(50),
+    vnp_bank_tran_no VARCHAR(50),
+    vnp_bank_code VARCHAR(20),
+    vnp_card_type VARCHAR(20),
+    vnp_order_info VARCHAR(500),
+    vnp_pay_date VARCHAR(14),
+    vnp_response_code VARCHAR(2),
+    vnp_transaction_status VARCHAR(10),
+    FOREIGN KEY (payment_id) REFERENCES Payment(payment_id)
+);
+
 -- Bảng MaintenanceRequest (Yêu cầu bảo trì)
 CREATE TABLE MaintenanceRequest (
     request_id INT PRIMARY KEY IDENTITY(1,1),
     apartment_id VARCHAR(20) NOT NULL,
     resident_id INT NOT NULL,
     request_date DATE NOT NULL,
-    description NVARCHAR(MAX) NOT NULL,
+    description VARCHAR(MAX) NOT NULL,
     status VARCHAR(20) NOT NULL CHECK (status IN ('pending', 'assigned', 'in_progress', 'completed', 'cancelled')),
     priority VARCHAR(20) NOT NULL CHECK (priority IN ('low', 'medium', 'high', 'urgent')),
     assigned_staff_id INT, -- staff đảm nhiệm yêu càu bảo trì
@@ -188,9 +207,9 @@ CREATE TABLE MaintenanceRequest (
 CREATE TABLE Notification (
     notification_id INT PRIMARY KEY IDENTITY(1,1),
     title VARCHAR(200) NOT NULL,
-    content NVARCHAR(100) NOT NULL,
+    content VARCHAR(100) NOT NULL,
     creation_date DATETIME2 NOT NULL,
-    type NVARCHAR(50) NOT NULL,
+    type VARCHAR(50) NOT NULL,
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE()
 );
@@ -212,372 +231,251 @@ CREATE TABLE NotificationRecipient (
 -- Bảng Report (Báo cáo)
 CREATE TABLE Report (
     report_id INT PRIMARY KEY IDENTITY(1,1),
-    report_type VARCHAR(50) NOT NULL,
+    report_name VARCHAR(50) NOT NULL,
     generation_date DATETIME2 NOT NULL,
     generated_by_user_id INT NOT NULL,
-    parameters NVARCHAR(100),
+    parameters VARCHAR(100),
     file_path VARCHAR(255) NOT NULL,
     created_at DATETIME2 DEFAULT GETDATE(),
     updated_at DATETIME2 DEFAULT GETDATE(),
     FOREIGN KEY (generated_by_user_id) REFERENCES [User](user_id)
 );
 
---INSERT 
 
-INSERT INTO Role (role_name, description) VALUES 
-('Manager', 'Quản lý hệ thống và tòa nhà'),
-('Staff', 'Nhân viên hỗ trợ và vận hành'),
-('Resident', 'Cư dân sử dụng căn hộ');
+--INSERT
 
--- Insert data into User table with the 3 roles
-INSERT INTO [User] (username, password, full_name, email, phone_number, role_id) VALUES 
-('quanly1', 'ManagerPass123!', N'Trần Văn Quản', 'quanly1@qlcc.com', '0901234567', 1),
-('quanly2', 'ManagerPass456!', N'Lê Thị Giám', 'quanly2@qlcc.com', '0912345678', 1),
-('nhanvien1', 'StaffPass123!', N'Phạm Văn Nhân', 'nhanvien1@qlcc.com', '0923456789', 2),
-('nhanvien2', 'StaffPass456!', N'Hoàng Thị Viên', 'nhanvien2@qlcc.com', '0934567890', 2),
-('nhanvien3', 'StaffPass789!', N'Võ Văn Hỗ', 'nhanvien3@qlcc.com', '0945678901', 2),
-('cudan1', 'ResidentPass123!', N'Vũ Đức Cư', 'cudan1@qlcc.com', '0956789012', 3),
-('cudan2', 'ResidentPass456!', N'Ngô Thị Dân', 'cudan2@qlcc.com', '0967890123', 3),
-('cudan3', 'ResidentPass789!', N'Bùi Văn Nhà', 'cudan3@qlcc.com', '0978901234', 3),
-('cudan4', 'ResidentPass012!', N'Đỗ Thị Hộ', 'cudan4@qlcc.com', '0989012345', 3),
-('cudan5', 'ResidentPass345!', N'Trương Văn Chung', 'cudan5@qlcc.com', '0990123456', 3);
+-- ===== INSERT DU LIEU THUC TIEN CHO HE THONG QUAN LY CHUNG CU =====
 
--- Insert data into Manager table
-INSERT INTO Manager (manager_id, office, start_date) VALUES 
-(1, N'Văn phòng Điều Hành', '2022-01-15'),
-(2, N'Văn phòng Quản Lý Tòa Nhà', '2021-11-01');
+-- 1. Them du lieu vao bang Role
+INSERT INTO Role (role_name, description) VALUES
+('Manager', 'Quan ly toa nha, chiu trach nhiem van hanh va quan ly cac hoat dong trong toa nha'),
+('Staff', 'Nhan vien phuc vu, thuc hien cac cong viec ky thuat va ho tro cu dan'),
+('Resident', 'Cu dan sinh song tai chung cu, co quyen su dung cac dich vu va tien ich');
 
--- Insert data into Staff table
-INSERT INTO Staff (staff_id, department, position,degree,certificate, hire_date, manager_id) VALUES 
-(3, N'Hành Chính', N'Nhân Viên Hành Chính',N'Cử nhân kế toán',N'Toiec 900', '2023-02-01', 1),
-(4, N'Vận Hành', N'Nhân Viên Kỹ Thuật', N'Thạc sĩ Khoa học máy tính',N'Chuyên gia kỹ thuật','2022-12-15', 2),
-(5, N'Dịch Vụ', N'Nhân Viên Dịch Vụ',N'Cử nhân Du Lịch',N'Ai eo 8.0', '2022-08-10', 1);
+-- 2. Thêm dữ liệu vào bảng User
+INSERT INTO [User] (username, password, full_name, email, phone_number, role_id, active) VALUES
+-- Managers (role_id = 1)
+('manager.huong', '$2a$12$j.yCSNv1mHMgAjD4hkuEY.xYxcyZe.Ua4w3xpoWVZd.Jf7memgEba', 'Tran Thi Huong', 'huong.tran@sunrisevn.com', '0901000002', 1, 1), --mk:Manager@2024#
+('manager.minh', '$2a$12$j.yCSNv1mHMgAjD4hkuEY.xYxcyZe.Ua4w3xpoWVZd.Jf7memgEba', 'Le Van Minh', 'minh.le@sunrisevn.com', '0901000003', 1, 1),
 
+-- Staff (role_id = 2)
 
-INSERT INTO Building (building_name, address, total_floors, total_apartments, completion_date) VALUES 
-(N'Chung Cư Xanh', N'123 Đường Lê Văn Lương, Quận 7, TP.HCM', 15, 180, '2020-12-31'),
-(N'Tháp Sen', N'456 Đường Nguyễn Văn Trỗi, Quận Phú Nhuận, TP.HCM', 20, 240, '2021-06-30'),
-(N'Khu Dân Cư Hạnh Phúc', N'789 Đường Cộng Hòa, Quận Tân Bình, TP.HCM', 12, 150, '2019-09-15'),
-(N'Chung Cư Thiên Đường', N'101 Đường Trường Chinh, Quận 12, TP.HCM', 18, 220, '2021-03-20'),
-(N'Bắc Linh Đàm Tower', N'202 Đường Điện Biên Phủ, Quận Bình Thạnh, TP.HCM', 22, 280, '2022-01-10'),
-(N'Goldmark City', N'88 Đường Hồng Tiến, Quận Long Biên, Hà Nội', 25, 300, '2021-11-05'),
-(N'Imperia Sky Garden', N'360 Đường Giải Phóng, Quận Hoàng Mai, Hà Nội', 16, 190, '2020-08-25'),
-(N'Royal City', N'72 Nguyễn Trãi, Quận Thanh Xuân, Hà Nội', 30, 350, '2022-05-15'),
-(N'Vinhomes Central Park', N'720A Điện Biên Phủ, Quận Bình Thạnh, TP.HCM', 40, 450, '2021-07-20'),
-(N'Sun Grand City', N'69 Thụy Khuê, Quận Tây Hồ, Hà Nội', 12, 140, '2020-04-30'),
-(N'New Horizon City', N'234 Đào Duy Anh, Quận Đống Đa, Hà Nội', 15, 180, '2021-09-10'),
-(N'Eco Lake View', N'32 Đại Từ, Quận Hoàng Mai, Hà Nội', 18, 220, '2022-02-15'),
-(N'Times City', N'458 Minh Khai, Quận Hai Bà Trưng, Hà Nội', 25, 300, '2021-05-20'),
-(N'Park Premium', N'99 Trần Duy Hưng, Quận Cầu Giấy, Hà Nội', 20, 240, '2020-11-15'),
-(N'The Manor Central Park', N'177 Hồ Tùng Mậu, Quận Nam Từ Liêm, Hà Nội', 35, 420, '2022-03-25');
+('staff.tung', '$2a$12$0MRetD48MmFtaS8hPIVC1.u59tvp58uHBnqN5J0dgACoSspTBeiim', 'Pham Van Tung', 'tung.pham@sunrisevn.com', '0901000004', 2, 1), --mk: Staff@2024#
+('staff.lan', '$2a$12$0MRetD48MmFtaS8hPIVC1.u59tvp58uHBnqN5J0dgACoSspTBeiim', 'Hoang Thi Lan', 'lan.hoang@sunrisevn.com', '0901000005', 2, 1),
+('staff.hai', '$2a$12$0MRetD48MmFtaS8hPIVC1.u59tvp58uHBnqN5J0dgACoSspTBeiim', 'Do Van Hai', 'hai.do@sunrisevn.com', '0901000006', 2, 1),
+('staff.linh', '$2a$12$0MRetD48MmFtaS8hPIVC1.u59tvp58uHBnqN5J0dgACoSspTBeiim', 'Nguyen Thi Linh', 'linh.nguyen@sunrisevn.com', '0901000007', 2, 1),
 
--- Insert data into Apartment table
-INSERT INTO Apartment (apartment_id, building_id, floor, area, bedrooms, price_apartment, status, maintenance_fee) VALUES 
-('A101', 1, 1, 75.5, 2, 1510000000, 'occupied', 1500000),
-('A102', 1, 1, 65.2, 2, 1304000000, 'available', 1300000),
-('B201', 2, 2, 80.3, 3, 1766600000, 'available', 1600000),
-('B202', 2, 2, 70.1, 2, 1331900000, 'maintenance', 1400000),
-('C301', 3, 3, 90.5, 3, 1991000000, 'reserved', 1800000),
-('C302', 3, 3, 60.7, 1, 1214000000, 'available', 1200000),
-('D401', 4, 4, 85.6, 3, 1883200000, 'occupied', 1700000),
-('D402', 4, 4, 72.4, 2, 1448000000, 'available', 1450000),
-('E501', 5, 5, 95.2, 3, 2094400000, 'available', 1900000),
-('E502', 5, 5, 68.9, 2, 1377800000, 'maintenance', 1350000),
-('F601', 6, 6, 78.3, 2, 1566000000, 'reserved', 1550000),
-('F602', 6, 6, 66.5, 1, 1330000000, 'available', 1250000),
-('G701', 7, 7, 82.7, 3, 1819400000, 'occupied', 1650000),
-('G702', 7, 7, 69.8, 2, 1396000000, 'available', 1400000),
-('H801', 8, 8, 88.4, 3, 1944800000, 'available', 1750000),
-('I901', 9, 9, 76.2, 2, 1524000000, 'reserved', 1500000),
-('J1001', 10, 10, 92.6, 3, 2037200000, 'maintenance', 1850000),
-('K1101', 11, 11, 67.8, 2, 1356000000, 'occupied', 1350000),
-('L1201', 12, 12, 84.5, 3, 1862000000, 'available', 1700000),
-('M1301', 13, 13, 71.3, 2, 1426000000, 'reserved', 1450000);
-
--- Insert data into Resident table
-INSERT INTO Resident (apartment_id, full_name, identity_card, date_of_birth, gender, user_id, is_primary_resident, move_in_date) VALUES 
-('A101', N'Vũ Đức Cư', '001234567890', '1985-05-15', N'Nam', 6, 1, '2022-06-01'),
-('A102', N'Ngô Thị Dân', '002345678901', '1990-08-20', N'Nữ', 7, 1, '2022-07-15'),
-('B201', N'Bùi Văn Nhà', '003456789012', '1978-03-10', N'Nam', 8, 1, '2022-09-01'),
-('B202', N'Đỗ Thị Hộ', '004567890123', '1982-11-25', N'Nữ', 9, 1, '2022-10-15'),
-('C301', N'Trương Văn Chung', '005678901234', '1975-07-30', N'Nam', 10, 1, '2022-12-01');
-
--- Insert data into Service table
-INSERT INTO Service (service_name, description, price_service, unit, is_available) VALUES 
-(N'Giữ xe ô tô', N'Dịch vụ giữ xe ô tô an toàn', 500000, N'tháng', 1),
-(N'Giặt ủi', N'Dịch vụ giặt ủi chuyên nghiệp', 300000, N'tháng', 1),
-(N'Vệ sinh', N'Dịch vụ vệ sinh căn hộ', 200000, N'tháng', 1),
-(N'Internet', N'Dịch vụ internet tốc độ cao', 150000, N'tháng', 1),
-(N'Bảo vệ 24/7', N'Dịch vụ bảo vệ toàn thời gian', 100000, N'tháng', 1),
-(N'Phòng tập gym', N'Dịch vụ phòng tập hiện đại', 350000, N'tháng', 1),
-(N'Hồ bơi', N'Dịch vụ hồ bơi cao cấp', 250000, N'tháng', 1),
-(N'Dọn nhà', N'Dịch vụ dọn nhà chuyên nghiệp', 150000, N'lượt', 1),
-(N'Sửa chữa điện nước', N'Dịch vụ sửa chữa khẩn cấp', 300000, N'lượt', 1),
-(N'Diệt côn trùng', N'Dịch vụ diệt côn trùng', 500000, N'lượt', 1),
-(N'Camera an ninh', N'Dịch vụ camera an ninh', 200000, N'tháng', 1),
-(N'Quản lý chung cư', N'Dịch vụ quản lý chung cư', 50000, N'tháng', 1),
-(N'Thu gom rác', N'Dịch vụ thu gom rác', 100000, N'tháng', 1),
-(N'Chăm sóc cây xanh', N'Dịch vụ chăm sóc cảnh quan', 150000, N'tháng', 1),
-(N'Bảo trì thang máy', N'Dịch vụ bảo trì thang máy', 300000, N'tháng', 1);
-
--- Insert data into ServiceRegistration table
-INSERT INTO ServiceRegistration (service_id, apartment_id, start_date, end_date, status) VALUES 
-(1, 'A101', '2023-01-01', '2023-12-31', 'active'),
-(2, 'A101', '2023-02-15', '2023-08-15', 'active'),
-(3, 'A102', '2023-03-01', '2023-09-01', 'active'),
-(4, 'B201', '2023-01-15', '2023-07-15', 'active'),
-(5, 'B202', '2023-04-01', '2023-10-01', 'active'),
-(6, 'C301', '2023-02-01', '2023-08-01', 'active'),
-(7, 'C302', '2023-03-15', '2023-09-15', 'active'),
-(8, 'D401', '2023-01-01', '2023-12-31', 'active'),
-(9, 'D402', '2023-02-15', '2023-08-15', 'active'),
-(10, 'E501', '2023-03-01', '2023-09-01', 'active'),
-(11, 'E502', '2023-01-15', '2023-07-15', 'active'),
-(12, 'F601', '2023-04-01', '2023-10-01', 'active'),
-(13, 'F602', '2023-02-01', '2023-08-01', 'active'),
-(14, 'G701', '2023-03-15', '2023-09-15', 'active'),
-(15, 'G702', '2023-01-01', '2023-12-31', 'active');
-
-INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
-('A101', '2023-05-01', '2023-05-15', 2500000, 'pending', 0),
-('A102', '2023-05-01', '2023-05-15', 1800000, 'pending', 0),
-('B201', '2023-05-01', '2023-05-15', 3200000, 'pending', 0),
-('B202', '2023-05-01', '2023-05-15', 2100000, 'pending', 0),
-('C301', '2023-05-01', '2023-05-15', 2800000, 'pending', 0),
-('C302', '2023-05-01', '2023-05-15', 1600000, 'pending', 0),
-('D401', '2023-05-01', '2023-05-15', 3500000, 'pending', 0),
-('D402', '2023-05-01', '2023-05-15', 2300000, 'pending', 0),
-('E501', '2023-05-01', '2023-05-15', 3000000, 'pending', 0),
-('E502', '2023-05-01', '2023-05-15', 1900000, 'pending', 0),
-('F601', '2023-05-01', '2023-05-15', 2600000, 'pending', 0),
-('F602', '2023-05-01', '2023-05-15', 1700000, 'pending', 0),
-('G701', '2023-05-01', '2023-05-15', 3300000, 'pending', 0),
-('G702', '2023-05-01', '2023-05-15', 2200000, 'pending', 0),
-('H801', '2023-05-01', '2023-05-15', 2700000, 'pending', 0);
-
--- Insert data into BillItem table
-INSERT INTO BillItem (bill_id, item_type, description, amount, quantity, total) VALUES 
-(1, N'Phí quản lý', N'Phí quản lý chung cư', 500000, 1, 500000),
-(1, N'Phí dịch vụ', N'Phí giữ xe', 1000000, 1, 1000000),
-(1, N'Tiền điện', N'Tiêu thụ điện', 1000000, 1, 1000000),
-(2, N'Phí quản lý', N'Phí quản lý chung cư', 300000, 1, 300000),
-(2, N'Tiền nước', N'Tiêu thụ nước', 500000, 1, 500000),
-(2, N'Internet', N'Dịch vụ internet', 1000000, 1, 1000000),
-(3, N'Phí quản lý', N'Phí quản lý chung cư', 600000, 1, 600000),
-(3, N'Phí dịch vụ', N'Phí sử dụng gym', 1200000, 1, 1200000),
-(3, N'Tiền điện', N'Tiêu thụ điện', 1400000, 1, 1400000),
-(4, N'Phí quản lý', N'Phí quản lý chung cư', 400000, 1, 400000),
-(4, N'Tiền nước', N'Tiêu thụ nước', 700000, 1, 700000),
-(4, N'Bảo trì', N'Phí bảo trì', 1000000, 1, 1000000),
-(5, N'Phí quản lý', N'Phí quản lý chung cư', 500000, 1, 500000),
-(5, N'Phí dịch vụ', N'Phí hồ bơi', 1300000, 1, 1300000),
-(5, N'Tiền điện', N'Tiêu thụ điện', 1000000, 1, 1000000);
-
--- Insert data into Payment table
-INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES 
-(1, 2500000, '2023-05-10', N'Chuyển khoản', 'TRX123456', 'pending'),
-(2, 1800000, '2023-05-12', N'Tiền mặt', 'CSH789012', 'pending'),
-(3, 3200000, '2023-05-08', N'Thẻ ngân hàng', 'CC345678', 'pending'),
-(4, 2100000, '2023-05-15', N'Chuyển khoản', 'TRX901234', 'pending'),
-(5, 2800000, '2023-05-11', N'Ví điện tử', 'E-WALLET567890', 'pending'),
-(6, 1600000, '2023-05-13', N'Chuyển khoản', 'TRX234567', 'pending'),
-(7, 3500000, '2023-05-09', N'Tiền mặt', 'CSH345678', 'pending'),
-(8, 2300000, '2023-05-14', N'Thẻ ngân hàng', 'CC456789', 'pending'),
-(9, 3000000, '2023-05-12', N'Ví điện tử', 'E-WALLET678901', 'pending'),
-(10, 1900000, '2023-05-10', N'Chuyển khoản', 'TRX789012', 'pending'),
-(11, 2600000, '2023-05-13', N'Tiền mặt', 'CSH456789', 'pending'),
-(12, 1700000, '2023-05-11', N'Thẻ ngân hàng', 'CC567890', 'pending'),
-(13, 3300000, '2023-05-14', N'Chuyển khoản', 'TRX890123', 'pending'),
-(14, 2200000, '2023-05-09', N'Ví điện tử', 'E-WALLET901234', 'pending'),
-(15, 2700000, '2023-05-15', N'Tiền mặt', 'CSH567890', 'pending');
-
--- Insert data into MaintenanceRequest table
-INSERT INTO MaintenanceRequest (apartment_id, resident_id, request_date, description, status, priority, assigned_staff_id, completion_date) VALUES 
-('A101', 1, '2023-05-02', N'Hỏng khóa cửa', 'pending', 'medium', 3, NULL),
-('A102', 2, '2023-05-05', N'Rò rỉ nước', 'assigned', 'high', 4, NULL),
-('B201', 3, '2023-05-07', N'Bóng đèn không sáng', 'in_progress', 'low', 5, NULL),
-('B202', 4, '2023-05-10', N'Điều hòa không mát', 'pending', 'high', 3, NULL),
-('C301', 1, '2023-05-12', N'Hệ thống điện yếu', 'assigned', 'urgent', 4, NULL),
-('C302', 2, '2023-05-15', N'Sửa ống nước', 'in_progress', 'medium', 5, NULL),
-('D401', 3, '2023-05-03', N'Thang máy kêu', 'completed', 'low', 3, '2023-05-07'),
-('D402', 4, '2023-05-06', N'Khung cửa sổ lỏng', 'assigned', 'medium', 4, NULL),
-('E501', 1, '2023-05-08', N'Vệ sinh máy lạnh', 'pending', 'low', 5, NULL),
-('E502', 2, '2023-05-11', N'Bể nước nóng', 'in_progress', 'high', 3, NULL);
-
--- Insert data into Notification table
-INSERT INTO Notification (title, content, creation_date, type) VALUES 
-(N'Thông Báo Bảo Trì', N'Sẽ có đợt bảo trì thang máy vào tuần tới', '2023-05-01', 'maintenance'),
-(N'Sự Kiện Cộng Đồng', N'Chào mừng ngày quốc tế thiếu nhi', '2023-05-30', 'community'),
-(N'Cảnh Báo An Ninh', N'Yêu cầu tăng cường cảnh giác', '2023-05-15', 'security'),
-(N'Thông Tin Dịch Vụ', N'Cập nhật các dịch vụ mới', '2023-06-01', 'service'),
-(N'Hướng Dẫn Thanh Toán', N'Hướng dẫn thanh toán trực tuyến', '2023-05-20', 'payment'),
-(N'Hoạt Động Môi Trường', N'Chương trình làm sạch khu chung cư', '2023-05-25', 'environment'),
-(N'Thông Báo Sự Kiện', N'Tiệc cuối năm cho cư dân', '2023-06-15', 'event'),
-(N'Tin Tức Quản Lý', N'Thay đổi quy định quản lý', '2023-05-10', 'management'),
-(N'Khuyến Mãi Dịch Vụ', N'Ưu đãi dịch vụ giặt ủi', '2023-05-05', 'promotion'),
-(N'Bảo Trì Định Kỳ', N'Lịch bảo trì hệ thống', '2023-05-18', 'maintenance');
--- Insert data into NotificationRecipient table
-INSERT INTO NotificationRecipient (notification_id, user_id, is_read, read_at) VALUES 
-(1, 6, 0, NULL),
-(1, 7, 0, NULL),
-(2, 6, 0, NULL),
-(2, 7, 0, NULL),
-(3, 6, 1, '2023-05-16 10:30:00'),
-(3, 7, 0, NULL),
-(4, 6, 0, NULL),
-(4, 7, 0, NULL),
-(5, 6, 1, '2023-05-21 15:45:00'),
-(5, 7, 0, NULL);
-
--- Insert data into Report table
-INSERT INTO Report (report_type, generation_date, generated_by_user_id, parameters, file_path) VALUES 
-(N'Báo Cáo Tài Chính', '2023-05-01', 1, N'Tháng 4/2023', '/reports/financial_04_2023.pdf'),
-(N'Báo Cáo Dịch Vụ', '2023-05-05', 2, N'Quý 2/2023', '/reports/service_q2_2023.pdf'),
-(N'Báo Cáo Bảo Trì', '2023-05-10', 3, N'Tháng 5/2023', '/reports/maintenance_05_2023.pdf'),
-(N'Báo Cáo Cư Dân', '2023-05-15', 1, N'Tháng 5/2023', '/reports/resident_05_2023.pdf'),
-(N'Báo Cáo An Ninh', '2023-05-20', 2, N'Tháng 5/2023', '/reports/security_05_2023.pdf');
+-- Residents (role_id = 3)
+('resident.an', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Nguyen Van An', 'anvn.personal@gmail.com', '0912345678', 3, 1), --mk:Resident@123
+('resident.bich', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Tran Thi Bich', 'bichtran88@yahoo.com', '0923456789', 3, 1),
+('resident.cuong', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Le Van Cuong', 'cuongle1985@hotmail.com', '0934567890', 3, 1),
+('resident.dung', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Pham Thi Dung', 'dungpham.work@gmail.com', '0945678901', 3, 1),
+('resident.em', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Hoang Van Em', 'emhoang.biz@gmail.com', '0956789012', 3, 1),
+('resident.hoa', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Dang Thi Hoa', 'hoadang.home@gmail.com', '0967890123', 3, 1),
+('resident.giang', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Vu Thi Giang', 'giangvu.family@gmail.com', '0978901234', 3, 1),
+('resident.khanh', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Truong Van Khanh', 'khanhtruong@outlook.com', '0989012345', 3, 1),
+('resident.mai', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Phan Thi Mai', 'maiphan@gmail.com', '0989016345', 3, 1),
+('resident.nam', '$2a$12$zuZojdSAf830ciuhHnAqkeA6uQAnfATJONcm39GJkobjVa8kcroqa', 'Dinh Van Nam', 'namdinh@gmail.com', '0981016345', 3, 1);
 
 
-INSERT INTO Resident (apartment_id, full_name, identity_card, date_of_birth, gender, is_primary_resident, move_in_date) VALUES 
-('N1401', N'Nguyễn Văn Phương', '006789012345', '1983-09-18', N'Nam', 1, '2022-08-10'),
-('P1601', N'Trần Thị Hương', '007890123456', '1987-06-22', N'Nữ', 1, '2022-11-05'),
-('R1801', N'Lê Minh Tuấn', '008901234567', '1979-12-03', N'Nam', 1, '2023-01-20');
+-- 3. Them du lieu vao bang Manager
+INSERT INTO Manager (manager_id, office, start_date) VALUES
+(1, 'Phong Quan ly chung cu S3', '2023-01-15'),
+(2, 'Phong Quan ly chung cu S1', '2023-01-15'),
+(3, 'Phong Quan ly chung cu S2', '2023-03-20');
 
-use Apartment
-go
+-- 4. Them du lieu vao bang Staff
+INSERT INTO Staff (staff_id, department, position, hire_date, manager_id, degree, certificate) VALUES
+(4, 'Ky thuat dien nuoc', 'Ky thuat vien dien', '2023-02-01', 2, 'Cao dang Dien - Dien tu', 'Chung chi An toan dien ha the, Chung chi Tho dien bac 4'),
+(5, 'Dich vu khach hang', 'Nhan vien tiep tan', '2023-02-15', 2, 'Dai hoc Quan tri Kinh doanh', 'Chung chi Tieng Anh B2, Chung chi Tin hoc van phong'),
+(6, 'Ky thuat bao tri', 'Tho sua chua da nang', '2023-04-01', 3, 'Trung cap Co khi dong luc', 'Chung chi Han dien, Chung chi Sua chua may moc'),
+(3, 'An ninh - Bao ve', 'Nhan vien bao ve', '2023-05-10', 2, 'Trung hoc pho thong', 'Chung chi Bao ve dan pho, Chung chi PCCC');
 
-INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
-('A101', '2023-01-01', '2023-01-15', 2350000, 'paid', 0),
-('A102', '2023-01-01', '2023-01-15', 1750000, 'paid', 0),
-('B201', '2023-01-01', '2023-01-15', 3100000, 'paid', 0),
-('B202', '2023-01-01', '2023-01-15', 2050000, 'paid', 0),
-('C301', '2023-01-01', '2023-01-15', 2700000, 'paid', 0);
+-- 5. Them du lieu vao bang Building
+INSERT INTO Building (building_name, address, total_floors, total_apartments, completion_date) VALUES
+('Chung cu S1', '512 Nguyen Xien, Thanh Pho, Thu Duc, Ho Chi Minh', 25, 200, '2022-12-15'),
+('Chung cu S2', '512 Nguyen Xien, Thanh Pho, Thu Duc, Ho Chi Minh', 30, 240, '2023-06-30');
 
--- February 2023
-INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
-('A101', '2023-02-01', '2023-02-15', 2380000, 'paid', 0),
-('A102', '2023-02-01', '2023-02-15', 1780000, 'paid', 0),
-('B201', '2023-02-01', '2023-02-15', 3150000, 'paid', 0),
-('B202', '2023-02-01', '2023-02-15', 2080000, 'paid', 0),
-('C301', '2023-02-01', '2023-02-15', 2750000, 'paid', 0);
+-- 6. Them du lieu vao bang Apartment
+INSERT INTO Apartment (apartment_id, building_id, floor, area, bedrooms, price_apartment, status, maintenance_fee) VALUES
+-- Toa Sunrise Tower (building_id = 1)
+('S1P0101', 1, 1, 65.5, 2, 2800000000.00, 'occupied', 850000.00),
+('S1P0102', 1, 1, 78.2, 3, 3200000000.00, 'occupied', 950000.00),
+('S1P0103', 1, 1, 45.8, 1, 2100000000.00, 'available', 650000.00),
+('S1P0201', 1, 2, 65.5, 2, 2850000000.00, 'occupied', 850000.00),
+('S1P0202', 1, 2, 78.2, 3, 3250000000.00, 'reserved', 950000.00),
+('S1P0301', 1, 3, 89.7, 3, 3800000000.00, 'occupied', 1100000.00),
+('S1P0302', 1, 3, 95.3, 4, 4200000000.00, 'occupied', 1200000.00),
+('S1P0501', 1, 5, 120.5, 4, 5500000000.00, 'occupied', 1500000.00),
+('S1P1001', 1, 10, 78.2, 3, 3400000000.00, 'maintenance', 950000.00),
+('S1P1501', 1, 15, 95.3, 4, 4500000000.00, 'available', 1200000.00),
 
--- March 2023
-INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
-('A101', '2023-03-01', '2023-03-15', 2400000, 'paid', 0),
-('A102', '2023-03-01', '2023-03-15', 1800000, 'paid', 0),
-('B201', '2023-03-01', '2023-03-15', 3180000, 'paid', 0),
-('B202', '2023-03-01', '2023-03-15', 2100000, 'paid', 0),
-('C301', '2023-03-01', '2023-03-15', 2780000, 'paid', 0);
+-- Toa Golden Park (building_id = 2)
+('S2P0101', 2, 1, 72.8, 2, 3100000000.00, 'occupied', 900000.00),
+('S2P0201', 2, 2, 85.4, 3, 3600000000.00, 'occupied', 1050000.00),
+('S2P0301', 2, 3, 105.2, 4, 4800000000.00, 'available', 1300000.00);
 
--- April 2023
-INSERT INTO Bill (apartment_id, billing_date, due_date, total_amount, status, late_fee) VALUES 
-('A101', '2023-04-01', '2023-04-15', 2450000, 'paid', 0),
-('A102', '2023-04-01', '2023-04-15', 1830000, 'paid', 0),
-('B201', '2023-04-01', '2023-04-15', 3220000, 'paid', 0),
-('B202', '2023-04-01', '2023-04-15', 2150000, 'paid', 0),
-('C301', '2023-04-01', '2023-04-15', 2820000, 'paid', 0);
+-- 7. Them du lieu vao bang Resident
+INSERT INTO Resident (apartment_id, full_name, identity_card, date_of_birth, gender, user_id, is_primary_resident, move_in_date) VALUES
+-- Cư dân Tòa Sunrise Tower
+('S1P0101', 'Nguyen Van An', '079088001234', '1988-05-15', 1, 7, 1, '2023-01-20'),
+('S1P0101', 'Tran Thi Bich', '079088005678', '1990-08-22', 0, 8, 0, '2023-01-20'),
+('S1P0102', 'Le Van Cuong', '079085001122', '1985-12-10', 1, 9, 1, '2023-02-15'),
+('S1P0201', 'Pham Thi Dung', '079092003344', '1992-03-18', 0, 10, 1, '2023-03-10'),
+('S1P0301', 'Hoang Van Em', '079080005566', '1980-07-25', 1, 11, 1, '2023-04-05'),
+('S1P0301', 'Dang Thi Hoa', '079082007788', '1982-11-30', 0, 12, 0, '2023-04-05'),
+('S1P0302', 'Vu Thi Giang', '079090009900', '1990-09-12', 0, 13, 1, '2023-05-01'),
+('S1P0501', 'Truong Van Khanh', '079075001357', '1975-04-08', 1, 14, 1, '2023-06-15'),
+-- Cư dân Tòa Golden Park
+('S2P0101', 'Phan Thi Mai', '079087002468', '1987-01-20', 0, 15, 1, '2023-07-01'),
+('S2P0201', 'Dinh Van Nam', '079083003579', '1983-06-14', 1, 16, 1, '2023-08-10');
 
--- Update payments for historical bills to 'completed' status
-INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES 
--- For January bills (assuming bill_id starts from 16 for the new bills)
-(16, 2350000, '2023-01-10', N'Chuyển khoản', 'TRX-JAN-A101', 'completed'),
-(17, 1750000, '2023-01-12', N'Tiền mặt', 'CSH-JAN-A102', 'completed'),
-(18, 3100000, '2023-01-09', N'Thẻ ngân hàng', 'CC-JAN-B201', 'completed'),
-(19, 2050000, '2023-01-14', N'Chuyển khoản', 'TRX-JAN-B202', 'completed'),
-(20, 2700000, '2023-01-11', N'Ví điện tử', 'EW-JAN-C301', 'completed'),
+-- 8. Them du lieu vao bang Service
+INSERT INTO Service (service_name, description, price_service, unit, is_active) VALUES
+('Dich vu Internet cap quang', 'Cung cap Internet toc do cao 100Mbps, bao gom modem WiFi va ho tro ky thuat 24/7', 300000.00, 'thang', 1),
+('Dich vu truyen hinh cap', 'Goi truyen hinh co ban voi 150+ kenh trong nuoc va quoc te', 200000.00, 'thang', 1),
+('Dich vu giat ui', 'Dich vu giat ui tai nha, nhan va giao do theo lich hen', 15000.00, 'kg', 1),
+('Dich vu don dep nha cua', 'Dich vu don dep can ho dinh ky hoac theo yeu cau', 200000.00, 'luot', 1),
+('Dich vu gui xe may', 'Cho gui xe may trong tang ham co bao ve 24/7', 150000.00, 'thang', 1),
+('Dich vu gui xe o to', 'Cho gui xe o to trong tang ham co camera giam sat', 800000.00, 'thang', 1),
+('Dich vu the duc the thao', 'Su dung phong gym, be boi va san tennis trong khu chung cu', 500000.00, 'thang', 1),
+('Dich vu bao ve 24/7', 'Dich vu an ninh va bao ve can ho rieng', 1000000.00, 'thang', 0);
 
--- For February bills
-(21, 2380000, '2023-02-09', N'Chuyển khoản', 'TRX-FEB-A101', 'completed'),
-(22, 1780000, '2023-02-10', N'Tiền mặt', 'CSH-FEB-A102', 'completed'),
-(23, 3150000, '2023-02-08', N'Thẻ ngân hàng', 'CC-FEB-B201', 'completed'),
-(24, 2080000, '2023-02-12', N'Chuyển khoản', 'TRX-FEB-B202', 'completed'),
-(25, 2750000, '2023-02-11', N'Ví điện tử', 'EW-FEB-C301', 'completed'),
+-- 9. Them du lieu vao bang ServiceRegistration
+INSERT INTO ServiceRegistration (service_id, resident_id, apartment_id, start_date, end_date, status, registered_by) VALUES
+-- Resident 1 (Nguyen Van An - S1P0101)
+(1, 1, 'S1P0101', '2023-02-01', '2024-01-31', 'active', 1),
+(2, 1, 'S1P0101', '2023-02-01', '2024-01-31', 'active', 1),
+(5, 1, 'S1P0101', '2023-02-01', '2024-01-31', 'active', 1),
+(7, 1, 'S1P0101', '2023-03-01', '2024-02-29', 'active', 1),
 
--- For March bills
-(26, 2400000, '2023-03-12', N'Chuyển khoản', 'TRX-MAR-A101', 'completed'),
-(27, 1800000, '2023-03-10', N'Tiền mặt', 'CSH-MAR-A102', 'completed'),
-(28, 3180000, '2023-03-14', N'Thẻ ngân hàng', 'CC-MAR-B201', 'completed'),
-(29, 2100000, '2023-03-11', N'Chuyển khoản', 'TRX-MAR-B202', 'completed'),
-(30, 2780000, '2023-03-13', N'Ví điện tử', 'EW-MAR-C301', 'completed'),
+-- Resident 3 (Le Van Cuong - S1P0102)
+(1, 3, 'S1P0102', '2023-03-01', '2024-02-29', 'active', 3),
+(6, 3, 'S1P0102', '2023-03-01', '2024-02-29', 'active', 3),
 
--- For April bills
-(31, 2450000, '2023-04-10', N'Chuyển khoản', 'TRX-APR-A101', 'completed'),
-(32, 1830000, '2023-04-12', N'Tiền mặt', 'CSH-APR-A102', 'completed'),
-(33, 3220000, '2023-04-09', N'Thẻ ngân hàng', 'CC-APR-B201', 'completed'),
-(34, 2150000, '2023-04-14', N'Chuyển khoản', 'TRX-APR-B202', 'completed'),
-(35, 2820000, '2023-04-11', N'Ví điện tử', 'EW-APR-C301', 'completed');
+-- Resident 4 (Pham Thi Dung - S1P0201)
+(1, 4, 'S1P0201', '2023-04-01', '2024-03-31', 'active', 4),
+(3, 4, 'S1P0201', '2023-04-15', '2023-10-15', 'expired', 4),
+(5, 4, 'S1P0201', '2023-04-01', '2024-03-31', 'active', 4),
+
+-- Resident 5 (Hoang Van Em - S1P0301)
+(1, 5, 'S1P0301', '2023-05-01', '2024-04-30', 'active', 5),
+(2, 5, 'S1P0301', '2023-05-01', '2024-04-30', 'active', 5),
+(6, 5, 'S1P0301', '2023-05-01', '2024-04-30', 'active', 5),
+(7, 5, 'S1P0301', '2023-05-01', '2024-04-30', 'active', 5);
 
 
-SELECT 
-    FORMAT(payment_date, 'yyyy-MM') AS month,
-    status,
-    COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (PARTITION BY FORMAT(payment_date, 'yyyy-MM')) AS percentage
-FROM Payment
-GROUP BY FORMAT(payment_date, 'yyyy-MM'), status
-ORDER BY month, status;
+-- 10. Thêm dữ liệu vào bảng Bill
+INSERT INTO Bill (apartment_id, billing_date, total_amount, status, billed_to, late_fee) VALUES
+-- Hóa đơn tháng 1/2024
+('S1P0101', '2024-01-05', 1850000.00, 'paid', 1, 0.00),
+('S1P0102', '2024-01-05', 1750000.00, 'paid', 3, 0.00),
+('S1P0201', '2024-01-05', 1350000.00, 'paid', 4, 0.00),
+('S1P0301', '2024-01-05', 2900000.00, 'paid', 5, 0.00),
+('S1P0302', '2024-01-05', 1200000.00, 'paid', 7, 0.00),
+('S1P0501', '2024-01-05', 1500000.00, 'paid', 8, 0.00),
 
--- Dữ liệu cho tháng 1
+-- Hóa đơn tháng 2/2024
+('S1P0101', '2024-02-05', 1950000.00, 'paid', 1, 0.00),
+('S1P0102', '2024-02-05', 1750000.00, 'overdue', 3, 175000.00),
+('S1P0201', '2024-02-05', 1350000.00, 'paid', 4, 0.00),
+('S1P0301', '2024-02-05', 2900000.00, 'paid', 5, 0.00),
+
+-- Hóa đơn tháng 3/2024 (mới nhất)
+('S1P0101', '2024-03-05', 1850000.00, 'pending', 1, 0.00),
+('S1P0102', '2024-03-05', 1750000.00, 'pending', 3, 0.00),
+('S1P0201', '2024-03-05', 1350000.00, 'pending', 4, 0.00),
+('S1P0301', '2024-03-05', 2900000.00, 'pending', 5, 0.00);
+
+
+-- 11. Them du lieu vao bang BillItem
+INSERT INTO BillItem (bill_id, item_type, description, amount, quantity, total) VALUES
+-- Bill 1 (S1P0101 - Thang 1/2024)
+(1, 'Phi quan ly', 'Phi quan ly chung cu thang 1/2024', 850000, 1, 850000),
+(1, 'Tien dien', 'Tien dien thang 1/2024 - 180 kWh', 2500, 180, 450000),
+(1, 'Tien nuoc', 'Tien nuoc thang 1/2024 - 15 m3', 20000, 15, 300000),
+(1, 'Internet', 'Cuoc Internet thang 1/2024', 300000, 1, 300000),
+
+-- Bill 2 (S1P0102 - Thang 1/2024)
+(2, 'Phi quan ly', 'Phi quan ly chung cu thang 1/2024', 950000, 1, 950000),
+(2, 'Tien dien', 'Tien dien thang 1/2024 - 200 kWh', 2500, 200, 500000),
+(2, 'Tien nuoc', 'Tien nuoc thang 1/2024 - 12 m3', 20000, 12, 240000),
+(2, 'Gui xe o to', 'Phi gui xe o to thang 1/2024', 800000, 1, 800000),
+
+-- Bill 7 (S1P0101 - Thang 2/2024)
+(7, 'Phi quan ly', 'Phi quan ly chung cu thang 2/2024', 850000, 1, 850000),
+(7, 'Tien dien', 'Tien dien thang 2/2024 - 220 kWh', 2500, 220, 550000),
+(7, 'Tien nuoc', 'Tien nuoc thang 2/2024 - 18 m3', 20000, 18, 360000),
+(7, 'Internet', 'Cuoc Internet thang 2/2024', 300000, 1, 300000),
+
+-- Bill 11 (S1P0101 - Thang 3/2024)
+(11, 'Phi quan ly', 'Phi quan ly chung cu thang 3/2024', 850000, 1, 850000),
+(11, 'Tien dien', 'Tien dien thang 3/2024 - 160 kWh', 2500, 160, 400000),
+(11, 'Tien nuoc', 'Tien nuoc thang 3/2024 - 14 m3', 20000, 14, 280000),
+(11, 'Internet', 'Cuoc Internet thang 3/2024', 300000, 1, 300000);
+
+
+-- 12. Them du lieu vao bang Payment
 INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
-(1, 2200000, '2023-01-15', N'Chuyển khoản', 'TRX-JAN-PEND1', 'pending'),
-(2, 2100000, '2023-01-16', N'Tiền mặt', 'CSH-JAN-FAIL3', 'failed');
+-- thêm một số dữ liệu có trạng thái khác nhau để java lấy biểu đồ tròn và trụ
+-- vì đây là dữ liệu mẫu chỉ thay đổi ngày tháng năm và trạng thái nên sẽ bị trùng transaction_id
 
--- Dữ liệu cho tháng 2
-INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
-(3, 1800000, '2023-02-15', N'Thẻ ngân hàng', 'CC-FEB-PEND1', 'pending'),
-(4, 1850000, '2023-02-16', N'Ví điện tử', 'EW-FEB-PEND2', 'pending'),
-(5, 1900000, '2023-02-17', N'Chuyển khoản', 'TRX-FEB-FAIL3', 'failed');
+(1, 1850000.00, '2024-01-10', 'VNPay', 'VNP20240110001', 'completed'),
+(2, 1750000.00, '2024-01-12', 'VNPay', 'VNP20240112001', 'completed'),
+(3, 1350000.00, '2024-01-08', 'Tien mat', 'CASH20240108001', 'completed'),
+(4, 2900000.00, '2024-01-15', 'VNPay', 'VNP20240115001', 'completed'),
+(5, 1200000.00, '2024-01-20', 'VNPay', 'VNP20240120001', 'completed'),
+(6, 1500000.00, '2024-01-25', 'VNPay', 'VNP20240125001', 'completed'),
+(7, 1950000.00, '2024-02-08', 'VNPay', 'VNP20240208001', 'completed'),
+(9, 1350000.00, '2024-02-12', 'Tien mat', 'CASH20240212001', 'completed'),
+(10, 2900000.00, '2024-02-18', 'VNPay', 'VNP20240218001', 'completed'),
 
--- Dữ liệu cho tháng 3
-INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
-(6, 2000000, '2023-03-15', N'Ví điện tử', 'EW-MAR-FAIL3', 'failed'),
-(7, 1800000, '2023-03-17', N'Tiền mặt', 'CSH-MAR-PEND1', 'pending');
+(1, 1850000.00, '2024-01-11', 'VNPay', 'VNP20240110001', 'pending'),
+(2, 1750000.00, '2024-01-12', 'VNPay', 'VNP20240112001', 'pending'),
+(3, 1350000.00, '2024-01-07', 'Tien mat', 'CASH20240108001', 'pending'),
+(4, 2900000.00, '2024-01-16', 'VNPay', 'VNP20240115001', 'pending'),
+(5, 1200000.00, '2024-01-21', 'VNPay', 'VNP20240120001', 'pending'),
+(6, 1500000.00, '2024-01-25', 'VNPay', 'VNP20240125001', 'pending'),
+(7, 1950000.00, '2024-02-09', 'VNPay', 'VNP20240208001', 'pending'),
+(9, 1350000.00, '2024-02-12', 'Tien mat', 'CASH20240212001', 'pending'),
+(10, 2900000.00, '2024-02-18', 'VNPay', 'VNP20240218001', 'pending'),
 
--- Dữ liệu cho tháng 4
-INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES
-(8, 1950000, '2023-04-15', N'Chuyển khoản', 'TRX-APR-FAIL3', 'failed'),
-(9, 1820000, '2023-04-17', N'Thẻ ngân hàng', 'CC-APR-PEND1', 'pending'),
-(10, 1770000, '2023-04-18', N'Ví điện tử', 'EW-APR-PEND2', 'pending');
+(1, 1850000.00, '2024-01-11', 'VNPay', 'VNP20240110009', 'failed'),
+(2, 1750000.00, '2024-01-12', 'Tien mat', 'VNP20240112031', 'failed'),
+(3, 1350000.00, '2024-01-07', 'Tien mat', 'CASH20240108201', 'failed'),
+(4, 2900000.00, '2024-01-17', 'VNPay', 'VNP20240115007', 'failed'),
+(5, 1200000.00, '2024-01-22', 'VNPay', 'VNP20240120006', 'failed'),
+(6, 1500000.00, '2024-01-26', 'Tien mat', 'VNP20240125005', 'failed'),
+(7, 1950000.00, '2024-02-09', 'VNPay', 'VNP20240208004', 'failed'),
+(9, 1350000.00, '2024-02-12', 'Tien mat', 'CASH20240212003', 'failed'),
+(10, 2900000.00, '2024-02-20', 'VNPay', 'VNP20240218002', 'failed'),
 
--- Dữ liệu cho các hóa đơn đã hoàn thành (completed)
-INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) VALUES 
--- Tháng 1
-(11, 2350000, '2023-01-10', N'Chuyển khoản', 'TRX-JAN-A101', 'completed'),
-(12, 1750000, '2023-01-12', N'Tiền mặt', 'CSH-JAN-A102', 'completed'),
-(13, 3100000, '2023-01-09', N'Thẻ ngân hàng', 'CC-JAN-B201', 'completed'),
-(14, 2050000, '2023-01-14', N'Chuyển khoản', 'TRX-JAN-B202', 'completed'),
-(15, 2700000, '2023-01-11', N'Ví điện tử', 'EW-JAN-C301', 'completed'),
+(2, 1550000.00, '2024-01-14', 'VNPay', 'VNP20240110009', 'refunded'),
+(1, 1850000.00, '2024-01-13', 'Tien mat', 'VNP20240112031', 'refunded'),
+(4, 130000.00, '2024-01-11', 'Tien mat', 'CASH20240108201', 'refunded'),
+(7, 2900000.00, '2024-01-20', 'VNPay', 'VNP20240115007', 'refunded'),
+(6, 120000.00, '2024-01-23', 'VNPay', 'VNP20240120006', 'refunded'),
+(5, 150000.00, '2024-01-21', 'Tien mat', 'VNP20240125005', 'refunded'),
+(8, 190000.00, '2024-02-03', 'VNPay', 'VNP20240208004', 'completed'),
+(10, 130000.00, '2024-03-23', 'Tien mat', 'CASH20240212003', 'completed'),
+(9, 290000.00, '2024-02-21', 'VNPay', 'VNP20240218002', 'completed'),
 
--- Tháng 2
-(16, 2380000, '2023-02-09', N'Chuyển khoản', 'TRX-FEB-A101', 'completed'),
-(17, 1780000, '2023-02-10', N'Tiền mặt', 'CSH-FEB-A102', 'completed'),
-(18, 3150000, '2023-02-08', N'Thẻ ngân hàng', 'CC-FEB-B201', 'completed'),
-(19, 2080000, '2023-02-12', N'Chuyển khoản', 'TRX-FEB-B202', 'completed'),
-(20, 2750000, '2023-02-11', N'Ví điện tử', 'EW-FEB-C301', 'completed'),
+(8, 1200000.00, '2024-01-20', 'VNPay', 'VNP20240120001', 'pending'),
+(8, 1500000.00, '2024-01-25', 'VNPay', 'VNP20240125001', 'pending'),
+(2, 1950000.00, '2024-02-08', 'VNPay', 'VNP20240208001', 'pending'),
+(2, 1350000.00, '2024-02-12', 'Tien mat', 'CASH20240212001', 'pending');
 
--- Tháng 3
-(21, 2400000, '2023-03-12', N'Chuyển khoản', 'TRX-MAR-A101', 'completed'),
-(22, 1800000, '2023-03-10', N'Tiền mặt', 'CSH-MAR-A102', 'completed'),
-(23, 3180000, '2023-03-14', N'Thẻ ngân hàng', 'CC-MAR-B201', 'completed'),
-(24, 2100000, '2023-03-11', N'Chuyển khoản', 'TRX-MAR-B202', 'completed'),
-(25, 2780000, '2023-03-13', N'Ví điện tử', 'EW-MAR-C301', 'completed'),
-
--- Tháng 4
-(26, 2450000, '2023-04-10', N'Chuyển khoản', 'TRX-APR-A101', 'completed'),
-(27, 1830000, '2023-04-12', N'Tiền mặt', 'CSH-APR-A102', 'completed'),
-(28, 3220000, '2023-04-09', N'Thẻ ngân hàng', 'CC-APR-B201', 'completed'),
-(29, 2150000, '2023-04-14', N'Chuyển khoản', 'TRX-APR-B202', 'completed'),
-(30, 2820000, '2023-04-11', N'Ví điện tử', 'EW-APR-C301', 'completed');
+-- 13. Them du lieu vao bang VnpayReturn (cho cac giao dich VNPay)
+INSERT INTO VnpayReturn (payment_id, vnp_txn_ref, vnp_transaction_no, vnp_bank_code, vnp_order_info, vnp_pay_date, vnp_response_code, vnp_transaction_status) VALUES
+(1, 'BILL000001', '14157001', 'VCB', 'Thanh toan hoa don S1P0101 thang 01/2024', '20240110123000', '00', '00'),
+(2, 'BILL000002', '14158739', 'NCB', 'Thanh toan hoa don S1P0102 thang 01/2024', '20240112103045', '00', '00'),
+(4, 'BILL000004', '14158045', 'ACB', 'Thanh toan hoa don S1P0104 thang 01/2024', '20240115110000', '00', '00'),
+(5, 'BILL000005', '14159876', 'TCB', 'Thanh toan hoa don S1P0105 thang 01/2024', '20240120143022', '00', '00'),
+(6, 'BILL000006', '14159078', 'BIDV', 'Thanh toan hoa don S1P0106 thang 01/2024', '20240125143000', '00', '00'),
+(7, 'BILL000007', '14167234', 'VCB', 'Thanh toan hoa don S1P0107 thang 02/2024', '20240208094512', '00', '00');
 
 
-WITH StatusCounts AS (
-    SELECT 
-        status, 
-        COUNT(*) AS count_status
-    FROM Payment
-    WHERE payment_date BETWEEN '2023-01-01' AND '2023-03-31'
-    GROUP BY status
-)
-SELECT 
-    status,
-    (count_status * 100.0 / (SELECT COUNT(*) FROM Payment WHERE payment_date BETWEEN '2023-01-01' AND '2023-03-31')) AS percentage
-FROM StatusCounts;
+-- 14. Them du lieu vao bang MaintenanceRequest
+INSERT INTO MaintenanceRequest (apartment_id, resident_id, request_date, description, status, priority, assigned_staff_id, completion_date) VALUES
+('S1P0101', 1, '2024-01-15', 'Voi nuoc bon rua bat trong bep bi ri nuoc, can thay the voi moi', 'completed', 'medium', 4, '2024-01-16'),
+('S1P0102', 3, '2024-01-20', 'Den LED phong khach bi chap chon, co the do bong den hong hoac van de dien', 'completed', 'high', 4, '2024-01-21');

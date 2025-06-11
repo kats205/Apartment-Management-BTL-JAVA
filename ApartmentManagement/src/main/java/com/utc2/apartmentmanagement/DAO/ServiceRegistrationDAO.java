@@ -120,7 +120,7 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
                 rows.put("end_date", rs.getDate("end_date"));
                 rows.put("price_service", rs.getDouble("price_service"));
                 rows.put("status", rs.getString("status"));
-                rows.put("description", rs.getNString("description"));
+                rows.put("description", rs.getString("description"));
                 list.add(rows);
             }
         }catch (SQLException e){

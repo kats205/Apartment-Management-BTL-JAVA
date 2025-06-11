@@ -4,6 +4,7 @@ import com.utc2.apartmentmanagement.Model.MaintenanceRequest;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IMaintenanceRequestDAO {
@@ -19,4 +20,7 @@ public interface IMaintenanceRequestDAO {
     boolean deleteMaintenanceRequestByID(int requestID);
     boolean addMaintenanceRequest(MaintenanceRequest maintenanceRequest);
     int countRequestByStatus(String status) throws SQLException;
+    void saveMaintenaceRequest(String apartmentID, String residentID, LocalDate requestDate, String description,String priority);
+
+
 }

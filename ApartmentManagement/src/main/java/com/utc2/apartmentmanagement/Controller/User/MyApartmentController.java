@@ -1,6 +1,5 @@
 package com.utc2.apartmentmanagement.Controller.User;
 
-import com.utc2.apartmentmanagement.Controller.MyProfileController;
 import com.utc2.apartmentmanagement.Controller.UserDashboardController;
 import com.utc2.apartmentmanagement.DAO.*;
 import com.utc2.apartmentmanagement.Model.Session;
@@ -19,16 +18,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
-import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.*;
-
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import lombok.Setter;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -64,24 +59,37 @@ public class MyApartmentController implements Initializable {
     @FXML public TableColumn<Map<String, Object>, LocalDate> dueDateCol;
     @FXML public TableColumn<Map<String, Object>, String> AmountCol;
     @FXML public TableColumn<Map<String, Object>, String> statusBillCol;
-    @FXML
-    private AnchorPane myApartmentPane;
 
-    @FXML private Button ViewFullDetailsBtn;
-
-
-    @FXML
-    private VBox apartmentsContainer;
-
-    @FXML
-    private ScrollPane apartmentsScrollPane;
+    @FXML private AnchorPane MyApartmentView;
 
     @Setter
     private UserDashboardController parentController;
 
-    @FXML
-    private AnchorPane MyApartmentView;
+    private String apartment_id;
 
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // load data về căn hộ
+        try {
+            getInformationResident();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        // load data về service
+        try {
+            getRegistrationByResident();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+//        load data về bill
+        try {
+            getBillByResident();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void handleCloseButton(ActionEvent event) {
         // Xoá apartment view
@@ -90,8 +98,8 @@ public class MyApartmentController implements Initializable {
         parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
 
-    private String apartment_id;
     private void getInformationResident() throws SQLException {
+
         String userName = Session.getUserName();
         int userId = new UserDAO().getIdByUserName(userName);
         Map<String, Object> apartmentInf = new ApartmentDAO().getInformation(userId);
@@ -100,10 +108,12 @@ public class MyApartmentController implements Initializable {
 
         DecimalFormat df = new DecimalFormat("#,###", symbols);
         df.setMaximumFractionDigits(0);
+
         if(apartmentInf.isEmpty()){
             System.out.println("No apartment information found for user ID: " + userId);
             return;
         }
+
         fullNameResident.setText(apartmentInf.get("full_name").toString());
         moveInDate.setText(apartmentInf.get("move_in_date").toString());
         price.setText(df.format(Double.parseDouble(apartmentInf.get("price_apartment").toString())) + " VNĐ");
@@ -123,6 +133,7 @@ public class MyApartmentController implements Initializable {
             return new SimpleStringProperty(value != null ? value.toString() : "null");
         });
         serviceNameCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+        serviceNameCol.setPrefWidth(180);
 
         startDateCol.setCellValueFactory(cellData -> {
             Object dateObj = cellData.getValue().get("start_date");
@@ -161,12 +172,12 @@ public class MyApartmentController implements Initializable {
         });
         priceCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
+
         statusCol.setCellValueFactory(cellData -> {
             Object value = cellData.getValue().get("status");
             return new SimpleStringProperty(value != null ? value.toString() : "null");
         });
         statusCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
     }
 
     private void getRegistrationByResident() throws SQLException {
@@ -190,18 +201,14 @@ public class MyApartmentController implements Initializable {
 
     private void setUpColumnForBill(){
         billIdCol.setCellValueFactory(data -> new SimpleObjectProperty<>((Integer) data.getValue().get("bill_id")));
+        billIdCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         dateCol.setCellValueFactory(data -> {
-            java.sql.Date date = (java.sql.Date) data.getValue().get("payment_date");
+            Date date = (Date) data.getValue().get("payment_date");
             return new ReadOnlyObjectWrapper<>(date.toLocalDate());
         });
         dateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
-        dueDateCol.setCellValueFactory(data -> {
-            java.sql.Date date = (java.sql.Date) data.getValue().get("due_date");
-            return new ReadOnlyObjectWrapper<>(date != null ? date.toLocalDate() : null);
-        });
-        dueDateCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         AmountCol.setCellValueFactory(data -> {
             double price = (double) data.getValue().get("total_amount");
@@ -215,7 +222,6 @@ public class MyApartmentController implements Initializable {
 
         statusBillCol.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("status")));
         statusBillCol.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
     }
 
     private void getBillByResident() throws SQLException {
@@ -224,29 +230,7 @@ public class MyApartmentController implements Initializable {
         ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
         tableBills.setItems(observableList);
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // load data về căn hộ
-        try {
-            getInformationResident();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
-        // load data về service
-        try {
-            getRegistrationByResident();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-//        load data về bill
-        try {
-            getBillByResident();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
     double x = 0, y = 0;
     @FXML
     public void handleViewDetailsBtn(ActionEvent actionEvent) {
@@ -286,7 +270,6 @@ public class MyApartmentController implements Initializable {
             // Hiệu ứng hover cho nút đóng
             closeButton.setOnMouseEntered(e -> closeButton.setStyle("-fx-background-color: #FF5555; -fx-text-fill: white; -fx-font-weight: bold;"));
             closeButton.setOnMouseExited(e -> closeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-weight: bold;"));
-
             header.getChildren().add(closeButton);
 
             // Đặt header và nội dung vào BorderPane
