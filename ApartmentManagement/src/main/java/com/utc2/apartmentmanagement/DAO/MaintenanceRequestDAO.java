@@ -175,7 +175,7 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
             stmt.setString(8, "pending");
 
             stmt.executeUpdate();
-            System.out.println(" Dữ liệu đã được lưu thành công.");
+            System.out.println(" Dữ liệu đã được lưu vào MaintenanceRequest thành công.");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(" Lỗi khi lưu dữ liệu: " + e.getMessage());

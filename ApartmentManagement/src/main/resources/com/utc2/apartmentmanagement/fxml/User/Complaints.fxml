@@ -252,7 +252,7 @@
                               <HBox styleClass="button-container">
                                  <children>
                                     <Button fx:id="cancelButton" onAction="#handleCancelButton" prefHeight="30.0" prefWidth="90.0" styleClass="cancel-button" text="Cancel" />
-                                    <Button fx:id="submitButton" prefHeight="30.0" prefWidth="150.0" styleClass="submit-button" text="Submit Complaint" />
+                                    <Button fx:id="submitButton" onAction="#handleSubmitComplaint" prefHeight="30.0" prefWidth="150.0" styleClass="submit-button" text="Submit Complaint" />
                                  </children>
                                  <padding>
                                     <Insets top="5.0" />
