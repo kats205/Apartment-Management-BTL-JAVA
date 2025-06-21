@@ -1,6 +1,5 @@
 package com.utc2.apartmentmanagement.Utils;
 
-import com.utc2.apartmentmanagement.Model.Apartment;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 

@@ -1,8 +1,13 @@
 package com.utc2.apartmentmanagement.Controller;
 
-import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
-import com.utc2.apartmentmanagement.DAO.MaintenanceRequestDAO;
-import com.utc2.apartmentmanagement.DAO.PaymentDAO;
+import com.utc2.apartmentmanagement.Controller.Apartment.ApartmentViewController;
+import com.utc2.apartmentmanagement.Controller.Payment.PaymentViewController;
+import com.utc2.apartmentmanagement.Controller.Report.ReportViewController;
+import com.utc2.apartmentmanagement.Controller.Staff.HRViewController;
+import com.utc2.apartmentmanagement.Controller.User.MyProfileController;
+import com.utc2.apartmentmanagement.DAO.Apartment.ApartmentDAO;
+import com.utc2.apartmentmanagement.DAO.Maintenance.MaintenanceRequestDAO;
+import com.utc2.apartmentmanagement.DAO.Billing.PaymentDAO;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -282,7 +287,7 @@ public class DashboardController implements Initializable {
     private void loadApartmentView() throws IOException {
         // Thêm debug để xác định vấn đề
         System.out.println("Đang cố gắng tải ApartmentView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/ApartmentView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Apartment/ApartmentView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
         FXMLLoader loader = new FXMLLoader(url);
 
@@ -317,7 +322,7 @@ public class DashboardController implements Initializable {
     private void loadPaymentView() throws IOException {
         // Thêm debug để xác định vấn đề
         System.out.println("Đang cố gắng tải ApartmentView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/PaymentView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Service/PaymentView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
@@ -346,7 +351,7 @@ public class DashboardController implements Initializable {
 
     public void loadReportView() throws IOException {
         System.out.println("Đang cố gắng tải ReportView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/ReportView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Report/ReportView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
@@ -404,7 +409,7 @@ public class DashboardController implements Initializable {
     @FXML
     public void loadMyProfile() {
         try {
-            URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/MyProfileView.fxml");
+            URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/MyProfileView.fxml");
             FXMLLoader loader = new FXMLLoader(url);
             Parent root = loader.load();
 
@@ -441,7 +446,7 @@ public class DashboardController implements Initializable {
 
     public void loadHRView(ActionEvent actionEvent) throws IOException {
         System.out.println("Đang cố gắng tải ReportView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/HRView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/HRView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
