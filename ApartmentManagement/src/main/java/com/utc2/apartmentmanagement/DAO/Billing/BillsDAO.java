@@ -30,7 +30,7 @@ public class BillsDAO implements IBillDAO {
 
     @Override
     public boolean addBill(Bills bill) {
-        String sql = "INSERT INTO Bill(bill_id, apartment_id, billing_date, total_amount, status, late_fee, created_at, updated_at)" +
+        String sql = "INSERT INTO Bill(bill_id, apartment_id, billing_date, due_date, total_amount, status, late_fee, created_at, updated_at)" +
                 "VALUES ( ? , ? , ? , ? , ?, ? , ? , ? , ?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -150,7 +150,7 @@ public class BillsDAO implements IBillDAO {
 
     @Override
     public List<Map<String, Object>> getBillByApartmentId(String apartmentId) throws SQLException {
-        String sql = "SELECT b.bill_id, b.total_amount, b.status, p.payment_date FROM Bill b\n" +
+        String sql = "SELECT b.bill_id, b.due_date, b.total_amount, b.status, p.payment_date FROM Bill b\n" +
                 "JOIN Payment p ON p.bill_id = b.bill_id\n" +
                 "JOIN Apartment a ON a.apartment_id = b.apartment_id\n" +
                 "WHERE a.apartment_id = ?";

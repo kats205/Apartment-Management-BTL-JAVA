@@ -1,6 +1,10 @@
 package com.utc2.apartmentmanagement.Controller.Maintenance;
 
 import com.utc2.apartmentmanagement.Controller.User.UserDashboardController;
+import com.utc2.apartmentmanagement.DAO.Apartment.ApartmentDAO;
+import com.utc2.apartmentmanagement.DAO.Maintenance.MaintenanceRequestDAO;
+import com.utc2.apartmentmanagement.DAO.User.UserDAO;
+import com.utc2.apartmentmanagement.Model.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +15,9 @@ import javafx.scene.control.Alert.AlertType;
 import lombok.Setter;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Map;
 
 public class MaintenanceController {
 
@@ -40,7 +46,7 @@ public class MaintenanceController {
     private UserDashboardController parentController;
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException {
         // Set today's date
         requestDatePicker.setValue(LocalDate.now());
         requestDatePicker.setDisable(true); // Make it read-only
@@ -107,11 +113,16 @@ public class MaintenanceController {
         );
     }
 
-    private void fillResidentInfo() {
+    private void fillResidentInfo() throws SQLException {
         // TODO: Get actual data from logged-in user session
         // For now, using dummy data
-        apartmentIdTextField.setText("A101");
-        residentIdTextField.setText("R001");
+        String userName = Session.getUserName();
+        int userId = new UserDAO().getIdByUserName(userName);
+        Map<String, Object> apartmentInf = new ApartmentDAO().getInformation(userId);
+
+
+        apartmentIdTextField.setText(String.valueOf(apartmentInf.get("apartment_id")));
+        residentIdTextField.setText(String.valueOf((apartmentInf.get("resident_id"))));
 
         // These fields should be read-only
         apartmentIdTextField.setEditable(false);
@@ -124,8 +135,10 @@ public class MaintenanceController {
         if (!validateForm()) {
             return;
         }
-
         // Prepare data for database
+        String apartmentID = apartmentIdTextField.getText();
+        String residentID = residentIdTextField.getText();
+
         String issueType = issueTypeComboBox.getValue();
         String priorityText = priorityComboBox.getValue();
         String priority = extractPriority(priorityText);
@@ -137,14 +150,18 @@ public class MaintenanceController {
         LocalDate requestDate = requestDatePicker.getValue();
 
         // TODO: Save to database
-        // MaintenanceRequest request = new MaintenanceRequest();
-        // request.setApartmentId(apartmentIdTextField.getText());
-        // request.setResidentId(residentIdTextField.getText());
-        // request.setRequestDate(requestDate);
+        MaintenanceRequestDAO requestDAO = new MaintenanceRequestDAO();
+        requestDAO.saveMaintenaceRequest(apartmentID, residentID, requestDate,location +" - " + description, priority,issueType);
+
+//         request.setApartmentID(apartmentIdTextField.getText());
+//         request.setResidentID(Integer.parseInt(residentIdTextField.getText()));
+//         request.setRequestDate(Date.valueOf(requestDate));
         // request.setDescription(description);
         // request.setStatus("pending");
         // request.setPriority(priority);
         // maintenanceDAO.save(request);
+
+
 
         // Show success message
         showAlert("Success", "Maintenance request submitted successfully!",
@@ -152,7 +169,7 @@ public class MaintenanceController {
                 AlertType.INFORMATION);
 
         // Clear form or close window
-        clearForm();
+       // clearForm();
     }
 
     @FXML

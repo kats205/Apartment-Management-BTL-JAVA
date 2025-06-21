@@ -1,4 +1,4 @@
-package com.utc2.apartmentmanagement.Model.Maintenance;
+package com.utc2.apartmentmanagement.Model.Complaint;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,29 +10,14 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MaintenanceRequest {
+public class Complaint {
     private int requestID;
     private String apartmentID;
     private int residentID;
+    private String typeComplaint;
     private Date requestDate;
     private String description;
     private String status;
     private String priority;
     private int assignedStaffID;
-    private Date completionDate;
-    private String issueType;
-
-
-//    public void assignedTotalStaff(int staffID){
-//
-//    }
-//    public void updateStatus(String status){
-//
-//    }
-//    public Apartment getApartment(){
-//
-//    }
-//    public Resident getResident(){
-//
-//    }
 }

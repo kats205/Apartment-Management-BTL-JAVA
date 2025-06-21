@@ -17,7 +17,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<<< HEAD:ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/Test.fxml
 <AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../styles/UserCSS/Services.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Service.ServicesController">
+========
+<AnchorPane fx:id="ServiceView" prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Services.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Service.ServicesController">
+>>>>>>>> origin/duybinh-new:ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/Service/Services.fxml
     <children>
         <BorderPane prefHeight="655.0" prefWidth="1100.0">
             <top>
@@ -71,7 +75,11 @@
                                                         <TableColumn fx:id="descriptionColumn" prefWidth="350.0" text="Description" />
                                                         <TableColumn fx:id="startDateColumn" prefWidth="120.0" text="Start Date" />
                                                         <TableColumn fx:id="endDateColumn" prefWidth="120.0" text="End Date" />
+<<<<<<<< HEAD:ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/Test.fxml
                                                         <TableColumn fx:id="monthlyFeeColumn" prefWidth="120.0" text="Monthly Fee" />
+========
+                                                        <TableColumn fx:id="priceColumn" prefWidth="120.0" text="Price" />
+>>>>>>>> origin/duybinh-new:ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/Service/Services.fxml
                                                         <TableColumn fx:id="statusColumn" prefWidth="100.0" text="Status" />
                                                         <TableColumn fx:id="actionColumn" prefWidth="100.0" text="Action" />
                                                     </columns>
@@ -151,7 +159,11 @@
                                                                                     <Font size="12.0" />
                                                                                 </font>
                                                                             </Label>
+<<<<<<<< HEAD:ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/Test.fxml
                                                                             <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
+========
+                                                                            <Button fx:id="registerService" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="register-service-button" text="Register Service">
+>>>>>>>> origin/duybinh-new:ApartmentManagement/src/main/resources/com/utc2/apartmentmanagement/fxml/Service/Services.fxml
                                                                                 <font>
                                                                                     <Font name="System Bold" size="14.0" />
                                                                                 </font>

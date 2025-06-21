@@ -5,6 +5,7 @@ import com.utc2.apartmentmanagement.Model.Report.Report;
 import com.utc2.apartmentmanagement.Repository.Report.IReportDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
@@ -12,7 +13,9 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReportDAO implements IReportDAO {
     private Connection connection;
@@ -163,7 +166,7 @@ public class ReportDAO implements IReportDAO {
     @Override
     public List<Report> getReportsByType(String reportType) {
         List<Report> reports = new ArrayList<>();
-        String query = "SELECT * FROM reports WHERE report_name = ? ORDER BY generation_date DESC";
+        String query = "SELECT * FROM reports WHERE report_type = ? ORDER BY generation_date DESC";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, reportType);
@@ -206,7 +209,7 @@ public class ReportDAO implements IReportDAO {
     public Report mapResultSetToReport(ResultSet resultSet) throws SQLException {
         Report report = new Report();
         report.setId(resultSet.getInt("report_id"));
-        report.setReportType(resultSet.getString("report_name"));
+        report.setReportType(resultSet.getString("report_type"));
 
         Date generationDate = resultSet.getDate("generation_date");
         if (generationDate != null) {
@@ -330,38 +333,5 @@ public class ReportDAO implements IReportDAO {
             throw new SQLException("Error while generating report", e);
         }
         return data;
-    }
-
-    public static void main(String[] args) {
-//        Platform.startup(() -> {
-//            try {
-//                // Tạo đối tượng DAO
-//                ReportDAO dao = new ReportDAO();
-//
-//                // Gọi phương thức với khoảng ngày cụ thể
-//                LocalDate fromDate = LocalDate.of(2023, 1, 1);
-//                LocalDate toDate = LocalDate.of(2024, 3, 31);
-//                ObservableList<PieChart.Data> result = new ReportDAO().PieChart(fromDate, toDate);
-//
-//                // In kết quả ra console
-//                System.out.println("Kết quả PieChart:");
-//                for (PieChart.Data data : result) {
-//                    System.out.println("Label: " + data.getName() + ", Value: " + data.getPieValue());
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//
-//            // Kết thúc chương trình JavaFX
-//            Platform.exit();
-//        });
-
-        List<Report> reports = new ReportDAO().getAllReports();
-        if(reports.isEmpty()){
-            System.out.println("Không có bản ghi");
-        }
-        for(Report report : reports){
-            System.out.println(report.getReportType());
-        }
     }
 }

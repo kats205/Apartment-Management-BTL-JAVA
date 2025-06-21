@@ -326,10 +326,10 @@ public class ApartmentDAO implements IApartmentDAO {
                 map.put("area", rs.getDouble("area"));
                 map.put("bedrooms", rs.getInt("bedrooms"));
                 map.put("maintenance_fee", rs.getDouble("maintenance_fee"));
-                map.put("address", rs.getString("address"));
+                map.put("address", rs.getNString("address"));
                 map.put("price_apartment", rs.getDouble("price_apartment"));
                 map.put("move_in_date", rs.getDate("move_in_date"));
-                map.put("full_name", rs.getString("full_name"));
+                map.put("full_name", rs.getNString("full_name"));
             }
         }catch (SQLException e){
             throw new SQLException("Lỗi khi lấy thông tin căn hộ", e);

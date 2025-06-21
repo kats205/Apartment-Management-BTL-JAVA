@@ -54,7 +54,7 @@
                                                       <Font name="System Bold" size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Label fx:id="myMaintenanceCountLabel" text="(5 total requests)" textFill="#666666">
+                                                <Label fx:id="maintenanceCountLabel" text="(5 total requests)" textFill="#666666">
                                                    <font>
                                                       <Font size="14.0" />
                                                    </font>
@@ -71,13 +71,13 @@
                                                       <Insets left="20.0" />
                                                    </HBox.margin>
                                                 </Label>
-                                                <ComboBox fx:id="myMaintenanceStatusFilter" prefHeight="27.0" prefWidth="152.0" promptText="All Status" styleClass="filter-combo" />
+                                                <ComboBox fx:id="maintenanceStatusFilter" prefHeight="27.0" prefWidth="152.0" promptText="All Status" styleClass="filter-combo" />
                                                 <Label prefHeight="19.0" prefWidth="55.0" styleClass="filter-label" text="Priority:" />
-                                                <ComboBox fx:id="myMaintenancePriorityFilter" prefHeight="27.0" prefWidth="122.0" promptText="All Priority" styleClass="filter-combo" />
+                                                <ComboBox fx:id="maintenancePriorityFilter" prefHeight="27.0" prefWidth="122.0" promptText="All Priority" styleClass="filter-combo" />
                                                 <Label prefHeight="19.0" prefWidth="70.0" styleClass="filter-label" text="Issue Type:" />
                                                 <TextField fx:id="myMaintenanceIssueFilter" prefHeight="27.0" prefWidth="152.0" promptText="Search" styleClass="filter-text" />
-                                                <Button fx:id="viewMaintenanceDetailsButton" mnemonicParsing="false" onAction="#handleViewMaintenanceDetails" prefHeight="30.0" prefWidth="91.0" styleClass="action-button-primary" text="Sellect All" />
-                                                <Button fx:id="editMaintenanceRequestButton" mnemonicParsing="false" onAction="#handleEditMaintenanceRequest" prefHeight="30.0" prefWidth="81.0" styleClass="action-button-secondary" text="Delete" />
+                                                <Button fx:id="viewMaintenanceDetailsButton" mnemonicParsing="false" onAction="#handleFilterMaintenance" prefHeight="30.0" prefWidth="91.0" styleClass="action-button-primary" text="Sellect All" />
+                                                <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDeleteMaintenance" prefHeight="30.0" prefWidth="81.0" styleClass="action-button-secondary" text="Delete" />
                                                 <Region prefHeight="29.0" prefWidth="99.0" HBox.hgrow="ALWAYS" />
                                                 <Button fx:id="refreshMyMaintenanceButton" mnemonicParsing="false" onAction="#handleRefreshMyMaintenance" prefHeight="30.0" prefWidth="81.0" styleClass="refresh-button" text="Refresh">
                                                    <HBox.margin>
@@ -89,16 +89,16 @@
                                                 <Insets />
                                              </VBox.margin>
                                           </HBox>
-                                          <TableView fx:id="myMaintenanceTable" prefHeight="504.0" prefWidth="1060.0" styleClass="data-table">
+                                          <TableView fx:id="maintenanceTable" prefHeight="504.0" prefWidth="1060.0" styleClass="data-table">
                                              <columns>
-                                                <TableColumn fx:id="myMaintenanceIdColumn" prefWidth="120.0" text="Request ID" />
-                                                <TableColumn fx:id="myMaintenanceIssueTypeColumn" prefWidth="100.0" text="Issue Type" />
-                                                <TableColumn fx:id="myMaintenanceDescriptionColumn" prefWidth="230.0" text="Description" />
-                                                <TableColumn fx:id="myMaintenanceStatusColumn" prefWidth="100.0" text="Status" />
-                                                <TableColumn fx:id="myMaintenancePriorityColumn" prefWidth="80.0" text="Priority" />
-                                                <TableColumn fx:id="myMaintenanceRequestDateColumn" prefWidth="120.0" text="Request Date" />
-                                                <TableColumn fx:id="myMaintenanceAssignedStaffColumn" prefWidth="150.0" text="Assigned Staff" />
-                                                <TableColumn fx:id="myMaintenanceCompletionDateColumn" prefWidth="120.0" text="Completion Date" />
+                                                <TableColumn fx:id="maintenanceIdColumn" prefWidth="120.0" text="Request ID" />
+                                                <TableColumn fx:id="maintenanceIssueTypeColumn" prefWidth="100.0" text="Issue Type" />
+                                                <TableColumn fx:id="maintenanceDescriptionColumn" prefWidth="230.0" text="Description" />
+                                                <TableColumn fx:id="maintenanceStatusColumn" prefWidth="100.0" text="Status" />
+                                                <TableColumn fx:id="maintenancePriorityColumn" prefWidth="80.0" text="Priority" />
+                                                <TableColumn fx:id="maintenanceRequestDateColumn" prefWidth="120.0" text="Request Date" />
+                                                <TableColumn fx:id="maintenanceAssignedStaffColumn" prefWidth="150.0" text="Assigned Staff" />
+                                                <TableColumn fx:id="maintenanceCompletionDateColumn" prefWidth="120.0" text="Completion Date" />
                                              </columns>
                                              <VBox.margin>
                                                 <Insets left="20.0" right="20.0" />
@@ -143,9 +143,9 @@
                                                       <Insets left="20.0" />
                                                    </HBox.margin>
                                                 </Label>
-                                                <ComboBox fx:id="myServiceStatusFilter" prefHeight="27.0" prefWidth="150.0" promptText="All Status" styleClass="filter-combo" />
+                                                <ComboBox fx:id="serviceStatusFilter" prefHeight="27.0" prefWidth="150.0" promptText="All Status" styleClass="filter-combo" />
                                                 <Label prefHeight="19.0" prefWidth="83.0" styleClass="filter-label" text="Service Type:" />
-                                                <ComboBox fx:id="myServiceTypeFilter" prefHeight="27.0" prefWidth="130.0" promptText="All Services" styleClass="filter-combo" />
+                                                <ComboBox fx:id="serviceTypeFilter" prefHeight="27.0" prefWidth="130.0" promptText="All Services" styleClass="filter-combo" />
                                                 <Button fx:id="viewServiceComplaintDetailsButton" mnemonicParsing="false" onAction="#handleViewServiceComplaintDetails" prefHeight="36.0" prefWidth="90.0" styleClass="action-button-primary" text="Select All" HBox.hgrow="ALWAYS" />
                                                 <Button fx:id="editServiceComplaintButton" mnemonicParsing="false" onAction="#handleEditServiceComplaint" prefHeight="30.0" prefWidth="80.0" styleClass="action-button-secondary" text="Delete" />
                                                 <Region prefHeight="36.0" prefWidth="211.0" HBox.hgrow="ALWAYS" />

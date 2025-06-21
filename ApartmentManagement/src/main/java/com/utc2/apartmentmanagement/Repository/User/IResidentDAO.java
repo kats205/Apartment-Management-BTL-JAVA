@@ -17,4 +17,5 @@ public interface IResidentDAO {
     boolean updateGender(int residentID, String newGender);
     boolean updateMoveInDate(int residentID, Date newMoveInDate);
     String getApartmentIdByUserID(int userID);
+    Integer getResidentIDByUserID(int userID); // dùng Integer để trả về null
 }

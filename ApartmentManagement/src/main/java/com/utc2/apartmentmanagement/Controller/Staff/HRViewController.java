@@ -12,12 +12,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import lombok.Setter;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -83,38 +86,19 @@ public class HRViewController implements Initializable {
 
     private void loadComboboxPosition() throws SQLException {
         List<String> positions = new StaffDAO().listPosition();
-        cbFilterPosition.getItems().add("Lọc theo chức vụ");
         cbFilterPosition.getItems().addAll(positions);
     }
 
     private void setValueCol(){
         colUserId.setCellValueFactory(data -> new SimpleObjectProperty<>((Integer) data.getValue().get("ID")));
-        colUserId.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
         colUsername.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Tendangnhap")));
-        colUsername.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
         colRole.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Vaitro")));
-        colRole.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
         colFullName.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Hoten")));
-        colFullName.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
         colEmail.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Email")));
-        colEmail.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
         colPhone.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Sodienthoai")));
-        colPhone.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
         colDepartment.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Phongban")));
-        colDepartment.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
         colPosition.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Chucvu")));
-        colPosition.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
         colActive.setCellValueFactory(data -> new SimpleObjectProperty<>((Boolean) data.getValue().get("Trangthai") ? 1 : 0));
-        colActive.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-
     }
 
     private void loadDataStaff(){
@@ -155,7 +139,7 @@ public class HRViewController implements Initializable {
 
     public void handleBtnRefresh(ActionEvent actionEvent) throws SQLException {
         setValueCol();
-        cbFilterPosition.setValue(cbFilterPosition.getItems().getFirst());
+        cbFilterPosition.setValue("Lọc theo chức vụ");
         List<Map<String, Object>> list = new StaffDAO().getAllStaffInfo();
         setUpTableView(list);
     }

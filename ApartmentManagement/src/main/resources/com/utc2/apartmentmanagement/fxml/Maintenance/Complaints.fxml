@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="ComplaintView" prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Complaintsv2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.ComplaintsController">
+<AnchorPane fx:id="ComplaintView" prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/UserCSS/Complaintsv2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Complaint.ComplaintsController">
    <children>
       <BorderPane prefHeight="655.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -87,7 +87,6 @@
                                              </items>
                                           </ComboBox>
                                           <Label styleClass="form-label" text="Apartment:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                          <ComboBox fx:id="apartmentComboBox" maxWidth="1.7976931348623157E308" prefHeight="106.0" prefWidth="386.0" promptText="Select apartment" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Label styleClass="form-label" text="Resident ID:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                           <TextField fx:id="residentIdField" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="385.0" promptText="Auto-filled" styleClass="form-field-readonly" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                           <Label styleClass="form-label" text="Location:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
@@ -106,6 +105,7 @@
                                           </ComboBox>
                                           <Label styleClass="form-label" text="Date:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                           <DatePicker fx:id="requestDatePicker" maxWidth="1.7976931348623157E308" prefHeight="149.0" prefWidth="385.0" promptText="Select date" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <TextField fx:id="apartmentIdField" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="385.0" promptText="Auto-filled" styleClass="form-field-readonly" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -252,7 +252,7 @@
                               <HBox styleClass="button-container">
                                  <children>
                                     <Button fx:id="cancelButton" onAction="#handleCancelButton" prefHeight="30.0" prefWidth="90.0" styleClass="cancel-button" text="Cancel" />
-                                    <Button fx:id="submitButton" prefHeight="30.0" prefWidth="150.0" styleClass="submit-button" text="Submit Complaint" />
+                                    <Button fx:id="submitButton" onAction="#handleSubmitComplaint" prefHeight="30.0" prefWidth="150.0" styleClass="submit-button" text="Submit Complaint" />
                                  </children>
                                  <padding>
                                     <Insets top="5.0" />

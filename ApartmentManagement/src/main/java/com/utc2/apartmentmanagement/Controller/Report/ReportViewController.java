@@ -125,7 +125,7 @@ public class ReportViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Khởi tạo các thành phần UI
-            initializeComponents();
+        initializeComponents();
 
         // Thiết lập các sự kiện
         setupEventHandlers();
@@ -133,50 +133,50 @@ public class ReportViewController implements Initializable {
         // Tải dữ liệu mặc định
         loadDefaultData();
 
-        apartmentStatusPieChart.setLabelLineLength(10);
-        apartmentStatusPieChart.setLegendVisible(true);
-
-        try {
-            LocalDate fromDate = fromDatePicker.getValue();
-            LocalDate toDate = toDatePicker.getValue();
-
-            // Kiểm tra giá trị ngày
-            if (fromDate == null || toDate == null) {
-                // Hiển thị thông báo lỗi
-                System.out.println("Vui lòng chọn ngày bắt đầu và ngày kết thúc");
-                return;
-            }
-
-            // Kiểm tra thứ tự ngày
-            if (fromDate.isAfter(toDate)) {
-                System.out.println("Ngày bắt đầu phải trước ngày kết thúc");
-                return;
-            }
-
-            ObservableList<PieChart.Data> pieChartData = new ReportDAO().PieChart(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 3, 31));
-            apartmentStatusPieChart.setData(pieChartData);
-
-            // Thêm hiệu ứng tương tác sau khi đã nạp dữ liệu
-            apartmentStatusPieChart.getData().forEach(data -> {
-                String originalStyle = data.getNode().getStyle(); // Lưu style ban đầu
-
-                data.getNode().setOnMouseEntered(event -> {
-                    // Làm nổi bật phần được chọn
-                    data.getNode().setStyle("-fx-background-color: derive(" +
-                            data.getNode().getStyle().replace("-fx-background-color: ", "") +
-                            ", -30%);");
-                });
-
-                data.getNode().setOnMouseExited(event -> {
-                    // Trở về màu gốc
-                    data.getNode().setStyle(originalStyle);
-                });
-            });
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Hiển thị thông báo lỗi cho người dùng
-            System.out.println("Lỗi khi truy vấn cơ sở dữ liệu: " + e.getMessage());
-        }
+//        apartmentStatusPieChart.setLabelLineLength(10);
+//        apartmentStatusPieChart.setLegendVisible(true);
+//
+//        try {
+//            LocalDate fromDate = fromDatePicker.getValue();
+//            LocalDate toDate = toDatePicker.getValue();
+//
+//            // Kiểm tra giá trị ngày
+//            if (fromDate == null || toDate == null) {
+//                // Hiển thị thông báo lỗi
+//                System.out.println("Vui lòng chọn ngày bắt đầu và ngày kết thúc");
+//                return;
+//            }
+//
+//            // Kiểm tra thứ tự ngày
+//            if (fromDate.isAfter(toDate)) {
+//                System.out.println("Ngày bắt đầu phải trước ngày kết thúc");
+//                return;
+//            }
+//
+//            ObservableList<PieChart.Data> pieChartData = new ReportDAO().PieChart(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 3, 31));
+//            apartmentStatusPieChart.setData(pieChartData);
+//
+//            // Thêm hiệu ứng tương tác sau khi đã nạp dữ liệu
+//            apartmentStatusPieChart.getData().forEach(data -> {
+//                String originalStyle = data.getNode().getStyle(); // Lưu style ban đầu
+//
+//                data.getNode().setOnMouseEntered(event -> {
+//                    // Làm nổi bật phần được chọn
+//                    data.getNode().setStyle("-fx-background-color: derive(" +
+//                            data.getNode().getStyle().replace("-fx-background-color: ", "") +
+//                            ", -30%);");
+//                });
+//
+//                data.getNode().setOnMouseExited(event -> {
+//                    // Trở về màu gốc
+//                    data.getNode().setStyle(originalStyle);
+//                });
+//            });
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            // Hiển thị thông báo lỗi cho người dùng
+//            System.out.println("Lỗi khi truy vấn cơ sở dữ liệu: " + e.getMessage());
+//        }
 
     }
 
@@ -199,7 +199,7 @@ public class ReportViewController implements Initializable {
     public void initialSummary(){
         List<Report> reportList = new ReportDAO().getAllReports();
         int totalReport = reportList.size();
-        String newestReport = reportList.get(totalReport-1).getReportType();
+        String newestReport = reportList.getLast().getReportType();
         // Map 1: Đếm số lần mỗi loại báo cáo
         Map<String, Integer> reportTypeCountMap = new HashMap<>();
 
@@ -251,7 +251,7 @@ public class ReportViewController implements Initializable {
     private void initializeComboBoxes() {
         // TODO: Khởi tạo các loại báo cáo cho reportTypeComboBox
         // Ví dụ: Báo cáo theo tháng, theo quý, theo năm
-        reportTypeComboBox.getItems().addAll("Báo cáo căn hộ", "Báo cáo tài chính");
+        reportTypeComboBox.getItems().addAll("Báo cáo theo tháng", "Báo cáo theo quý", "Báo cáo theo năm");
     }
 
     private void initializeTableView() {
@@ -550,25 +550,20 @@ public class ReportViewController implements Initializable {
             MenuItem editItem = new MenuItem("Xem chi tiết báo cáo");
 
             editItem.setOnAction(e -> {
-                if(selectedReport.getReportType().equalsIgnoreCase("Báo cáo tài chính")){
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/Report/DetailReport.fxml"));
-                        Parent root = loader.load();
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/DetailReport.fxml"));
+                    Parent root = loader.load();
 
-                        DetailReportController editController = loader.getController();
-                        editController.setParentController(this);   // set controller cha
-                        editController.setApartment(selectedReport); // set báo cáo cần xem chi tiết
+                    DetailReportController editController = loader.getController();
+                    editController.setParentController(this);   // set controller cha
+                    editController.setApartment(selectedReport); // set báo cáo cần xem chi tiết
 
-                        Stage stage = new Stage();
-                        stage.setTitle("Chi tiết báo cáo");
-                        stage.setScene(new Scene(root));
-                        stage.show();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-                else{
-                    System.out.println("Không có giao diện chi tiết báo cáo dành cho loại báo cáo này ");
+                    Stage stage = new Stage();
+                    stage.setTitle("Chi tiết báo cáo");
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
             });
 
