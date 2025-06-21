@@ -203,6 +203,22 @@ public class StaffDAO implements IStaffDAO {
         return null;
     }
 
+    @Override
+    public String getDepartmentStaffByUserName(String userName) throws SQLException {
+        String sql = "SELECT department FROM staff s JOIN [User] u ON u.user_id = s.staff_id WHERE u.username = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, userName);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getString("department");
+            }
+        }catch(SQLException e){
+            throw new SQLException("Error retrieving staff by user name: " + e.getMessage(), e);
+        }
+        return "";
+    }
+
 
     public boolean updateStaffField(int staffID, String field, Object newValue){
         String sql = "UPDATE Staff SET " + field + " = ?  WHERE staff_id = ?";

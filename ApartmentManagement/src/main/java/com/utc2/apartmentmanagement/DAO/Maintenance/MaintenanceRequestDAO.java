@@ -19,7 +19,7 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 maintenanceRequestList.add(new MaintenanceRequest(rs.getInt("request_id"), rs.getString("apartment_id"), rs.getInt("resident_id"),
-                        rs.getDate("request_date"), rs.getNString("description"), rs.getString("status"), rs.getString("priority"),
+                        rs.getDate("request_date"), rs.getString("description"), rs.getString("status"), rs.getString("priority"),
                         rs.getInt("assigned_staff_id"), rs.getDate("completion_date")));
             }
         }catch(SQLException e){

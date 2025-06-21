@@ -153,7 +153,6 @@ public class LoginController {
                 }
             }
             case 2 -> {
-
                 try {
                     // Chuyển sang màn hình staff
                     ((Stage) usernameField.getScene().getWindow()).close();
