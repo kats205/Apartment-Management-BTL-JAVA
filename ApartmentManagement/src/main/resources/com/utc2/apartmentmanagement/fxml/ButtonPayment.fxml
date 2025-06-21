@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="381.0" prefWidth="471.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.utc2.apartmentmanagement.Controller.PaymentController">
+<AnchorPane prefHeight="381.0" prefWidth="471.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.utc2.apartmentmanagement.Controller.Payment.PaymentController">
     <children>
          <Label layoutX="600.0" layoutY="11.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Thanh toán phí dịch vụ" />
          <Button fx:id="btnPayVnpay" layoutX="580.0" layoutY="58.0" onAction="#handlePayVnpay" prefWidth="200" text="Thanh toán bằng VNPAY" />

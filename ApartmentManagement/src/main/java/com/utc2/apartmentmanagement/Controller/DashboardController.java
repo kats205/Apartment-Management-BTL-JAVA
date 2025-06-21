@@ -1,8 +1,13 @@
 package com.utc2.apartmentmanagement.Controller;
 
-import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
-import com.utc2.apartmentmanagement.DAO.MaintenanceRequestDAO;
-import com.utc2.apartmentmanagement.DAO.PaymentDAO;
+import com.utc2.apartmentmanagement.Controller.Apartment.ApartmentViewController;
+import com.utc2.apartmentmanagement.Controller.Payment.PaymentViewController;
+import com.utc2.apartmentmanagement.Controller.Report.ReportViewController;
+import com.utc2.apartmentmanagement.Controller.Staff.HRViewController;
+import com.utc2.apartmentmanagement.Controller.User.MyProfileController;
+import com.utc2.apartmentmanagement.DAO.Apartment.ApartmentDAO;
+import com.utc2.apartmentmanagement.DAO.Maintenance.MaintenanceRequestDAO;
+import com.utc2.apartmentmanagement.DAO.Billing.PaymentDAO;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -18,7 +23,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -32,79 +36,48 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class DashboardController implements Initializable {
-    @FXML
-    public Button paymentButton;
-    @FXML
-    public Button report;
-    @FXML
-    public Button apartment;
-    @FXML
-    public Button payment;
+
+    @FXML public Button paymentButton;
+    @FXML public Button report;
+    @FXML public Button apartment;
+    @FXML public Button payment;
     @FXML public Button reportButton;
-
     @FXML public Button hrButton;
+    @FXML private Button ApartmentButton;
+
     @FXML public Label Occupied;
-
     @FXML public Label Available;
-
     @FXML public Label Collected;
-
     @FXML public Label outStanding;
-
     @FXML public Label Pending;
-
     @FXML public Label Completed;
-
     @FXML public Label totalApartmentsLabel;
-
     @FXML public Label requestsLabel;
-
     @FXML public Label revenueLabel;
+    @FXML private Label Menu;
+    @FXML private Label MenuBack;
 
     @FXML public TableView<Map<String, Object>> recentActivitiesTable;
-
     @FXML public TableColumn<Map<String, Object>, String> roleColumn;
-
     @FXML public TableColumn<Map<String, Object>, LocalDate> dateColumn;
-
     @FXML public TableColumn<Map<String, Object>, LocalDate> timeColumn;
-
     @FXML public TableColumn<Map<String, Object>, LocalDate> activityColumn;
-
     @FXML public TableColumn<Map<String, Object>, String> userColumn;
-
     @FXML public TableColumn<Map<String, Object>, Boolean> statusColumn;
     @FXML public TableColumn actionColumn;
 
-    @FXML public AnchorPane rootPane;
-    @FXML
-    private Button ApartmentButton;
-
-
-
-    @FXML
-    private Label Menu;
-
-    @FXML
-    private Label MenuBack;
-
-    @FXML
-    private AnchorPane slider;
-
-
-    @FXML
     @Getter
-    private AnchorPane contentArea;
+    @FXML private AnchorPane contentArea;
+    @FXML private AnchorPane rootPane;
+    @FXML private AnchorPane slider;
+
+    @FXML private ImageView Exit;
+
     @Getter
     private List<Node> dashboardNodes;
 
     private boolean isSidebarVisible = true;
 
-    @FXML
-    private BorderPane mainBorderPane;
-
-    @FXML
-    private ImageView Exit;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -115,55 +88,11 @@ public class DashboardController implements Initializable {
 
         dashboardNodes = new ArrayList<>(contentArea.getChildren());
 
+        setUpButtonApartment();
 
+        setUpButtonReport();
 
-
-        // Thiết lập sự kiện cho nút ApartmentButton
-        ApartmentButton.setOnAction(event -> {
-            try {
-                loadApartmentView();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });
-        apartment.setOnAction(event -> {
-            try {
-                loadApartmentView();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        });
-        paymentButton.setOnAction(event -> {
-            try {
-                loadPaymentView();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        payment.setOnAction(event -> {
-            try {
-                loadPaymentView();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        reportButton.setOnAction(event -> {
-            try {
-                loadReportView();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        report.setOnAction(event -> {
-            try {
-                loadReportView();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        setUpButtonPayment();
 
 
         // Các thiết lập khác...
@@ -232,6 +161,62 @@ public class DashboardController implements Initializable {
         }
     }
 
+    private void setUpButtonApartment(){
+        // Thiết lập sự kiện cho nút ApartmentButton
+        ApartmentButton.setOnAction(event -> {
+            try {
+                loadApartmentView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+        apartment.setOnAction(event -> {
+            try {
+                loadApartmentView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+
+    private void setUpButtonPayment(){
+        // Thiết lập sự kiện cho nút paymentButton
+        paymentButton.setOnAction(event -> {
+            try {
+                loadPaymentView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        payment.setOnAction(event -> {
+            try {
+                loadPaymentView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void setUpButtonReport(){
+        // Thiết lập sự kiện cho nút reportButton
+        reportButton.setOnAction(event -> {
+            try {
+                loadReportView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        report.setOnAction(event -> {
+            try {
+                loadReportView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     private void setupMenuToggle() {
         // Initial setup for menu labels
         MenuBack.setVisible(false);
@@ -282,7 +267,7 @@ public class DashboardController implements Initializable {
     private void loadApartmentView() throws IOException {
         // Thêm debug để xác định vấn đề
         System.out.println("Đang cố gắng tải ApartmentView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/ApartmentView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Apartment/ApartmentView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
         FXMLLoader loader = new FXMLLoader(url);
 
@@ -317,7 +302,7 @@ public class DashboardController implements Initializable {
     private void loadPaymentView() throws IOException {
         // Thêm debug để xác định vấn đề
         System.out.println("Đang cố gắng tải ApartmentView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/PaymentView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Service/PaymentView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
@@ -346,7 +331,7 @@ public class DashboardController implements Initializable {
 
     public void loadReportView() throws IOException {
         System.out.println("Đang cố gắng tải ReportView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/ReportView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Report/ReportView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
@@ -373,38 +358,11 @@ public class DashboardController implements Initializable {
         System.out.println("Đã thêm ReportView vào contentArea");
     }
 
-//    public void handleButtonSetting(ActionEvent actionEvent) throws IOException {
-//        System.out.println("Đang cố gắng tải SettingView.fxml");
-//        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/SettingView.fxml");
-//        System.out.println("URL: " + (url != null ? url.toString() : "null"));
-//
-//        FXMLLoader loader = new FXMLLoader(url);
-//        if (url == null) {
-//            System.out.println("Không tìm thấy file SettingView.fxml");
-//            return;
-//        }
-//
-//        Parent SettingView = loader.load();
-//
-//        // In ra để debug
-//        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
-//
-//        // Thiết lập kích thước view để lấp đầy contentArea
-//        AnchorPane.setTopAnchor(SettingView, 0.0);
-//        AnchorPane.setRightAnchor(SettingView, 0.0);
-//        AnchorPane.setBottomAnchor(SettingView, 0.0);
-//        AnchorPane.setLeftAnchor(SettingView, 0.0);
-//
-//        // Xóa tất cả các view hiện tại và thêm ApartmentView
-//        contentArea.getChildren().clear();
-//        contentArea.getChildren().add(SettingView);
-//        System.out.println("Đã thêm ReportView vào contentArea");
-//    }
         double x,y = 0;
     @FXML
     public void loadMyProfile() {
         try {
-            URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/MyProfileView.fxml");
+            URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/MyProfileView.fxml");
             FXMLLoader loader = new FXMLLoader(url);
             Parent root = loader.load();
 
@@ -440,13 +398,13 @@ public class DashboardController implements Initializable {
 
 
     public void loadHRView(ActionEvent actionEvent) throws IOException {
-        System.out.println("Đang cố gắng tải ReportView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/HRView.fxml");
+        System.out.println("Đang cố gắng tải HRView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/HRView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
         if (url == null) {
-            System.out.println("Không tìm thấy file ReportView.fxml");
+            System.out.println("Không tìm thấy file HRView.fxml");
             return;
         }
 
@@ -462,9 +420,9 @@ public class DashboardController implements Initializable {
         AnchorPane.setBottomAnchor(ReportView, 0.0);
         AnchorPane.setLeftAnchor(ReportView, 0.0);
 
-        // Xóa tất cả các view hiện tại và thêm ApartmentView
+        // Xóa tất cả các view hiện tại và thêm HRView
         contentArea.getChildren().clear();
         contentArea.getChildren().add(ReportView);
-        System.out.println("Đã thêm ReportView vào contentArea");
+        System.out.println("Đã thêm HRView vào contentArea");
     }
 }

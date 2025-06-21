@@ -1,6 +1,5 @@
 package com.utc2.apartmentmanagement.Controller.User;
 
-import com.utc2.apartmentmanagement.Controller.UserDashboardController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

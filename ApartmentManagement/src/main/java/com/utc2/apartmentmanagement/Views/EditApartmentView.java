@@ -12,7 +12,7 @@ public class EditApartmentView extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/EditApartmentView.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/Apartment/EditApartmentView.fxml")));
         stage.setTitle("Apartment Application");
         stage.setScene(new Scene(root));
         stage.show();

@@ -8,20 +8,16 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.TextAlignment;
-import com.utc2.apartmentmanagement.DAO.ApartmentDAO;
-import com.utc2.apartmentmanagement.Model.Apartment;
+import com.utc2.apartmentmanagement.DAO.Apartment.ApartmentDAO;
+import com.utc2.apartmentmanagement.Model.Apartment.Apartment;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.io.font.PdfEncodings;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
-
-import static javax.swing.text.StyleConstants.setBold;
 
 public class GeneratePDF  {
     public static void generateApartmentPDF(List<Apartment> apartments, String filePath) {
