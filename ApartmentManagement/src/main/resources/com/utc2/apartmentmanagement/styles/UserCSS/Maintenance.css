@@ -6,10 +6,18 @@
     -fx-background-color: #f8f9fa;
 }
 
+.subtitle {
+    -fx-text-fill: #666666;
+    -fx-font-size: 14px;
+}
+
 /* Scrollbar styling */
 .scroll-pane {
-    -fx-background: transparent;
-    -fx-background-color: transparent;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);
 }
 
 .scroll-pane > .viewport {
@@ -17,38 +25,73 @@
 }
 
 .scroll-bar:vertical {
-    -fx-background-color: transparent;
-    -fx-pref-width: 12;
+    -fx-background-color: #f0f8f0;
+    -fx-pref-width: 14;
+    -fx-background-radius: 7px;
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #cfd5dd;
-    -fx-background-radius: 6px;
+    -fx-background-color: #1A936F;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
 }
 
 .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #adb5bd;
+    -fx-background-color: #147a5c;
+    -fx-effect: dropshadow(three-pass-box, rgba(26,147,111,0.3), 3, 0, 0, 0);
 }
+
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #0d6952;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: #f0f8f0;
+    -fx-pref-height: 14;
+    -fx-background-radius: 7px;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #1A936F;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+}
+
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #147a5c;
+    -fx-effect: dropshadow(three-pass-box, rgba(26,147,111,0.3), 3, 0, 0, 0);
+}
+
+.scroll-bar:horizontal .thumb:pressed {
+    -fx-background-color: #0d6952;
+}
+
+/* Scrollbar track styling */
+.scroll-bar:vertical .track {
+    -fx-background-color: #f0f8f0;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+}
+
+.scroll-bar:horizontal .track {
+    -fx-background-color: #f0f8f0;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 7px;
+}
+
 
 /* Header Section Styles */
 .header-container {
-    -fx-background-color: linear-gradient(to right, #1A936F, #88d498);
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 3);
+    -fx-background-color: white;
+    /*-fx-background-color: linear-gradient(to right, #1A936F, #88d498); */
 }
 
-.header-title {
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1);
-}
 
 /* Content Section Styles */
 .form-container {
     -fx-background-color: white;
     -fx-background-radius: 8px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3);
-    -fx-padding: 25px;
     -fx-spacing: 20px;
 }
 
@@ -158,10 +201,13 @@
 }
 
 .cancel-button {
-    -fx-background-color: white;
-    -fx-text-fill: #495057;
-    -fx-border-color: #ced4da;
+    -fx-background-color: #F44336;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
     -fx-border-radius: 5px;
+    -fx-transition: all 0.2s ease;
 }
 
 .cancel-button:hover {
@@ -178,6 +224,48 @@
 .file-name-label {
     -fx-text-fill: #6c757d;
     -fx-font-style: italic;
+}
+
+/* Priority Note Box */
+.priority-note-box {
+    -fx-background-color: #fff8f0;
+    -fx-border-color: #ff8c00;
+    -fx-border-radius: 6px;
+    -fx-border-style: dashed;
+    -fx-border-width: 2px;
+    -fx-padding: 15px;
+}
+
+.priority-note-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ff8c00;
+}
+
+.priority-note-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6c5ce7;
+    -fx-line-spacing: 2px;
+}
+
+.priority-level-high {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+}
+
+.priority-level-urgent {
+    -fx-text-fill: #dc3545;
+    -fx-font-weight: bold;
+}
+
+.priority-level-medium {
+    -fx-text-fill: #ffc107;
+    -fx-font-weight: bold;
+}
+
+.priority-level-low {
+    -fx-text-fill: #28a745;
+    -fx-font-weight: bold;
 }
 
 /* Combo Box Styling */
@@ -203,7 +291,6 @@
     -fx-background-color: #1A936F;
     -fx-background-insets: 0;
     -fx-padding: 3;
-    -fx-shape: "M0,0 L7,0 L3.5,4 z";
 }
 
 .combo-box .list-cell {
@@ -306,11 +393,4 @@
 /* Animation for hover effects */
 .submit-button, .cancel-button, .upload-button {
     -fx-transition-duration: 0.2s;
-}
-
-/* Responsive adjustments */
-@media screen and (max-width: 800px) {
-    .form-container {
-        -fx-padding: 15px;
-    }
 }

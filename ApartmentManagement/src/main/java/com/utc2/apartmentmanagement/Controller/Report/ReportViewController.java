@@ -199,7 +199,7 @@ public class ReportViewController implements Initializable {
     public void initialSummary(){
         List<Report> reportList = new ReportDAO().getAllReports();
         int totalReport = reportList.size();
-        String newestReport = reportList.getLast().getReportType();
+
         // Map 1: Đếm số lần mỗi loại báo cáo
         Map<String, Integer> reportTypeCountMap = new HashMap<>();
 
@@ -228,6 +228,11 @@ public class ReportViewController implements Initializable {
                 .map(Map.Entry::getKey)
                 .orElse(null);
         String nameUserById = new UserDAO().getUserByID(mostActiveUserId).getFullName();
+        String newestReport = reportList.getLast().getReportType();
+        if(newestReport == null || newestReport.isEmpty()){
+            return;
+        }
+
         totalReportsLabel.setText(String.valueOf(totalReport));
         latestReportLabel.setText(newestReport);
         popularReportTypeLabel.setText(popularReport);
@@ -551,7 +556,7 @@ public class ReportViewController implements Initializable {
 
             editItem.setOnAction(e -> {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/DetailReport.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/DetailReport.fxml"));
                     Parent root = loader.load();
 
                     DetailReportController editController = loader.getController();

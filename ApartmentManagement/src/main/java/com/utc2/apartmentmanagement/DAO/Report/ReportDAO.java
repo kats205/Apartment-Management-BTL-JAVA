@@ -3,9 +3,9 @@ package com.utc2.apartmentmanagement.DAO.Report;
 import com.utc2.apartmentmanagement.DAO.DatabaseConnection;
 import com.utc2.apartmentmanagement.Model.Report.Report;
 import com.utc2.apartmentmanagement.Repository.Report.IReportDAO;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
@@ -13,7 +13,9 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReportDAO implements IReportDAO {
     private Connection connection;
@@ -66,7 +68,7 @@ public class ReportDAO implements IReportDAO {
 
     @Override
     public boolean saveReport(Report report) {
-        String query = "INSERT INTO report (report_type, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at) " +
+        String query = "INSERT INTO report (report_name, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -100,7 +102,7 @@ public class ReportDAO implements IReportDAO {
 
     @Override
     public boolean updateReport(Report report) {
-        String query = "UPDATE reports SET report_type = ?, generation_date = ?, generated_by_user_id = ?, " +
+        String query = "UPDATE reports SET report_name = ?, generation_date = ?, generated_by_user_id = ?, " +
                 "parameters = ?, file_path = ?, updated_at = ? WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -161,26 +163,7 @@ public class ReportDAO implements IReportDAO {
         return reports;
     }
 
-    @Override
-    public List<Report> getReportsByType(String reportType) {
-        List<Report> reports = new ArrayList<>();
-        String query = "SELECT * FROM reports WHERE report_type = ? ORDER BY generation_date DESC";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, reportType);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Report report = mapResultSetToReport(resultSet);
-                    reports.add(report);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return reports;
-    }
 
     @Override
     public List<Report> getReportsByUser(int userId) {
@@ -241,8 +224,8 @@ public class ReportDAO implements IReportDAO {
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement countStmt = connection.prepareStatement(countSql)) {
-            countStmt.setDate(1, java.sql.Date.valueOf(fromDate));
-            countStmt.setDate(2, java.sql.Date.valueOf(toDate));
+            countStmt.setDate(1, Date.valueOf(fromDate));
+            countStmt.setDate(2, Date.valueOf(toDate));
 
             ResultSet countRs = countStmt.executeQuery();
             if (countRs.next()) {
@@ -270,10 +253,10 @@ public class ReportDAO implements IReportDAO {
                     "FROM StatusCounts;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setDate(1, java.sql.Date.valueOf(fromDate));
-                preparedStatement.setDate(2, java.sql.Date.valueOf(toDate));
-                preparedStatement.setDate(3, java.sql.Date.valueOf(fromDate));
-                preparedStatement.setDate(4, java.sql.Date.valueOf(toDate));
+                preparedStatement.setDate(1, Date.valueOf(fromDate));
+                preparedStatement.setDate(2, Date.valueOf(toDate));
+                preparedStatement.setDate(3, Date.valueOf(fromDate));
+                preparedStatement.setDate(4, Date.valueOf(toDate));
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 // Định dạng DecimalFormat để làm tròn số
@@ -332,30 +315,4 @@ public class ReportDAO implements IReportDAO {
         }
         return data;
     }
-
-    public static void main(String[] args) {
-        Platform.startup(() -> {
-            try {
-                // Tạo đối tượng DAO
-                ReportDAO dao = new ReportDAO();
-
-                // Gọi phương thức với khoảng ngày cụ thể
-                LocalDate fromDate = LocalDate.of(2023, 1, 1);
-                LocalDate toDate = LocalDate.of(2024, 3, 31);
-                ObservableList<PieChart.Data> result = new ReportDAO().PieChart(fromDate, toDate);
-
-                // In kết quả ra console
-                System.out.println("Kết quả PieChart:");
-                for (PieChart.Data data : result) {
-                    System.out.println("Label: " + data.getName() + ", Value: " + data.getPieValue());
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            // Kết thúc chương trình JavaFX
-            Platform.exit();
-        });
-    }
-
 }

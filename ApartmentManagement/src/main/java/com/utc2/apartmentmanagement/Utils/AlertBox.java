@@ -17,5 +17,12 @@ public class AlertBox {
         alert.setHeaderText(null);
         alert.showAndWait();
     }
+    public static void showAlert(String title,String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
 
 }

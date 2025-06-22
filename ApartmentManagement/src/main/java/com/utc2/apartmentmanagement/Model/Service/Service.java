@@ -16,7 +16,7 @@ public class Service {
     private double price;
     private String unit;
     private boolean isAvailable;
-
+    private String service_filename;
 
 
 //    public boolean register(String apartmentID){

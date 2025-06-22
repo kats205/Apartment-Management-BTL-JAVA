@@ -44,26 +44,114 @@ public class PaymentDAO implements IPaymentDAO {
         return false;
     }
 
-    @Override
-    public boolean addPayment(Payment payment) {
-        String sql = "INSERT INTO Payment(payment_id, bill_id, amount, payment_date, payment_method, transaction_id, status, created_at, updated_at" +
-                " VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ?";
-        try(Connection connection = DatabaseConnection.getConnection();
-        PreparedStatement stmt = connection.prepareStatement(sql)){
-            stmt.setInt(1, payment.getPaymentID());
-            stmt.setInt(2, payment.getBillID());
-            stmt.setDouble(3, payment.getAmount());
-            stmt.setDate(4, payment.getPaymentDate());
-            stmt.setNString(5, payment.getPaymentMedthod());
-            stmt.setString(6, payment.getTransactionID());
-            stmt.setNString(7, payment.getStatus());
-            stmt.setDate(8, Date.valueOf(LocalDate.now()));
-            stmt.setDate(9, Date.valueOf(LocalDate.now()));
-            return stmt.executeUpdate() > 0;
-        }catch (SQLException e){
-            e.printStackTrace();
+//    public boolean addPayment(Payment payment) {
+//        String sql = "INSERT INTO Payment(payment_id, bill_id, amount, payment_date, payment_method, transaction_id, status, created_at, updated_at" +
+//                " VALUES( ? , ? , ? , ? , ? , ? , ? , ? , ?";
+//        try(Connection connection = DatabaseConnection.getConnection();
+//        PreparedStatement stmt = connection.prepareStatement(sql)){
+//            stmt.setInt(1, payment.getPaymentID());
+//            stmt.setInt(2, payment.getBillID());
+//            stmt.setDouble(3, payment.getAmount());
+//            stmt.setDate(4, payment.getPaymentDate());
+//            stmt.setNString(5, payment.getPaymentMedthod());
+//            stmt.setString(6, payment.getTransactionID());
+//            stmt.setNString(7, payment.getStatus());
+//            stmt.setDate(8, Date.valueOf(LocalDate.now()));
+//            stmt.setDate(9, Date.valueOf(LocalDate.now()));
+//            return stmt.executeUpdate() > 0;
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+
+
+    // Phương thức lưu thông tin bill trước
+    public int saveBill(String apartmentId, LocalDate billingDate, double totalAmount, int billedTo) throws SQLException {
+        String sql = "INSERT INTO Bill (apartment_id, billing_date, total_amount, billed_to, status) " +
+                "OUTPUT INSERTED.bill_id " +
+                "VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, apartmentId);
+            stmt.setDate(2, Date.valueOf(billingDate));
+            stmt.setDouble(3, totalAmount);
+            stmt.setInt(4, billedTo);
+            stmt.setString(5, "paid");
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            throw new SQLException("Failed to create bill");
         }
-        return false;
+    }
+
+    // Phương thức lưu thông tin payment
+    @Override
+    public int addPayment(int billId, double amount, String paymentMethod, String transactionId, String status) throws SQLException {
+        String sql = "INSERT INTO Payment (bill_id, amount, payment_date, payment_method, transaction_id, status) " +
+                "OUTPUT INSERTED.payment_id " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, billId);
+            stmt.setDouble(2, amount);
+            stmt.setDate(3, Date.valueOf(LocalDate.now()));
+            stmt.setString(4, paymentMethod);
+            stmt.setString(5, transactionId);
+            stmt.setString(6, status);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            throw new SQLException("Failed to create payment");
+        }
+    }
+
+    // Phương thức lưu thông tin VNPay return
+    public void saveVnpayReturn(int paymentId, Map<String, String> vnpayParams) throws SQLException {
+        String sql = "INSERT INTO VnpayReturn (payment_id, vnp_bank_code, vnp_pay_date, vnp_transaction_no, " +
+                "vnp_TmnCode, vnp_SecureHash, vnp_order_info, vnp_txn_ref, vnp_Amount, vnp_card_type, " +
+                "vnp_transaction_status, vnp_bank_tran_no, vnp_response_code) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, paymentId);
+            stmt.setString(2, vnpayParams.get("vnp_BankCode"));
+            stmt.setString(3, vnpayParams.get("vnp_PayDate"));
+            stmt.setString(4, vnpayParams.get("vnp_TransactionNo"));
+            stmt.setString(5, vnpayParams.get("vnp_TmnCode"));
+            stmt.setString(6, vnpayParams.get("vnp_SecureHash"));
+            stmt.setString(7, vnpayParams.get("vnp_OrderInfo"));
+            stmt.setString(8, vnpayParams.get("vnp_TxnRef"));
+            stmt.setString(9, vnpayParams.get("vnp_Amount"));
+            stmt.setString(10, vnpayParams.get("vnp_CardType"));
+            stmt.setString(11, vnpayParams.get("vnp_TransactionStatus"));
+            stmt.setString(12, vnpayParams.get("vnp_BankTranNo"));
+            stmt.setString(13, vnpayParams.get("vnp_ResponseCode"));
+
+            stmt.executeUpdate();
+        }
+    }
+
+    // Phương thức cập nhật trạng thái payment
+    public void updatePaymentStatus(int paymentId, String status) throws SQLException {
+        String sql = "UPDATE Payment SET status = ?, updated_at = GETDATE() WHERE payment_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, status);
+            stmt.setInt(2, paymentId);
+            stmt.executeUpdate();
+        }
     }
 
     @Override

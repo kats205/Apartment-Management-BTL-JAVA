@@ -11,7 +11,7 @@ import java.util.Map;
 public interface IPaymentDAO {
     List<Payment> getAllPayment();
     boolean deletePaymentByID(int paymentID);
-    boolean addPayment(Payment payment);
+    int addPayment(int billId, double amount, String paymentMethod, String transactionId, String status)throws SQLException;
     boolean updatebillID(int paymentID, int newbBillId);
     boolean updateAmount(int paymentID, double newAmount);
     boolean updatePaymentDate(int paymentID, Date newPaymentDate);

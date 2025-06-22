@@ -18,34 +18,19 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditApartmentViewController implements Initializable {
-    @FXML
-    public TextField buildingID;
-    @FXML
-    private TextField apartmentIdField;
+    @FXML private TextField buildingID;
+    @FXML private TextField apartmentIdField;
+    @FXML private TextField floorField;
+    @FXML private TextField areaField;
+    @FXML private TextField bedroomsField;
+    @FXML private TextField priceField;
+    @FXML private TextField maintenanceFeeField;
 
-    @FXML
-    private TextField floorField;
+    @FXML private Button saveButton;
+    @FXML private Button cancelButton;
 
-    @FXML
-    private TextField areaField;
+    @FXML private ComboBox<String> statusComboBox;
 
-    @FXML
-    private TextField bedroomsField;
-
-    @FXML
-    private TextField priceField;
-
-    @FXML
-    private TextField maintenanceFeeField;
-
-    @FXML
-    private ComboBox<String> statusComboBox;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private Button cancelButton;
     // Thiết lập controller cha
     @Setter
     private ApartmentViewController parentController = new ApartmentViewController();

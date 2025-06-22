@@ -25,7 +25,8 @@ public class ServiceDAO implements IServiceDAO {
                         rs.getString("description"),
                         rs.getDouble("price_service"),
                         rs.getString("unit"),
-                        rs.getBoolean("is_available")));
+                        rs.getBoolean("is_active"),
+                        rs.getString("service_filename")));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -46,7 +47,8 @@ public class ServiceDAO implements IServiceDAO {
                         rs.getString("description"),
                         rs.getDouble("price_service"),
                         rs.getString("unit"),
-                        rs.getBoolean("is_available"));
+                        rs.getBoolean("is_available"),
+                        rs.getString("service_filename"));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -108,6 +110,24 @@ public class ServiceDAO implements IServiceDAO {
     public boolean updateServiceAvailability(int id, boolean isAvailable) {
         return updateServiceField(id, "is_available", isAvailable);
     }
+
+    @Override
+    public int getServiceIdByServiceName(String serviceName) {
+        String sql = "SELECT service_id FROM Service WHERE service_name = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, serviceName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("service_id");
+            }
+        }catch(SQLException e){
+            System.out.println("Đã có lỗi trong quá trình lấy id của service!!");
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public boolean updateServiceField(int id, String field, Object newValue){
         String sql = "UPDATE Service SET " + field + " = ?, updated_at = ? WHERE service_id = ?";
         try(Connection connection = DatabaseConnection.getConnection();

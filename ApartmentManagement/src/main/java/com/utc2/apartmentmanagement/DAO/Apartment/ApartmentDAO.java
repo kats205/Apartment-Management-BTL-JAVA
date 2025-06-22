@@ -309,7 +309,7 @@ public class ApartmentDAO implements IApartmentDAO {
     @Override
     public Map<String, Object> getInformation(int userId) throws SQLException {
         String sql = "SELECT a.apartment_id, a.status, a.floor, a.area, a.bedrooms, a.maintenance_fee,\n" +
-                "\t\tb.address, a.price_apartment, r.move_in_date, r.full_name, r.resident_id\n" +
+                "\t\tb.address, a.price_apartment, r.move_in_date, r.resident_id, r.full_name\n" +
                 "FROM Resident r\n" +
                 "JOIN Apartment a ON r.apartment_id = a.apartment_id\n" +
                 "JOIN Building b ON a.building_id = b.building_id\n" +

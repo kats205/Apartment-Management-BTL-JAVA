@@ -28,7 +28,6 @@ import lombok.Getter;
 import lombok.Setter;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -93,6 +92,9 @@ public class ApartmentViewController implements Initializable {
     @FXML
     private Button exportButton;
 
+    @Setter
+    private DashboardController parentController;
+
     // Getter cho nút đóng để DashboardController có thể truy cập
     @Getter
     @FXML
@@ -115,13 +117,6 @@ public class ApartmentViewController implements Initializable {
         // load data apartment
         loadDataApartment();
 
-        int totalCount;
-        try {
-            totalCount = new ApartmentDAO().countApartment();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        apartmentCountLabel.setText(String.valueOf(totalCount));
     }
 
     private void getValueCol() {
@@ -195,12 +190,14 @@ public class ApartmentViewController implements Initializable {
         ObservableList<Apartment> apartmentListOb = FXCollections.observableArrayList();
         apartmentListOb.addAll(apartmentList);
         apartmentTable.setItems(apartmentListOb);
+        apartmentCountLabel.setText(String.valueOf(apartmentList.size()));
     }
 
     private void loadTableView(Apartment apartment) {
         ObservableList<Apartment> apartmentList = FXCollections.observableArrayList();
         apartmentList.add(apartment);
         apartmentTable.setItems(apartmentList);
+        apartmentCountLabel.setText("1");
     }
 
     private void loadIdCB() {
@@ -220,44 +217,6 @@ public class ApartmentViewController implements Initializable {
         statusComboBox.getItems().addAll(statusList);
         statusComboBox.getSelectionModel().selectFirst(); // Chọn "Chọn trạng thái"
 
-    }
-
-    private void initializeComponents() {
-        // Khởi tạo các ComboBox
-        initializeComboBoxes();
-
-        // Khởi tạo TableView
-        initializeTableView();
-
-    }
-
-    private void initializeComboBoxes() {
-        // TODO: Khởi tạo dữ liệu cho buildingComboBox
-
-        // TODO: Khởi tạo dữ liệu cho statusComboBox
-    }
-
-    private void initializeTableView() {
-        // TODO: Cấu hình TableView và các cột
-    }
-
-    private void setupEventHandlers() {
-        // Xử lý sự kiện tìm kiếm
-        searchButton.setOnAction(event -> searchApartments());
-
-        // Xử lý sự kiện làm mới
-        refreshButton.setOnAction(event -> refreshData());
-
-        // Xử lý sự kiện thêm căn hộ mới
-        addApartmentButton.setOnAction(event -> addNewApartment());
-
-        // Xử lý sự kiện xem chi tiết
-        detailButton.setOnAction(event -> viewApartmentDetails());
-
-        // Xử lý sự kiện xuất báo cáo
-        exportButton.setOnAction(event -> exportReport());
-
-        // Nút đóng mặc định không làm gì - sẽ được xử lý bởi DashboardController
     }
 
     private void loadData() {
@@ -363,7 +322,7 @@ public class ApartmentViewController implements Initializable {
     }
 
     public void handleRefresh(ActionEvent event) {
-// Xóa các lựa chọn trong ComboBox
+        // Xóa các lựa chọn trong ComboBox
         buildingComboBox.getSelectionModel().clearSelection();
         statusComboBox.getSelectionModel().clearSelection();
         buildingComboBox.setValue("Chọn tòa nhà");
@@ -371,9 +330,6 @@ public class ApartmentViewController implements Initializable {
         // Tải lại dữ liệu
         loadData();
     }
-
-    @Setter
-    private DashboardController parentController;
 
     public void handleCloseButton(ActionEvent event) {
         // Xoá apartment view

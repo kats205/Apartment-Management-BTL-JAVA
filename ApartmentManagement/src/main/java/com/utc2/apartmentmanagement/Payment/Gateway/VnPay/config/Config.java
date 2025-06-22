@@ -1,5 +1,5 @@
 
-package com.utc2.apartmentmanagement.Vnpay.config;
+package com.utc2.apartmentmanagement.Payment.Gateway.VnPay.config;
 
 //import jakarta.servlet.http.HttpServletRequest;
 

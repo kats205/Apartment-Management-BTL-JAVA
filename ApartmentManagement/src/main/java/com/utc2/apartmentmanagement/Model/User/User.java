@@ -1,12 +1,11 @@
 package com.utc2.apartmentmanagement.Model.User;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class User {
     private int userID;
     private String userName;

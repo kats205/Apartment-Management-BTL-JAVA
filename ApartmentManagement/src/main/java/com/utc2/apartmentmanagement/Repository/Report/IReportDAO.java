@@ -16,7 +16,6 @@ public interface IReportDAO {
     boolean updateReport(Report report);
     boolean deleteReport(int id);
     List<Report> getReportsByDateRange(LocalDate fromDate, LocalDate toDate);
-    List<Report> getReportsByType(String reportType);
     List<Report> getReportsByUser(int userId);
     Report mapResultSetToReport(ResultSet resultSet) throws SQLException;
     ObservableList<PieChart.Data> PieChart(LocalDate fromDate, LocalDate toDate) throws SQLException;

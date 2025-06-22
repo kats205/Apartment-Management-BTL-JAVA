@@ -56,19 +56,22 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
     }
 
     @Override
-    public boolean addServiceRegistration(ServiceRegistration serviceRegistration) {
-        String sql = "INSERT INTO ServiceRegistration (service_id, apartment_id, start_date, end_date, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public boolean addServiceRegistration(int service_id, String apartment_id,Date start_date,Date end_date,String status,int registered_by, int resident_id) {
+        String sql = "INSERT INTO ServiceRegistration (service_id, resident_id, apartment_id, start_date, end_date, status, created_at, updated_at, registered_by) VALUES ( ? , ? , ?, ?, ?, ?, ? , ? , ?)";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, serviceRegistration.getServiceID());
-            stmt.setInt(2, serviceRegistration.getApartmentID());
-            stmt.setDate(3, new Date(serviceRegistration.getStartDate().getTime()));
-            stmt.setDate(4, new Date(serviceRegistration.getEndDate().getTime()));
-            stmt.setString(5, serviceRegistration.getStatus());
-            stmt.setDate(6, Date.valueOf(LocalDate.now()));
+            stmt.setInt(1, service_id);
+            stmt.setInt(2, resident_id);
+            stmt.setString(3, apartment_id);
+            stmt.setDate(4, start_date);
+            stmt.setDate(5, end_date);
+            stmt.setString(6, status);
             stmt.setDate(7, Date.valueOf(LocalDate.now()));
+            stmt.setDate(8, Date.valueOf(LocalDate.now()));
+            stmt.setInt(9, resident_id);
             return stmt.executeUpdate() > 0;
         }catch (SQLException e){
+            System.out.println("Đã xảy ra lỗi trong quá trình thêm dữ liệu");
             e.printStackTrace();
         }
         return false;
@@ -128,6 +131,26 @@ public class ServiceRegistrationDAO implements IServiceRegistrationDAO {
             throw new SQLException("Error retrieving service registration by apartment ID", e);
         }
         return list;
+    }
+
+    @Override
+    public int getServiceRegistrationCountByApartmentId(String apartmentId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Service s\n" +
+                "JOIN ServiceRegistration sr ON sr.service_id = s.service_id\n" +
+                "WHERE sr.apartment_id = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, apartmentId);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+            else{
+                return 0;
+            }
+        }catch(SQLException e){
+            throw new SQLException("Error retrieving service registration count by apartment ID", e);
+        }
     }
 
     public boolean updateServiceRegistrationField(int id, String field, Object newValue){

@@ -6,15 +6,14 @@ import com.utc2.apartmentmanagement.DAO.Billing.PaymentDAO;
 import com.utc2.apartmentmanagement.DAO.Report.ReportDAO;
 import com.utc2.apartmentmanagement.DAO.User.UserDAO;
 import com.utc2.apartmentmanagement.Model.*;
-import com.utc2.apartmentmanagement.Model.Apartment.Apartment;
 import com.utc2.apartmentmanagement.Model.Billing.Payment;
 import com.utc2.apartmentmanagement.Model.Report.Report;
-import com.utc2.apartmentmanagement.Utils.AlertBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -30,68 +29,40 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.utc2.apartmentmanagement.Utils.AlertBox.showAlert;
+
 public class PaymentViewController implements Initializable {
-    @FXML
-    public AnchorPane paymentView;
-    @FXML
-    private ComboBox<String> apartmentComboBox;
 
-    @FXML
-    private DatePicker fromDatePicker;
+    @FXML private AnchorPane paymentView;
 
-    @FXML
-    private DatePicker toDatePicker;
 
-    @FXML
-    private Button searchButton;
+    @FXML private ComboBox<String> apartmentComboBox;
 
-    @FXML
-    private Button refreshBtn;
+    @FXML private DatePicker fromDatePicker;
+    @FXML private DatePicker toDatePicker;
 
-    @FXML
-    private TableView<Payment> paymentTable;
+    @FXML private Button searchButton;
+    @FXML private Button refreshBtn;
+    @FXML private Button detailButton;
+    @FXML private Button printButton;
+    @FXML private Button exportButton;
 
-    @FXML
-    private TableColumn<Payment, Integer> idColumn;
+    @FXML private TableView<Payment> paymentTable;
+    @FXML private TableColumn<Payment, Integer> idColumn;
+    @FXML private TableColumn<Payment, Integer> invoiceColumn;
+    @FXML private TableColumn<Payment, Date> paymentDateColumn;
+    @FXML private TableColumn<Payment, Double> amountColumn;
+    @FXML private TableColumn<Payment, String> methodColumn;
+    @FXML private TableColumn<Payment, String> statusColumn;
+    @FXML private TableColumn<Payment, Date> createDateColumn;
+    @FXML private TableColumn<Payment, String> transactionIdColumn;
 
-    @FXML
-    private TableColumn<Payment, Integer> invoiceColumn;
+    @FXML private Label noContentLabel;
+    @FXML private Label paymentCountLabel;
 
-    @FXML
-    private TableColumn<Apartment, String> apartmentColumn;
-
-    @FXML
-    private TableColumn<Payment, Date> paymentDateColumn;
-
-    @FXML
-    private TableColumn<Payment, Double> amountColumn;
-
-    @FXML
-    private TableColumn<Payment, String> methodColumn;
-
-    @FXML
-    private TableColumn<Payment, String> statusColumn;
-
-    @FXML
-    private TableColumn<Payment, Date> createDateColumn;
-
-    @FXML
-    private TableColumn<Payment, String> transactionIdColumn;
-
-    @FXML
-    private Label noContentLabel;
-
-    @FXML
-    private Label paymentCountLabel;
-
-    @FXML
-    private Button detailButton;
-
-    @FXML
-    private Button printButton;
-
-    @FXML
-    private Button exportButton;
+    @FXML private Pagination pagination;
+    private static final int ROWS_PER_PAGE = 10;
+    private List<Payment> fullPaymentList; // toàn bộ danh sách
 
     // Getter cho nút đóng để DashboardController có thể truy cập
     @Getter
@@ -130,10 +101,6 @@ public class PaymentViewController implements Initializable {
         invoiceColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
         invoiceColumn.setPrefWidth(140);
 
-//        apartmentColumn.setCellValueFactory(new PropertyValueFactory<>("apartmentID"));
-//        apartmentColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
-//        apartmentColumn.setPrefWidth(140);
-
         paymentDateColumn.setCellValueFactory(new PropertyValueFactory<>("paymentDate"));
         paymentDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
         paymentDateColumn.setPrefWidth(150);
@@ -161,13 +128,29 @@ public class PaymentViewController implements Initializable {
     }
 
 
-    public void loadDataColumn(){
+    public void loadDataColumn() {
         getValueColumn();
-        ObservableList<Payment> payments = FXCollections.observableArrayList();
-        List<Payment> paymentList = new PaymentDAO().getAllPayment();
-        payments.addAll(paymentList);
-        paymentTable.setItems(payments);
+        fullPaymentList = new PaymentDAO().getAllPayment();
+        pagination.setPageCount((int) Math.ceil((double) fullPaymentList.size() / ROWS_PER_PAGE));
+        pagination.setCurrentPageIndex(0);
+        pagination.setPageFactory(this::createPage);
+        paymentCountLabel.setText(String.valueOf(fullPaymentList.size()));
     }
+
+    private Node createPage(int pageIndex) {
+        int fromIndex = pageIndex * ROWS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, fullPaymentList.size());
+        List<Payment> subList = fullPaymentList.subList(fromIndex, toIndex);
+
+        ObservableList<Payment> currentPageData = FXCollections.observableArrayList(subList);
+        paymentTable.setItems(currentPageData);
+
+        // Ẩn/hiện label "Không có dữ liệu"
+        noContentLabel.setVisible(currentPageData.isEmpty());
+
+        return new AnchorPane(); // Bạn có thể trả về paymentTable nếu cần nhưng không bắt buộc
+    }
+
     private void initializeComponents() {
         // Khởi tạo DatePicker
         initializeDatePickers();
@@ -344,21 +327,17 @@ public class PaymentViewController implements Initializable {
         LocalDate fromDate = fromDatePicker.getValue();
         LocalDate toDate = toDatePicker.getValue();
         if (fromDate != null && toDate != null) {
-            List<Payment> paymentList = new PaymentDAO().findPaymentByDate(fromDate, toDate);
-            int sizeList = paymentList.size();
-            if (sizeList == 0) {
-                AlertBox.showAlertForExeptionRegister("Thông báo!", "Không có dữ liệu trong khoảng thời gian này!");
-                paymentCountLabel.setText("1");
-                paymentCountLabel.setText(String.valueOf(paymentList.size()));
-            } else {
-                ObservableList<Payment> payments = FXCollections.observableArrayList();
-                payments.addAll(paymentList);
-                paymentTable.setItems(payments);
-                paymentCountLabel.setText(String.valueOf(paymentList.size()));
-                noContentLabel.setVisible(false);
+            fullPaymentList = new PaymentDAO().findPaymentByDate(fromDate, toDate);
+            if (fullPaymentList.isEmpty()) {
+                showAlert("Thông báo!", "Không có dữ liệu trong khoảng thời gian này!");
             }
+            pagination.setPageCount((int) Math.ceil((double) fullPaymentList.size() / ROWS_PER_PAGE));
+            pagination.setCurrentPageIndex(0);
+            pagination.setPageFactory(this::createPage);
+            paymentCountLabel.setText(String.valueOf(fullPaymentList.size()));
         }
     }
+
 
     public void handlesearByApartmentIdButton(ActionEvent actionEvent) throws SQLException {
         String apartmentID = apartmentComboBox.getValue();

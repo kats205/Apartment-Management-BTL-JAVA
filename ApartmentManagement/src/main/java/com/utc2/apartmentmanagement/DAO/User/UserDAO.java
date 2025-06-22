@@ -3,7 +3,6 @@ package com.utc2.apartmentmanagement.DAO.User;
 import com.utc2.apartmentmanagement.DAO.DatabaseConnection;
 import com.utc2.apartmentmanagement.Model.User.User;
 import com.utc2.apartmentmanagement.Repository.User.IUserDAO;
-import com.utc2.apartmentmanagement.Utils.AlertBox;
 import com.utc2.apartmentmanagement.Utils.passwordEncryption;
 
 import java.sql.*;
@@ -12,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.utc2.apartmentmanagement.Utils.AlertBox.showAlert;
 
 
 public class UserDAO implements IUserDAO {
@@ -27,7 +28,7 @@ public class UserDAO implements IUserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            AlertBox.showAlertForExeptionRegister("Cảnh báo!", "Lỗi kết nối database!");
+            showAlert("Cảnh báo!", "Lỗi kết nối database!");
         }
 
         return resultList;
@@ -57,7 +58,7 @@ public class UserDAO implements IUserDAO {
             stmt.setInt(1,userID);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                return new User(rs.getInt("user_id"), rs.getString( "username"),rs.getString( "password"), rs.getNString( "full_name"),
+                return new User(rs.getInt("user_id"), rs.getString( "username"),rs.getString( "password"), rs.getString( "full_name"),
                         rs.getString( "email"), rs.getString( "phone_number"), rs.getInt( "role_id"), rs.getBoolean( "active"));
             }
         }catch(SQLException e){
@@ -174,11 +175,11 @@ public class UserDAO implements IUserDAO {
                 row.put("ID", rs.getInt("staff_id"));
                 row.put("Tendangnhap", rs.getString("username"));
                 row.put("Vaitro", rs.getString("role_name"));
-                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Hoten", rs.getString("full_name"));
                 row.put("Email", rs.getString("email"));
                 row.put("Sodienthoai", rs.getString("phone_number"));
                 row.put("Phongban", rs.getString("department"));
-                row.put("Chucvu", rs.getNString("position"));
+                row.put("Chucvu", rs.getString("position"));
                 row.put("Trangthai", rs.getBoolean("active"));
                 result.add(row);
             }
@@ -307,12 +308,20 @@ public class UserDAO implements IUserDAO {
         return false;
     }
 
-
-//    public boolean logout(){
-//
-//    }
-
-    public static void main(String[] args) {
-        System.out.println(new UserDAO().login("baokhanh123", "123Baokhanh"));
+    @Override
+    public int getUserIdBvEmail(String email) {
+        String sql = "SELECT user_id FROM [User] WHERE email = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch(SQLException e){
+            System.out.println("Đã xảy ra lỗi khi lấy user id");
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

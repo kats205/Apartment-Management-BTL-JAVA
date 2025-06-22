@@ -19,7 +19,7 @@ public class StaffDAO implements IStaffDAO {
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 staffList.add(new Staff(rs.getInt("staff_id"), rs.getNString("department"), rs.getString("position"),
-                        rs.getDate("hire_date"), rs.getInt("manager_id")));
+                        rs.getDate("hire_date"), rs.getInt("manager_id"), rs.getString("degree"), rs.getString("certificate")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,8 +29,8 @@ public class StaffDAO implements IStaffDAO {
 
     @Override
     public boolean addStaff(Staff staff) {
-        String sql = "INSERT INTO Staff( staff_id, department, position, hire_date, manager_id," +
-                "VALUES ( ? , ? , ? , ? , ?";
+        String sql = "INSERT INTO Staff( staff_id, department, position, hire_date, manager_id)" +
+                "VALUES ( ? , ? , ? , ? , ?)";
         try{
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -102,11 +102,11 @@ public class StaffDAO implements IStaffDAO {
                 row.put("ID", rs.getInt("staff_id"));
                 row.put("Tendangnhap", rs.getString("username"));
                 row.put("Vaitro", rs.getString("role_name"));
-                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Hoten", rs.getString("full_name"));
                 row.put("Email", rs.getString("email"));
                 row.put("Sodienthoai", rs.getString("phone_number"));
                 row.put("Phongban", rs.getString("department"));
-                row.put("Chucvu", rs.getNString("position"));
+                row.put("Chucvu", rs.getString("position"));
                 row.put("Trangthai", rs.getBoolean("active"));
                 list.add(row);
             }
@@ -124,7 +124,7 @@ public class StaffDAO implements IStaffDAO {
         PreparedStatement stmt = connection.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                positionList.add(rs.getNString("position"));
+                positionList.add(rs.getString("position"));
             }
         }catch (SQLException e){
             throw new SQLException("Error retrieving position list: " + e.getMessage(), e);
@@ -149,11 +149,11 @@ public class StaffDAO implements IStaffDAO {
                 row.put("ID", rs.getInt("staff_id"));
                 row.put("Tendangnhap", rs.getString("username"));
                 row.put("Vaitro", rs.getString("role_name"));
-                row.put("Hoten", rs.getNString("full_name"));
+                row.put("Hoten", rs.getString("full_name"));
                 row.put("Email", rs.getString("email"));
                 row.put("Sodienthoai", rs.getString("phone_number"));
                 row.put("Phongban", rs.getString("department"));
-                row.put("Chucvu", rs.getNString("position"));
+                row.put("Chucvu", rs.getString("position"));
                 row.put("Trangthai", rs.getBoolean("active"));
                 list.add(row);
             }
@@ -194,13 +194,48 @@ public class StaffDAO implements IStaffDAO {
             stmt.setInt(1, userId);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
-                return new Staff(rs.getInt("staff_id"), rs.getString("department"), rs.getNString("position"),
-                        rs.getDate("hire_date"), rs.getInt("manager_id"));
+                return new Staff(rs.getInt("staff_id"), rs.getString("department"), rs.getString("position"),
+                        rs.getDate("hire_date"), rs.getInt("manager_id"), rs.getString("degree"), rs.getString("certificate"));
             }
         } catch (SQLException e) {
            throw new SQLException("Error retrieving staff by user ID: " + e.getMessage(), e);
         }
         return null;
+    }
+
+    @Override
+    public String getDepartmentStaffByUserName(String userName) throws SQLException {
+        String sql = "SELECT department FROM staff s JOIN [User] u ON u.user_id = s.staff_id WHERE u.username = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, userName);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getString("department");
+            }
+        }catch(SQLException e){
+            throw new SQLException("Error retrieving staff by user name: " + e.getMessage(), e);
+        }
+        return "";
+    }
+
+    @Override
+    public List<Map<String, String>> getAllDepartmentsAndPositions() throws SQLException {
+        String sql = "SELECT department, position FROM Staff";
+        List<Map<String, String>> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, String> row = new HashMap<>();
+                row.put("department", rs.getString("department"));
+                row.put("position", rs.getString("position"));
+                list.add(row);
+            }
+        }catch (SQLException e){
+            throw new SQLException("Error retrieving all departments and positions: " + e.getMessage(), e);
+        }
+        return list;
     }
 
 

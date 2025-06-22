@@ -24,4 +24,5 @@ public interface IUserDAO {
     String getAvatarPathByUserId(String userName) throws SQLException;
     String getPasswordByUserId(int userId);
     boolean updatePassword(int userId, String newPassword);
+    int getUserIdBvEmail(String email);
 }

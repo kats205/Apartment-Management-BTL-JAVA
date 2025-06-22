@@ -17,5 +17,6 @@ public class Staff extends User{
     private String position; // vị trí làm việc
     private Date hireDate; // ngày nhân viên được tuyển dụng
     private int managerID; // người quản lý trực tiếp nhân viên
-
+    private String degree;
+    private String certificate;
 }
