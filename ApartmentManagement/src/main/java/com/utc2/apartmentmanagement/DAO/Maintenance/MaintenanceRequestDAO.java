@@ -301,4 +301,52 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
         return stmt;
     }
 
+    public int getFilteredMaintenanceCount(int residentID, String status, String priority) {
+        int total = 0;
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = createPreparedStatementForCount(connection, residentID, status, priority)) {
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return total;
+    }
+
+    private PreparedStatement createPreparedStatementForCount(Connection connection, int residentID, String status, String priortity) throws SQLException {
+        if (status == null) status = "All Status";
+        if (priortity == null) priortity = "All Priority";
+
+        PreparedStatement stmt;
+
+        if (status.equals("All Status") && priortity.equals("All Priority")) {
+            String sql = "SELECT COUNT(*) AS total FROM MaintenanceRequest WHERE resident_id = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, residentID);
+        } else if (status.equals("All Status")) {
+            String sql = "SELECT COUNT(*) AS total FROM MaintenanceRequest WHERE resident_id = ? AND priority = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, residentID);
+            stmt.setString(2, priortity);
+        } else if (priortity.equals("All Priority")) {
+            String sql = "SELECT COUNT(*) AS total FROM MaintenanceRequest WHERE resident_id = ? AND status = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, residentID);
+            stmt.setString(2, status);
+        } else {
+            String sql = "SELECT COUNT(*) AS total FROM MaintenanceRequest WHERE resident_id = ? AND status = ? AND priority = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, residentID);
+            stmt.setString(2, status);
+            stmt.setString(3, priortity);
+        }
+
+        return stmt;
+    }
 }

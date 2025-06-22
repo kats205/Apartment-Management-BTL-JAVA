@@ -36,9 +36,6 @@ public class ComplaintsController implements Initializable {
     @FXML private DatePicker requestDatePicker;
     @FXML private TextArea descriptionArea;
 
-    // TODO: Còn thiếu link ảnh
-
-
 
     @SneakyThrows
     @Override
@@ -88,6 +85,9 @@ public class ComplaintsController implements Initializable {
         ComplaintRequestDAO requestDAO = new ComplaintRequestDAO();
         requestDAO.saveComplaintRequest(apartmentID, residentID, complaintType, requestDate, description, priority);
 
+        showAlert("Success", "Complaint submitted successfully!",
+                "Your complaint has been recorded and will be processed according to its priority level.",
+                Alert.AlertType.INFORMATION);
     }
 
     private String extractPriority(String priorityText) {
@@ -149,5 +149,12 @@ public class ComplaintsController implements Initializable {
         parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
 
+    private void showAlert(String title, String header, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
 }

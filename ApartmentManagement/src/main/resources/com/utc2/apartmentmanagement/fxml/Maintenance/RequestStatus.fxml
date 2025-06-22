@@ -156,16 +156,16 @@
                                                 </Button>
                                              </children>
                                           </HBox>
-                                          <TableView fx:id="myServiceComplaintsTable" prefHeight="467.0" prefWidth="1060.0" styleClass="data-table">
+                                          <TableView fx:id="serviceComplaintsTable" prefHeight="467.0" prefWidth="1060.0" styleClass="data-table">
                                              <columns>
-                                                <TableColumn fx:id="myServiceComplaintIdColumn" prefWidth="120.0" text="Complaint ID" />
-                                                <TableColumn fx:id="myServiceNameColumn" prefWidth="120.0" text="Service Name" />
-                                                <TableColumn fx:id="myServiceComplaintDescColumn" prefWidth="230.0" text="Description" />
-                                                <TableColumn fx:id="myServiceStatusColumn" prefWidth="100.0" text="Status" />
-                                                <TableColumn fx:id="myServiceSeverityColumn" prefWidth="100.0" text="Severity" />
-                                                <TableColumn fx:id="myServiceSubmitDateColumn" prefWidth="120.0" text="Submit Date" />
+                                                <TableColumn fx:id="serviceComplaintIdColumn" prefWidth="120.0" text="Complaint ID" />
+                                                <TableColumn fx:id="typeComplaintColumn" prefWidth="120.0" text="Service Name" />
+                                                <TableColumn fx:id="serviceComplaintDescColumn" prefWidth="230.0" text="Description" />
+                                                <TableColumn fx:id="serviceStatusColumn" prefWidth="100.0" text="Status" />
+                                                <TableColumn fx:id="serviceSeverityColumn" prefWidth="100.0" text="Severity" />
+                                                <TableColumn fx:id="serviceSubmitDateColumn" prefWidth="120.0" text="Submit Date" />
                                                 <TableColumn fx:id="myServiceResolutionDateColumn" prefWidth="120.0" text="Resolution Date" />
-                                                <TableColumn fx:id="myServiceAssignedStaffColumn" prefWidth="120.0" text="Assigned Staff" />
+                                                <TableColumn fx:id="serviceAssignedStaffColumn" prefWidth="120.0" text="Assigned Staff" />
                                              </columns>
                                              <VBox.margin>
                                                 <Insets left="20.0" right="20.0" />

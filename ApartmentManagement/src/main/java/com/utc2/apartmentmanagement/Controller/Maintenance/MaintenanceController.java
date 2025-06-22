@@ -273,7 +273,6 @@ public class MaintenanceController {
         if (priorityText.startsWith("Urgent")) return "urgent";
         return "medium"; // default
     }
-
     private void showAlert(String title, String header, String content, AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -281,6 +280,7 @@ public class MaintenanceController {
         alert.setContentText(content);
         alert.showAndWait();
     }
+
 
     private void clearForm() {
         issueTypeComboBox.setValue(null);
