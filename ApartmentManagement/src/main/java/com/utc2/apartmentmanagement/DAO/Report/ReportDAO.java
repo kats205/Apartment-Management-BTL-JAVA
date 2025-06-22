@@ -163,26 +163,7 @@ public class ReportDAO implements IReportDAO {
         return reports;
     }
 
-    @Override
-    public List<Report> getReportsByType(String reportType) {
-        List<Report> reports = new ArrayList<>();
-        String query = "SELECT * FROM reports WHERE report_type = ? ORDER BY generation_date DESC";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, reportType);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    Report report = mapResultSetToReport(resultSet);
-                    reports.add(report);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return reports;
-    }
 
     @Override
     public List<Report> getReportsByUser(int userId) {

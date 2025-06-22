@@ -80,7 +80,7 @@
                     <Label style="-fx-font-weight: bold; -fx-text-fill: #333333;" text="Describe:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <TextArea fx:id="serviceDescriptionArea" editable="false" prefRowCount="3" promptText="Mô tả dịch vụ" style="-fx-background-color: #f5f5f5; -fx-border-color: #e0e0e0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                    <Label style="-fx-font-weight: bold; -fx-text-fill: #333333;" text="Duration:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <Label fx:id="labelDuration" style="-fx-font-weight: bold; -fx-text-fill: #333333;" text="Duration:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 
                     <Label style="-fx-font-weight: bold; -fx-text-fill: #333333;" text="Unit price:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                     <TextField fx:id="servicePriceField" editable="false" promptText="0 VNĐ" style="-fx-background-color: #f5f5f5; -fx-border-color: #e0e0e0;" GridPane.columnIndex="1" GridPane.rowIndex="4" />

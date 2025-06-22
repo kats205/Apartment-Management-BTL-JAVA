@@ -10,20 +10,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class HRViewController implements Initializable {
     @FXML public AnchorPane hrView;
@@ -58,6 +60,9 @@ public class HRViewController implements Initializable {
     @FXML public TextField textFullName;
     @Setter
     private DashboardController parentController;
+
+    private static Stage addStaffStage;
+
     @FXML
     public void handleCloseButton(ActionEvent event) {
         // Xoá apartment view
@@ -82,6 +87,13 @@ public class HRViewController implements Initializable {
         // tìm kiếm onchange
         handleBtnSearchOnChanged();
 
+        btnAdd.setOnAction(event -> {
+            try{
+                loadFormAddStaff();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void loadComboboxPosition() throws SQLException {
@@ -91,14 +103,32 @@ public class HRViewController implements Initializable {
 
     private void setValueCol(){
         colUserId.setCellValueFactory(data -> new SimpleObjectProperty<>((Integer) data.getValue().get("ID")));
+        colUserId.setStyle("-fx-alignment: CENTER;");
+
         colUsername.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Tendangnhap")));
+        colUsername.setStyle("-fx-alignment: CENTER;");
+
         colRole.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Vaitro")));
+        colRole.setStyle("-fx-alignment: CENTER;");
+
         colFullName.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Hoten")));
+        colFullName.setStyle("-fx-alignment: CENTER;");
+
         colEmail.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Email")));
+        colEmail.setStyle("-fx-alignment: CENTER;");
+
         colPhone.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Sodienthoai")));
+        colPhone.setStyle("-fx-alignment: CENTER;");
+
         colDepartment.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Phongban")));
+        colDepartment.setStyle("-fx-alignment: CENTER;");
+
         colPosition.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Chucvu")));
+        colPosition.setStyle("-fx-alignment: CENTER;");
+
         colActive.setCellValueFactory(data -> new SimpleObjectProperty<>((Boolean) data.getValue().get("Trangthai") ? 1 : 0));
+        colActive.setStyle("-fx-alignment: CENTER;");
+
     }
 
     private void loadDataStaff(){
@@ -212,5 +242,22 @@ public class HRViewController implements Initializable {
         tfFullName.setText("");
         tfEmail.setText("");
         tfPhone.setText("");
+    }
+
+
+    public void loadFormAddStaff() throws IOException {
+        if (addStaffStage == null || !addStaffStage.isShowing()) {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/utc2/apartmentmanagement/fxml/FormAddStaff.fxml")));
+            addStaffStage = new Stage();
+            addStaffStage.setTitle("Apartment Application");
+            addStaffStage.setScene(new Scene(root, 1200, 800));
+            addStaffStage.show();
+
+            // Khi cửa sổ bị đóng, reset lại biến
+            addStaffStage.setOnHidden(e -> addStaffStage = null);
+        } else {
+            // Nếu cửa sổ đã mở, đưa nó lên trước (optional)
+            addStaffStage.toFront();
+        }
     }
 }

@@ -46,42 +46,8 @@ public class StaffDashboardController implements Initializable {
     public TableColumn<MaintenanceRequest, String> statusColumn;
     public TableColumn<MaintenanceRequest, String> descriptionColumn;
     public TableColumn<MaintenanceRequest, String> priorityColumn;
-    double x =0, y = 0;
-    public void loadMyProfile(ActionEvent actionEvent) throws SQLException {
-        try {
-            URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/MyProfileView.fxml");
-            FXMLLoader loader = new FXMLLoader(url);
-            Parent root = loader.load();
+    public AnchorPane contentArea;
 
-            // Gán controller
-            MyProfileController controller = loader.getController();
-            controller.setParentStaffDashBoard(this);
-            controller.setDashboardStage((Stage) rootPane.getScene().getWindow()); // Stage của dashboard!
-
-            Stage stage = new Stage();
-            stage.initStyle(StageStyle.UNDECORATED);
-
-            // Kéo cửa sổ
-            root.setOnMousePressed(event -> {
-                x = event.getSceneX();
-                y = event.getSceneY();
-            });
-
-            root.setOnMouseDragged(event -> {
-                stage.setX(event.getScreenX() - x);
-                stage.setY(event.getScreenY() - y);
-            });
-            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), root);
-            fadeIn.setFromValue(0);
-            fadeIn.setToValue(1);
-            fadeIn.play();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,8 +61,19 @@ public class StaffDashboardController implements Initializable {
         // khởi tạo bảng pending Approvals
         List<MaintenanceRequest> pendingApprovals = new MaintenanceRequestDAO().getAllMaintenanceRequest();
         InitTableView(pendingApprovals);
+        setActionButton();
     }
-    
+
+    public void setActionButton(){
+        approvalButton.setOnAction(event -> {
+            try{
+                loadApprovalView();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     public void roleDefination() throws SQLException {
         String userName = Session.getUserName();
         String positionStaff = new StaffDAO().getDepartmentStaffByUserName(userName);
@@ -142,5 +119,71 @@ public class StaffDashboardController implements Initializable {
         InitColumn();
         requestsList.addAll(pendingApprovals);
         pendingApprovalsTable.getItems().addAll(requestsList);
+    }
+
+    public void loadApprovalView() throws IOException {
+        System.out.println("Đang cố gắng tải StaffApproval.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Staff/StaffApproval.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        if (url == null) {
+            System.out.println("Không tìm thấy file StaffApproval.fxml");
+            return;
+        }
+
+        Parent StaffApproval = loader.load();
+//        HRViewController controller = loader.getController();
+//        controller.setParentController(this);  // Gán parent
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(StaffApproval, 0.0);
+        AnchorPane.setRightAnchor(StaffApproval, 0.0);
+        AnchorPane.setBottomAnchor(StaffApproval, 0.0);
+        AnchorPane.setLeftAnchor(StaffApproval, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm HRView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(StaffApproval);
+        System.out.println("Đã thêm StaffApproval vào contentArea");
+    }
+
+    double x =0, y = 0;
+    public void loadMyProfile(ActionEvent actionEvent) throws SQLException {
+        try {
+            URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/MyProfileView.fxml");
+            FXMLLoader loader = new FXMLLoader(url);
+            Parent root = loader.load();
+
+            // Gán controller
+            MyProfileController controller = loader.getController();
+            controller.setParentStaffDashBoard(this);
+            controller.setDashboardStage((Stage) rootPane.getScene().getWindow()); // Stage của dashboard!
+
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+
+            // Kéo cửa sổ
+            root.setOnMousePressed(event -> {
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+
+            root.setOnMouseDragged(event -> {
+                stage.setX(event.getScreenX() - x);
+                stage.setY(event.getScreenY() - y);
+            });
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), root);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.play();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

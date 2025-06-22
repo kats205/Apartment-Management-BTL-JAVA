@@ -14,4 +14,5 @@ public interface IServiceDAO {
     boolean updateServicePrice(int id, double newPrice);
     boolean updateServiceUnit(int id, String newUnit);
     boolean updateServiceAvailability(int id, boolean isAvailable);
+    int getServiceIdByServiceName(String serviceName);
 }

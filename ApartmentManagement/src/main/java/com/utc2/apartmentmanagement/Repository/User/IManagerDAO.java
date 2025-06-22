@@ -13,4 +13,6 @@ public interface IManagerDAO {
     boolean updateOffice(int managerID, String newOffice);
     boolean updateStartDate(int managerID, Date newStartDate);
     Map<String, Object> getManagerByUserId(int userId);
+    List<Map<String, String>> getAllOfficeAndFullNameManager();
+    int getManagerIdByFullNameAndOffice(String fullName, String office);
 }

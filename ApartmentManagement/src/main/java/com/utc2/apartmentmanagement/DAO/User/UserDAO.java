@@ -307,4 +307,21 @@ public class UserDAO implements IUserDAO {
         }
         return false;
     }
+
+    @Override
+    public int getUserIdBvEmail(String email) {
+        String sql = "SELECT user_id FROM [User] WHERE email = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch(SQLException e){
+            System.out.println("Đã xảy ra lỗi khi lấy user id");
+            e.printStackTrace();
+        }
+        return -1;
+    }
 }

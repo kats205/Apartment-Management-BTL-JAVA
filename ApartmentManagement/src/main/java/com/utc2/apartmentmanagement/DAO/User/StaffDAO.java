@@ -19,7 +19,7 @@ public class StaffDAO implements IStaffDAO {
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 staffList.add(new Staff(rs.getInt("staff_id"), rs.getNString("department"), rs.getString("position"),
-                        rs.getDate("hire_date"), rs.getInt("manager_id")));
+                        rs.getDate("hire_date"), rs.getInt("manager_id"), rs.getString("degree"), rs.getString("certificate")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,8 +29,8 @@ public class StaffDAO implements IStaffDAO {
 
     @Override
     public boolean addStaff(Staff staff) {
-        String sql = "INSERT INTO Staff( staff_id, department, position, hire_date, manager_id," +
-                "VALUES ( ? , ? , ? , ? , ?";
+        String sql = "INSERT INTO Staff( staff_id, department, position, hire_date, manager_id)" +
+                "VALUES ( ? , ? , ? , ? , ?)";
         try{
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -195,7 +195,7 @@ public class StaffDAO implements IStaffDAO {
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 return new Staff(rs.getInt("staff_id"), rs.getString("department"), rs.getString("position"),
-                        rs.getDate("hire_date"), rs.getInt("manager_id"));
+                        rs.getDate("hire_date"), rs.getInt("manager_id"), rs.getString("degree"), rs.getString("certificate"));
             }
         } catch (SQLException e) {
            throw new SQLException("Error retrieving staff by user ID: " + e.getMessage(), e);
@@ -217,6 +217,25 @@ public class StaffDAO implements IStaffDAO {
             throw new SQLException("Error retrieving staff by user name: " + e.getMessage(), e);
         }
         return "";
+    }
+
+    @Override
+    public List<Map<String, String>> getAllDepartmentsAndPositions() throws SQLException {
+        String sql = "SELECT department, position FROM Staff";
+        List<Map<String, String>> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, String> row = new HashMap<>();
+                row.put("department", rs.getString("department"));
+                row.put("position", rs.getString("position"));
+                list.add(row);
+            }
+        }catch (SQLException e){
+            throw new SQLException("Error retrieving all departments and positions: " + e.getMessage(), e);
+        }
+        return list;
     }
 
 

@@ -309,7 +309,7 @@ public class ApartmentDAO implements IApartmentDAO {
     @Override
     public Map<String, Object> getInformation(int userId) throws SQLException {
         String sql = "SELECT a.apartment_id, a.status, a.floor, a.area, a.bedrooms, a.maintenance_fee,\n" +
-                "\t\tb.address, a.price_apartment, r.move_in_date, r.full_name\n" +
+                "\t\tb.address, a.price_apartment, r.move_in_date, r.resident_id, r.full_name\n" +
                 "FROM Resident r\n" +
                 "JOIN Apartment a ON r.apartment_id = a.apartment_id\n" +
                 "JOIN Building b ON a.building_id = b.building_id\n" +
@@ -326,10 +326,11 @@ public class ApartmentDAO implements IApartmentDAO {
                 map.put("area", rs.getDouble("area"));
                 map.put("bedrooms", rs.getInt("bedrooms"));
                 map.put("maintenance_fee", rs.getDouble("maintenance_fee"));
-                map.put("address", rs.getNString("address"));
+                map.put("address", rs.getString("address"));
                 map.put("price_apartment", rs.getDouble("price_apartment"));
                 map.put("move_in_date", rs.getDate("move_in_date"));
-                map.put("full_name", rs.getNString("full_name"));
+                map.put("full_name", rs.getString("full_name"));
+                map.put("resident_id", rs.getInt("resident_id"));
             }
         }catch (SQLException e){
             throw new SQLException("Lỗi khi lấy thông tin căn hộ", e);

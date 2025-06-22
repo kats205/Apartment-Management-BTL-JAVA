@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/StaffCSS/StaffApproval.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Staff.StaffApprovalController">
+    <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <top>
+         <AnchorPane prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+               <Label layoutX="383.0" layoutY="20.0" styleClass="main-title" text="Staff Approval Dashboard">
+                  <font>
+                     <Font size="28.0" />
+                  </font>
+               </Label>
+               <Label layoutX="345.0" layoutY="60.0" styleClass="subtitle" text="Manage and approve maintenance requests and service complaints" />
+            </children>
+         </AnchorPane>
+      </top>
+      <center>
+         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+            <children>
+               <TabPane fx:id="mainTabPane" layoutX="9.0" layoutY="3.0" prefHeight="540.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <tabs>
+                     <Tab text="Maintenance Requests">
+                        <content>
+                           <VBox spacing="15" styleClass="tab-content">
+                              <padding>
+                                 <Insets bottom="20" left="20" right="20" top="20" />
+                              </padding>
+                              <children>
+                                 <HBox alignment="CENTER_LEFT" prefHeight="5.0" prefWidth="1060.0" spacing="10">
+                                    <children>
+                                       <Label prefHeight="23.0" prefWidth="193.0" styleClass="tab-title" text="Maintenance Requests">
+                                          <font>
+                                             <Font name="System Bold" size="21.0" />
+                                          </font>
+                                       </Label>
+                                       <Label fx:id="maintenanceCountLabel" styleClass="tab-subtitle" text="(5 total requests)" />
+                                    </children>
+                                 </HBox>
+                                 <HBox alignment="CENTER_LEFT" spacing="15">
+                                    <children>
+                                       <HBox alignment="CENTER_LEFT" spacing="5">
+                                          <children>
+                                             <Label text="Status:" />
+                                             <ComboBox fx:id="maintenanceStatusFilter" prefHeight="30.0" prefWidth="150" value="All Status">
+                                                <items>
+                                                   <FXCollections fx:factory="observableArrayList">
+                                                      <String fx:value="All Status" />
+                                                      <String fx:value="pending" />
+                                                      <String fx:value="assigned" />
+                                                      <String fx:value="in_progress" />
+                                                      <String fx:value="completed" />
+                                                      <String fx:value="cancelled" />
+                                                   </FXCollections>
+                                                </items>
+                                             </ComboBox>
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0" spacing="5">
+                                          <children>
+                                             <Label text="Priority:" />
+                                             <ComboBox fx:id="maintenancePriorityFilter" prefHeight="30.0" prefWidth="150" value="All Priority">
+                                                <items>
+                                                   <FXCollections fx:factory="observableArrayList">
+                                                      <String fx:value="All Priority" />
+                                                      <String fx:value="low" />
+                                                      <String fx:value="medium" />
+                                                      <String fx:value="high" />
+                                                      <String fx:value="urgent" />
+                                                   </FXCollections>
+                                                </items>
+                                             </ComboBox>
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER_LEFT" spacing="5" />
+                                       <Button fx:id="selectAllMaintenanceBtn" prefHeight="30.0" prefWidth="100.0" styleClass="select-all-btn" text="Select All">
+                                          <HBox.margin>
+                                             <Insets left="-20.0" />
+                                          </HBox.margin>
+                                       </Button>
+                                       <Button fx:id="deleteMaintenanceBtn" prefHeight="30.0" prefWidth="80.0" styleClass="delete-btn" text="Delete" />
+                                       <Region HBox.hgrow="ALWAYS" />
+                                       <Button fx:id="refreshMaintenanceBtn" prefHeight="30.0" prefWidth="80.0" styleClass="refresh-btn" text="Refresh" />
+                                       <Button fx:id="approveAllMaintenanceBtn" prefHeight="34.0" prefWidth="100.0" styleClass="delete-btn" text="Approve" />
+                                    </children>
+                                 </HBox>
+                                 <TableView fx:id="maintenanceTable" prefHeight="360.0" prefWidth="1058.0" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                       <TableColumn fx:id="requestIdCol" prefWidth="120.0" text="Request ID" />
+                                       <TableColumn fx:id="issueTypeCol" prefWidth="120" text="Issue Type" />
+                                       <TableColumn fx:id="maintenanceDescCol" prefWidth="250" text="Description" />
+                                       <TableColumn fx:id="maintenanceStatusCol" prefWidth="100" text="Status" />
+                                       <TableColumn fx:id="priorityCol" prefWidth="100.0" text="Priority" />
+                                       <TableColumn fx:id="requestDateCol" prefWidth="120" text="Request Date" />
+                                       <TableColumn fx:id="assignedStaffCol" prefWidth="150" text="Assigned Staff" />
+                                       <TableColumn fx:id="completionDateCol" prefWidth="120" text="Completion Date" />
+                                    </columns>
+                                    <placeholder>
+                                       <Label text="No maintenance requests found" />
+                                    </placeholder>
+                                 </TableView>
+                              </children>
+                           </VBox>
+                        </content>
+                     </Tab>
+                     <Tab text="Complaint Requests">
+                        <content>
+                           <VBox spacing="15" styleClass="tab-content">
+                              <padding>
+                                 <Insets bottom="20" left="20" right="20" top="20" />
+                              </padding>
+                              <children>
+                                 <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                       <Label styleClass="tab-title" text="Complaint Requests" />
+                                       <Label fx:id="complaintsCountLabel" styleClass="tab-subtitle" text="(3 total complaints)" />
+                                    </children>
+                                 </HBox>
+                                 <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="1060.0" spacing="15">
+                                    <children>
+                                       <HBox alignment="CENTER_LEFT" spacing="5">
+                                          <children>
+                                             <Label prefHeight="15.0" prefWidth="40.0" text="Status:" />
+                                             <ComboBox fx:id="complaintsStatusFilter" prefHeight="30.0" prefWidth="150" value="All Status">
+                                                <items>
+                                                   <FXCollections fx:factory="observableArrayList">
+                                                      <String fx:value="All Status" />
+                                                      <String fx:value="pending" />
+                                                      <String fx:value="processing" />
+                                                      <String fx:value="resolved" />
+                                                      <String fx:value="cancelled" />
+                                                   </FXCollections>
+                                                </items>
+                                             </ComboBox>
+                                          </children>
+                                       </HBox>
+                                       <HBox alignment="CENTER_LEFT" spacing="5">
+                                          <children>
+                                             <Label prefHeight="15.0" prefWidth="42.0" text="Priority:" />
+                                             <ComboBox fx:id="complaintsPriorityFilter" prefHeight="30.0" prefWidth="150" value="All Priority">
+                                                <items>
+                                                   <FXCollections fx:factory="observableArrayList">
+                                                      <String fx:value="All Priority" />
+                                                      <String fx:value="low" />
+                                                      <String fx:value="medium" />
+                                                      <String fx:value="high" />
+                                                      <String fx:value="urgent" />
+                                                   </FXCollections>
+                                                </items>
+                                             </ComboBox>
+                                          </children>
+                                       </HBox>
+                                       <Button fx:id="selectAllComplaintsBtn" prefHeight="30.0" prefWidth="100.0" styleClass="select-all-btn" text="Select All" />
+                                       <Button fx:id="deleteComplaintsBtn" prefHeight="30.0" prefWidth="80.0" styleClass="delete-btn" text="Delete" />
+                                       <Region prefHeight="30.0" prefWidth="168.0" HBox.hgrow="ALWAYS" />
+                                       <Button fx:id="refreshComplaintsBtn" prefHeight="30.0" prefWidth="80.0" styleClass="refresh-btn" text="Refresh" />
+                                       <Button fx:id="ApproveComplaintsBtn" prefHeight="30.0" prefWidth="100.0" styleClass="delete-btn" text="Approve" />
+                                    </children>
+                                 </HBox>
+                                 <TableView fx:id="complaintsTable" prefHeight="360.0" prefWidth="1060.0" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                       <TableColumn fx:id="complaintIdCol" prefWidth="120.0" text="Complaint ID" />
+                                       <TableColumn fx:id="serviceNameCol" prefWidth="150" text="Service Name" />
+                                       <TableColumn fx:id="complaintsDescCol" prefWidth="250" text="Description" />
+                                       <TableColumn fx:id="complaintsStatusCol" prefWidth="100" text="Status" />
+                                       <TableColumn fx:id="severityCol" prefWidth="100.0" text="Priority" />
+                                       <TableColumn fx:id="submitDateCol" prefWidth="120" text="Submit Date" />
+                                       <TableColumn fx:id="resolutionDateCol" prefWidth="120" text="Resolution Date" />
+                                       <TableColumn fx:id="complaintsAssignedStaffCol" prefWidth="150" text="Assigned Staff" />
+                                    </columns>
+                                    <placeholder>
+                                       <Label text="No complaints found" />
+                                    </placeholder>
+                                 </TableView>
+                              </children>
+                           </VBox>
+                        </content>
+                     </Tab>
+                  </tabs>
+                  <padding>
+                     <Insets top="15.0" />
+                  </padding>
+               </TabPane>
+               <HBox alignment="CENTER_RIGHT" layoutY="532.0" prefHeight="17.0" prefWidth="1100.0" spacing="10.0">
+                  <children>
+                     <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" prefWidth="101.0" styleClass="cancel-button" text="Cancel" />
+                  </children>
+                  <padding>
+                     <Insets right="20.0" />
+                  </padding>
+               </HBox>
+            </children>
+         </AnchorPane>
+      </center>
+    </BorderPane>
+</AnchorPane>

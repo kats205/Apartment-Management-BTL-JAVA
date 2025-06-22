@@ -1,6 +1,7 @@
 package com.utc2.apartmentmanagement.Controller.Maintenance;
 
 import com.utc2.apartmentmanagement.Controller.User.UserDashboardController;
+import com.utc2.apartmentmanagement.DAO.Complaint.ComplaintRequestDAO;
 import com.utc2.apartmentmanagement.DAO.DatabaseConnection;
 import com.utc2.apartmentmanagement.DAO.Maintenance.MaintenanceRequestDAO;
 import com.utc2.apartmentmanagement.DAO.User.ResidentDAO;
@@ -53,6 +54,7 @@ public class RequestStatusController implements Initializable {
     @FXML public TableColumn<Map<String, Object>, String> maintenanceAssignedStaffColumn;
     @FXML public TableColumn<Map<String, Object>, LocalDate> maintenanceCompletionDateColumn;
 
+    // Các thao tác trên Complaint
     @FXML public Button closeMaintenanceButton;
     @FXML public Label serviceComplaintsCountLabel;
     @FXML public ComboBox serviceStatusFilter;
@@ -64,16 +66,18 @@ public class RequestStatusController implements Initializable {
     @FXML public Button addServiceComplaintButton;
     @FXML public Button editServiceComplaintButton;
     @FXML public Button deleteServiceComplaintButton;
-    @FXML public TableView serviceTable;
-    @FXML public TableColumn serviceComplaintIdColumn;
-    @FXML public TableColumn serviceNameColumn;
-    @FXML public TableColumn serviceApartmentColumn;
-    @FXML public TableColumn serviceComplaintDescColumn;
-    @FXML public TableColumn serviceStatusColumn;
-    @FXML public TableColumn serviceSeverityColumn;
-    @FXML public TableColumn serviceSubmitDateColumn;
-    @FXML public TableColumn serviceResolutionDateColumn;
-    @FXML public Button closeServiceButton;
+    @FXML public TableView<Map<String, Object>> serviceComplaintsTable;
+
+    // Bảng My Complaint
+    @FXML public TableColumn<Map<String, Object>, String> serviceComplaintIdColumn;
+    @FXML public TableColumn<Map<String, Object>, String> typeComplaintColumn;
+    @FXML public TableColumn<Map<String, Object>, String> serviceComplaintDescColumn;
+    @FXML public TableColumn<Map<String, Object>, String> serviceStatusColumn;
+    @FXML public TableColumn<Map<String, Object>, String> serviceSeverityColumn;
+    @FXML public TableColumn<Map<String, Object>, LocalDate> serviceSubmitDateColumn;
+    @FXML public TableColumn<Map<String, Object>, String>  serviceAssignedStaffColumn;
+//    @FXML public TableColumn serviceResolutionDateColumn;
+
     @FXML public AnchorPane RequestStatusView;
 
     @Setter
@@ -84,11 +88,16 @@ public class RequestStatusController implements Initializable {
         loadDataMaintenanceRequest();
         loadDataComplaint();
 
-        loadPrioritiesMaintenance();
         loadStatusMaintenanceTypes();
+        loadPrioritiesMaintenance();
 
-        setUpConTextMenuMaintenanceMenu();
+        loadStatusComplaintTypes();
+        loadServicesType();
+
+        setUpConTextMenuMaintenanceMenu(); // Load Maintenance menu hỗ trợ
+        setUpConTextMenuComplaintMenu(); // Load Complaint menu hỗ trợ
     }
+    // TODO: Load Maintenance menu hỗ trợ
     private void setUpConTextMenuMaintenanceMenu(){
         ContextMenu contextMenu = new ContextMenu();
 
@@ -119,6 +128,38 @@ public class RequestStatusController implements Initializable {
             return row;
         });
     }
+    // TODO: Load Complaint menu hỗ trợ
+    private void setUpConTextMenuComplaintMenu(){
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem deleteItem = new MenuItem("Delete");
+        deleteItem.setOnAction(event -> {
+            try {
+                handleDeleteMaintenance();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        contextMenu.getItems().addAll(deleteItem);
+
+        serviceComplaintsTable.setRowFactory(tv -> {
+            TableRow<Map<String,Object>> row = new TableRow<>();
+            row.setOnContextMenuRequested(event -> {
+                if(!row.isEmpty()){
+                    serviceComplaintsTable.getSelectionModel().select(row.getIndex());
+                    contextMenu.show(row,event.getSceneX(),event.getSceneY());
+                }
+            });
+            row.setOnMouseClicked(event -> {
+                if(event.getButton() == MouseButton.PRIMARY){
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
+    }
+
 
     // TODO: Load dữ liệu Maintenace Request
     public void loadDataMaintenanceRequest(){
@@ -133,8 +174,12 @@ public class RequestStatusController implements Initializable {
     // TODO: Load dữ liệu Complaint
     public void loadDataComplaint(){
         // chưa có load bảng dữ liệu
-        loadStatusComplaintTypes();
-        loadServicesType();
+        try {
+            getComplaintByResidentID();
+            getTotalComplaint();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // TODO: Load Status Maintenance Types
@@ -157,13 +202,13 @@ public class RequestStatusController implements Initializable {
     // TODO: Load Status Complaint
     private void loadStatusComplaintTypes() {
         serviceStatusFilter.getItems().addAll(
-                "pending", "assigned", "in_progress", "completed", "cancelled", "All Status"
+                "Pending", "Assigned", "In progress", "Completed", "Cancelled", "All Status"
         );
     }
-    // TODO: Load Services Types Complaint // chưa thêm loại gì á
+    // TODO: Load Services Types Complaint
     private void loadServicesType() {
         serviceTypeFilter.getItems().addAll(
-                "low", "medium", "high", "urgent", "All Priority"
+                "Maintenance","Service","All Priority"
         );
     }
 
@@ -222,8 +267,12 @@ public class RequestStatusController implements Initializable {
 
         // Assigned STAFF
         maintenanceAssignedStaffColumn.setCellValueFactory(cellData -> {
-            Object value = cellData.getValue().get("assigned_staff");
-            return new SimpleStringProperty(value != null ? value.toString() : "Waiting...");
+            Object value = cellData.getValue().get("assigned_staff_id");
+            // Kiểm tra null hoặc 0
+            if (value == null || (value instanceof Integer && (Integer) value == 0)) {
+                return new SimpleStringProperty("Waiting...");
+            }
+            return new SimpleStringProperty(value.toString());
         });
         maintenanceAssignedStaffColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
@@ -235,6 +284,65 @@ public class RequestStatusController implements Initializable {
         maintenanceIssueTypeColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
     }
+    // TODO: Gán dữ liệu MAINTAINECE REQUEST vào các ô dữ liệu
+    private void setUpColumnForComplaint(){
+        // Complaint ID
+        serviceComplaintIdColumn.setCellValueFactory(cellData ->{
+            Object value = cellData.getValue().get("complaint_id");
+            return new SimpleStringProperty(value != null ? value.toString() : "null");
+        });
+        serviceComplaintIdColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        // Description
+        serviceComplaintDescColumn.setCellValueFactory(cellData ->{
+            Object value = cellData.getValue().get("description");
+            return new SimpleStringProperty(value != null ? value.toString() : "null");
+        });
+        serviceComplaintDescColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+        // Type Complaint
+        typeComplaintColumn.setCellValueFactory(cellData ->{
+            Object value = cellData.getValue().get("type_complaint");
+            return new SimpleStringProperty(value != null ? value.toString() : "null");
+        });
+        typeComplaintColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        // Status
+        serviceStatusColumn.setCellValueFactory(cellData ->{
+            Object value = cellData.getValue().get("status");
+            return new SimpleStringProperty(value != null ? capitalizeFirstLetter(value.toString()) : "null");
+        });
+        serviceStatusColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        // Priority
+        serviceSeverityColumn.setCellValueFactory(cellData ->{
+            Object value = cellData.getValue().get("priority");
+            return new SimpleStringProperty(value != null ? capitalizeFirstLetter(value.toString()) : "null");
+        });
+        serviceSeverityColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        // Submit date
+        serviceSubmitDateColumn.setCellValueFactory(cellData -> {
+            Object dateObj = cellData.getValue().get("created_at");
+            if (dateObj instanceof Date) {
+                Date date = (Date) dateObj;
+                return new SimpleObjectProperty<>(date.toLocalDate());
+            }
+            return new SimpleObjectProperty<>(null);
+        });
+        serviceSubmitDateColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+        // Staff
+        serviceAssignedStaffColumn.setCellValueFactory(cellData ->{
+            Object value = cellData.getValue().get("assigned_staff_id");
+            // Kiểm tra null hoặc 0
+            if (value == null || (value instanceof Integer && (Integer) value == 0)) {
+                return new SimpleStringProperty("Waiting...");
+            }
+            return new SimpleStringProperty(value.toString());
+        });
+        serviceAssignedStaffColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+
+    }
     // TODO: Viết hoa chữ cái đầu
     public static String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
@@ -244,8 +352,8 @@ public class RequestStatusController implements Initializable {
     }
     // TODO: Lấy dữ liệu các YÊU CẦU BẢO TRÌ thông qua
     private void getMaintenanceRequestByResidentID() throws SQLException{
-        int userID = new UserDAO().getIdByUserName(Session.getUserName());
         setUpColumnForMaintaineceRequest();
+        int userID = new UserDAO().getIdByUserName(Session.getUserName());
 
         int residentID = new ResidentDAO().getResidentIDByUserID(userID);
         List<Map<String, Object>> result = new MaintenanceRequestDAO().getMaintenanceRequestsByResidentId(residentID); //
@@ -259,6 +367,7 @@ public class RequestStatusController implements Initializable {
         ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
         maintenanceTable.setItems(observableList);
     }
+    // TODO: Tổng cộng các yêu câu BẢO TRÌ
     private void getTotalMaintainenceRequest() throws SQLException {
         int userID = new UserDAO().getIdByUserName(Session.getUserName());
         int residentID = new ResidentDAO().getResidentIDByUserID(userID);
@@ -366,7 +475,31 @@ public class RequestStatusController implements Initializable {
     }
 
 
+// Service
+    // TODO: Lấy dữ liệu các Complaint thông qua ID
+    private void getComplaintByResidentID() throws SQLException{
+        int userID = new UserDAO().getIdByUserName(Session.getUserName());
+        setUpColumnForComplaint();
 
+        int residentID = new ResidentDAO().getResidentIDByUserID(userID);
+        List<Map<String, Object>> result = new ComplaintRequestDAO().getComplaintByResidentId(residentID); //
+        System.out.println("Result size: " + result.size());
+
+        if (!result.isEmpty()) {
+            System.out.println("First row keys: " + result.get(0).keySet());
+        }else{
+            System.out.println("Không có dữ liệu");
+        }
+        ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
+        serviceComplaintsTable.setItems(observableList);
+    }
+    private void getTotalComplaint() throws SQLException {
+        int userID = new UserDAO().getIdByUserName(Session.getUserName());
+        int residentID = new ResidentDAO().getResidentIDByUserID(userID);
+        int totalRequest = new MaintenanceRequestDAO().getTotalMaintenaceRequestByResidentID(residentID);
+        maintenanceCountLabel.setText("( " +totalRequest + " total request )");
+
+    }
 
     public void handleViewServiceComplaintDetails(ActionEvent actionEvent) {
     }

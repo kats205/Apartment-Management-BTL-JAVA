@@ -3,6 +3,9 @@ package com.utc2.apartmentmanagement.Controller.Service;
 import com.google.gson.JsonObject;
 import com.utc2.apartmentmanagement.DAO.Apartment.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.Billing.BillsDAO;
+import com.utc2.apartmentmanagement.DAO.Service.ServiceDAO;
+import com.utc2.apartmentmanagement.DAO.Service.ServiceRegistrationDAO;
+import com.utc2.apartmentmanagement.DAO.User.ResidentDAO;
 import com.utc2.apartmentmanagement.DAO.User.UserDAO;
 import com.utc2.apartmentmanagement.Model.Billing.Bills;
 import com.utc2.apartmentmanagement.Model.Session;
@@ -33,6 +36,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.sql.Date;
 import java.util.*;
 import java.util.List;
 
@@ -67,7 +71,8 @@ public class ServiceInformationController implements Initializable {
     @FXML public Button payButton;
     @FXML public ImageView QrCode;
     @FXML public AnchorPane anchorPaneQrCode;
-    public HBox HboxButton;
+    @FXML public HBox HboxButton;
+    @FXML public Label labelDuration;
 
     private Button confirmPaymentButton;
 
@@ -77,7 +82,7 @@ public class ServiceInformationController implements Initializable {
     // Thêm field
     private PaymentService paymentService = new PaymentService();
     private int currentPaymentId = -1; // Để lưu payment ID cho trường hợp transfer
-
+    private String apartmentId;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -133,7 +138,7 @@ public class ServiceInformationController implements Initializable {
         Map<String, Object> apartmentInf = new ApartmentDAO().getInformation(userId);
 
         apartmentIdField.setText(String.valueOf(apartmentInf.get("apartment_id")));
-
+        apartmentId = String.valueOf(apartmentInf.get("apartment_id"));
         billedToField.setText(String.valueOf(apartmentInf.get("full_name")));
     }
 
@@ -142,6 +147,16 @@ public class ServiceInformationController implements Initializable {
 
         serviceNameField.setText(name);
         servicePriceField.setText(price + " / " + unit);
+        // nếu unit khác tháng thì sẽ ẩn phần duration, các đơn vị khác chỉ mặc định đăng ký 1 lần và không có thời gian hạn
+        if(!unit.equalsIgnoreCase("thang")){
+            // ẩn combobox
+            durationComboBox.setVisible(false);
+            durationComboBox.setManaged(false);
+            durationComboBox.setValue(null);
+            // ẩn label
+            labelDuration.setVisible(false);
+            labelDuration.setManaged(false);
+        }
         serviceDescriptionArea.setText(description);
 
         updateTotalCost(Integer.parseInt(price.replace(".", "")));
@@ -175,6 +190,7 @@ public class ServiceInformationController implements Initializable {
                 // Set thông tin thanh toán cho VnpayReturnServer
                 VnpayReturnServer.setPaymentInfo(apartmentId, totalAmount, getUserIdFromName(billedToStr), serviceName);
 
+
                 // Khởi động server để nhận callback
                 VnpayReturnServer.start();
 
@@ -185,7 +201,31 @@ public class ServiceInformationController implements Initializable {
                 // Tiến hành thanh toán
                 long price = (long) totalAmount;
                 JsonObject paymentResult = new Vnpay().handlePayVnpay(price);
+// lưu dịch vụ nào được đăng ký bởi người dùng nào
+                int serviceId = new ServiceDAO().getServiceIdByServiceName(serviceName);
+                int userID = new UserDAO().getIdByUserName(Session.getUserName());
+                int residentID = new ResidentDAO().getResidentIDByUserID(userID);
+                Date startDate = Date.valueOf(startDatePicker.getValue());
+                System.out.println("startDate: " + startDate);
+                int duration = durationComboBox.getValue() != null ? durationComboBox.getValue() : 1;
 
+                // Chuyển startDate sang LocalDate để cộng ngày
+                LocalDate endLocalDate = startDate.toLocalDate().plusMonths(duration);
+
+                // Chuyển lại về java.sql.Date
+                Date endDate = Date.valueOf(endLocalDate);
+                if(duration == 1){
+                    endDate = startDate;
+                }
+                System.out.println("endDate: " + endDate);
+
+                boolean save = new ServiceRegistrationDAO().addServiceRegistration(serviceId, apartmentId, startDate, endDate, "active", residentID, residentID);
+                if(save){
+                    System.out.println("Save successful");
+                }
+                else{
+                    System.out.println("Save failed");
+                }
                 if (paymentResult != null) {
                     showAlert("Notification","Redirecting to payment gateway...");
                 } else {

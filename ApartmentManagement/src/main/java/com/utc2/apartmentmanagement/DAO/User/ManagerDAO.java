@@ -92,6 +92,47 @@ public class ManagerDAO implements IManagerDAO {
         }
         return null;
     }
+
+    @Override
+    public List<Map<String, String>> getAllOfficeAndFullNameManager() {
+        String sql = "SELECT m.office, u.full_name FROM Manager m JOIN [User] u ON m.manager_id = u.user_id";
+        List<Map<String,String>> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, String> rows = new HashMap<>();
+                rows.put("full_name", rs.getString("full_name"));
+                rows.put("office", rs.getString("office"));
+                list.add(rows);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public int getManagerIdByFullNameAndOffice(String fullName, String office) {
+        String sql = "SELECT manager_id FROM Manager m\n" +
+                "JOIN [User] u ON m.manager_id = u.user_id\n" +
+                "WHERE m.office = ? AND u.full_name = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+
+            stmt.setString(2, office);
+            stmt.setString(1, fullName);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getInt("manager_id");
+            }
+        }catch(SQLException e){
+            System.out.println("Đã xảy ra lỗi khi lấy manager id");
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public boolean updateManagerField(int managerID, String field, Object newValue){
         String SQL = "UPDATE Manager SET " + field + " = ? WHERE manager_id = ?";
         try(Connection connection = DatabaseConnection.getConnection();

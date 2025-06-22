@@ -4,9 +4,10 @@ import com.utc2.apartmentmanagement.Model.Maintenance.MaintenanceRequest;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface IComplaintDAO {
     List<MaintenanceRequest> getAllMaintenanceRequest();
     void saveComplaintRequest(String apartmentID, String residentID, String complaintType, LocalDate requestDate, String description, String priority);
-
+    List<Map<String, Object>>  getComplaintByResidentId(int residentID);
 }
