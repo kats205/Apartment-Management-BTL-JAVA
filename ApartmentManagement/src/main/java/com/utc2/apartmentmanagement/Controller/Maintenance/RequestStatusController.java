@@ -104,6 +104,7 @@ public class RequestStatusController implements Initializable {
         ContextMenu contextMenu = new ContextMenu();
 
         MenuItem deleteItem = new MenuItem("Delete");
+        MenuItem exportFile = new MenuItem("Export PDF");
         deleteItem.setOnAction(event -> {
             try {
                 handleDeleteMaintenance();
@@ -111,8 +112,11 @@ public class RequestStatusController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        exportFile.setOnAction(event -> {
 
-        contextMenu.getItems().addAll(deleteItem);
+        });
+
+        contextMenu.getItems().addAll(deleteItem,exportFile);
 
         maintenanceTable.setRowFactory(tv -> {
             TableRow<Map<String,Object>> row = new TableRow<>();
@@ -135,6 +139,7 @@ public class RequestStatusController implements Initializable {
         ContextMenu contextMenu = new ContextMenu();
 
         MenuItem deleteItem = new MenuItem("Delete");
+        MenuItem exportFile = new MenuItem("Export PDF");
         deleteItem.setOnAction(event -> {
             try {
                 handleEditServiceComplaint();
@@ -142,8 +147,11 @@ public class RequestStatusController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        exportFile.setOnAction(event -> {
 
-        contextMenu.getItems().addAll(deleteItem);
+        });
+
+        contextMenu.getItems().addAll(deleteItem,exportFile);
 
         serviceComplaintsTable.setRowFactory(tv -> {
             TableRow<Map<String,Object>> row = new TableRow<>();
