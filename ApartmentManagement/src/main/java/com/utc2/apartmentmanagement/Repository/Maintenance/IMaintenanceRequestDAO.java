@@ -23,8 +23,11 @@ public interface IMaintenanceRequestDAO {
     int countRequestByStatus(String status) throws SQLException;
     void saveMaintenaceRequest(String apartmentID, String residentID, LocalDate requestDate, String description,String priority, String issueType);
     List<Map<String, Object>> getMaintenanceRequestsByResidentId(int resient_id);
-
     int getTotalMaintenaceRequestByResidentID(int resident_id);
 
     List<Map<String, Object>> getFilterStatusAndPriority(int residentID, String status, String priority);
+
+    List<Map<String, Object>> getMaintenanceRequestsByAssignedStaffId(int staffId);
+
+    boolean updateStatus(int requestId, String inProgress);
 }

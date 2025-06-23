@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 9.0.0.final using JasperReports Library version 6.21.0-4f56c4f36cd19e17675219a9ac4692d5f0f13b06  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2490e56-4151-4718-b7bb-e3b3a4d7d3d0">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Apartment"/>
+	<parameter name="request_id" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+    mr.request_id,
+    mr.request_date,
+    mr.issue_type,
+    mr.description AS request_description,
+    mr.status,
+    mr.priority,
+    mr.assigned_staff_id,
+    mr.completion_date,
+    r.full_name AS resident_name,
+    r.identity_card,
+    u.phone_number,
+    b.building_name,
+    a.apartment_id,
+    a.floor
+FROM MaintenanceRequest mr
+JOIN Resident r ON mr.resident_id = r.resident_id
+JOIN Apartment a ON r.apartment_id = a.apartment_id
+JOIN Building b ON a.building_id = b.building_id
+JOIN [User] u ON r.user_id = u.user_id
+WHERE mr.request_id = $P{request_id};]]>
+	</queryString>
+	<field name="request_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="request_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="request_id"/>
+	</field>
+	<field name="request_date" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="request_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="request_date"/>
+	</field>
+	<field name="issue_type" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="issue_type"/>
+		<property name="com.jaspersoft.studio.field.label" value="issue_type"/>
+	</field>
+	<field name="request_description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="MaintenanceRequest"/>
+	</field>
+	<field name="status" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="status"/>
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+	</field>
+	<field name="priority" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="priority"/>
+		<property name="com.jaspersoft.studio.field.label" value="priority"/>
+	</field>
+	<field name="assigned_staff_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="assigned_staff_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="assigned_staff_id"/>
+	</field>
+	<field name="completion_date" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="completion_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="completion_date"/>
+	</field>
+	<field name="resident_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="resident_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="resident_name"/>
+	</field>
+	<field name="identity_card" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="identity_card"/>
+		<property name="com.jaspersoft.studio.field.label" value="identity_card"/>
+	</field>
+	<field name="phone_number" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone_number"/>
+	</field>
+	<field name="building_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="building_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="building_name"/>
+	</field>
+	<field name="apartment_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="apartment_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="apartment_id"/>
+	</field>
+	<field name="floor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="floor"/>
+		<property name="com.jaspersoft.studio.field.label" value="floor"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="89" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-19" y="-20" width="595" height="70" backcolor="#A3CEC0" uuid="7d0e33d2-35ba-423c-b8d2-633ebf76bc50"/>
+				<graphicElement>
+					<pen lineColor="#A3CEC0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="50" y="0" width="69" height="30" uuid="abbc818e-7394-42f6-b087-c6439048dfd2"/>
+				<textElement>
+					<font fontName="UTM Helve" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Building:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="20" width="250" height="30" uuid="14c9df18-773a-47e3-b93b-7e5e1145804a"/>
+				<textElement>
+					<font fontName="UTM Helve" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Independence - Liberty - Happiness]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="-10" width="240" height="30" uuid="68b3b272-27eb-422b-9af3-94a3ec40962d"/>
+				<textElement>
+					<font fontName="UTM Helve" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Socialist Republic of Viet Nam]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="115" y="2" width="125" height="30" uuid="1a078066-66d3-444e-b3ad-e014678c737d"/>
+				<textElement>
+					<font fontName="UTM Helve" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{building_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="36" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-20" y="1" width="595" height="30" backcolor="#CAE0D9" uuid="103a3053-d815-46e9-840b-3f2a97633b28"/>
+				<graphicElement>
+					<pen lineColor="#CAE0D9"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="169" y="4" width="250" height="30" uuid="c81da471-d3d6-4c53-bc18-6b10ab9d9676"/>
+				<textElement>
+					<font fontName="UTM Helve" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAINTENANCE REQUEST]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="485" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-19" y="218" width="595" height="30" backcolor="#CAE0D9" uuid="ced4b5ac-fc77-4d18-9183-62e03d1df38d"/>
+				<graphicElement>
+					<pen lineColor="#CAE0D9"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="20" y="103" width="80" height="30" uuid="f1821746-5f24-4cff-b2b0-2fc7740bb250"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resident of:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="133" width="100" height="30" uuid="45afdcbf-8b0e-4f46-948c-e89a8030fc40"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="218" width="150" height="30" uuid="91853155-413a-48fd-bb05-7020671ebe31"/>
+				<textElement>
+					<font fontName="UTM Helve" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Infomation maintenance request:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="262" width="87" height="30" uuid="c8dc757f-8668-4d6e-8598-cc0703b9125c"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type of issue:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="322" width="80" height="30" uuid="ccf3b148-7af0-49ca-ad1e-872b93a056cd"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="292" width="50" height="30" uuid="21515754-2037-4eb4-ad3d-c52275839eff"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Priority:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="13" width="40" height="30" uuid="9b0afc01-4a7e-4edd-a884-23124f97c902"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dear:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="13" width="445" height="30" uuid="c0849dad-b40e-4600-8c38-6923e5cba7c7"/>
+				<textElement>
+					<font fontName="Noto Sans" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Apartment management board]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="43" width="80" height="30" uuid="7c4fa46f-7872-4bf6-b8b5-d9988c55e94d"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[My name is:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="43" width="264" height="30" uuid="51e531d0-1aae-4681-9241-f7bcc5ef11cb"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resident_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="73" width="80" height="30" uuid="cc7c4376-0ced-434e-8d1d-24a69e4c67c6"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identity ID:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="101" y="73" width="309" height="30" uuid="9091a1dc-362c-4406-a091-577f8b7308ef"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{identity_card}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="133" width="414" height="30" uuid="d4472aa4-a37c-403c-a0dd-c9b9ef8f637a"/>
+				<textElement>
+					<font fontName="Noto Sans" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{phone_number}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="373" width="500" height="44" uuid="8028917d-74a7-4b30-8234-9f4ab917d8af"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[I hope the Management Board will arrange time and support to fix the problem as soon as possible to ensure normal life for my family.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="419" width="56" height="30" uuid="926e6683-d41d-4200-a4c3-6f4fa51b23fd"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<text><![CDATA[Applicant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="438" width="175" height="30" uuid="ec832911-aed0-4061-b915-6f323ac9b5b3"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<text><![CDATA[(sign and print full name)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="419" width="200" height="30" uuid="98fc855f-ff7f-4ce1-910f-30b1dc32e08e"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Thank you very much!]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="455" width="120" height="30" uuid="452f9174-fe66-46a7-99b6-fc07021cf1eb"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ho Chi Minh City, day]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="270" y="103" width="25" height="30" uuid="83844852-3b97-4f11-a12f-f781b20d9f31">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4bc57548-07d4-495f-be60-fc6fd1646d69"/>
+				</reportElement>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{floor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="103" width="195" height="30" uuid="98100e5f-fc30-419a-83e6-c9dc1625ab0e"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{building_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="103" width="60" height="30" uuid="20f5ce4d-379c-4082-a9e1-b114fa657142">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="593a0367-3b55-462d-80cc-39b3eed3d1ce"/>
+				</reportElement>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apartment_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="100" y="103" width="80" height="30" uuid="9d7c0154-f69a-4515-acb4-cf4f965f0860"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apartment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="103" width="40" height="30" uuid="643b876a-99b5-44dc-a623-c39ada6079d2"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[, floor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="103" width="58" height="30" uuid="19ad61f2-af82-4ffa-83c6-bc4fc9d5b809"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[, building]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="126" y="262" width="314" height="30" uuid="d526619c-622c-45c6-a40f-40b3e5de4e12">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e03d4330-6164-4853-853e-c8c4607dc528"/>
+				</reportElement>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{issue_type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="89" y="292" width="351" height="30" uuid="4bc01238-2d2d-4741-9394-6beb0b4a00e3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="25bdaf58-f644-48be-ba74-fcb913d92fbb"/>
+				</reportElement>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{priority}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="322" width="450" height="51" uuid="b4a56dc3-d2be-4939-af6e-2642cbee09c4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b6dadb55-d7eb-4f0f-80bd-b79fc2cd8b98"/>
+				</reportElement>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{request_description}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="455" width="100" height="30" uuid="aad3ca08-551f-4c9a-93c7-e86e2a5bbc9f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d1f52687-8778-41f6-ac07-8521d0b6da22"/>
+				</reportElement>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{request_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="160" width="470" height="56" uuid="6c39f75f-dbbf-4f03-82bb-818c568e02f9"/>
+				<textElement>
+					<font fontName="UTM Helve" size="12"/>
+				</textElement>
+				<text><![CDATA[Today I am writing to request the engineering/maintenance department to inspect and repair the following items in my apartment:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

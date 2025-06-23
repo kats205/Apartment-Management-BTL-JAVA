@@ -72,6 +72,21 @@ public class StaffDashboardController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        // Maintenance Handling
+        approvalButton1.setOnAction(event -> {
+            try {
+                loadMaintenanceHandlingView();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        approvalButton11.setOnAction(event -> {
+            try {
+                loadProgessView();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void roleDefination() throws SQLException {
@@ -148,6 +163,67 @@ public class StaffDashboardController implements Initializable {
         contentArea.getChildren().clear();
         contentArea.getChildren().add(StaffApproval);
         System.out.println("Đã thêm StaffApproval vào contentArea");
+    }
+
+    // Load Maintenance Handling View
+    public void loadMaintenanceHandlingView() throws IOException {
+        System.out.println("Đang cố gắng tải MaintenanceHandling.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Staff/MaintenanceHandling.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        if (url == null) {
+            System.out.println("Không tìm thấy file MaintenanceHandling.fxml");
+            return;
+        }
+
+        Parent StaffApproval = loader.load();
+//        HRViewController controller = loader.getController();
+//        controller.setParentController(this);  // Gán parent
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(StaffApproval, 0.0);
+        AnchorPane.setRightAnchor(StaffApproval, 0.0);
+        AnchorPane.setBottomAnchor(StaffApproval, 0.0);
+        AnchorPane.setLeftAnchor(StaffApproval, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm HRView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(StaffApproval);
+        System.out.println("Đã thêm Maintenance Handling vào contentArea");
+
+    }
+
+    // Load Progress View
+    public void loadProgessView() throws IOException {
+        System.out.println("Đang cố gắng tải Progress.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Staff/Progress.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        if (url == null) {
+            System.out.println("Không tìm thấy file Progress.fxml");
+            return;
+        }
+
+        Parent StaffApproval = loader.load();
+//        HRViewController controller = loader.getController();
+//        controller.setParentController(this);  // Gán parent
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(StaffApproval, 0.0);
+        AnchorPane.setRightAnchor(StaffApproval, 0.0);
+        AnchorPane.setBottomAnchor(StaffApproval, 0.0);
+        AnchorPane.setLeftAnchor(StaffApproval, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm HRView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(StaffApproval);
+        System.out.println("Đã thêm Progress vào contentArea");
     }
 
     double x =0, y = 0;

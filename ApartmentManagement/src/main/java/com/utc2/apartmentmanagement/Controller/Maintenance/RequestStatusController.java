@@ -20,6 +20,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import lombok.Setter;
+import net.sf.jasperreports.engine.*;
 
 
 import java.net.URL;
@@ -99,6 +100,64 @@ public class RequestStatusController implements Initializable {
         setupAutoServiceComplaintFilterListeners();
 
     }
+    // Export PDF Maintenance
+    private void exportPDFMaintenance(){
+        Map<String, Object> selected = maintenanceTable.getSelectionModel().getSelectedItem();
+        int requestId = (int) selected.get("request_id");
+        try{
+            Map<String, Object> params =new HashMap<>();
+            params.put("request_id",requestId);
+            // Biên dịch .jrxml thành file .jasper
+            JasperReport report = JasperCompileManager.compileReport("src/main/resources/com/utc2/apartmentmanagement/jrxml/MaintenancePDF.jrxml");
+
+            // Dữ liệu đổ vào báo cáo
+            JasperPrint print = JasperFillManager.fillReport(report,params, DatabaseConnection.getConnection());
+
+            String fileName = "PDF/Maintenance/MaintenanceRequest-"+requestId+".pdf";
+            // Xuất PDF
+            JasperExportManager.exportReportToPdfFile(print,fileName);
+            System.out.println("Xuất PDF thành công!");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Infomation");
+            alert.setHeaderText(null);
+            alert.setContentText("Export PDF SUCCESS!");
+            alert.showAndWait();
+
+        } catch (JRException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // Export PDF Complaint
+    private void exportPDFComplaint(){
+        Map<String, Object> selected = serviceComplaintsTable.getSelectionModel().getSelectedItem();
+        int requestId = (int) selected.get("complaint_id");
+        try{
+            Map<String, Object> params =new HashMap<>();
+            params.put("complaint_id",requestId);
+            // Biên dịch .jrxml thành file .jasper
+
+            // Chua doi duong dan
+            JasperReport report = JasperCompileManager.compileReport("src/main/resources/com/utc2/apartmentmanagement/jrxml/ComplaintPDF.jrxml");
+
+            // Dữ liệu đổ vào báo cáo
+            JasperPrint print = JasperFillManager.fillReport(report,params, DatabaseConnection.getConnection());
+
+            String fileName = "PDF/Complaint/Complaint-"+requestId+".pdf";
+            // Xuất PDF
+            JasperExportManager.exportReportToPdfFile(print,fileName);
+            System.out.println("Xuất PDF thành công!");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Infomation");
+            alert.setHeaderText(null);
+            alert.setContentText("Export PDF SUCCESS!");
+            alert.showAndWait();
+
+        } catch (JRException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     // TODO: Load Maintenance menu hỗ trợ
     private void setUpConTextMenuMaintenanceMenu(){
         ContextMenu contextMenu = new ContextMenu();
@@ -113,7 +172,7 @@ public class RequestStatusController implements Initializable {
             }
         });
         exportFile.setOnAction(event -> {
-
+            exportPDFMaintenance();
         });
 
         contextMenu.getItems().addAll(deleteItem,exportFile);
@@ -148,7 +207,7 @@ public class RequestStatusController implements Initializable {
             }
         });
         exportFile.setOnAction(event -> {
-
+            exportPDFComplaint();
         });
 
         contextMenu.getItems().addAll(deleteItem,exportFile);
