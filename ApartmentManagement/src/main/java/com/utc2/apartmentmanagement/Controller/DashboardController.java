@@ -461,7 +461,7 @@ public class DashboardController implements Initializable {
         AnchorPane.setBottomAnchor(HRView, 0.0);
         AnchorPane.setLeftAnchor(HRView, 0.0);
 
-        // Xóa tất cả các view hiện tại và thêm HRView
+        // Xóa tất csả các view hiện tại và thêm HRView
         contentArea.getChildren().clear();
         contentArea.getChildren().add(HRView);
         System.out.println("Đã thêm HRView vào contentArea");

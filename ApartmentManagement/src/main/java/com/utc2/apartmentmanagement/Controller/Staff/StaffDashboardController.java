@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,10 +24,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -46,9 +50,11 @@ public class StaffDashboardController implements Initializable {
     public TableColumn<MaintenanceRequest, String> statusColumn;
     public TableColumn<MaintenanceRequest, String> descriptionColumn;
     public TableColumn<MaintenanceRequest, String> priorityColumn;
+    @Getter
     public AnchorPane contentArea;
 
-
+    @Getter
+    private List<Node> dashboardNodes;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Exit.setOnMouseClicked(e ->
@@ -62,6 +68,8 @@ public class StaffDashboardController implements Initializable {
         List<MaintenanceRequest> pendingApprovals = new MaintenanceRequestDAO().getAllMaintenanceRequest();
         InitTableView(pendingApprovals);
         setActionButton();
+        dashboardNodes = new ArrayList<>(contentArea.getChildren());
+
     }
 
     public void setActionButton(){
@@ -78,11 +86,11 @@ public class StaffDashboardController implements Initializable {
         String userName = Session.getUserName();
         String positionStaff = new StaffDAO().getDepartmentStaffByUserName(userName);
         System.out.println("User name: " + userName + " Position: " + positionStaff);
-        if(positionStaff.equalsIgnoreCase("Dich vu khach hang")){
+        if(positionStaff.equalsIgnoreCase("Ky thuat bao tri")){
             approvalButton.setVisible(false);
             approvalButton.setManaged(false);
         }
-        if(positionStaff.equalsIgnoreCase("Ky thuat bao tri")){
+        if(positionStaff.equalsIgnoreCase("Dich vu khach hang")){
             approvalButton1.setVisible(false);
             approvalButton1.setManaged(false);
         }
@@ -133,8 +141,8 @@ public class StaffDashboardController implements Initializable {
         }
 
         Parent StaffApproval = loader.load();
-//        HRViewController controller = loader.getController();
-//        controller.setParentController(this);  // Gán parent
+        StaffApprovalController controller = loader.getController();
+        controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 

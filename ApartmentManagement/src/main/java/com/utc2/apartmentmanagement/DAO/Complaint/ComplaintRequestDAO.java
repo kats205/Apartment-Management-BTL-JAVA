@@ -1,6 +1,7 @@
 package com.utc2.apartmentmanagement.DAO.Complaint;
 
 import com.utc2.apartmentmanagement.DAO.DatabaseConnection;
+import com.utc2.apartmentmanagement.Model.Complaint.Complaint;
 import com.utc2.apartmentmanagement.Model.Maintenance.MaintenanceRequest;
 import com.utc2.apartmentmanagement.Repository.Complaint.IComplaintDAO;
 
@@ -13,10 +14,6 @@ import java.util.Map;
 
 public class ComplaintRequestDAO implements IComplaintDAO {
 
-    @Override
-    public List<MaintenanceRequest> getAllMaintenanceRequest() {
-        return List.of();
-    }
 
     @Override
     public List<Map<String, Object>>  getComplaintByResidentId(int residentID){
@@ -142,6 +139,64 @@ public class ComplaintRequestDAO implements IComplaintDAO {
 
         return total;
     }
+
+    @Override
+    public List<Complaint> getAllComplaints() {
+        String sql = "SELECT * FROM Complaint";
+        List<Complaint> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(new Complaint(rs.getInt("complaint_id"), rs.getString("type_complaint"), rs.getString("apartment_id"),
+                        rs.getInt("resident_id"), rs.getString("description"), rs.getString("status"), rs.getString("priority"),
+                        rs.getInt("assigned_staff_id"), rs.getDate("created_at")));
+            }
+        }catch(SQLException e){
+            System.out.println("Đã có lỗi trong quá trình lấy dữ liệu complaints!" + e.getMessage());
+        }
+        return list;
+    }
+
+    @Override
+    public boolean updateField(String field, Object value, int complaint_id) {
+        String sql = "UPDATE Complaint SET " + field + " = ? WHERE complaint_id = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            if(value instanceof Integer){
+                stmt.setInt(1, (Integer)value);
+            }
+            else if(value instanceof String){
+                stmt.setString(1, (String)value);
+            }
+            stmt.setInt(2, complaint_id);
+            return stmt.executeUpdate() > 0;
+        }catch(SQLException e){
+            System.out.println("Đã xảy ra lỗi trong quá trình cập nhật" + e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public List<Complaint> getFilterStatusAndPriority(String field, String value) {
+        List<Complaint> Complaint = new ArrayList<>();
+        String sql = "SELECT * FROM Complaint WHERE " + field + " = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,value);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Complaint.add(new Complaint(rs.getInt("complaint_id"), rs.getString("type_complaint"), rs.getString("apartment_id"),
+                        rs.getInt("resident_id"), rs.getString("description"), rs.getString("status"), rs.getString("priority"),
+                        rs.getInt("assigned_staff_id"), rs.getDate("created_at")));
+            }
+        } catch (SQLException e) {
+            System.out.println("Đã xảy ra lỗi trong quá trình lọc status!" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return Complaint;
+    }
+
     private PreparedStatement createPreparedStatement(Connection connection, int residentID,String status, String type) throws SQLException {
         PreparedStatement stmt = null;
 

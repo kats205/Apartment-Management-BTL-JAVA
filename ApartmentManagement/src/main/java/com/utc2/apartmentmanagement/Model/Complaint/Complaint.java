@@ -12,12 +12,12 @@ import java.sql.Date;
 @AllArgsConstructor
 public class Complaint {
     private int requestID;
+    private String typeComplaint;
     private String apartmentID;
     private int residentID;
-    private String typeComplaint;
-    private Date requestDate;
     private String description;
     private String status;
     private String priority;
     private int assignedStaffID;
+    private Date requestDate;
 }

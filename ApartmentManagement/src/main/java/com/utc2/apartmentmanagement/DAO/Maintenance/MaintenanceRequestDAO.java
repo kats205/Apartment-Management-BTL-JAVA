@@ -82,7 +82,7 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
         return updateMaintenanceRequestField(requestID, "completion_date", newCompletionDate);
     }
     public boolean updateMaintenanceRequestField(int requestID, String field, Object newValue){
-        String sql = "UPDATE MaintenanceRequest SET " + field + " = ? , updated_field = ? WHERE requestID = ?";
+        String sql = "UPDATE MaintenanceRequest SET " + field + " = ? , updated_at = ? WHERE request_id = ?";
         try(Connection connection = DatabaseConnection.getConnection();
         PreparedStatement stmt = connection.prepareStatement(sql)){
             if(newValue instanceof String){
@@ -265,6 +265,26 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
             throw new RuntimeException(e);
         }
         return requestList;    }
+
+    @Override
+    public List<MaintenanceRequest> getFilterStatusAndPriority(String field, String value) {
+        List<MaintenanceRequest> maintenanceRequestList = new ArrayList<>();
+        String sql = "SELECT * FROM MaintenanceRequest WHERE " + field + " = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setString(1,value);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                maintenanceRequestList.add(new MaintenanceRequest(rs.getInt("request_id"), rs.getString("apartment_id"), rs.getInt("resident_id"),
+                        rs.getDate("request_date"), rs.getString("description"), rs.getString("status"), rs.getString("priority"),
+                        rs.getInt("assigned_staff_id"), rs.getDate("completion_date"), rs.getString("issue_type")));
+            }
+        } catch (SQLException e) {
+            System.out.println("Đã xảy ra lỗi trong quá trình lọc status!" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return maintenanceRequestList;
+    }
 
     // TODO: Hỗ trợ set biến cho method getFilterStatusAndPriority
     private PreparedStatement createPreparedStatement(Connection connection, int residentID,String status, String priority) throws SQLException {
