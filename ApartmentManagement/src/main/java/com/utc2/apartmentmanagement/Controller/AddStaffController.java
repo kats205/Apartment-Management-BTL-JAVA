@@ -656,8 +656,4 @@ public class AddStaffController implements Initializable {
         }
     }
 
-//    private void handleChooseAvatar() {
-//        // TODO: Implement file chooser for avatar
-//        System.out.println("Choose avatar functionality...");
-//    }
 }

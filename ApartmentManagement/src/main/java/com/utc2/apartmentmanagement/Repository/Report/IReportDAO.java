@@ -19,4 +19,5 @@ public interface IReportDAO {
     List<Report> getReportsByUser(int userId);
     Report mapResultSetToReport(ResultSet resultSet) throws SQLException;
     ObservableList<PieChart.Data> PieChart(LocalDate fromDate, LocalDate toDate) throws SQLException;
+
 }

@@ -35,10 +35,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ReportViewController implements Initializable {
 
@@ -72,6 +69,7 @@ public class ReportViewController implements Initializable {
 
     @FXML private PieChart apartmentStatusPieChart;
 
+    private static final List<Report> REPORT_INIT = new ReportDAO().getAllReports();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Khởi tạo các thành phần UI
@@ -85,6 +83,8 @@ public class ReportViewController implements Initializable {
 
         pagination.setVisible(false);
         pagination.setManaged(false);
+        initTableView(REPORT_INIT);
+        reportTypeFilter();
     }
 
     private void initializeComponents() {
@@ -245,7 +245,28 @@ public class ReportViewController implements Initializable {
     private void initializeComboBoxes() {
         // TODO: Khởi tạo các loại báo cáo cho reportTypeComboBox
         // Ví dụ: Báo cáo theo tháng, theo quý, theo năm
-        reportTypeComboBox.getItems().addAll("Báo cáo theo tháng", "Báo cáo theo quý", "Báo cáo theo năm");
+        reportTypeComboBox.getItems().addAll("Bao cao can ho", "Bao cao tai chinh", "All Report Type");
+    }
+
+    public void         reportTypeFilter(){
+        reportTypeComboBox.setOnAction(event -> {
+            String reportType = reportTypeComboBox.getValue();
+            System.out.println("Report type: " + reportType);
+            if (reportType == null || reportType.equals("All Report Type")) {
+                initTableView(REPORT_INIT); // Hiển thị toàn bộ nếu không chọn hoặc chọn "Tất cả"
+                return;
+            }
+
+            List<Report> reportTypeFilter = REPORT_INIT.stream()
+                    .filter(r -> reportType.equals(r.getReportType()))
+                    .toList();
+
+            for(Report r : reportTypeFilter) {
+                System.out.println(r);
+            }
+
+            initTableView(reportTypeFilter);
+        });
     }
 
     private void initializeTableView() {
@@ -271,15 +292,17 @@ public class ReportViewController implements Initializable {
         updatedAtColumn.setCellValueFactory(new PropertyValueFactory<>("updatedAt"));
         updatedAtColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
-        ObservableList<Report> reportList = FXCollections.observableArrayList();
-        List<Report> reportList1 = new ReportDAO().getAllReports();
-        reportList.addAll(reportList1);
-        reportTable.setItems(reportList);
+    }
+
+    public void initTableView(List<Report> validReports) {
+        initializeTableView();
+        ObservableList<Report> reportList = FXCollections.observableArrayList(validReports);
         PaginationUtils.setupPagination(
-                reportList1,
+                REPORT_INIT,
                 reportTable,
                 pagination
         );
+        reportTable.setItems(reportList);
     }
 
     private void initializeCharts() {
