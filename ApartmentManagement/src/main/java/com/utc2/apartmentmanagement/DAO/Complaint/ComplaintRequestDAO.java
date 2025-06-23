@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class ComplaintRequestDAO implements IComplaintDAO {
 
-
     @Override
     public List<Map<String, Object>>  getComplaintByResidentId(int residentID){
         List<Map<String, Object>> requestList = new ArrayList<>();
