@@ -321,4 +321,97 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
         return stmt;
     }
 
+    public int getFilteredMaintenanceCount(int residentID, String status, String priority) {
+        int total = 0;
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = createPreparedStatementForCount(connection, residentID, status, priority)) {
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return total;
+    }
+
+    private PreparedStatement createPreparedStatementForCount(Connection connection, int residentID, String status, String priortity) throws SQLException {
+        if (status == null) status = "All Status";
+        if (priortity == null) priortity = "All Priority";
+
+        PreparedStatement stmt;
+
+        if (status.equals("All Status") && priortity.equals("All Priority")) {
+            String sql = "SELECT COUNT(*) AS total FROM MaintenanceRequest WHERE resident_id = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, residentID);
+        } else if (status.equals("All Status")) {
+            String sql = "SELECT COUNT(*) AS total FROM MaintenanceRequest WHERE resident_id = ? AND priority = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, residentID);
+            stmt.setString(2, priortity);
+        } else if (priortity.equals("All Priority")) {
+            String sql = "SELECT COUNT(*) AS total FROM MaintenanceRequest WHERE resident_id = ? AND status = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, residentID);
+            stmt.setString(2, status);
+        } else {
+            String sql = "SELECT COUNT(*) AS total FROM MaintenanceRequest WHERE resident_id = ? AND status = ? AND priority = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, residentID);
+            stmt.setString(2, status);
+            stmt.setString(3, priortity);
+        }
+
+        return stmt;
+    }
+
+    @Override
+    public List<Map<String, Object>> getMaintenanceRequestsByAssignedStaffId(int staffId) {
+            List<Map<String, Object>> requestList = new ArrayList<>();
+        String sql = "SELECT mr.issue_type,mr.status,mr.completion_date, mr.request_id, mr.apartment_id, mr.description, mr.priority, u.full_name AS staff_name, ru.full_name AS resident_name,mr.request_date FROM MaintenanceRequest mr JOIN Staff s ON mr.assigned_staff_id = s.staff_id JOIN [User] u ON s.staff_id = u.user_id JOIN Resident r ON mr.resident_id = r.resident_id JOIN [User] ru ON r.user_id = ru.user_id WHERE mr.assigned_staff_id = ? AND mr.status IN ('assigned', 'in_progress') ORDER BY CASE WHEN mr.status = 'assigned' THEN 0 WHEN mr.status = 'in_progress' THEN 1 ELSE 2 END, mr.request_date DESC;";
+            try(Connection connection = DatabaseConnection.getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql)){
+                stmt.setInt(1,staffId);
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    Map<String, Object> rows = new HashMap<>();
+
+                    rows.put("request_id", rs.getInt("request_id"));
+                    rows.put("apartment_id", rs.getString("apartment_id"));
+                    rows.put("description", rs.getString("description"));
+                    rows.put("status", rs.getString("status"));
+                    rows.put("priority", rs.getString("priority"));
+                    rows.put("staff_name", rs.getString("staff_name"));
+                    rows.put("resident_name", rs.getString("resident_name"));
+                    rows.put("issue_type", rs.getString("issue_type"));
+                    rows.put("request_date", rs.getDate("request_date"));
+                    requestList.add(rows);
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return requestList;
+        }
+
+    @Override
+    public boolean updateStatus(int requestId, String newStatus) {
+        String sql = "UPDATE MaintenanceRequest SET status = ? WHERE request_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, requestId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+

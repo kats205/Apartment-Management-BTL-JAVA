@@ -181,6 +181,15 @@
       <artifactId>twilio</artifactId>
       <version>10.7.2</version>
     </dependency>
+
+    <!-- Jasper -->
+    <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+    <dependency>
+      <groupId>net.sf.jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>6.21.0</version>
+    </dependency>
+
   </dependencies>
 
   <build>
