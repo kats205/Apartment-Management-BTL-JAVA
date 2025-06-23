@@ -156,13 +156,13 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
     }
 
     @Override // lưu sau khi gửi yêu cầu bảo trì
-    public void saveMaintenaceRequest(String apartmentID, String residentID, LocalDate requestDate, String description,String priority, String issueType) {
+    public int saveMaintenaceRequest(String apartmentID, String residentID, LocalDate requestDate, String description,String priority, String issueType) {
         // status mặc định ban đầu là pending
         // assgin staff là NULL,
         // completion_date NULL,
         String sql = "INSERT INTO MaintenanceRequest " +
                 "(apartment_id, resident_id, request_date, description, priority, created_at, updated_at, status,issue_type) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                " OUTPUT INSERTED.request_id VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -176,12 +176,14 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
             stmt.setString(8, "pending");
             stmt.setString(9,issueType);
 
-            stmt.executeUpdate();
+            ResultSet rs = stmt.executeQuery();
             System.out.println(" Dữ liệu đã được lưu vào MaintenanceRequest thành công.");
+            if(rs.next()) return rs.getInt("request_id");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(" Lỗi khi lưu dữ liệu: " + e.getMessage());
         }
+        return -1; // Trả về -1 nếu có lỗi xảy ra
     }
 
     @Override
@@ -284,6 +286,34 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
             throw new RuntimeException(e);
         }
         return maintenanceRequestList;
+    }
+
+    @Override
+    public boolean updateImageFileName(int requestID, String imageFileName) {
+        String sql = "UPDATE MaintenanceRequest SET image_filename = ? WHERE request_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, imageFileName);
+            stmt.setInt(2, requestID);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateAssignedStaff(int requestID, int staffID) {
+        String sql = "UPDATE MaintenanceRequest SET assigned_staff_id = ? WHERE request_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, staffID);
+            stmt.setInt(2, requestID);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     // TODO: Hỗ trợ set biến cho method getFilterStatusAndPriority

@@ -30,4 +30,5 @@ public interface IUserDAO {
     int getUserIdBvEmail(String email);
     boolean updateLastLogin(String userName, LocalDateTime lastLogin);
     List<Map<String, String>> listUserLastLogin();
+    List<Map<String, String>> listUserAssignTasks();
 }

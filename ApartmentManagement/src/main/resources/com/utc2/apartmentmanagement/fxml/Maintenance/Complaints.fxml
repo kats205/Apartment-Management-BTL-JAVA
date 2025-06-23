@@ -125,7 +125,7 @@
                                     <Label styleClass="form-label" text="Attach Photos (optional):" />
                                     <HBox alignment="CENTER_LEFT" styleClass="upload-box">
                                        <children>
-                                          <Button fx:id="fileUploadButton" styleClass="upload-button" text="Choose File">
+                                          <Button fx:id="fileUploadButton" onAction="#handleAddFileImage" styleClass="upload-button" text="Choose File">
                                              <graphic>
                                                 <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>

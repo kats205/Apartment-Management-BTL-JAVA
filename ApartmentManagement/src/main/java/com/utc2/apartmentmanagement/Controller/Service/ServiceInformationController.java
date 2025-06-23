@@ -94,14 +94,30 @@ public class ServiceInformationController implements Initializable {
 
         // set sự kiện cho combobox mỗi khi người dùng thay đổi thời gian sử dụng dịch vụ
         durationComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            String priceStr = servicePriceField.getText().split(" /")[0].replace(".", "").trim();
             try {
-                int price = Integer.parseInt(priceStr);
-                updateTotalCost(price);
+                String priceText = servicePriceField.getText();
+                if (priceText != null && !priceText.isEmpty()) {
+                    // Tách lấy phần giá từ chuỗi "price / unit"
+                    String[] parts = priceText.split(" /");
+                    if (parts.length > 0) {
+                        // Loại bỏ tất cả dấu phẩy, dấu chấm và khoảng trắng
+                        String priceStr = parts[0].replaceAll("[.,\\s]", "");
+                        System.out.println("Parsing price from combobox listener: " + priceStr);
+
+                        int price = Integer.parseInt(priceStr);
+                        updateTotalCost(price);
+                    }
+                }
             } catch (NumberFormatException e) {
+                System.err.println("Error parsing price in combobox listener: " + servicePriceField.getText());
+                e.printStackTrace();
+                totalAmountLabel.setText("Lỗi tính toán");
+            } catch (Exception e) {
+                System.err.println("Unexpected error in combobox listener: " + e.getMessage());
                 e.printStackTrace();
             }
         });
+
 
         anchorPaneQrCode.setManaged(false);
         anchorPaneQrCode.setVisible(false);
@@ -142,40 +158,111 @@ public class ServiceInformationController implements Initializable {
         billedToField.setText(String.valueOf(apartmentInf.get("full_name")));
     }
 
-    // Thiết lập thông tin dịch vụ
-    public void setServiceInfo(String name, String price, String description, String unit) {
-
-        serviceNameField.setText(name);
-        servicePriceField.setText(price + " / " + unit);
-        // nếu unit khác tháng thì sẽ ẩn phần duration, các đơn vị khác chỉ mặc định đăng ký 1 lần và không có thời gian hạn
-        if(!unit.equalsIgnoreCase("thang")){
-            // ẩn combobox
-            durationComboBox.setVisible(false);
-            durationComboBox.setManaged(false);
-            durationComboBox.setValue(null);
-            // ẩn label
-            labelDuration.setVisible(false);
-            labelDuration.setManaged(false);
-        }
-        serviceDescriptionArea.setText(description);
-
-        updateTotalCost(Integer.parseInt(price.replace(".", "")));
-    }
-
-
-
-    // Cập nhật tổng chi phí dựa trên thời hạn đã chọn
+    // Phương thức updateTotalCost được cải thiện
     private void updateTotalCost(int price) {
-        int duration = durationComboBox.getValue() != null ? durationComboBox.getValue() : 1;
-        double total =  price * duration;
+        try {
+            int duration;
+            if (durationComboBox.isVisible() && durationComboBox.getValue() != null) {
+                duration = durationComboBox.getValue();
+            } else {
+                duration = 1; // Mặc định là 1 cho các dịch vụ không theo tháng
+            }
 
-        NumberFormat format = NumberFormat.getInstance(new Locale("vi", "VN"));
-        String formattedTotal = format.format(total) + " VND";
+            System.out.println("updateTotalCost - Price: " + price + ", Duration: " + duration);
 
-        totalAmountLabel.setText(formattedTotal);
+            long total = (long) price * duration; // Dùng long để tránh overflow
+
+            // Format số theo định dạng Việt Nam
+            NumberFormat format = NumberFormat.getInstance(new Locale("vi", "VN"));
+            String formattedTotal = format.format(total) + " VND";
+
+            System.out.println("Formatted total: " + formattedTotal);
+
+            totalAmountLabel.setText(formattedTotal);
+
+            // Đảm bảo label có thể nhìn thấy
+            totalAmountLabel.setVisible(true);
+            totalAmountLabel.setManaged(true);
+
+        } catch (Exception e) {
+            System.err.println("Error in updateTotalCost: " + e.getMessage());
+            e.printStackTrace();
+            totalAmountLabel.setText("Lỗi tính toán");
+        }
     }
 
-    public void savePayment(String serviceName) throws SQLException {
+    private int parsePrice(String priceString) {
+        if (priceString == null || priceString.trim().isEmpty()) {
+            return 0;
+        }
+
+        try {
+            // Loại bỏ tất cả ký tự không phải số
+            String cleanPrice = priceString.replaceAll("[^0-9]", "");
+
+            if (cleanPrice.isEmpty()) {
+                return 0;
+            }
+
+            return Integer.parseInt(cleanPrice);
+        } catch (NumberFormatException e) {
+            System.err.println("Cannot parse price: " + priceString);
+            return 0;
+        }
+    }
+
+    // Cải thiện phương thức setServiceInfo
+    public void setServiceInfo(String name, String price, String description, String unit) {
+        try {
+            serviceNameField.setText(name);
+            servicePriceField.setText(price + " / " + unit);
+
+            // Xử lý hiển thị duration dựa trên unit
+            if(!unit.equalsIgnoreCase("thang")){
+                durationComboBox.setVisible(false);
+                durationComboBox.setManaged(false);
+                labelDuration.setVisible(false);
+                labelDuration.setManaged(false);
+            } else {
+                durationComboBox.setVisible(true);
+                durationComboBox.setManaged(true);
+                labelDuration.setVisible(true);
+                labelDuration.setManaged(true);
+            }
+
+            serviceDescriptionArea.setText(description);
+
+            // SỬA LỖI: Parse price an toàn - loại bỏ tất cả dấu phẩy và dấu chấm
+            String cleanPrice = price.replaceAll("[.,]", "").trim();
+            System.out.println("Original price: " + price);
+            System.out.println("Clean price: " + cleanPrice);
+
+            int priceValue = Integer.parseInt(cleanPrice);
+            updateTotalCost(priceValue);
+
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing price: " + price);
+            e.printStackTrace();
+            totalAmountLabel.setText("Lỗi giá: " + price);
+        } catch (Exception e) {
+            System.err.println("Error in setServiceInfo: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Thêm phương thức debug để kiểm tra
+    public void debugLabelStatus() {
+        System.out.println("=== DEBUG LABEL STATUS ===");
+        System.out.println("totalAmountLabel.isVisible(): " + totalAmountLabel.isVisible());
+        System.out.println("totalAmountLabel.isManaged(): " + totalAmountLabel.isManaged());
+        System.out.println("totalAmountLabel.getText(): " + totalAmountLabel.getText());
+        System.out.println("durationComboBox.getValue(): " + durationComboBox.getValue());
+        System.out.println("durationComboBox.isVisible(): " + durationComboBox.isVisible());
+        System.out.println("servicePriceField.getText(): " + servicePriceField.getText());
+        System.out.println("========================");
+    }
+
+    public void savePayment(String serviceName, double totalAmount, int billedToStr) throws SQLException {
         int serviceId = new ServiceDAO().getServiceIdByServiceName(serviceName);
         int userID = new UserDAO().getIdByUserName(Session.getUserName());
         int residentID = new ResidentDAO().getResidentIDByUserID(userID);
@@ -195,10 +282,10 @@ public class ServiceInformationController implements Initializable {
 
         boolean saveServiceRegistration = new ServiceRegistrationDAO().addServiceRegistration(serviceId, apartmentId, startDate, endDate, "active", residentID, residentID);
 
-//                boolean saveBill = new BillsDAO().addBill(new Bills(0,apartmentId, startDate, totalAmount, "paid", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), Integer.parseInt(billedToStr)));
+        boolean saveBill = new BillsDAO().addBill(new Bills(0,apartmentId, startDate, totalAmount, "paid", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), billedToStr));
 
 
-        if(saveServiceRegistration){
+        if(saveServiceRegistration && saveBill){
             System.out.println("Save successful");
         }
         else{
@@ -211,7 +298,10 @@ public class ServiceInformationController implements Initializable {
             try {
                 // Lấy thông tin cần thiết
                 String apartmentId = apartmentIdField.getText();
-                String rawAmount = totalAmountLabel.getText().replace("VND", "").replace(".", "").trim();
+                String rawAmount = totalAmountLabel.getText()
+                        .replace("VND", "")
+                        .replaceAll("[.,\\s]", "")
+                        .trim();
                 double totalAmount = Double.parseDouble(rawAmount);
                 String billedToStr = billedToField.getText();
                 String serviceName = serviceNameField.getText();
@@ -222,8 +312,7 @@ public class ServiceInformationController implements Initializable {
 
                 // Khởi động server để nhận callback
                 VnpayReturnServer.start();
-
-                // Đóng popup đăng ký
+// Đóng popup đăng ký
                 Stage stage = (Stage) serviceNameField.getScene().getWindow();
                 stage.close();
 
@@ -231,7 +320,7 @@ public class ServiceInformationController implements Initializable {
                 long price = (long) totalAmount;
                 JsonObject paymentResult = new Vnpay().handlePayVnpay(price);
                 // lưu dịch vụ nào được đăng ký bởi người dùng nào
-                savePayment(serviceName);
+                savePayment(serviceName, totalAmount, getUserIdFromName(billedToStr));
 //                int serviceId = new ServiceDAO().getServiceIdByServiceName(serviceName);
 //                int userID = new UserDAO().getIdByUserName(Session.getUserName());
 //                int residentID = new ResidentDAO().getResidentIDByUserID(userID);
@@ -280,10 +369,9 @@ public class ServiceInformationController implements Initializable {
                 double totalAmount = Double.parseDouble(rawAmount);
                 String billedToStr = billedToField.getText();
                 String serviceName = serviceNameField.getText();
-
                 paymentService.processTransferPayment(apartmentId, totalAmount, getUserIdFromName(billedToStr), serviceName);
 
-                savePayment(serviceName);
+                savePayment(serviceName, totalAmount, getUserIdFromName(billedToStr));
                 // Hiển thị QR code
                 showQRCodeForTransfer();
 
@@ -351,7 +439,6 @@ public class ServiceInformationController implements Initializable {
         HboxButton.getChildren().add(confirmPaymentButton);
         this.confirmPaymentButton = confirmPaymentButton;
     }
-
     private void showPaymentSuccess() {
         // Ẩn QR code
         anchorPaneQrCode.setVisible(false);
@@ -383,4 +470,5 @@ public class ServiceInformationController implements Initializable {
         Stage stage = (Stage) serviceNameField.getScene().getWindow();
         stage.close();
     }
+
 }

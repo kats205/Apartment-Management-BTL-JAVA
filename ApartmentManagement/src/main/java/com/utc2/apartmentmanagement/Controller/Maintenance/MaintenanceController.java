@@ -4,9 +4,13 @@ import com.utc2.apartmentmanagement.Controller.User.UserDashboardController;
 import com.utc2.apartmentmanagement.DAO.Apartment.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.Maintenance.MaintenanceRequestDAO;
 import com.utc2.apartmentmanagement.DAO.User.UserDAO;
+import com.utc2.apartmentmanagement.Model.Maintenance.MaintenanceRequest;
 import com.utc2.apartmentmanagement.Model.Session;
+import com.utc2.apartmentmanagement.Utils.AlertBox;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -15,8 +19,15 @@ import javafx.scene.control.Alert.AlertType;
 import lombok.Setter;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 public class MaintenanceController {
@@ -132,45 +143,60 @@ public class MaintenanceController {
     @FXML
     private void handleSubmit() {
         // Validate required fields
-        if (!validateForm()) {
-            return;
+        if (!validateForm()) return;
+
+        try {
+            // 1. Thu thập dữ liệu
+            String apartmentID = apartmentIdTextField.getText();
+            String residentID = residentIdTextField.getText();
+
+            String issueType = issueTypeComboBox.getValue();
+            String priorityText = priorityComboBox.getValue();
+            String priority = extractPriority(priorityText);
+            String location = locationComboBox.getValue();
+            String subject = subjectTextField.getText();
+            String description = descriptionTextArea.getText();
+            String phoneNumber = phoneNumberTextField.getText();
+            String availableTime = availableTimeComboBox.getValue();
+            LocalDate requestDate = requestDatePicker.getValue();
+
+            // 2. Insert bản ghi maintenance request
+            MaintenanceRequestDAO requestDAO = new MaintenanceRequestDAO();
+            int requestId = requestDAO.saveMaintenaceRequest(
+                    apartmentID, residentID, requestDate,
+                    location + " - " + description, priority, issueType
+            );
+
+            // 3. Nếu có ảnh, lưu ảnh và cập nhật image_filename
+            if (selectedFile != null) {
+                Path destinationDir = Paths.get("uploads", "maintenance");
+                if (!Files.exists(destinationDir)) {
+                    Files.createDirectories(destinationDir);
+                }
+
+                String fileExtension = getFileExtension(selectedFile.getName());
+                String newFileName = "request_" + requestId + "_" + System.currentTimeMillis() + fileExtension;
+                Path destinationFile = destinationDir.resolve(newFileName);
+
+                Files.copy(selectedFile.toPath(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+                requestDAO.updateImageFileName(requestId, newFileName);
+            }
+
+            // 4. Thông báo
+            showAlert("Success", "Maintenance request submitted successfully!",
+                    "Your request has been recorded and will be processed according to its priority level.",
+                    Alert.AlertType.INFORMATION);
+
+            // 5. Xoá form hoặc quay về dashboard
+            ((Pane) maintenanceView.getParent()).getChildren().clear();
+            parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Something went wrong!", e.getMessage(), Alert.AlertType.ERROR);
         }
-        // Prepare data for database
-        String apartmentID = apartmentIdTextField.getText();
-        String residentID = residentIdTextField.getText();
-
-        String issueType = issueTypeComboBox.getValue();
-        String priorityText = priorityComboBox.getValue();
-        String priority = extractPriority(priorityText);
-        String location = locationComboBox.getValue();
-        String subject = subjectTextField.getText();
-        String description = descriptionTextArea.getText();
-        String phoneNumber = phoneNumberTextField.getText();
-        String availableTime = availableTimeComboBox.getValue();
-        LocalDate requestDate = requestDatePicker.getValue();
-
-        // TODO: Save to database
-        MaintenanceRequestDAO requestDAO = new MaintenanceRequestDAO();
-        requestDAO.saveMaintenaceRequest(apartmentID, residentID, requestDate,location +" - " + description, priority,issueType);
-
-//         request.setApartmentID(apartmentIdTextField.getText());
-//         request.setResidentID(Integer.parseInt(residentIdTextField.getText()));
-//         request.setRequestDate(Date.valueOf(requestDate));
-        // request.setDescription(description);
-        // request.setStatus("pending");
-        // request.setPriority(priority);
-        // maintenanceDAO.save(request);
-
-
-
-        // Show success message
-        showAlert("Success", "Maintenance request submitted successfully!",
-                "Your request has been recorded and will be processed according to its priority level.",
-                AlertType.INFORMATION);
-
-        // Clear form or close window
-        // clearForm();
     }
+
 
     @FXML
     private void handleCancel() {
@@ -292,5 +318,86 @@ public class MaintenanceController {
         availableTimeComboBox.setValue(null);
         photoNameLabel.setText("No file selected");
         selectedFile = null;
+    }
+
+    @FXML
+    public void handleAddFileImage(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Chọn ảnh đại diện");
+
+        // Lọc file chỉ cho phép chọn ảnh
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.bmp")
+        );
+
+        // Mở cửa sổ chọn file ảnh
+        File selectedFile = fileChooser.showOpenDialog(uploadPhotoButton.getScene().getWindow());
+
+        if (selectedFile != null) {
+            try {
+                // 1. Tạo thư mục uploads/avatars nếu chưa tồn tại
+                Path destinationDir = Paths.get("uploads", "maintenance");
+                if (!Files.exists(destinationDir)) {
+                    Files.createDirectories(destinationDir);
+                    System.out.println("Đã tạo thư mục: " + destinationDir.toAbsolutePath());
+                }
+
+                // 2. Lấy thông tin user
+                int userId = new UserDAO().getIdByUserName(Session.getUserName());
+                System.out.println("User ID(Lấy thông tin user): " + userId);
+                // 3. Xóa ảnh cũ (nếu có)
+//                deleteOldAvatar(userId);
+
+                // 4. Tạo tên file mới (unique)
+                String fileExtension = getFileExtension(selectedFile.getName());
+                String newFileName = "user_" + userId + "_" + System.currentTimeMillis() + fileExtension;
+                Path destinationFile = destinationDir.resolve(newFileName);
+
+                // 5. Copy ảnh vào thư mục
+                Files.copy(selectedFile.toPath(), destinationFile, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Đã copy ảnh đến: " + destinationFile.toAbsolutePath());
+
+                // 6. Cập nhật database
+                MaintenanceRequestDAO maintenanceRequestDAO = new MaintenanceRequestDAO();
+                List<MaintenanceRequest> list = maintenanceRequestDAO.getAllMaintenanceRequest();
+                int requestId = getRequestId(list);
+                if (maintenanceRequestDAO.updateImageFileName(requestId, newFileName)) {
+                    System.out.println("Đã cập nhật ảnh đính kèm vào database!");
+
+                    // 9. Thông báo thành công
+                    AlertBox.showAlert("Thành công", "Đã thay đổi ảnh đại diện thành công!");
+
+                } else {
+                    // Nếu cập nhật DB thất bại, xóa file đã copy
+                    Files.deleteIfExists(destinationFile);
+                    AlertBox.showAlert("Lỗi", "Không thể cập nhật ảnh đại diện vào database!");
+                }
+
+            } catch (IOException e) {
+                System.err.println("Lỗi I/O: " + e.getMessage());
+                AlertBox.showAlert("Lỗi", "Không thể lưu file ảnh: " + e.getMessage());
+            } catch (SQLException e) {
+                System.err.println("Lỗi SQL: " + e.getMessage());
+                AlertBox.showAlert("Lỗi", "Lỗi database: " + e.getMessage());
+            }
+        }
+    }
+    public int getRequestId(List<MaintenanceRequest> list){
+        String issueType = issueTypeComboBox.getValue();
+        String priorityText = priorityComboBox.getValue();
+        Date requestDate = Date.valueOf(requestDatePicker.getValue());
+        for(MaintenanceRequest m : list){
+            if(m.getRequestDate().equals(requestDate) && m.getIssueType().equals(issueType) && m.getPriority().equals(priorityText)){
+                return m.getRequestID();
+            }
+        }
+        return -1; // Not found
+    }
+    private String getFileExtension(String fileName) {
+        int lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < fileName.length() - 1) {
+            return fileName.substring(lastDotIndex).toLowerCase();
+        }
+        return ".jpg"; // default extension
     }
 }

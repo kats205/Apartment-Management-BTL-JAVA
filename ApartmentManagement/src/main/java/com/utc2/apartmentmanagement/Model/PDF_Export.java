@@ -36,6 +36,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -279,8 +280,11 @@ public class PDF_Export {
 
     public static String exportApartmentList(String fileName) {
         try {
-            String directoryPath = "src/main/resources/com/utc2/apartmentmanagement/PDF_File/";
-            String filePath = directoryPath + "Apartment_List.pdf";
+            String directoryPath = "PDF/Apartment/";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmm");
+            String timestamp = LocalDateTime.now().format(formatter);
+            fileName = "Apartment_List_" + timestamp + ".pdf";
+            String filePath = directoryPath + fileName;
             createDirectoryIfNeeded(directoryPath);
 
 

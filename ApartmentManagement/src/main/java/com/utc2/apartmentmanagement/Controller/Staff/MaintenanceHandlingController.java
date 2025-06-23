@@ -192,7 +192,7 @@ public class MaintenanceHandlingController implements Initializable {
     private void updateStats(List<Map<String, Object>> data) {
         int total = data.size();
         int inProgress = 0;
-        int completedToday = 0;
+        int todayRequest = 0;
         int urgent = 0;
 
         LocalDate today = LocalDate.now();
@@ -208,20 +208,21 @@ public class MaintenanceHandlingController implements Initializable {
             if ("urgent".equalsIgnoreCase(priority)) {
                 urgent++;
             }
-
-            Object compDateObj = row.get("completion_date");
-            if (compDateObj instanceof Date) {
-                LocalDate completionDate = ((Date) compDateObj).toLocalDate();
-                if (completionDate.equals(today)) {
-                    completedToday++;
+            System.out.println("Request Date: " + row.get("request_date"));
+            Object dateObj = row.get("request_date");
+            if (dateObj instanceof Date) {
+                LocalDate requestDate = ((Date) dateObj).toLocalDate();
+                if (requestDate.equals(today)) {
+                    todayRequest++;
                 }
             }
         }
 
+
         totalTasksLabel.setText(String.valueOf(total));
         inProgressLabel.setText(String.valueOf(inProgress));
         urgentTasksLabel.setText(String.valueOf(urgent));
-        completedTodayLabel.setText(String.valueOf(completedToday));
+        completedTodayLabel.setText(String.valueOf(todayRequest));
     }
 
     private void setupTableSelectionListener() {

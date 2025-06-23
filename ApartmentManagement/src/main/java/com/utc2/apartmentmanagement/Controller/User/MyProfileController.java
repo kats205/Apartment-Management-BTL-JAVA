@@ -143,7 +143,7 @@ public class MyProfileController implements Initializable {
     private void loadDefaultAvatar() {
         try {
             // Đường dẫn ảnh mặc định trong resources
-            String defaultImagePath = "/com/utc2/apartmentmanagement/assets/Profile/Admin/IMG_0466.JPG";
+            String defaultImagePath = "com/utc2/apartmentmanagement/assets/Profile/Admin/IMG_0466.JPG";
             Image defaultImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream(defaultImagePath)));
             userAvatar.setImage(defaultImage);
         } catch (Exception e) {

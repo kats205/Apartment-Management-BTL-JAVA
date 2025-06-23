@@ -376,4 +376,26 @@ public class UserDAO implements IUserDAO {
         }
         return list;
     }
+
+    @Override
+    public List<Map<String, String>> listUserAssignTasks() {
+        String sql = "SELECT s.staff_id, u.email, u.full_name, u.phone_number FROM [User] u JOIN Staff s ON s.staff_id = u.user_id";
+        List<Map<String, String>> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, String> rows = new HashMap<>();
+                rows.put("staff_id", rs.getString("staff_id"));
+                rows.put("email", rs.getString("email"));
+                rows.put("full_name", rs.getString("full_name"));
+                rows.put("phone_number", rs.getString("phone_number"));
+                list.add(rows);
+            }
+        }catch(SQLException e){
+            System.out.println("Đã xảy ra lỗi trong quá trình lấy thông tin user phân công nhiệm vụ!!" + e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

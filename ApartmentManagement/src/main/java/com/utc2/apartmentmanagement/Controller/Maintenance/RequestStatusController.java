@@ -6,7 +6,10 @@ import com.utc2.apartmentmanagement.DAO.DatabaseConnection;
 import com.utc2.apartmentmanagement.DAO.Maintenance.MaintenanceRequestDAO;
 import com.utc2.apartmentmanagement.DAO.User.ResidentDAO;
 import com.utc2.apartmentmanagement.DAO.User.UserDAO;
+import com.utc2.apartmentmanagement.Model.Maintenance.MaintenanceRequest;
 import com.utc2.apartmentmanagement.Model.Session;
+import com.utc2.apartmentmanagement.Utils.AlertBox;
+import com.utc2.apartmentmanagement.Utils.PaginationUtils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,14 +19,22 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import lombok.Setter;
 import net.sf.jasperreports.engine.*;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -34,8 +45,8 @@ import java.util.*;
 public class RequestStatusController implements Initializable {
 
     @FXML public Label maintenanceCountLabel;
-    @FXML public ComboBox maintenanceStatusFilter;
-    @FXML public ComboBox maintenancePriorityFilter;
+    @FXML public ComboBox<String> maintenanceStatusFilter;
+    @FXML public ComboBox<String> maintenancePriorityFilter;
     @FXML public TextField   myMaintenanceIssueFilter;
 
     @FXML public TableView<Map<String, Object>> maintenanceTable;
@@ -75,13 +86,13 @@ public class RequestStatusController implements Initializable {
 //    @FXML public TableColumn serviceResolutionDateColumn;
 
     @FXML public AnchorPane RequestStatusView;
+    @FXML public Pagination pagination;
 
     @Setter
     private UserDashboardController parentController;
 
 
     private FilteredList<Map<String, Object>> issueTypeFilteredList;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         loadDataMaintenanceRequest();
@@ -355,6 +366,8 @@ public class RequestStatusController implements Initializable {
         maintenanceIssueTypeColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
     }
+
+
     // TODO: Gán dữ liệu MAINTAINECE REQUEST vào các ô dữ liệu
     private void setUpColumnForComplaint(){
         // Complaint ID
@@ -414,6 +427,8 @@ public class RequestStatusController implements Initializable {
         serviceAssignedStaffColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
     }
+
+
     // TODO: Viết hoa chữ cái đầu
     public static String capitalizeFirstLetter(String input) {
         if (input == null || input.isEmpty()) {
@@ -436,10 +451,13 @@ public class RequestStatusController implements Initializable {
             System.out.println("Không có dữ liệu");
         }
         ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
+//        PaginationUtils.setupPagination(
+//                result,
+//                maintenanceTable,
+//                pagination
+//        );
         maintenanceTable.setItems(observableList);
-
         maintenanceCountLabel.setText("( " + observableList.size() + " total request )");
-
     }
     // TODO: Tổng cộng các yêu câu BẢO TRÌ
     private void getTotalMaintainenceRequest() throws SQLException {
@@ -488,7 +506,11 @@ public class RequestStatusController implements Initializable {
             Object issueType = item.get("issue_type");
             return issueType != null && issueType.toString().toLowerCase().contains(keyword.toLowerCase());
         });
-
+        PaginationUtils.setupPagination(
+                issueTypeFilteredList,
+                maintenanceTable,
+                pagination
+        );
         maintenanceTable.setItems(issueTypeFilteredList);
         maintenanceCountLabel.setText("( " + issueTypeFilteredList.size() + " total request )");
 
@@ -593,6 +615,12 @@ public class RequestStatusController implements Initializable {
         }
         ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
         serviceComplaintsTable.setItems(observableList);
+        PaginationUtils.setupPagination(
+                result,
+                serviceComplaintsTable,
+                pagination
+
+        );
     }
     private void getTotalComplaint() throws SQLException {
         int userID = new UserDAO().getIdByUserName(Session.getUserName());
@@ -627,7 +655,12 @@ public class RequestStatusController implements Initializable {
             System.out.println("Không có dữ liệu");
         }
         serviceComplaintsTable.setItems(observableList);
+        PaginationUtils.setupPagination(
+                result,
+                serviceComplaintsTable,
+                pagination
 
+        );
         int totalFiltered = new ComplaintRequestDAO().getFilteredComplaintCount(residentID, status, type);
         myServiceComplaintsCountLabel.setText("( " + totalFiltered + " total complaint )");
     }
@@ -707,5 +740,7 @@ public class RequestStatusController implements Initializable {
         // Thêm lại dashboard nodes từ controller cha
         parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
+
+
 
 }

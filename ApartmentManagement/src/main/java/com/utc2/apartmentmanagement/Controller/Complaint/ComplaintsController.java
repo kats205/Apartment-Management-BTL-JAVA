@@ -157,4 +157,7 @@ public class ComplaintsController implements Initializable {
         alert.showAndWait();
     }
 
+    public void handleAddFileImage(ActionEvent event) {
+
+    }
 }

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="assignTasksView" prefHeight="655.0" prefWidth="1059.0" style="-fx-background-color: #ffffff;" stylesheets="@../../styles/Manager/EmployeeAssignment.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Manager.EmployeeAssignmentController">
+   <children>
+      <BorderPane fx:id="mainContainer" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <AnchorPane prefHeight="575.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TabPane fx:id="mainTabPane" prefHeight="575.0" prefWidth="1130.0" style="-fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE">
+                     <tabs>
+                        <Tab text="MAINTENANCE REQUESTS">
+                           <content>
+                              <BorderPane prefHeight="492.0" prefWidth="1130.0">
+                                 <left>
+                                    <VBox prefHeight="546.0" prefWidth="387.0" spacing="15" style="-fx-background-color: #ffffff; -fx-border-width: 0 1 0 0;">
+                                       <padding>
+                                          <Insets left="20.0" right="10.0" top="20.0" />
+                                       </padding>
+                                       <children>
+                                          <Label style="-fx-text-fill: #032d4d; -fx-font-size: 18px; -fx-font-weight: bold;" text="Staff List" />
+                                          <HBox alignment="CENTER_LEFT" prefHeight="30.0" spacing="10">
+                                             <children>
+                                                <TextField fx:id="searchStaffMaintenance" prefHeight="30.0" prefWidth="175.0" promptText="Search staff by name..." style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d; -fx-prompt-text-fill: #999999;" />
+                                                <Button onAction="#searchStaffMaintenance" prefHeight="30.0" prefWidth="70.0" styleClass="search-btn" text="Search">
+                                                   <padding>
+                                                      <Insets right="2.0" />
+                                                   </padding></Button>
+                                                <Button mnemonicParsing="false" onAction="#refreshStaffMaintenance" prefHeight="30.0" prefWidth="70.0" styleClass="refresh-btn" text="Refresh">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                          <TableView fx:id="staffTableMaintenance" onMouseClicked="#handleClickTableStaff" prefHeight="366.0" prefWidth="341.0" styleClass="table">
+                                             <columns>
+                                                <TableColumn fx:id="staffNameCol" prefWidth="117.33333015441895" text="Staff's Name" />
+                                                <TableColumn fx:id="staffPhoneCol" prefWidth="120.53337097167969" text="Phone Number" />
+                                                <TableColumn fx:id="staffEmailCol" prefWidth="165.066650390625" text="Email" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </left>
+                                 <right>
+                                    <VBox prefHeight="546.0" prefWidth="331.0" spacing="15">
+                                       <padding>
+                                          <Insets left="10.0" right="20.0" top="20.0" />
+                                       </padding>
+                                       <children>
+                                          <Label style="-fx-text-fill: #032d4d; -fx-font-size: 18px; -fx-font-weight: bold;" text="Pending Maintenance Requests" />
+                                          <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <ComboBox fx:id="priorityFilterMaintenance" prefHeight="30.0" prefWidth="190.0" promptText="Priority" />
+                                                <Button mnemonicParsing="false" onAction="#refreshMaintenanceRequests" prefHeight="30.0" prefWidth="70.0" styleClass="refresh-btn" text="Refresh" />
+                                             </children>
+                                          </HBox>
+                                          <TableView fx:id="maintenanceRequestsTable" onMouseClicked="#handleClickTableView" prefHeight="410.0" prefWidth="269.0" style="-fx-background-color: transparent; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4;">
+                                             <columns>
+                                                <TableColumn fx:id="requestTypeCol" prefWidth="116.00006246566772" text="Type" />
+                                                <TableColumn fx:id="requestIdCol" prefWidth="84.00000762939453" text="Request ID" />
+                                                <TableColumn fx:id="requestStatusCol" prefWidth="100.0" text="Status" />
+                                                <TableColumn fx:id="requestPriorityCol" prefWidth="100.0" text="Priority" />
+                                                <TableColumn fx:id="requestDateCol" prefWidth="100.0" text="Request Date" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </right>
+                                 <center>
+                                    <AnchorPane prefHeight="262.0" prefWidth="480.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <VBox layoutX="20.0" prefHeight="506.0" prefWidth="392.0" spacing="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <padding>
+                                                <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+                                             </padding>
+                                             <children>
+                                                <Label style="-fx-text-fill: #032d4d; -fx-font-size: 18px; -fx-font-weight: bold;" text="Maintenance Request Assignment" />
+                                                <GridPane hgap="15.0" prefHeight="415.0" vgap="15.0">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints percentWidth="30" />
+                                                      <ColumnConstraints percentWidth="70" />
+                                                   </columnConstraints>
+                                                   <children>
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Request ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                                      <TextField fx:id="requestIdMaintenance" editable="false" prefHeight="25.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Apartment:" GridPane.rowIndex="1" />
+                                                      <TextField fx:id="apartmentIdMaintenance" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Resident:" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="residentNameMaintenance" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Type:" GridPane.rowIndex="3" />
+                                                      <TextField fx:id="issueTypeMaintenance" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Description:" GridPane.rowIndex="4" />
+                                                      <TextArea fx:id="descriptionMaintenance" editable="false" prefRowCount="4" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Priority:" GridPane.rowIndex="5" />
+                                                      <ComboBox fx:id="priorityMaintenance" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                         <items>
+                                                            <FXCollections fx:factory="observableArrayList">
+                                                               <String fx:value="low" />
+                                                               <String fx:value="medium" />
+                                                               <String fx:value="high" />
+                                                               <String fx:value="urgent" />
+                                                            </FXCollections>
+                                                         </items>
+                                                      </ComboBox>
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Status:" GridPane.rowIndex="6" />
+                                                      <ComboBox fx:id="statusMaintenance" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                         <items>
+                                                            <FXCollections fx:factory="observableArrayList">
+                                                               <String fx:value="pending" />
+                                                               <String fx:value="assigned" />
+                                                               <String fx:value="in_progress" />
+                                                               <String fx:value="completed" />
+                                                               <String fx:value="cancelled" />
+                                                            </FXCollections>
+                                                         </items>
+                                                      </ComboBox>
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Created Date:" GridPane.rowIndex="7" />
+                                                      <TextField fx:id="createdDateMaintenance" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Assigned Staff:" GridPane.rowIndex="8" />
+                                                      <Label fx:id="selectedStaffMaintenance" style="-fx-text-fill: #0a5a8a; -fx-font-size: 14px; -fx-font-weight: bold;" text="None selected" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                   </children>
+                                                   <rowConstraints>
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="60.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                   </rowConstraints>
+                                                </GridPane>
+                                                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="440.0" spacing="15">
+                                                   <children>
+                                                      <Button fx:id="assignStaffBtn" prefHeight="30.0" prefWidth="120" styleClass="assign-btn" text="Assign Staff" />
+                                                      <Button onAction="#clearSelectionMaintenance" prefHeight="30.0" prefWidth="120" styleClass="clear-btn" text="Clear Selection" />
+                                                      <Button mnemonicParsing="false" onAction="#cancelMaintenance" prefHeight="30.0" prefWidth="100.0" styleClass="cancel-button" text="Cancel" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </center>
+                              </BorderPane>
+                           </content>
+                        </Tab>
+                        <Tab text="COMPLAINTS">
+                           <content>
+                              <BorderPane prefHeight="514.0" prefWidth="1130.0">
+                                 <left>
+                                    <VBox prefHeight="546.0" prefWidth="387.0" spacing="15">
+                                       <padding>
+                                          <Insets bottom="20.0" left="20.0" right="10.0" top="20.0" />
+                                       </padding>
+                                       <children>
+                                          <Label style="-fx-text-fill: #032d4d; -fx-font-size: 18px; -fx-font-weight: bold;" text="Staff List" />
+                                          <HBox alignment="CENTER_LEFT" prefHeight="30.0" spacing="10">
+                                             <children>
+                                                <TextField fx:id="searchStaffMaintenance" prefHeight="30.0" prefWidth="175.0" promptText="Search staff by name..." style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d; -fx-prompt-text-fill: #999999;" />
+                                                <Button onAction="#searchStaffMaintenance" prefHeight="30.0" prefWidth="70.0" styleClass="search-btn" text="Search">
+                                                   <padding>
+                                                      <Insets right="2.0" />
+                                                   </padding>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#refreshStaffMaintenance" prefHeight="30.0" prefWidth="70.0" styleClass="refresh-btn" text="Refresh" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0" spacing="10.0" />
+                                          <TableView fx:id="staffTableComplaint" prefHeight="447.0" prefWidth="357.0" style="-fx-background-color: transparent; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4;">
+                                             <columns>
+                                                <TableColumn fx:id="staffNameColComplaint" prefWidth="150.0" text="Staff's Name" />
+                                                <TableColumn fx:id="staffRoleColComplaint" prefWidth="80.80007934570312" text="Role" />
+                                                <TableColumn fx:id="staffEmailColComplaint" prefWidth="139.199951171875" text="Email" />
+                                                <TableColumn fx:id="staffPhoneColComplaint" prefWidth="100.0" text="Phone Number" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </left>
+                                 <right>
+                                    <VBox prefHeight="491.0" prefWidth="331.0" spacing="15">
+                                       <padding>
+                                          <Insets bottom="20.0" left="10.0" right="20.0" top="20.0" />
+                                       </padding>
+                                       <children>
+                                          <Label style="-fx-text-fill: #032d4d; -fx-font-size: 18px; -fx-font-weight: bold;" text="Pending Complaints" />
+                                          <HBox prefHeight="30.0" prefWidth="200.0" spacing="10.0">
+                                             <children>
+                                                <ComboBox fx:id="priorityFilterComplaint" prefHeight="30.0" prefWidth="190.0" promptText="Priority" />
+                                                <Button mnemonicParsing="false" onAction="#refreshComplaints" prefHeight="30.0" prefWidth="70.0" styleClass="refresh-btn" text="Refresh" />
+                                             </children>
+                                          </HBox>
+                                          <TableView fx:id="complaintsTable" prefHeight="410.0" prefWidth="269.0" style="-fx-background-color: transparent; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4;">
+                                             <columns>
+                                                <TableColumn fx:id="complaintIdCol" prefWidth="100.0" text="Complaint ID" />
+                                                <TableColumn fx:id="complaintTypeCol" prefWidth="100.0" text="Type" />
+                                                <TableColumn fx:id="complaintStatusCol" prefWidth="100.0" text="Status" />
+                                                <TableColumn fx:id="complaintPriorityCol" prefWidth="100.0" text="Priority" />
+                                                <TableColumn fx:id="submitDateCol" prefWidth="100.0" text="Submit Date" />
+                                                <TableColumn fx:id="completionDateColComplaint" prefWidth="100.0" text="Completion Date" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </right>
+                                 <center>
+                                    <AnchorPane prefHeight="522.0" prefWidth="432.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <VBox prefHeight="545.0" prefWidth="478.0" spacing="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <padding>
+                                                <Insets left="20.0" right="20.0" top="20.0" />
+                                             </padding>
+                                             <children>
+                                                <Label style="-fx-text-fill: #032d4d; -fx-font-size: 18px; -fx-font-weight: bold;" text="Complaint Assignment" />
+                                                <GridPane hgap="15" prefHeight="415.0" prefWidth="438.0" vgap="15">
+                                                   <columnConstraints>
+                                                      <ColumnConstraints percentWidth="30" />
+                                                      <ColumnConstraints percentWidth="70" />
+                                                   </columnConstraints>
+                                                   <children>
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Complaint ID:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                                      <TextField fx:id="complaintId" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Apartment:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                                      <TextField fx:id="apartmentIdComplaint" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Resident:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="residentNameComplaint" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                                      <TextField fx:id="typeComplaint" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                                      <TextArea fx:id="descriptionComplaint" editable="false" prefHeight="196.0" prefRowCount="4" prefWidth="296.0" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Priority:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                                      <ComboBox fx:id="priorityComplaint" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                         <items>
+                                                            <FXCollections fx:factory="observableArrayList">
+                                                               <String fx:value="low" />
+                                                               <String fx:value="medium" />
+                                                               <String fx:value="high" />
+                                                               <String fx:value="urgent" />
+                                                            </FXCollections>
+                                                         </items>
+                                                      </ComboBox>
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                                      <ComboBox fx:id="statusComplaint" prefWidth="200" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                         <items>
+                                                            <FXCollections fx:factory="observableArrayList">
+                                                               <String fx:value="pending" />
+                                                               <String fx:value="assigned" />
+                                                               <String fx:value="in_progress" />
+                                                               <String fx:value="completed" />
+                                                               <String fx:value="cancelled" />
+                                                            </FXCollections>
+                                                         </items>
+                                                      </ComboBox>
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Created Date:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                                                      <TextField fx:id="createdDateComplaint" editable="false" style="-fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 13px; -fx-text-fill: #032d4d;" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                      <Label style="-fx-text-fill: #032d4d; -fx-font-size: 13px; -fx-font-weight: bold;" text="Assigned Staff:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                                                      <Label fx:id="selectedStaffComplaint" style="-fx-text-fill: #0a5a8a; -fx-font-size: 14px; -fx-font-weight: bold;" text="None selected" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                   </children>
+                                                   <rowConstraints>
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="60.0" vgrow="ALWAYS" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                      <RowConstraints prefHeight="30.0" />
+                                                   </rowConstraints>
+                                                </GridPane>
+                                                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="440.0" spacing="15.0">
+                                                   <children>
+                                                      <Button onAction="#assignStaffComplaint" prefHeight="30.0" prefWidth="120" styleClass="assign-btn" text="Assign Staff" />
+                                                      <Button onAction="#clearSelectionComplaint" prefHeight="30.0" prefWidth="120" styleClass="clear-btn" text="Clear Selection" />
+                                                      <Button mnemonicParsing="false" onAction="#cancelComplaint" prefHeight="30.0" prefWidth="100.0" styleClass="cancel-button" text="Cancel" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </center>
+                              </BorderPane>
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+         </center>
+         <top>
+            <AnchorPane prefHeight="90.0" prefWidth="1130.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="BOTTOM_CENTER" prefHeight="80.0" prefWidth="1130.0" spacing="5">
+                     <children>
+                        <Label styleClass="main-title" text="EMPLOYEE ASSIGNMENT">
+                           <font>
+                              <Font name="System Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label styleClass="subtitle" text="Manage and assign maintenance requests and complaints to staff members">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

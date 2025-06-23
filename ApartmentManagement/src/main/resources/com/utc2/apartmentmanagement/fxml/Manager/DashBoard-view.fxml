@@ -104,7 +104,7 @@
          <left>
             <AnchorPane fx:id="slider" prefHeight="655.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="275.0" prefWidth="150.0">
+                  <VBox prefHeight="330.0" prefWidth="150.0">
                      <children>
                         <Button fx:id="ApartmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Apartment" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
@@ -162,6 +162,18 @@
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #ffffff;">
                                  <image>
                                     <Image url="@../../assets/Dashboard/friend.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="assignTaskButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Assign Tasks" textAlignment="CENTER" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/Dashboard/HR.png" />
                                  </image>
                               </ImageView>
                            </graphic>

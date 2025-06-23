@@ -21,7 +21,7 @@ public interface IMaintenanceRequestDAO {
     boolean deleteMaintenanceRequestByID(int requestID);
     boolean addMaintenanceRequest(MaintenanceRequest maintenanceRequest);
     int countRequestByStatus(String status) throws SQLException;
-    void saveMaintenaceRequest(String apartmentID, String residentID, LocalDate requestDate, String description,String priority, String issueType);
+    int saveMaintenaceRequest(String apartmentID, String residentID, LocalDate requestDate, String description,String priority, String issueType);
     List<Map<String, Object>> getMaintenanceRequestsByResidentId(int resient_id);
 
     int getTotalMaintenaceRequestByResidentID(int resident_id);
@@ -31,5 +31,6 @@ public interface IMaintenanceRequestDAO {
 
     boolean updateStatus(int requestId, String inProgress);
     List<MaintenanceRequest> getFilterStatusAndPriority(String field, String value);
-
+    boolean updateImageFileName(int requestID, String imageFileName);
+    boolean updateAssignedStaff(int requestID, int staffID);
 }

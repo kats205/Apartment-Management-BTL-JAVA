@@ -7,6 +7,7 @@ import com.utc2.apartmentmanagement.DAO.User.ResidentDAO;
 import com.utc2.apartmentmanagement.DAO.User.UserDAO;
 import com.utc2.apartmentmanagement.Model.Service.Service;
 import com.utc2.apartmentmanagement.Model.Session;
+import com.utc2.apartmentmanagement.Utils.PaginationUtils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -47,6 +48,8 @@ import java.util.List;
 public class ServicesController implements Initializable {
 
     @FXML public Button registerService;
+    @FXML public Tab tabServices;
+    @FXML public Pagination pagination;
     @FXML private Label activeServicesLabel;
     @FXML private Label totalMonthlyCostLabel;
     @FXML private TableView<Map<String, Object>> servicesTableView;
@@ -75,6 +78,7 @@ public class ServicesController implements Initializable {
             throw new RuntimeException(e);
         }
         setupServiceCards();
+        setUpActionTabServices();
     }
 
     private void setUpColumnForRegistration(){
@@ -156,6 +160,11 @@ public class ServicesController implements Initializable {
             }
         }
         totalMonthlyCostLabel.setText(String.format("%,.0f", total) + "VNĐ");
+        PaginationUtils.setupPagination(
+                result,
+                servicesTableView,
+                pagination
+        );
     }
 
 
@@ -333,4 +342,19 @@ public class ServicesController implements Initializable {
     }
 
 
+    public void setUpActionTabServices(){
+        tabServices.setOnSelectionChanged(event -> {
+            if (tabServices.isSelected()) {
+                System.out.println("Tab Services is selected");
+                try {
+                    getRegistrationByResident();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                setupServiceCards();
+            } else {
+                System.out.println("Tab Services is not selected");
+            }
+        });
+    }
 }

@@ -1,6 +1,7 @@
 package com.utc2.apartmentmanagement.Controller;
 
 import com.utc2.apartmentmanagement.Controller.Apartment.ApartmentViewController;
+import com.utc2.apartmentmanagement.Controller.Manager.EmployeeAssignmentController;
 import com.utc2.apartmentmanagement.Controller.Payment.PaymentViewController;
 import com.utc2.apartmentmanagement.Controller.Report.ReportViewController;
 import com.utc2.apartmentmanagement.Controller.Staff.HRViewController;
@@ -51,6 +52,7 @@ public class DashboardController implements Initializable {
     @FXML public Button hrButton;
     @FXML public Button ResidentBtn;
     @FXML private Button ApartmentButton;
+    @FXML private Button  assignTaskButton;
 
     @FXML public Label Occupied;
     @FXML public Label Available;
@@ -102,6 +104,8 @@ public class DashboardController implements Initializable {
         setUpButtonReport();
 
         setUpButtonPayment();
+
+        setUpButtonAssignTask();
 
         List<Map<String,String>> list = new UserDAO().listUserLastLogin();
         InitTableRecentActivities(list);
@@ -169,6 +173,51 @@ public class DashboardController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void setUpButtonAssignTask() {
+        assignTaskButton.setOnAction(event -> {
+            try {
+                loadAssignTaskView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
+    }
+    private void loadAssignTaskView() throws IOException {
+        // Thêm debug để xác định vấn đề
+        System.out.println("Đang cố gắng tải EmployeeAssignment.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Manager/EmployeeAssignment.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+        FXMLLoader loader = new FXMLLoader(url);
+
+        if (url == null) {
+            System.out.println("Không tìm thấy file EmployeeAssignment.fxml");
+            return;
+        }
+
+        Parent assignedTasks = loader.load();
+        EmployeeAssignmentController controller = loader.getController();
+        controller.setParentController(this);  // Gán parent
+
+        // Hiển thị ApartmentView thay cho dashboard
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(assignedTasks); // Hiện phần danh sách căn hộ
+
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(assignedTasks, 0.0);
+        AnchorPane.setRightAnchor(assignedTasks, 0.0);
+        AnchorPane.setBottomAnchor(assignedTasks, 0.0);
+        AnchorPane.setLeftAnchor(assignedTasks, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm ApartmentView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(assignedTasks);
+        System.out.println("Đã thêm EmployeeAssignment vào contentArea");
     }
 
     // setup column for table recent activities
