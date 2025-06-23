@@ -353,7 +353,7 @@ public class MaintenanceRequestDAO implements IMaintenanceRequestDAO {
     @Override
     public List<Map<String, Object>> getMaintenanceRequestsByAssignedStaffId(int staffId) {
             List<Map<String, Object>> requestList = new ArrayList<>();
-        String sql = "SELECT mr.issue_type,mr.status, mr.request_id, mr.apartment_id, mr.description, mr.priority, u.full_name AS staff_name, ru.full_name AS resident_name,mr.request_date FROM MaintenanceRequest mr JOIN Staff s ON mr.assigned_staff_id = s.staff_id JOIN [User] u ON s.staff_id = u.user_id JOIN Resident r ON mr.resident_id = r.resident_id JOIN [User] ru ON r.user_id = ru.user_id WHERE mr.assigned_staff_id = ? AND mr.status IN ('assigned', 'in_progress') ORDER BY CASE WHEN mr.status = 'assigned' THEN 0 WHEN mr.status = 'in_progress' THEN 1 ELSE 2 END, mr.request_date DESC;";
+        String sql = "SELECT mr.issue_type,mr.status,mr.completion_date, mr.request_id, mr.apartment_id, mr.description, mr.priority, u.full_name AS staff_name, ru.full_name AS resident_name,mr.request_date FROM MaintenanceRequest mr JOIN Staff s ON mr.assigned_staff_id = s.staff_id JOIN [User] u ON s.staff_id = u.user_id JOIN Resident r ON mr.resident_id = r.resident_id JOIN [User] ru ON r.user_id = ru.user_id WHERE mr.assigned_staff_id = ? AND mr.status IN ('assigned', 'in_progress') ORDER BY CASE WHEN mr.status = 'assigned' THEN 0 WHEN mr.status = 'in_progress' THEN 1 ELSE 2 END, mr.request_date DESC;";
             try(Connection connection = DatabaseConnection.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)){
                 stmt.setInt(1,staffId);

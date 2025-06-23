@@ -18,10 +18,10 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.utc2.apartmentmanagement.Controller.Maintenance.RequestStatusController.capitalizeFirstLetter;
 
 public class MaintenanceHandlingController implements Initializable {
 
@@ -30,9 +30,23 @@ public class MaintenanceHandlingController implements Initializable {
 
     private StaffDashboardController parentStaffDashboardController;
     // Các nút chức năng
-    @FXML public Button refreshButton;
-    @FXML public Button startTaskButton;
-    @FXML public Button completeTaskButton;
+        @FXML public Button refreshButton;
+        @FXML public Button startTaskButton;
+        @FXML public Button completeTaskButton;
+        // Lọc
+        @FXML public Button allFilter;
+        @FXML public Button urgentFilter;
+        @FXML public Button highFilter;
+        @FXML public Button mediumFilter;
+        @FXML public Button lowFilter;
+        private List<Map<String, Object>> allRequests = new ArrayList<>();
+
+    // Các Label số lượng
+    @FXML private Label totalTasksLabel;
+    @FXML private Label inProgressLabel;
+    @FXML private Label completedTodayLabel;
+    @FXML private Label urgentTasksLabel;
+
 
     // Các biến của cột
     @FXML public TableView<Map<String,Object>> maintenanceTasksTable;
@@ -140,13 +154,85 @@ public class MaintenanceHandlingController implements Initializable {
         refreshButton.setOnAction(event -> {
             loadDataMaintenanceHandling();
         });
+        setupButtonFilter();
 
     }
+        // Setup các Button Filter
+        private void setupButtonFilter(){
+            allFilter.setOnAction(this::filterByPriority);
+            urgentFilter.setOnAction(this::filterByPriority);
+            highFilter.setOnAction(this::filterByPriority);
+            mediumFilter.setOnAction(this::filterByPriority);
+            lowFilter.setOnAction(this::filterByPriority);
+        }
+    @FXML
+    private void filterByPriority(ActionEvent event) {
+        String selectedPriority = ((Button) event.getSource()).getText().toLowerCase();
+
+        List<Map<String, Object>> filtered;
+
+        if (selectedPriority.equals("all")) {
+            filtered = allRequests;
+        } else {
+            filtered = allRequests.stream()
+                    .filter(req -> selectedPriority.equalsIgnoreCase((String) req.get("priority")))
+                    .collect(Collectors.toList());
+        }
+
+        System.out.println("Selected priority: " + selectedPriority);
+        System.out.println("Total original: " + allRequests.size());
+        System.out.println("Filtered: " + filtered.size());
+
+        maintenanceTasksTable.getItems().setAll(filtered);
+
+        updateStats(filtered); // Update thông số
+    }
+
+    // Thay đổi trạng thái khi lọc
+    private void updateStats(List<Map<String, Object>> data) {
+        int total = data.size();
+        int inProgress = 0;
+        int completedToday = 0;
+        int urgent = 0;
+
+        LocalDate today = LocalDate.now();
+
+        for (Map<String, Object> row : data) {
+            String status = (String) row.get("status");
+            String priority = (String) row.get("priority");
+
+            if ("in_progress".equalsIgnoreCase(status)) {
+                inProgress++;
+            }
+
+            if ("urgent".equalsIgnoreCase(priority)) {
+                urgent++;
+            }
+
+            Object compDateObj = row.get("completion_date");
+            if (compDateObj instanceof Date) {
+                LocalDate completionDate = ((Date) compDateObj).toLocalDate();
+                if (completionDate.equals(today)) {
+                    completedToday++;
+                }
+            }
+        }
+
+        totalTasksLabel.setText(String.valueOf(total));
+        inProgressLabel.setText(String.valueOf(inProgress));
+        urgentTasksLabel.setText(String.valueOf(urgent));
+        completedTodayLabel.setText(String.valueOf(completedToday));
+    }
+
     private void setupTableSelectionListener() {
         maintenanceTasksTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 String issueType = (String) newSelection.get("issue_type");
-                taskDetailsArea.setText("Issue Type: " + issueType);
+                String description = (String) newSelection.get("description");
+                String  priority = (String) newSelection.get("priority");
+                taskDetailsArea.setText("Issue Type: " + capitalizeFirstLetter(issueType)+"\n" +
+                                        "Detail Description: " + capitalizeFirstLetter(description)+"\n" +
+                                        "Priority: " + capitalizeFirstLetter(priority));
             }
         });
     }
@@ -173,8 +259,13 @@ public class MaintenanceHandlingController implements Initializable {
         }else{
             System.out.println("Không có dữ liệu");
         }
+
+        allRequests = result;
+
         ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
         maintenanceTasksTable.setItems(observableList);
+
+        updateStats(result); // Set dữ liệu
     }
     // Set up cột hiển thị dữ liệu
     private void setUpColumnForMaintenanceHandling(){
