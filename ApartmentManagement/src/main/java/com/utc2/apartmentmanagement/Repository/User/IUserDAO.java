@@ -2,7 +2,10 @@ package com.utc2.apartmentmanagement.Repository.User;
 
 import com.utc2.apartmentmanagement.Model.User.User;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -25,4 +28,6 @@ public interface IUserDAO {
     String getPasswordByUserId(int userId);
     boolean updatePassword(int userId, String newPassword);
     int getUserIdBvEmail(String email);
+    boolean updateLastLogin(String userName, LocalDateTime lastLogin);
+    List<Map<String, String>> listUserLastLogin();
 }

@@ -4,12 +4,17 @@ import com.utc2.apartmentmanagement.Controller.Apartment.ApartmentViewController
 import com.utc2.apartmentmanagement.Controller.Payment.PaymentViewController;
 import com.utc2.apartmentmanagement.Controller.Report.ReportViewController;
 import com.utc2.apartmentmanagement.Controller.Staff.HRViewController;
+import com.utc2.apartmentmanagement.Controller.Staff.ResidentsInfoController;
 import com.utc2.apartmentmanagement.Controller.User.MyProfileController;
 import com.utc2.apartmentmanagement.DAO.Apartment.ApartmentDAO;
 import com.utc2.apartmentmanagement.DAO.Maintenance.MaintenanceRequestDAO;
 import com.utc2.apartmentmanagement.DAO.Billing.PaymentDAO;
+import com.utc2.apartmentmanagement.DAO.User.UserDAO;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +36,7 @@ import lombok.Getter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -43,6 +49,7 @@ public class DashboardController implements Initializable {
     @FXML public Button payment;
     @FXML public Button reportButton;
     @FXML public Button hrButton;
+    @FXML public Button ResidentBtn;
     @FXML private Button ApartmentButton;
 
     @FXML public Label Occupied;
@@ -57,14 +64,16 @@ public class DashboardController implements Initializable {
     @FXML private Label Menu;
     @FXML private Label MenuBack;
 
-    @FXML public TableView<Map<String, Object>> recentActivitiesTable;
-    @FXML public TableColumn<Map<String, Object>, String> roleColumn;
-    @FXML public TableColumn<Map<String, Object>, LocalDate> dateColumn;
-    @FXML public TableColumn<Map<String, Object>, LocalDate> timeColumn;
-    @FXML public TableColumn<Map<String, Object>, LocalDate> activityColumn;
-    @FXML public TableColumn<Map<String, Object>, String> userColumn;
-    @FXML public TableColumn<Map<String, Object>, Boolean> statusColumn;
-    @FXML public TableColumn actionColumn;
+    @FXML public TableView<Map<String, String>> recentActivitiesTable;
+    @FXML public TableColumn<Map<String, String>, String> roleColumn;
+    @FXML public TableColumn<Map<String, String>, String> dateColumn;
+    @FXML public TableColumn<Map<String, String>, String> timeColumn;
+    @FXML public TableColumn<Map<String, String>, String> activityColumn;
+    @FXML public TableColumn<Map<String, String>, String> userColumn;
+    @FXML public TableColumn<Map<String, String>, String> statusColumn;
+    @FXML public TableColumn<Map<String, String>, String> actionColumn;
+
+
 
     @Getter
     @FXML private AnchorPane contentArea;
@@ -94,7 +103,8 @@ public class DashboardController implements Initializable {
 
         setUpButtonPayment();
 
-
+        List<Map<String,String>> list = new UserDAO().listUserLastLogin();
+        InitTableRecentActivities(list);
         // Các thiết lập khác...
         ApartmentDAO apartment = new ApartmentDAO();
         try {
@@ -160,6 +170,37 @@ public class DashboardController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    // setup column for table recent activities
+    public void setUpColRecentActivities(){
+        roleColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("Role")));
+        roleColumn.setStyle("-fx-alignment: CENTER;");
+
+        dateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("Date")));
+        dateColumn.setStyle("-fx-alignment: CENTER; ");
+
+        timeColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("Time")));
+        timeColumn.setStyle("-fx-alignment: CENTER; ");
+
+        activityColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("Activity")));
+        activityColumn.setStyle("-fx-alignment: CENTER; ");
+
+        userColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("username")));
+        userColumn.setStyle("-fx-alignment: CENTER; ");
+
+        statusColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("Status")));
+        statusColumn.setStyle("-fx-alignment: CENTER; ");
+
+        actionColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get("Action")));
+        actionColumn.setStyle("-fx-alignment: CENTER; ");
+
+    }
+    public void InitTableRecentActivities(List<Map<String,String>> listRecentActivities){
+        setUpColRecentActivities();
+        ObservableList<Map<String, String>> list = FXCollections.observableList(listRecentActivities);
+        recentActivitiesTable.setItems(list);
+    }
+
 
     private void setUpButtonApartment(){
         // Thiết lập sự kiện cho nút ApartmentButton
@@ -399,7 +440,7 @@ public class DashboardController implements Initializable {
 
     public void loadHRView(ActionEvent actionEvent) throws IOException {
         System.out.println("Đang cố gắng tải HRView.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/User/HRView.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Manager/HRView.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
@@ -408,21 +449,51 @@ public class DashboardController implements Initializable {
             return;
         }
 
-        Parent ReportView = loader.load();
+        Parent HRView = loader.load();
         HRViewController controller = loader.getController();
         controller.setParentController(this);  // Gán parent
         // In ra để debug
         System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
 
         // Thiết lập kích thước view để lấp đầy contentArea
-        AnchorPane.setTopAnchor(ReportView, 0.0);
-        AnchorPane.setRightAnchor(ReportView, 0.0);
-        AnchorPane.setBottomAnchor(ReportView, 0.0);
-        AnchorPane.setLeftAnchor(ReportView, 0.0);
+        AnchorPane.setTopAnchor(HRView, 0.0);
+        AnchorPane.setRightAnchor(HRView, 0.0);
+        AnchorPane.setBottomAnchor(HRView, 0.0);
+        AnchorPane.setLeftAnchor(HRView, 0.0);
 
         // Xóa tất cả các view hiện tại và thêm HRView
         contentArea.getChildren().clear();
-        contentArea.getChildren().add(ReportView);
+        contentArea.getChildren().add(HRView);
         System.out.println("Đã thêm HRView vào contentArea");
+    }
+
+    @FXML
+    public void loadResidentView(ActionEvent actionEvent) throws IOException {
+        System.out.println("Đang cố gắng tải ResidentsInfo.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Manager/ResidentsInfo.fxml");
+        System.out.println("URL: " + (url != null ? url.toString() : "null"));
+
+        FXMLLoader loader = new FXMLLoader(url);
+        if (url == null) {
+            System.out.println("Không tìm thấy file ResidentsInfo.fxml");
+            return;
+        }
+
+        Parent ResidentsInfo = loader.load();
+        ResidentsInfoController controller = loader.getController();
+        controller.setParentController(this);  // Gán parent
+        // In ra để debug
+        System.out.println("ContentArea: " + (contentArea != null ? "không null" : "null"));
+
+        // Thiết lập kích thước view để lấp đầy contentArea
+        AnchorPane.setTopAnchor(ResidentsInfo, 0.0);
+        AnchorPane.setRightAnchor(ResidentsInfo, 0.0);
+        AnchorPane.setBottomAnchor(ResidentsInfo, 0.0);
+        AnchorPane.setLeftAnchor(ResidentsInfo, 0.0);
+
+        // Xóa tất cả các view hiện tại và thêm HRView
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(ResidentsInfo);
+        System.out.println("Đã thêm ResidentsInfo vào contentArea");
     }
 }

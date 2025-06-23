@@ -20,6 +20,8 @@ import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import static com.utc2.apartmentmanagement.Utils.AlertBox.showAlert;
@@ -103,6 +105,16 @@ public class LoginController {
 
     private boolean isPasswordVisible = false;
 
+    public void saveLastLogin(String userName, LocalDateTime lastLogin){
+        UserDAO userDAO = new UserDAO();
+        if(userDAO.updateLastLogin(userName, lastLogin)){
+            System.out.println("Cập nhật thời gian đăng nhập thành công!!!");
+        }
+        else{
+            System.out.println("Đã xảy ra lỗi!");
+        }
+    }
+
     public void handleLogin(ActionEvent event) {
         String userName = usernameField.getText();
         String password = passwordField.getText();
@@ -122,6 +134,7 @@ public class LoginController {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formatted = now.format(formatter);
+
         Session.setLastLogin(formatted);
         Session.setUserName(userName);
         Session.setPassWord(password);
@@ -139,6 +152,9 @@ public class LoginController {
             showAlert("Thông báo!", "Tên đăng nhập hoặc mật khẩu không chính xác!");
             return;
         }
+        // cập nhật thời gian đăng nhâp cho user
+        LocalDateTime lastLogin = LocalDateTime.parse(formatted, formatter);
+        saveLastLogin(userName, lastLogin);
         switch (role_id) {
             case 1 -> {
                 try {

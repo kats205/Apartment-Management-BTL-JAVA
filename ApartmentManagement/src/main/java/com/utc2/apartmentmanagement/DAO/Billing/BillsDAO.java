@@ -19,8 +19,8 @@ public class BillsDAO implements IBillDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 billsList.add(new Bills(rs.getInt("bill_id"), rs.getString("apartment_id"), rs.getDate("billing_date"),
-                         rs.getDouble("total_amount"), rs.getString("status"), rs.getDouble("late_fee"),
-                        rs.getDate("created_at"), rs.getDate("updated_at")));
+                         rs.getDouble("total_amount"), rs.getString("status"),
+                        rs.getDate("created_at"), rs.getDate("updated_at"),rs.getInt("billed_to")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -30,18 +30,17 @@ public class BillsDAO implements IBillDAO {
 
     @Override
     public boolean addBill(Bills bill) {
-        String sql = "INSERT INTO Bill(bill_id, apartment_id, billing_date, due_date, total_amount, status, late_fee, created_at, updated_at)" +
-                "VALUES ( ? , ? , ? , ? , ?, ? , ? , ? , ?)";
+        String sql = "INSERT INTO Bill(apartment_id, billing_date, total_amount, status, created_at, updated_at, billed_to)" +
+                "VALUES ( ? , ? , ? , ? , ? , ? , ?)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, bill.getBillID());
-            stmt.setString(2, bill.getApartmentID());
-            stmt.setDate(3, bill.getBillingDate());
-            stmt.setDouble(5, bill.getTotalAmount());
-            stmt.setString(6, bill.getStatus());
-            stmt.setDouble(7, bill.getLate_fee());
-            stmt.setDate(8, Date.valueOf(LocalDate.now()));
-            stmt.setDate(9, Date.valueOf(LocalDate.now()));
+            stmt.setString(1, bill.getApartmentID());
+            stmt.setDate(2, bill.getBillingDate());
+            stmt.setDouble(3, bill.getTotalAmount());
+            stmt.setString(4, bill.getStatus());
+            stmt.setDate(5, Date.valueOf(LocalDate.now()));
+            stmt.setDate(6, Date.valueOf(LocalDate.now()));
+            stmt.setInt(7, bill.getBilled_to());
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,9 +61,9 @@ public class BillsDAO implements IBillDAO {
                         rs.getDate("billing_date"),
                         rs.getDouble("total_amount"),
                         rs.getString("status"),
-                        rs.getDouble("late_fee"),
                         rs.getDate("created_at"),
-                        rs.getDate("updated_at"));
+                        rs.getDate("updated_at"),
+                        rs.getInt("billed_to"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

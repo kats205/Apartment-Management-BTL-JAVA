@@ -9,6 +9,7 @@ import com.utc2.apartmentmanagement.Model.PDF_Export;
 import com.utc2.apartmentmanagement.Model.Report.Report;
 import com.utc2.apartmentmanagement.Model.Session;
 import com.utc2.apartmentmanagement.Utils.AlertBox;
+import com.utc2.apartmentmanagement.Utils.PaginationUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,6 +40,7 @@ import java.util.ResourceBundle;
 public class ApartmentViewController implements Initializable {
     @FXML
     public AnchorPane apartmentView;
+    @FXML public Pagination pagination;
     @FXML
     private ComboBox<String> buildingComboBox;
     @FXML
@@ -100,7 +102,7 @@ public class ApartmentViewController implements Initializable {
     @FXML
     private Button closeButton;
 
-
+    private static final int ROWS_PER_PAGE = 10;
     private ContextMenu currentContextMenu;
 
     @Override
@@ -184,12 +186,20 @@ public class ApartmentViewController implements Initializable {
         getValueCol();
         List<Apartment> apartmentList = new ApartmentDAO().getAllApartments();
         loadTableListView(apartmentList);
+
     }
 
     private void loadTableListView(List<Apartment> apartmentList) {
         ObservableList<Apartment> apartmentListOb = FXCollections.observableArrayList();
         apartmentListOb.addAll(apartmentList);
         apartmentTable.setItems(apartmentListOb);
+        PaginationUtils.setupPagination(
+                apartmentList,
+                apartmentTable,
+                pagination,
+                apartmentCountLabel,
+                noContentLabel
+        );
         apartmentCountLabel.setText(String.valueOf(apartmentList.size()));
     }
 
@@ -198,6 +208,13 @@ public class ApartmentViewController implements Initializable {
         apartmentList.add(apartment);
         apartmentTable.setItems(apartmentList);
         apartmentCountLabel.setText("1");
+        PaginationUtils.setupPagination(
+                apartmentList,
+                apartmentTable,
+                pagination,
+                apartmentCountLabel,
+                noContentLabel
+        );
     }
 
     private void loadIdCB() {
@@ -260,7 +277,7 @@ public class ApartmentViewController implements Initializable {
             LocalDateTime dateTime = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
             String formattedDateTime = dateTime.format(formatter);
-            Report report = new Report("Báo cáo căn hộ", LocalDate.now(), user_id, formattedDateTime, filePath, LocalDate.now(), LocalDate.now());
+            Report report = new Report("Bao cao can ho", LocalDate.now(), user_id, formattedDateTime, filePath, LocalDate.now(), LocalDate.now());
             new ReportDAO().saveReport(report);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

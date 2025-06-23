@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -31,17 +32,11 @@ import java.util.*;
 
 public class RequestStatusController implements Initializable {
 
-    @FXML public TabPane complaintsTabPane;
     @FXML public Label maintenanceCountLabel;
-    @FXML public ComboBox maintenanceStatusFilter;
-    @FXML public ComboBox maintenancePriorityFilter;
-    @FXML public TextField maintenanceApartmentFilter;
-    @FXML public Button filterMaintenanceButton;
-    @FXML public Button clearMaintenanceFilterButton;
-    @FXML public Button refreshMaintenanceButton;
-    @FXML public Button addMaintenanceButton;
-    @FXML public Button editMaintenanceButton;
-    @FXML public Button deleteMaintenanceButton;
+    @FXML public ComboBox<String> maintenanceStatusFilter;
+    @FXML public ComboBox<String> maintenancePriorityFilter;
+    @FXML public TextField   myMaintenanceIssueFilter;
+
     @FXML public TableView<Map<String, Object>> maintenanceTable;
     @FXML public TableColumn<Map<String, Object>, String> maintenanceIdColumn;
     @FXML public TableColumn<Map<String, Object>, String> maintenanceApartmentColumn;
@@ -56,9 +51,9 @@ public class RequestStatusController implements Initializable {
 
     // Các thao tác trên Complaint
     @FXML public Button closeMaintenanceButton;
-    @FXML public Label serviceComplaintsCountLabel;
-    @FXML public ComboBox serviceStatusFilter;
-    @FXML public ComboBox serviceTypeFilter;
+    @FXML public Label myServiceComplaintsCountLabel;
+    @FXML public ComboBox<String> serviceStatusFilter;
+    @FXML public ComboBox<String> serviceTypeFilter;
     @FXML public TextField serviceApartmentFilter;
     @FXML public Button filterServiceButton;
     @FXML public Button clearServiceFilterButton;
@@ -83,6 +78,9 @@ public class RequestStatusController implements Initializable {
     @Setter
     private UserDashboardController parentController;
 
+
+    private FilteredList<Map<String, Object>> issueTypeFilteredList;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         loadDataMaintenanceRequest();
@@ -96,12 +94,21 @@ public class RequestStatusController implements Initializable {
 
         setUpConTextMenuMaintenanceMenu(); // Load Maintenance menu hỗ trợ
         setUpConTextMenuComplaintMenu(); // Load Complaint menu hỗ trợ
+
+        setupFilterListeners();
+        setupAutoServiceComplaintFilterListeners();
+
+    }
+    // Export PDF
+    private void exportPDFMaintenance(){
+
     }
     // TODO: Load Maintenance menu hỗ trợ
     private void setUpConTextMenuMaintenanceMenu(){
         ContextMenu contextMenu = new ContextMenu();
 
         MenuItem deleteItem = new MenuItem("Delete");
+        MenuItem exportFile = new MenuItem("Export PDF");
         deleteItem.setOnAction(event -> {
             try {
                 handleDeleteMaintenance();
@@ -109,8 +116,11 @@ public class RequestStatusController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        exportFile.setOnAction(event -> {
+            exportPDFMaintenance();
+        });
 
-        contextMenu.getItems().addAll(deleteItem);
+        contextMenu.getItems().addAll(deleteItem,exportFile);
 
         maintenanceTable.setRowFactory(tv -> {
             TableRow<Map<String,Object>> row = new TableRow<>();
@@ -133,15 +143,19 @@ public class RequestStatusController implements Initializable {
         ContextMenu contextMenu = new ContextMenu();
 
         MenuItem deleteItem = new MenuItem("Delete");
+        MenuItem exportFile = new MenuItem("Export PDF");
         deleteItem.setOnAction(event -> {
             try {
-                handleDeleteMaintenance();
+                handleEditServiceComplaint();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
+        exportFile.setOnAction(event -> {
 
-        contextMenu.getItems().addAll(deleteItem);
+        });
+
+        contextMenu.getItems().addAll(deleteItem,exportFile);
 
         serviceComplaintsTable.setRowFactory(tv -> {
             TableRow<Map<String,Object>> row = new TableRow<>();
@@ -204,12 +218,14 @@ public class RequestStatusController implements Initializable {
         serviceStatusFilter.getItems().addAll(
                 "Pending", "Assigned", "In progress", "Completed", "Cancelled", "All Status"
         );
+        serviceStatusFilter.setValue("All Status");
     }
     // TODO: Load Services Types Complaint
     private void loadServicesType() {
         serviceTypeFilter.getItems().addAll(
-                "Maintenance","Service","All Priority"
+                "Maintenance","Service","All Type"
         );
+        serviceTypeFilter.setValue("All Type");
     }
 
 
@@ -352,8 +368,8 @@ public class RequestStatusController implements Initializable {
     }
     // TODO: Lấy dữ liệu các YÊU CẦU BẢO TRÌ thông qua
     private void getMaintenanceRequestByResidentID() throws SQLException{
-        setUpColumnForMaintaineceRequest();
         int userID = new UserDAO().getIdByUserName(Session.getUserName());
+        setUpColumnForMaintaineceRequest();
 
         int residentID = new ResidentDAO().getResidentIDByUserID(userID);
         List<Map<String, Object>> result = new MaintenanceRequestDAO().getMaintenanceRequestsByResidentId(residentID); //
@@ -366,6 +382,9 @@ public class RequestStatusController implements Initializable {
         }
         ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
         maintenanceTable.setItems(observableList);
+
+        maintenanceCountLabel.setText("( " + observableList.size() + " total request )");
+
     }
     // TODO: Tổng cộng các yêu câu BẢO TRÌ
     private void getTotalMaintainenceRequest() throws SQLException {
@@ -383,40 +402,78 @@ public class RequestStatusController implements Initializable {
     }
 
     // TODO: Lọc bảng Maintenance
-    public void handleFilterMaintenance(ActionEvent event) throws SQLException {
+    public void handleFilterMaintenance() throws SQLException {
         // truy cập
         int userID = new UserDAO().getIdByUserName(Session.getUserName());
         int residentID = new ResidentDAO().getResidentIDByUserID(userID);
 
         String status = (String) maintenanceStatusFilter.getValue();
         String  priority = (String) maintenancePriorityFilter.getValue();
+        String keyword = myMaintenanceIssueFilter.getText();
 
         setUpColumnForMaintaineceRequest();
         System.out.println("Lọc với status :" + status + " và priority : " + priority);
-        List<Map<String, Object>> result = new MaintenanceRequestDAO().getFilterStatusAndPriority(residentID, status, priority); //
-        System.out.println("Result size: " + result.size());
 
+        if (status.equals("In Progress")){
+            status = "in_progress";
+        }
+        List<Map<String, Object>> result = new MaintenanceRequestDAO().getFilterStatusAndPriority(residentID, status, priority); //
+        ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
+
+        // Debug
+        System.out.println("Result size: " + result.size());
         if (!result.isEmpty()) {
             System.out.println("First row keys: " + result.get(0).keySet());
         }else{
             System.out.println("Không có dữ liệu");
         }
-        ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
-        maintenanceTable.setItems(observableList);
+        issueTypeFilteredList = new FilteredList<>(observableList, p -> true);
+        issueTypeFilteredList.setPredicate(item -> {
+            if (keyword == null || keyword.isBlank()) return true;
+            Object issueType = item.get("issue_type");
+            return issueType != null && issueType.toString().toLowerCase().contains(keyword.toLowerCase());
+        });
+
+        maintenanceTable.setItems(issueTypeFilteredList);
+        maintenanceCountLabel.setText("( " + issueTypeFilteredList.size() + " total request )");
+
     }
+    private void setupFilterListeners() {
+        myMaintenanceIssueFilter.textProperty().addListener((obs, oldVal, newVal) -> {
+            try {
+                handleFilterMaintenance();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        maintenanceStatusFilter.valueProperty().addListener((obs, oldVal, newVal) -> {
+            try {
+                handleFilterMaintenance();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        maintenancePriorityFilter.valueProperty().addListener((obs, oldVal, newVal) -> {
+            try {
+                handleFilterMaintenance();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
 
     // TODO: Refresh lại bảng sau khi lọc
     public void handleRefreshMyMaintenance(ActionEvent actionEvent) throws SQLException {
         loadDataMaintenanceRequest();
+        maintenanceStatusFilter.setValue("All Status");
+        maintenancePriorityFilter.setValue("All Priority");
         System.out.println("Refresh thành công");
     }
 
-    public void handleAddMaintenance(ActionEvent event) {
-    }
-
-    public void handleEditMaintenance(ActionEvent event) {
-    }
-
+    // Nút Xóa
     public void handleDeleteMaintenance() throws SQLException {
         Map<String, Object> selected = maintenanceTable.getSelectionModel().getSelectedItem();
 
@@ -464,17 +521,6 @@ public class RequestStatusController implements Initializable {
         }
     }
 
-    public void handleEditServiceComplaint(ActionEvent event) {
-    }
-
-
-    public void handleViewMaintenanceDetails(ActionEvent actionEvent) {
-    }
-
-    public void handleEditMaintenanceRequest(ActionEvent actionEvent) {
-    }
-
-
 // Service
     // TODO: Lấy dữ liệu các Complaint thông qua ID
     private void getComplaintByResidentID() throws SQLException{
@@ -496,21 +542,115 @@ public class RequestStatusController implements Initializable {
     private void getTotalComplaint() throws SQLException {
         int userID = new UserDAO().getIdByUserName(Session.getUserName());
         int residentID = new ResidentDAO().getResidentIDByUserID(userID);
-        int totalRequest = new MaintenanceRequestDAO().getTotalMaintenaceRequestByResidentID(residentID);
-        maintenanceCountLabel.setText("( " +totalRequest + " total request )");
+        int totalRequest = new ComplaintRequestDAO().getTotalComplaintByResidentID(residentID);
+        myServiceComplaintsCountLabel.setText("( " +totalRequest + " total complaint )");
 
     }
 
-    public void handleViewServiceComplaintDetails(ActionEvent actionEvent) {
+    // Button Select All
+    public void handleViewServiceComplaintDetails() throws SQLException {
+        // truy cập
+        int userID = new UserDAO().getIdByUserName(Session.getUserName());
+        int residentID = new ResidentDAO().getResidentIDByUserID(userID);
+
+        String status = (String) serviceStatusFilter.getValue();
+        String  type = (String) serviceTypeFilter.getValue();
+        if (status.equals("In Progress")){
+            status = "in_progress";
+        }
+        setUpColumnForComplaint();
+
+        System.out.println("Lọc với status :" + status + " và service type : " + type);
+        List<Map<String, Object>> result = new ComplaintRequestDAO().getFilterStatusAndType(residentID, status,type); //
+        ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(result);
+
+        // Debug
+        System.out.println("Result size: " + result.size());
+        if (!result.isEmpty()) {
+            System.out.println("First row keys: " + result.get(0).keySet());
+        }else{
+            System.out.println("Không có dữ liệu");
+        }
+        serviceComplaintsTable.setItems(observableList);
+
+        int totalFiltered = new ComplaintRequestDAO().getFilteredComplaintCount(residentID, status, type);
+        myServiceComplaintsCountLabel.setText("( " + totalFiltered + " total complaint )");
+    }
+    private void setupAutoServiceComplaintFilterListeners() {
+        serviceStatusFilter.valueProperty().addListener((obs, oldVal, newVal) -> {
+            try {
+                handleViewServiceComplaintDetails();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        serviceTypeFilter.valueProperty().addListener((obs, oldVal, newVal) -> {
+            try {
+                handleViewServiceComplaintDetails();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+    // Nut Delete
+    public void handleEditServiceComplaint() throws SQLException {
+        Map<String, Object> selected = serviceComplaintsTable.getSelectionModel().getSelectedItem();
+
+        // TODO:: kiểm tra status chỉ khi status = pending mới được xóa
+        if(selected!= null) {
+            int requestId = (int) selected.get("complaint_id");
+
+            // Hiển thị bảng xác nhận
+            Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmAlert.setTitle("Confirm delete ?");
+            confirmAlert.setHeaderText("Do you really want delete this complaint");
+            confirmAlert.setContentText("Complaint ID: " + requestId);
+
+            Optional<ButtonType> result = confirmAlert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // 1. Xóa trong DB
+                deleteFromComplaintDatabase(requestId);
+
+                // 2. Xóa khỏi bảng
+                serviceComplaintsTable.getItems().remove(selected);
+
+                // 3. Cập nhật lại total request
+                getTotalComplaint();
+                System.out.println("Xóa thành công!");
+            }
+            System.out.println("Xóa không thành công");
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Chưa chọn hàng nào để xóa.", ButtonType.OK);
+            alert.showAndWait();
+        }
+    }
+    private void deleteFromComplaintDatabase(int complaintId){
+        String sql = "DELETE FROM Complaint WHERE complaint_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, complaintId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Show dialog or log error
+        }
     }
 
+
+    // Nut Refresh
     public void handleRefreshMyService(ActionEvent actionEvent) {
+        loadDataComplaint();
+        serviceStatusFilter.setValue("All Status");
+        serviceTypeFilter.setValue("All Type");
+        System.out.println("Refresh thành công");
     }
-
+    // Button Cancel
     public void handleCancel(ActionEvent actionEvent) {
         // Xoá RequestStatusView
         ((Pane) RequestStatusView.getParent()).getChildren().clear();
         // Thêm lại dashboard nodes từ controller cha
         parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }
+
 }

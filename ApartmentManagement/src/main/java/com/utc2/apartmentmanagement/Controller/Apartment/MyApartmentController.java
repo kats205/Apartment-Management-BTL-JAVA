@@ -59,11 +59,11 @@ public class MyApartmentController implements Initializable {
     @FXML public TableView<Map<String, Object>> tableBills;
     @FXML public TableColumn<Map<String, Object>, Integer> billIdCol;
     @FXML public TableColumn<Map<String, Object>, LocalDate> dateCol;
-    @FXML public TableColumn<Map<String, Object>, LocalDate> dueDateCol;
     @FXML public TableColumn<Map<String, Object>, String> AmountCol;
     @FXML public TableColumn<Map<String, Object>, String> statusBillCol;
+    @FXML public Button cancelButton;
 
-    @FXML private AnchorPane MyApartmentView;
+    @FXML private AnchorPane myApartmentPane;
 
     @Setter
     private UserDashboardController parentController;
@@ -92,11 +92,18 @@ public class MyApartmentController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        setActionCloseBtn();
     }
 
-    public void handleCloseButton(ActionEvent event) {
+    public void setActionCloseBtn(){
+        cancelButton.setOnAction(e->{
+            handleCloseButton();
+        });
+    }
+
+    public void handleCloseButton() {
         // Xoá apartment view
-        ((Pane) MyApartmentView.getParent()).getChildren().clear();
+        ((Pane) myApartmentPane.getParent()).getChildren().clear();
         // Thêm lại dashboard nodes từ controller cha
         parentController.getContentArea().getChildren().setAll(parentController.getDashboardNodes());
     }

@@ -98,7 +98,7 @@
                                                 <TableColumn fx:id="maintenancePriorityColumn" prefWidth="80.0" text="Priority" />
                                                 <TableColumn fx:id="maintenanceRequestDateColumn" prefWidth="120.0" text="Request Date" />
                                                 <TableColumn fx:id="maintenanceAssignedStaffColumn" prefWidth="150.0" text="Assigned Staff" />
-                                                <TableColumn fx:id="maintenanceCompletionDateColumn" prefWidth="120.0" text="Completion Date" />
+                                                <TableColumn fx:id="maintenanceCompletionDateColumn" prefWidth="152.00006103515625" text="Completion Date" />
                                              </columns>
                                              <VBox.margin>
                                                 <Insets left="20.0" right="20.0" />
@@ -158,14 +158,13 @@
                                           </HBox>
                                           <TableView fx:id="serviceComplaintsTable" prefHeight="467.0" prefWidth="1060.0" styleClass="data-table">
                                              <columns>
-                                                <TableColumn fx:id="serviceComplaintIdColumn" prefWidth="120.0" text="Complaint ID" />
-                                                <TableColumn fx:id="typeComplaintColumn" prefWidth="120.0" text="Service Name" />
-                                                <TableColumn fx:id="serviceComplaintDescColumn" prefWidth="230.0" text="Description" />
-                                                <TableColumn fx:id="serviceStatusColumn" prefWidth="100.0" text="Status" />
-                                                <TableColumn fx:id="serviceSeverityColumn" prefWidth="100.0" text="Severity" />
-                                                <TableColumn fx:id="serviceSubmitDateColumn" prefWidth="120.0" text="Submit Date" />
-                                                <TableColumn fx:id="myServiceResolutionDateColumn" prefWidth="120.0" text="Resolution Date" />
-                                                <TableColumn fx:id="serviceAssignedStaffColumn" prefWidth="120.0" text="Assigned Staff" />
+                                                <TableColumn fx:id="serviceComplaintIdColumn" prefWidth="113.86660957336426" text="Complaint ID" />
+                                                <TableColumn fx:id="typeComplaintColumn" prefWidth="151.7333526611328" text="Service Name" />
+                                                <TableColumn fx:id="serviceComplaintDescColumn" prefWidth="264.2667236328125" text="Description" />
+                                                <TableColumn fx:id="serviceStatusColumn" prefWidth="100.79998779296875" text="Status" />
+                                                <TableColumn fx:id="serviceSeverityColumn" prefWidth="117.59991455078125" text="Severity" />
+                                                <TableColumn fx:id="serviceSubmitDateColumn" prefWidth="142.9332275390625" text="Submit Date" />
+                                                <TableColumn fx:id="serviceAssignedStaffColumn" prefWidth="166.666748046875" text="Assigned Staff" />
                                              </columns>
                                              <VBox.margin>
                                                 <Insets left="20.0" right="20.0" />

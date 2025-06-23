@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -160,6 +161,7 @@
                                 <TableColumn fx:id="colActive" prefWidth="100.0" text="Trạng thái" />
                             </columns>
                         </TableView>
+                  <Pagination fx:id="pagination" prefHeight="17.0" prefWidth="812.0" />
                         <HBox prefHeight="45.0" prefWidth="810.0" spacing="10.0">
                             <children>
                         <AnchorPane prefHeight="45.0" prefWidth="820.0">

@@ -18,4 +18,5 @@ public interface IResidentDAO {
     boolean updateMoveInDate(int residentID, Date newMoveInDate);
     String getApartmentIdByUserID(int userID);
     Integer getResidentIDByUserID(int userID); // dùng Integer để trả về null
+    List<Resident> searchOnChange(String searchText, String field);
 }

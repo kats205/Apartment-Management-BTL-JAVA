@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../styles/Dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.DashboardController">
+<AnchorPane fx:id="rootPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../styles/Dashboard.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.DashboardController">
    <children>
       <BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1280.0">
          <top>
@@ -24,7 +24,7 @@
                      <children>
                         <ImageView fx:id="Exit" fitHeight="22.0" fitWidth="22.0" layoutX="1258.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../assets/Dashboard/exit.png" />
+                              <Image url="@../../assets/Dashboard/exit.png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" layoutX="10.0" prefHeight="25.0" text="Apartment Management System" textFill="WHITE">
@@ -36,38 +36,38 @@
                   </Pane>
                   <HBox layoutX="150.0" layoutY="25.0" prefHeight="40.0" prefWidth="1130.0" AnchorPane.bottomAnchor="0.0">
                      <children>
-                        <Button fx:id="apartment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Apartment">
+                        <Button fx:id="apartment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../../styles/Dashboard.css" text="Apartment">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/dash1.png" />
+                                    <Image url="@../../assets/Dashboard/dash1.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="payment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Payment">
+                        <Button fx:id="payment" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../../styles/Dashboard.css" text="Payment">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/data1.png" />
+                                    <Image url="@../../assets/Dashboard/data1.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="report" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="Report">
+                        <Button fx:id="report" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../../styles/Dashboard.css" text="Report">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/report1.png" />
+                                    <Image url="@../../assets/Dashboard/report1.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="HRBtn" mnemonicParsing="false" onAction="#loadHRView" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../styles/Dashboard.css" text="HRs">
+                        <Button fx:id="HRBtn" mnemonicParsing="false" onAction="#loadHRView" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="menuItem" stylesheets="@../../styles/Dashboard.css" text="HRs">
                            <graphic>
                               <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/add1.png" />
+                                    <Image url="@../../assets/Dashboard/add1.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -78,7 +78,7 @@
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../assets/UserDashboard/setting.png" />
+                              <Image url="@../../assets/UserDashboard/setting.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -90,7 +90,7 @@
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../assets/UserDashboard/setting.png" />
+                              <Image url="@../../assets/UserDashboard/setting.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -106,11 +106,11 @@
                <children>
                   <VBox prefHeight="275.0" prefWidth="150.0">
                      <children>
-                        <Button fx:id="ApartmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Apartment" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="ApartmentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Apartment" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/dash.png" />
+                                    <Image url="@../../assets/Dashboard/dash.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -121,11 +121,11 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="paymentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Payment" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="paymentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Payment" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/data.png" />
+                                    <Image url="@../../assets/Dashboard/data.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -133,11 +133,11 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="reportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="Report" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="reportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Report" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/report.png" />
+                                    <Image url="@../../assets/Dashboard/report.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -145,11 +145,23 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="hrButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadHRView" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="hrButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadHRView" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="HRs" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/HR.png" />
+                                    <Image url="@../../assets/Dashboard/HR.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="ResidentBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadResidentView" prefHeight="55.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="Residents" textAlignment="CENTER" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #ffffff;">
+                                 <image>
+                                    <Image url="@../../assets/Dashboard/friend.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -161,11 +173,11 @@
                   </VBox>
                   <VBox layoutX="-1.0" layoutY="603.0" prefHeight="50.0" prefWidth="150.0">
                      <children>
-                        <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadMyProfile" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../styles/Dashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#loadMyProfile" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #0A4969;" styleClass="sidebarItem" stylesheets="@../../styles/Dashboard.css" text="My Profile" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/profile.png" />
+                                    <Image url="@../../assets/Dashboard/profile.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -199,7 +211,7 @@
                               </Label>
                               <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="86.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/dash.png" />
+                                    <Image url="@../../assets/Dashboard/dash.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="totalApartmentsLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="125" textFill="#0a4969">
@@ -223,7 +235,7 @@
                               </Label>
                               <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="97.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/data.png" />
+                                    <Image url="@../../assets/Dashboard/data.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="revenueLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="₫258M" textFill="#0a4969">
@@ -247,7 +259,7 @@
                               </Label>
                               <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="69.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/report.png" />
+                                    <Image url="@../../assets/Dashboard/report.png" />
                                  </image>
                               </ImageView>
                               <Label fx:id="requestsLabel" layoutX="10.0" layoutY="60.0" styleClass="stat-value" text="42" textFill="#0a4969">
@@ -271,7 +283,7 @@
                               </Label>
                               <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="77.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/Dashboard/HR.png" />
+                                    <Image url="@../../assets/Dashboard/HR.png" />
                                  </image>
                               </ImageView>
                               <Label layoutX="10.0" layoutY="60.0" text="All Systems Operational" textFill="#0a4969">
@@ -295,15 +307,15 @@
                      </font>
                   </Label>
 
-                  <TableView fx:id="recentActivitiesTable" layoutX="45.0" layoutY="370.0" prefHeight="250.0" prefWidth="1040.0" stylesheets="@../styles/Dashboard.css">
+                  <TableView fx:id="recentActivitiesTable" layoutX="45.0" layoutY="370.0" prefHeight="250.0" prefWidth="1040.0" stylesheets="@../../styles/Dashboard.css">
                      <columns>
-                        <TableColumn fx:id="userColumn" prefWidth="130.0" text="User" />
-                        <TableColumn fx:id="roleColumn" prefWidth="130.0" text="Role" />
-                        <TableColumn fx:id="statusColumn" prefWidth="130.0" text="Status" />
-                        <TableColumn fx:id="actionColumn" prefWidth="150.0" text="Action" />
-                        <TableColumn fx:id="activityColumn" prefWidth="190.39996337890625" text="Activity" />
-                        <TableColumn fx:id="dateColumn" prefWidth="140.00006103515625" text="Date" />
-                        <TableColumn fx:id="timeColumn" prefWidth="164.800048828125" text="Time" />
+                        <TableColumn fx:id="userColumn" prefWidth="141.06671905517578" text="User" />
+                        <TableColumn fx:id="roleColumn" prefWidth="132.800048828125" text="Role" />
+                        <TableColumn fx:id="statusColumn" prefWidth="148.26669311523438" text="Status" />
+                        <TableColumn fx:id="actionColumn" prefWidth="121.33328247070312" text="Action" />
+                        <TableColumn fx:id="activityColumn" prefWidth="200.0001220703125" text="Activity" />
+                        <TableColumn fx:id="dateColumn" prefWidth="150.40008544921875" text="Date" />
+                        <TableColumn fx:id="timeColumn" prefWidth="146.4000244140625" text="Time" />
                      </columns>
                   </TableView>
                </children>

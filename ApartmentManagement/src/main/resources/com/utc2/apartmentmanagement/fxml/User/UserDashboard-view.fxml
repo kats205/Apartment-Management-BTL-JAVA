@@ -128,18 +128,6 @@
                                         <Insets left="15.0" />
                                     </padding>
                                 </Button>
-                                <Button fx:id="viewPaymentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="View Payment" textAlignment="CENTER" textFill="WHITE">
-                                    <graphic>
-                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../../assets/UserDashboard/payment.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <padding>
-                                        <Insets left="15.0" />
-                                    </padding>
-                                </Button>
                                 <Button fx:id="maintenanceButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #1A936F;" styleClass="userSidebarItem" stylesheets="@../../styles/UserCSS/UserDashboard.css" text="Maintenance" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">

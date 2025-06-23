@@ -1,76 +1,76 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<?xml version="1.0" encoding="UTF-8"?>
 
-<!--<?import javafx.geometry.Insets?>-->
-<!--<?import javafx.scene.control.ComboBox?>-->
-<!--<?import javafx.scene.control.DatePicker?>-->
-<!--<?import javafx.scene.control.Label?>-->
-<!--<?import javafx.scene.control.TextField?>-->
-<!--<?import javafx.scene.control.TitledPane?>-->
-<!--<?import javafx.scene.layout.AnchorPane?>-->
-<!--<?import javafx.scene.layout.HBox?>-->
-<!--<?import javafx.scene.layout.VBox?>-->
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 
-<!--<AnchorPane prefHeight="325.0" prefWidth="300.0" style="-fx-background-radius: 5px; -fx-border-radius: 5px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller">-->
-<!--   <children>-->
-<!--      <TitledPane animated="false" prefHeight="325.0" prefWidth="300.0" text="Thông tin chi tiết">-->
-<!--         <content>-->
-<!--            <VBox prefHeight="300.0" prefWidth="300.0" spacing="10.0">-->
-<!--               <children>-->
-<!--                  <HBox alignment="CENTER_LEFT" spacing="10.0">-->
-<!--                     <children>-->
-<!--                        <Label prefHeight="25.0" prefWidth="85.0" text="Phòng ban:" />-->
-<!--                        <TextField fx:id="tfDepartment" prefWidth="180.0" promptText="Phòng ban" HBox.hgrow="ALWAYS" />-->
-<!--                     </children>-->
-<!--                  </HBox>-->
-<!--                  <HBox alignment="CENTER_LEFT" spacing="10.0">-->
-<!--                     <children>-->
-<!--                        <Label prefHeight="25.0" prefWidth="85.0" text="Chức vụ:" />-->
-<!--                        <TextField fx:id="tfPosition" prefWidth="180.0" promptText="Chức vụ" HBox.hgrow="ALWAYS" />-->
-<!--                     </children>-->
-<!--                  </HBox>-->
-<!--                  <HBox alignment="CENTER_LEFT" spacing="10.0">-->
-<!--                     <children>-->
-<!--                        <Label prefHeight="25.0" prefWidth="85.0" text="Bằng cấp:" />-->
-<!--                        <TextField fx:id="tfDegree" prefWidth="180.0" promptText="Bằng cấp" HBox.hgrow="ALWAYS" />-->
-<!--                     </children>-->
-<!--                  </HBox>-->
-<!--                  <HBox alignment="CENTER_LEFT" spacing="10.0">-->
-<!--                     <children>-->
-<!--                        <Label prefHeight="25.0" prefWidth="85.0" text="Chứng chỉ:" />-->
-<!--                        <TextField fx:id="tfCertificate" prefWidth="180.0" promptText="Chứng chỉ" HBox.hgrow="ALWAYS" />-->
-<!--                     </children>-->
-<!--                  </HBox>-->
-<!--                  <HBox alignment="CENTER_LEFT" spacing="10.0">-->
-<!--                     <children>-->
-<!--                        <Label prefHeight="25.0" prefWidth="85.0" text="Ngày vào làm:" />-->
-<!--                        <DatePicker fx:id="dpHireDate" prefWidth="183.0" promptText="Ngày vào làm" HBox.hgrow="ALWAYS" />-->
-<!--                     </children>-->
-<!--                  </HBox>-->
-<!--                  <HBox alignment="CENTER_LEFT" spacing="10.0">-->
-<!--                     <children>-->
-<!--                        <Label prefHeight="25.0" prefWidth="85.0" text="Người quản lý:" />-->
-<!--                        <ComboBox fx:id="cbManager" prefHeight="25.0" prefWidth="183.0" promptText="Chọn quản lý" HBox.hgrow="ALWAYS" />-->
-<!--                     </children>-->
-<!--                  </HBox>-->
-<!--                  <HBox alignment="CENTER_LEFT" spacing="10.0">-->
-<!--                     <children>-->
-<!--                        <Label fx:id="lblOffice" prefHeight="25.0" prefWidth="85.0" text="Văn phòng:" />-->
-<!--                        <TextField fx:id="tfOffice" prefWidth="183.0" promptText="Văn phòng" HBox.hgrow="ALWAYS" />-->
-<!--                     </children>-->
-<!--                  </HBox>-->
-<!--                  <HBox alignment="CENTER_LEFT" spacing="10.0">-->
-<!--                     <children>-->
-<!--                        <Label fx:id="lblStartDate" prefHeight="17.0" prefWidth="85.0" text="Ngày bổ nhiệm:" />-->
-<!--                        <DatePicker fx:id="dpStartDate" prefWidth="183.0" promptText="Ngày bổ nhiệm" HBox.hgrow="ALWAYS" />-->
-<!--                     </children>-->
-<!--                  </HBox>-->
-<!--               </children>-->
-<!--               <padding>-->
-<!--                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />-->
-<!--               </padding>-->
-<!--            </VBox>-->
-<!--         </content>-->
-<!--      </TitledPane>-->
-<!--   </children>-->
-<!--</AnchorPane>-->
+<AnchorPane prefHeight="325.0" prefWidth="300.0" style="-fx-background-radius: 5px; -fx-border-radius: 5px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller">
+   <children>
+      <TitledPane animated="false" prefHeight="325.0" prefWidth="300.0" text="Thông tin chi tiết">
+         <content>
+            <VBox prefHeight="300.0" prefWidth="300.0" spacing="10.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="85.0" text="Phòng ban:" />
+                        <TextField fx:id="tfDepartment" prefWidth="180.0" promptText="Phòng ban" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="85.0" text="Chức vụ:" />
+                        <TextField fx:id="tfPosition" prefWidth="180.0" promptText="Chức vụ" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="85.0" text="Bằng cấp:" />
+                        <TextField fx:id="tfDegree" prefWidth="180.0" promptText="Bằng cấp" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="85.0" text="Chứng chỉ:" />
+                        <TextField fx:id="tfCertificate" prefWidth="180.0" promptText="Chứng chỉ" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="85.0" text="Ngày vào làm:" />
+                        <DatePicker fx:id="dpHireDate" prefWidth="183.0" promptText="Ngày vào làm" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="85.0" text="Người quản lý:" />
+                        <ComboBox fx:id="cbManager" prefHeight="25.0" prefWidth="183.0" promptText="Chọn quản lý" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label fx:id="lblOffice" prefHeight="25.0" prefWidth="85.0" text="Văn phòng:" />
+                        <TextField fx:id="tfOffice" prefWidth="183.0" promptText="Văn phòng" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label fx:id="lblStartDate" prefHeight="17.0" prefWidth="85.0" text="Ngày bổ nhiệm:" />
+                        <DatePicker fx:id="dpStartDate" prefWidth="183.0" promptText="Ngày bổ nhiệm" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </content>
+      </TitledPane>
+   </children>
+</AnchorPane>

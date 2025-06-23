@@ -175,7 +175,36 @@ public class ServiceInformationController implements Initializable {
         totalAmountLabel.setText(formattedTotal);
     }
 
+    public void savePayment(String serviceName) throws SQLException {
+        int serviceId = new ServiceDAO().getServiceIdByServiceName(serviceName);
+        int userID = new UserDAO().getIdByUserName(Session.getUserName());
+        int residentID = new ResidentDAO().getResidentIDByUserID(userID);
+        Date startDate = Date.valueOf(startDatePicker.getValue());
+        System.out.println("startDate: " + startDate);
+        int duration = durationComboBox.getValue() != null ? durationComboBox.getValue() : 1;
 
+        // Chuyển startDate sang LocalDate để cộng ngày
+        LocalDate endLocalDate = startDate.toLocalDate().plusMonths(duration);
+
+        // Chuyển lại về java.sql.Date
+        Date endDate = Date.valueOf(endLocalDate);
+        if(duration == 1){
+            endDate = startDate;
+        }
+        System.out.println("endDate: " + endDate);
+
+        boolean saveServiceRegistration = new ServiceRegistrationDAO().addServiceRegistration(serviceId, apartmentId, startDate, endDate, "active", residentID, residentID);
+
+//                boolean saveBill = new BillsDAO().addBill(new Bills(0,apartmentId, startDate, totalAmount, "paid", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), Integer.parseInt(billedToStr)));
+
+
+        if(saveServiceRegistration){
+            System.out.println("Save successful");
+        }
+        else{
+            System.out.println("Save failed");
+        }
+    }
     // Cập nhật phương thức proceedToPayment()
     public void proceedToPayment() throws FileNotFoundException {
         if(vnpayRadio.isSelected()){
@@ -201,31 +230,36 @@ public class ServiceInformationController implements Initializable {
                 // Tiến hành thanh toán
                 long price = (long) totalAmount;
                 JsonObject paymentResult = new Vnpay().handlePayVnpay(price);
-// lưu dịch vụ nào được đăng ký bởi người dùng nào
-                int serviceId = new ServiceDAO().getServiceIdByServiceName(serviceName);
-                int userID = new UserDAO().getIdByUserName(Session.getUserName());
-                int residentID = new ResidentDAO().getResidentIDByUserID(userID);
-                Date startDate = Date.valueOf(startDatePicker.getValue());
-                System.out.println("startDate: " + startDate);
-                int duration = durationComboBox.getValue() != null ? durationComboBox.getValue() : 1;
-
-                // Chuyển startDate sang LocalDate để cộng ngày
-                LocalDate endLocalDate = startDate.toLocalDate().plusMonths(duration);
-
-                // Chuyển lại về java.sql.Date
-                Date endDate = Date.valueOf(endLocalDate);
-                if(duration == 1){
-                    endDate = startDate;
-                }
-                System.out.println("endDate: " + endDate);
-
-                boolean save = new ServiceRegistrationDAO().addServiceRegistration(serviceId, apartmentId, startDate, endDate, "active", residentID, residentID);
-                if(save){
-                    System.out.println("Save successful");
-                }
-                else{
-                    System.out.println("Save failed");
-                }
+                // lưu dịch vụ nào được đăng ký bởi người dùng nào
+                savePayment(serviceName);
+//                int serviceId = new ServiceDAO().getServiceIdByServiceName(serviceName);
+//                int userID = new UserDAO().getIdByUserName(Session.getUserName());
+//                int residentID = new ResidentDAO().getResidentIDByUserID(userID);
+//                Date startDate = Date.valueOf(startDatePicker.getValue());
+//                System.out.println("startDate: " + startDate);
+//                int duration = durationComboBox.getValue() != null ? durationComboBox.getValue() : 1;
+//
+//                // Chuyển startDate sang LocalDate để cộng ngày
+//                LocalDate endLocalDate = startDate.toLocalDate().plusMonths(duration);
+//
+//                // Chuyển lại về java.sql.Date
+//                Date endDate = Date.valueOf(endLocalDate);
+//                if(duration == 1){
+//                    endDate = startDate;
+//                }
+//                System.out.println("endDate: " + endDate);
+//
+//                boolean saveServiceRegistration = new ServiceRegistrationDAO().addServiceRegistration(serviceId, apartmentId, startDate, endDate, "active", residentID, residentID);
+//
+////                boolean saveBill = new BillsDAO().addBill(new Bills(0,apartmentId, startDate, totalAmount, "paid", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), Integer.parseInt(billedToStr)));
+//
+//
+//                if(saveServiceRegistration){
+//                    System.out.println("Save successful");
+//                }
+//                else{
+//                    System.out.println("Save failed");
+//                }
                 if (paymentResult != null) {
                     showAlert("Notification","Redirecting to payment gateway...");
                 } else {
@@ -249,6 +283,7 @@ public class ServiceInformationController implements Initializable {
 
                 paymentService.processTransferPayment(apartmentId, totalAmount, getUserIdFromName(billedToStr), serviceName);
 
+                savePayment(serviceName);
                 // Hiển thị QR code
                 showQRCodeForTransfer();
 

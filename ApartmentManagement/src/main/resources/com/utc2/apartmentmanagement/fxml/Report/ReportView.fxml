@@ -9,6 +9,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -47,7 +48,7 @@
 
         <TabPane layoutX="55.0" layoutY="135.0" prefHeight="425.0" prefWidth="1020.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="Biểu đồ">
+                <Tab onSelectionChanged="#handleTabChart" text="Biểu đồ">
                     <content>
                         <AnchorPane layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="375.0" prefWidth="1020.0">
                             <children>
@@ -86,7 +87,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Bảng dữ liệu">
+                <Tab fx:id="tabDataTable" onSelectionChanged="#handleSelected" text="Bảng dữ liệu">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="375.0" prefWidth="200.0">
                             <children>
@@ -108,7 +109,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Tóm tắt">
+                <Tab onSelectionChanged="#handleTabSumary" text="Tóm tắt">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="375.0" prefWidth="200.0">
                             <children>
@@ -188,5 +189,6 @@
             <Button fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../../styles/Dashboard.css" text="Xuất Excel" />
          </children>
       </HBox>
+      <Pagination fx:id="pagination" layoutX="465.0" layoutY="563.0" prefHeight="30.0" prefWidth="200.0" />
     </children>
 </AnchorPane>

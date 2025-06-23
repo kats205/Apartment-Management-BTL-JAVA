@@ -8,6 +8,7 @@ import com.utc2.apartmentmanagement.DAO.User.UserDAO;
 import com.utc2.apartmentmanagement.Model.*;
 import com.utc2.apartmentmanagement.Model.Billing.Payment;
 import com.utc2.apartmentmanagement.Model.Report.Report;
+import com.utc2.apartmentmanagement.Utils.PaginationUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -56,12 +57,12 @@ public class PaymentViewController implements Initializable {
     @FXML private TableColumn<Payment, String> statusColumn;
     @FXML private TableColumn<Payment, Date> createDateColumn;
     @FXML private TableColumn<Payment, String> transactionIdColumn;
-
+    @FXML private Pagination pagination;
+    private static final int ROWS_PER_PAGE = 10;
     @FXML private Label noContentLabel;
     @FXML private Label paymentCountLabel;
 
-    @FXML private Pagination pagination;
-    private static final int ROWS_PER_PAGE = 10;
+
     private List<Payment> fullPaymentList; // toàn bộ danh sách
 
     // Getter cho nút đóng để DashboardController có thể truy cập
@@ -131,24 +132,13 @@ public class PaymentViewController implements Initializable {
     public void loadDataColumn() {
         getValueColumn();
         fullPaymentList = new PaymentDAO().getAllPayment();
-        pagination.setPageCount((int) Math.ceil((double) fullPaymentList.size() / ROWS_PER_PAGE));
-        pagination.setCurrentPageIndex(0);
-        pagination.setPageFactory(this::createPage);
-        paymentCountLabel.setText(String.valueOf(fullPaymentList.size()));
-    }
-
-    private Node createPage(int pageIndex) {
-        int fromIndex = pageIndex * ROWS_PER_PAGE;
-        int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, fullPaymentList.size());
-        List<Payment> subList = fullPaymentList.subList(fromIndex, toIndex);
-
-        ObservableList<Payment> currentPageData = FXCollections.observableArrayList(subList);
-        paymentTable.setItems(currentPageData);
-
-        // Ẩn/hiện label "Không có dữ liệu"
-        noContentLabel.setVisible(currentPageData.isEmpty());
-
-        return new AnchorPane(); // Bạn có thể trả về paymentTable nếu cần nhưng không bắt buộc
+        PaginationUtils.setupPagination(
+                fullPaymentList,
+                paymentTable,
+                pagination,
+                paymentCountLabel,
+                noContentLabel
+        );
     }
 
     private void initializeComponents() {
@@ -239,7 +229,7 @@ public class PaymentViewController implements Initializable {
             LocalDate date = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
             String formattedDate = date.format(formatter);
-            Report report = new Report("Báo cáo tài chính", LocalDate.now(), user_id, formattedDate,  filePath, LocalDate.now(), LocalDate.now());
+            Report report = new Report("Báo cáo tai chinh", LocalDate.now(), user_id, formattedDate,  filePath, LocalDate.now(), LocalDate.now());
             new ReportDAO().saveReport(report);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -269,48 +259,7 @@ public class PaymentViewController implements Initializable {
         noContentLabel.setVisible(!hasData);
     }
 
-    //    public void handleSearchButton(ActionEvent event) throws SQLException {
-//        String apartmentID = apartmentComboBox.getValue();
-//
-//        // Kiểm tra nếu apartmentID không null
-//        Payment payment = null;
-//        if (apartmentID != null && !apartmentID.isEmpty()) {
-//            // Tìm payment theo apartmentId
-//            payment = new PaymentDAO().findPaymentByApartmentId(apartmentID);
-//
-//            // Xóa dữ liệu cũ trong bảng
-//            paymentTable.getItems().clear();
-//
-//            // Kiểm tra nếu có payment
-//            if (payment != null) {
-//                // Thêm payment vào bảng
-//                ObservableList<Payment> payments = FXCollections.observableArrayList(payment);
-//                paymentTable.setItems(payments);
-//
-//                // Cập nhật số lượng payment
-//                paymentCountLabel.setText("1");
-//                noContentLabel.setVisible(false);
-//            } else {
-//                // Không có payment
-//                paymentCountLabel.setText("0");
-//                noContentLabel.setVisible(true);
-//            }
-//        }
-//
-//        LocalDate fromDate = fromDatePicker.getValue();
-//        LocalDate toDate = toDatePicker.getValue();
-//        if (fromDate != null && toDate != null && payment != null) {
-//            List<Payment> paymentList = new PaymentDAO().findPaymentByDate(fromDate, toDate);
-//            int sizeList = paymentList.size();
-//            if (sizeList == 0) {
-//                AlertBox.showAlertForExeptionRegister("Thông báo!", "Không có dữ liệu trong khoảng thời gian này!");
-//            } else {
-//                ObservableList<Payment> payments = FXCollections.observableArrayList();
-//                payments.addAll(paymentList);
-//                paymentTable.setItems(payments);
-//            }
-//        }
-//    }
+
     @Setter
     private DashboardController parentController;
 
@@ -331,10 +280,13 @@ public class PaymentViewController implements Initializable {
             if (fullPaymentList.isEmpty()) {
                 showAlert("Thông báo!", "Không có dữ liệu trong khoảng thời gian này!");
             }
-            pagination.setPageCount((int) Math.ceil((double) fullPaymentList.size() / ROWS_PER_PAGE));
-            pagination.setCurrentPageIndex(0);
-            pagination.setPageFactory(this::createPage);
-            paymentCountLabel.setText(String.valueOf(fullPaymentList.size()));
+            PaginationUtils.setupPagination(
+                    fullPaymentList,
+                    paymentTable,
+                    pagination,
+                    paymentCountLabel,
+                    noContentLabel
+            );
         }
     }
 
@@ -353,8 +305,17 @@ public class PaymentViewController implements Initializable {
 
             // Kiểm tra nếu có payment
             if (payment != null) {
+                List<Payment> filteredList = List.of(payment); // hoặc Collections.singletonList(payment)
+
                 // Thêm payment vào bảng
                 ObservableList<Payment> payments = FXCollections.observableArrayList(payment);
+                PaginationUtils.setupPagination(
+                        filteredList,
+                        paymentTable,
+                        pagination,
+                        paymentCountLabel,
+                        noContentLabel
+                );
                 paymentTable.setItems(payments);
 
                 // Cập nhật số lượng payment

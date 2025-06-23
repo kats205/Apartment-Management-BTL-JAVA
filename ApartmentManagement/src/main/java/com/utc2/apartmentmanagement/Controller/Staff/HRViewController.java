@@ -4,6 +4,7 @@ import com.utc2.apartmentmanagement.Controller.DashboardController;
 import com.utc2.apartmentmanagement.DAO.User.RoleDAO;
 import com.utc2.apartmentmanagement.DAO.User.StaffDAO;
 import com.utc2.apartmentmanagement.DAO.User.UserDAO;
+import com.utc2.apartmentmanagement.Utils.PaginationUtils;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -58,6 +59,7 @@ public class HRViewController implements Initializable {
     @FXML public Button btnClose;
     @FXML public TableView<Map<String, Object>> tvUsers;
     @FXML public TextField textFullName;
+    @FXML public Pagination pagination;
     @Setter
     private DashboardController parentController;
 
@@ -136,6 +138,13 @@ public class HRViewController implements Initializable {
             setValueCol();
             List<Map<String, Object>> listStaff = new StaffDAO().getAllStaffInfo();
             setUpTableView(listStaff);
+            PaginationUtils.setupPagination(
+                    listStaff,
+                    tvUsers,
+                    pagination,
+                    lblTotal
+
+            );
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -146,6 +155,12 @@ public class HRViewController implements Initializable {
         ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(list);
         tvUsers.setItems(observableList);
         lblTotal.setText(String.valueOf(list.size()));
+        PaginationUtils.setupPagination(
+                list,
+                tvUsers,
+                pagination,
+                lblTotal
+        );
     }
     public void handleBtnSearchOnChanged() {
         textFullName.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -156,6 +171,12 @@ public class HRViewController implements Initializable {
                 throw new RuntimeException(e);
             }
             ObservableList<Map<String, Object>> observableList = FXCollections.observableArrayList(listStaff);
+            PaginationUtils.setupPagination(
+                    listStaff,
+                    tvUsers,
+                    pagination,
+                    lblTotal
+            );
             tvUsers.setItems(observableList);
         });
     }
@@ -164,6 +185,12 @@ public class HRViewController implements Initializable {
         setValueCol();
         String searchText = cbFilterPosition.getValue();
         List<Map<String, Object>> list = new StaffDAO().filterStaffByRoleName(searchText);
+        PaginationUtils.setupPagination(
+                list,
+                tvUsers,
+                pagination,
+                lblTotal
+        );
         setUpTableView(list);
     }
 

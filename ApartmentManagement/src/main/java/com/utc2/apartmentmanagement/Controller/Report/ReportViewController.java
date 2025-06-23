@@ -5,9 +5,12 @@ import com.utc2.apartmentmanagement.DAO.Report.ReportDAO;
 import com.utc2.apartmentmanagement.DAO.User.UserDAO;
 import com.utc2.apartmentmanagement.Model.PDF_Export;
 import com.utc2.apartmentmanagement.Model.Report.Report;
+import com.utc2.apartmentmanagement.Model.User.User;
+import com.utc2.apartmentmanagement.Utils.PaginationUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -51,76 +54,23 @@ public class ReportViewController implements Initializable {
     @FXML public Label latestReportLabel;
     @FXML public Label totalReportsLabel;
     @FXML public AnchorPane reportView;
-    @FXML
-    private ComboBox<String> reportTypeComboBox;
+    @FXML public Pagination pagination;
+    @FXML public Tab tabDataTable;
+    @FXML private ComboBox<String> reportTypeComboBox;
+    @FXML private DatePicker fromDatePicker;
+    @FXML private DatePicker toDatePicker;
+    @FXML private Button generateButton;
+    @FXML private Button exportReportButton;
+    @FXML private BarChart<String, Number> revenueChart;
+    @FXML private TableView<Report> reportTable;
 
-    @FXML
-    private DatePicker fromDatePicker;
 
-    @FXML
-    private DatePicker toDatePicker;
-
-    @FXML
-    private Button generateButton;
-
-    @FXML
-    private Button exportReportButton;
-
-    @FXML
-    private BarChart<String, Number> revenueChart;
-
-    @FXML
-    private PieChart statusChart;
-
-    @FXML
-    private TableView<Report> reportTable;
-
-    @FXML
-    private TableColumn<Map, String> periodColumn;
-
-    @FXML
-    private TableColumn<Map, Double> totalInvoicesColumn;
-
-    @FXML
-    private TableColumn<Map, Integer> paidInvoicesColumn;
-
-    @FXML
-    private TableColumn<Map, Integer> unpaidInvoicesColumn;
-
-    @FXML
-    private TableColumn<Map, Integer> overdueInvoicesColumn;
-
-    @FXML
-    private TableColumn<Map, Double> totalRevenueColumn;
-
-    @FXML
-    private TableColumn<Map, Double> totalFeesColumn;
-
-    @FXML
-    private Label totalInvoicesLabel;
-
-    @FXML
-    private Label totalRevenueLabel;
-
-    @FXML
-    private Label paymentRateLabel;
-
-    @FXML
-    private Label overdueRateLabel;
-
-    @FXML
-    private Button printButton;
-
-    @FXML
-    private Button exportButton;
 
     // Getter cho nút đóng để DashboardController có thể truy cập
     @Getter
-    @FXML
-    private Button closeButton;
+    @FXML private Button closeButton;
 
-    @FXML
-    private  PieChart apartmentStatusPieChart;
+    @FXML private PieChart apartmentStatusPieChart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -133,51 +83,8 @@ public class ReportViewController implements Initializable {
         // Tải dữ liệu mặc định
         loadDefaultData();
 
-//        apartmentStatusPieChart.setLabelLineLength(10);
-//        apartmentStatusPieChart.setLegendVisible(true);
-//
-//        try {
-//            LocalDate fromDate = fromDatePicker.getValue();
-//            LocalDate toDate = toDatePicker.getValue();
-//
-//            // Kiểm tra giá trị ngày
-//            if (fromDate == null || toDate == null) {
-//                // Hiển thị thông báo lỗi
-//                System.out.println("Vui lòng chọn ngày bắt đầu và ngày kết thúc");
-//                return;
-//            }
-//
-//            // Kiểm tra thứ tự ngày
-//            if (fromDate.isAfter(toDate)) {
-//                System.out.println("Ngày bắt đầu phải trước ngày kết thúc");
-//                return;
-//            }
-//
-//            ObservableList<PieChart.Data> pieChartData = new ReportDAO().PieChart(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 3, 31));
-//            apartmentStatusPieChart.setData(pieChartData);
-//
-//            // Thêm hiệu ứng tương tác sau khi đã nạp dữ liệu
-//            apartmentStatusPieChart.getData().forEach(data -> {
-//                String originalStyle = data.getNode().getStyle(); // Lưu style ban đầu
-//
-//                data.getNode().setOnMouseEntered(event -> {
-//                    // Làm nổi bật phần được chọn
-//                    data.getNode().setStyle("-fx-background-color: derive(" +
-//                            data.getNode().getStyle().replace("-fx-background-color: ", "") +
-//                            ", -30%);");
-//                });
-//
-//                data.getNode().setOnMouseExited(event -> {
-//                    // Trở về màu gốc
-//                    data.getNode().setStyle(originalStyle);
-//                });
-//            });
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            // Hiển thị thông báo lỗi cho người dùng
-//            System.out.println("Lỗi khi truy vấn cơ sở dữ liệu: " + e.getMessage());
-//        }
-
+        pagination.setVisible(false);
+        pagination.setManaged(false);
     }
 
     private void initializeComponents() {
@@ -196,52 +103,134 @@ public class ReportViewController implements Initializable {
         initialSummary();
     }
 
-    public void initialSummary(){
-        List<Report> reportList = new ReportDAO().getAllReports();
-        int totalReport = reportList.size();
+    public void initialSummary() {
+        try {
+            List<Report> reportList = new ReportDAO().getAllReports();
 
-        // Map 1: Đếm số lần mỗi loại báo cáo
-        Map<String, Integer> reportTypeCountMap = new HashMap<>();
+            // Kiểm tra danh sách báo cáo có rỗng không
+            if (reportList == null || reportList.isEmpty()) {
+                // Thiết lập giá trị mặc định khi không có báo cáo
+                totalReportsLabel.setText("0");
+                latestReportLabel.setText("Không có báo cáo");
+                popularReportTypeLabel.setText("Không có dữ liệu");
+                topGeneratorLabel.setText("Không có dữ liệu");
 
-// Map 2: Đếm số lần mỗi user tạo báo cáo
-        Map<Integer, Integer> userReportCountMap = new HashMap<>();
+                System.out.println("Không có báo cáo nào trong hệ thống");
+                return;
+            }
 
-        for (Report report : reportList) {
-            // Đếm loại báo cáo
-            String type = report.getReportType();
-            reportTypeCountMap.put(type, reportTypeCountMap.getOrDefault(type, 0) + 1);
+            int totalReport = reportList.size();
 
-            // Đếm theo user
-            int userId = report.getGeneratedByUserId();
-            userReportCountMap.put(userId, userReportCountMap.getOrDefault(userId, 0) + 1);
+            // Map 1: Đếm số lần mỗi loại báo cáo
+            Map<String, Integer> reportTypeCountMap = new HashMap<>();
+
+            // Map 2: Đếm số lần mỗi user tạo báo cáo
+            Map<Integer, Integer> userReportCountMap = new HashMap<>();
+
+            for (Report report : reportList) {
+                // Đếm loại báo cáo (kiểm tra null)
+                String type = report.getReportType();
+                if (type != null && !type.trim().isEmpty()) {
+                    reportTypeCountMap.put(type, reportTypeCountMap.getOrDefault(type, 0) + 1);
+                }
+
+                // Đếm theo user (kiểm tra user ID hợp lệ)
+                int userId = report.getGeneratedByUserId();
+                if (userId > 0) { // Giả sử user ID phải > 0
+                    userReportCountMap.put(userId, userReportCountMap.getOrDefault(userId, 0) + 1);
+                }
+            }
+
+            // Tìm loại báo cáo phổ biến nhất
+            String popularReport = "Không có dữ liệu";
+            if (!reportTypeCountMap.isEmpty()) {
+                popularReport = reportTypeCountMap.entrySet().stream()
+                        .max(Map.Entry.comparingByValue())
+                        .map(Map.Entry::getKey)
+                        .orElse("Không có dữ liệu");
+            }
+
+            // Tìm user tạo nhiều báo cáo nhất
+            String topGeneratorName = "Không có dữ liệu";
+            if (!userReportCountMap.isEmpty()) {
+                Integer mostActiveUserId = userReportCountMap.entrySet().stream()
+                        .max(Map.Entry.comparingByValue())
+                        .map(Map.Entry::getKey)
+                        .orElse(null);
+
+                // Kiểm tra mostActiveUserId trước khi sử dụng
+                if (mostActiveUserId != null) {
+                    try {
+                        User user = new UserDAO().getUserByID(mostActiveUserId);
+                        if (user != null && user.getFullName() != null) {
+                            topGeneratorName = user.getFullName();
+                        } else {
+                            topGeneratorName = "User ID: " + mostActiveUserId;
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Lỗi khi lấy thông tin user ID " + mostActiveUserId + ": " + e.getMessage());
+                        topGeneratorName = "User ID: " + mostActiveUserId + " (Lỗi)";
+                    }
+                }
+            }
+
+            // Lấy báo cáo mới nhất
+            String newestReport = "Không có báo cáo";
+            if (!reportList.isEmpty()) {
+                Report lastReport = reportList.get(reportList.size() - 1); // Thay thế getLast()
+                if (lastReport != null && lastReport.getReportType() != null &&
+                        !lastReport.getReportType().trim().isEmpty()) {
+                    newestReport = lastReport.getReportType();
+                }
+            }
+
+            // Cập nhật UI
+            totalReportsLabel.setText(String.valueOf(totalReport));
+            latestReportLabel.setText(newestReport);
+            popularReportTypeLabel.setText(popularReport);
+            topGeneratorLabel.setText(topGeneratorName);
+
+            // Debug output
+            System.out.println("=== BÁO CÁO THỐNG KÊ ===");
+            System.out.println("Tổng số báo cáo: " + totalReport);
+            System.out.println("Báo cáo mới nhất: " + newestReport);
+            System.out.println("Loại báo cáo phổ biến nhất: " + popularReport);
+            System.out.println("Người tạo nhiều báo cáo nhất: " + topGeneratorName);
+            System.out.println("========================");
+
+        } catch (Exception e) {
+            System.err.println("Lỗi trong initialSummary(): " + e.getMessage());
+            e.printStackTrace();
+
+            // Thiết lập giá trị mặc định khi có lỗi
+            try {
+                totalReportsLabel.setText("Lỗi");
+                latestReportLabel.setText("Lỗi");
+                popularReportTypeLabel.setText("Lỗi");
+                topGeneratorLabel.setText("Lỗi");
+            } catch (Exception uiEx) {
+                System.err.println("Lỗi khi cập nhật UI: " + uiEx.getMessage());
+            }
         }
+    }
 
-        // Tìm loại báo cáo phổ biến nhất
-        String popularReport = reportTypeCountMap.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
 
-        // Tìm user tạo nhiều báo cáo nhất
-        Integer mostActiveUserId = userReportCountMap.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(null);
-        String nameUserById = new UserDAO().getUserByID(mostActiveUserId).getFullName();
-        String newestReport = reportList.getLast().getReportType();
-        if(newestReport == null || newestReport.isEmpty()){
-            return;
-        }
+    private void setDefaultValues() {
+        totalReportsLabel.setText("0");
+        latestReportLabel.setText("Không có báo cáo");
+        popularReportTypeLabel.setText("Không có dữ liệu");
+        topGeneratorLabel.setText("Không có dữ liệu");
+    }
 
-        totalReportsLabel.setText(String.valueOf(totalReport));
-        latestReportLabel.setText(newestReport);
-        popularReportTypeLabel.setText(popularReport);
-        topGeneratorLabel.setText(nameUserById);
-        // Output thử
-        System.out.println("Tổng số báo cáo: " + totalReport);
-        System.out.println("Báo cáo mới nhất: " + newestReport);
-        System.out.println("Loại báo cáo phổ biến nhất: " + popularReport);
-        System.out.println("Người dùng tạo nhiều báo cáo nhất: User ID = " + mostActiveUserId);
+    private void processReportStatistics(List<Report> validReports) {
+        // Implement logic xử lý thống kê ở đây
+        // Tương tự như code trên nhưng với validReports
+    }
+
+    private void handleError(String message, Exception e) {
+        System.err.println(message + ": " + e.getMessage());
+        e.printStackTrace();
+        setDefaultValues();
     }
 
     private void initializeDatePickers() {
@@ -286,6 +275,11 @@ public class ReportViewController implements Initializable {
         List<Report> reportList1 = new ReportDAO().getAllReports();
         reportList.addAll(reportList1);
         reportTable.setItems(reportList);
+        PaginationUtils.setupPagination(
+                reportList1,
+                reportTable,
+                pagination
+        );
     }
 
     private void initializeCharts() {
@@ -345,17 +339,7 @@ public class ReportViewController implements Initializable {
             apartmentStatusPieChart.setData(pieChartData);
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exception, có thể hiển thị thông báo lỗi cho người dùng
         }
-        // Tạo dữ liệu mẫu nếu chưa có
-//        if (apartmentStatusPieChart.getData().isEmpty()) {
-//            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-//                    new PieChart.Data("Đã thanh toán", 65),
-//                    new PieChart.Data("Chưa thanh toán", 25),
-//                    new PieChart.Data("Quá hạn", 10)
-//            );
-//            apartmentStatusPieChart.setData(pieChartData);
-//        }
     }
 
     private void setupEventHandlers() {
@@ -371,20 +355,11 @@ public class ReportViewController implements Initializable {
         // Xử lý sự kiện xuất báo cáo
         exportReportButton.setOnAction(event -> exportFullReport());
 
-        // Xử lý sự kiện in báo cáo
-        printButton.setOnAction(event -> printReport());
-
-        // Xử lý sự kiện xuất Excel
-        exportButton.setOnAction(event -> exportToExcel());
-
-        // Nút đóng mặc định không làm gì - sẽ được xử lý bởi DashboardController
     }
 
     private void loadDefaultData() {
         // TODO: Tải dữ liệu báo cáo mặc định
 
-        // Hiển thị dữ liệu tóm tắt
-        updateSummaryData();
     }
 
     private void generateReport() throws SQLException {
@@ -436,11 +411,6 @@ public class ReportViewController implements Initializable {
         // Cập nhật biểu đồ
         updateCharts();
 
-        // Cập nhật bảng dữ liệu
-//        updateTableData();
-
-        // Cập nhật dữ liệu tóm tắt
-        updateSummaryData();
     }
 
     private void updateCharts() throws SQLException {
@@ -466,28 +436,8 @@ public class ReportViewController implements Initializable {
 
     }
 
-//    private void updateTableData() throws SQLException {
-//        // TODO: Cập nhật dữ liệu cho bảng báo cáo
-//        LocalDate fromDate = fromDatePicker.getValue();
-//        LocalDate toDate = toDatePicker.getValue();
-//        reportTable.setItems(new ReportDAO().getValue(fromDate, toDate));
-//        periodColumn.setCellValueFactory(new MapValueFactory<>("kỳ"));
-//        totalInvoicesColumn.setCellValueFactory(new MapValueFactory<>("tổng số hóa đơn"));
-//        overdueInvoicesColumn.setCellValueFactory(new MapValueFactory<>("quá hạn"));
-//        paidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("đã thanh toán"));
-//        totalFeesColumn.setCellValueFactory(new MapValueFactory<>("tổng phí phạt"));
-//        unpaidInvoicesColumn.setCellValueFactory(new MapValueFactory<>("chưa thanh toán"));
-//        totalRevenueColumn.setCellValueFactory(new MapValueFactory<>("tổng doanh thu"));
-//    }
 
-    private void updateSummaryData() {
-        // TODO: Cập nhật các thông tin tóm tắt
-        // Giả sử các giá trị mặc định
-//        totalInvoicesLabel.setText("0");
-//        totalRevenueLabel.setText("0 VNĐ");
-//        paymentRateLabel.setText("0%");
-//        overdueRateLabel.setText("0%");
-    }
+
 
     private void exportFullReport() {
         // TODO: Xuất toàn bộ báo cáo (bao gồm biểu đồ, bảng dữ liệu và tóm tắt)
@@ -513,13 +463,6 @@ public class ReportViewController implements Initializable {
         }
     }
 
-    private void printReport() {
-        // TODO: In báo cáo
-    }
-
-    private void exportToExcel() {
-        // TODO: Xuất báo cáo dạng Excel
-    }
 
     @Setter
     private DashboardController parentController;
@@ -556,7 +499,7 @@ public class ReportViewController implements Initializable {
 
             editItem.setOnAction(e -> {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/DetailReport.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/utc2/apartmentmanagement/fxml/Report/DetailReport.fxml"));
                     Parent root = loader.load();
 
                     DetailReportController editController = loader.getController();
@@ -588,6 +531,25 @@ public class ReportViewController implements Initializable {
                     currentContextMenu.hide();
                 }
             });
+        }
+    }
+    @FXML
+    public void handleSelected(Event event) {
+        pagination.setVisible(true);
+        pagination.setManaged(true);
+    }
+
+    public void handleTabSumary(Event event) {
+        if(pagination!=null){
+            pagination.setVisible(false);
+            pagination.setManaged(false);
+        }
+    }
+
+    public void handleTabChart(Event event) {
+        if(pagination!=null){
+            pagination.setVisible(false);
+            pagination.setManaged(false);
         }
     }
 }

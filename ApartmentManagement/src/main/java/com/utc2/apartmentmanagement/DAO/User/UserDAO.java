@@ -7,6 +7,7 @@ import com.utc2.apartmentmanagement.Utils.passwordEncryption;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -323,5 +324,56 @@ public class UserDAO implements IUserDAO {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    @Override
+    public boolean updateLastLogin(String userName, LocalDateTime lastLogin) {
+        String sql = "UPDATE [User] Set last_login = ? WHERE username = ?";
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            stmt.setTimestamp(1, Timestamp.valueOf(lastLogin));
+            stmt.setString(2, userName);
+            return stmt.executeUpdate() > 0;
+        }catch(SQLException e){
+            System.out.println("Đã xảy ra lỗi khi cập nhật thời gian đăng nhập " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public List<Map<String, String>> listUserLastLogin() {
+        String sql = "SELECT \n" +
+                "    u.username,\n" +
+                "    r.role_name as Role,\n" +
+                "    CASE WHEN u.active = 1 THEN 'Active' ELSE 'Inactive' END as Status,\n" +
+                "    'Login' as Action,\n" +
+                "    'User Authentication' as Activity,\n" +
+                "    CAST(u.last_login as DATE) as Date,\n" +
+                "    FORMAT(u.last_login, 'HH:mm:ss') as Time\n" +
+                "FROM [User] u\n" +
+                "JOIN Role r ON u.role_id = r.role_id\n" +
+                "WHERE u.last_login IS NOT NULL\n" +
+                "ORDER BY u.last_login DESC";
+        List<Map<String,String>> list = new ArrayList<>();
+        try(Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement stmt = connection.prepareStatement(sql)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Map<String, String > rows = new HashMap<>();
+                rows.put("username", rs.getString("username"));
+                rows.put("Role", rs.getString("Role"));
+                rows.put("Action", rs.getString("action"));
+                rows.put("Activity", rs.getString("activity"));
+                rows.put("Status", rs.getString("Status"));
+                rows.put("Date", rs.getString("date"));
+                rows.put("Time", rs.getString("time"));
+                list.add(rows);
+            }
+        }catch(SQLException e){
+            System.out.println("Đã xảy ra lỗi trong quá trình lấy thông tin user đăng nhập!!"+e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
     }
 }

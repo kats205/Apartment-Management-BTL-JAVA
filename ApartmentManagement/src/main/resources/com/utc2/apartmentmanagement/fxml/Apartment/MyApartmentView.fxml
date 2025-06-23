@@ -167,7 +167,6 @@
                                        <children>
                                           <Button fx:id="cancelButton" prefHeight="35.0" prefWidth="90.0" styleClass="cancel-button" text="Cancel" />
                                           <Button fx:id="ViewFullDetailsBtn" mnemonicParsing="false" onAction="#handleViewDetailsBtn" styleClass="view-details-button" text="View Full Details" />
-                                          <Button mnemonicParsing="false" styleClass="manage-button" text="Manage Apartment" />
                                        </children>
                                     </HBox>
                                  </children>

@@ -13,7 +13,22 @@ public class ResidentDAO implements IResidentDAO {
     @Override
     public List<Resident> getAllResident() {
         List<Resident> residentList = new ArrayList<>();
-        String sql = "SELECT resident_id, apartment_id, full_name, identity_card, date_of_birth, gender, user_id, is_primary_resident, move_in_date, created_at, updated_at FROM Resident";
+        String sql = "SELECT \n" +
+                "    resident_id, \n" +
+                "    apartment_id, \n" +
+                "    full_name, \n" +
+                "    identity_card, \n" +
+                "    date_of_birth,\n" +
+                "    CASE \n" +
+                "        WHEN gender = 0 THEN 'Nu' \n" +
+                "        ELSE 'Nam' \n" +
+                "    END AS gender,\n" +
+                "    user_id, \n" +
+                "    is_primary_resident, \n" +
+                "    move_in_date, \n" +
+                "    created_at, \n" +
+                "    updated_at \n" +
+                "FROM Resident;\n";
         try(Connection connection = DatabaseConnection.getConnection();
             PreparedStatement stmt = connection.prepareStatement(sql)){
             ResultSet rs = stmt.executeQuery();
@@ -95,6 +110,50 @@ public class ResidentDAO implements IResidentDAO {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    @Override
+    public List<Resident> searchOnChange(String searchText, String field) {
+        if (!field.equals("apartment_id") && !field.equals("full_name")) {
+            throw new IllegalArgumentException("Invalid search field: " + field);
+        }
+
+        String sql = "SELECT " +
+                "resident_id, apartment_id, full_name, identity_card, date_of_birth, " +
+                "CASE WHEN gender = 0 THEN 'Nu' ELSE 'Nam' END AS gender, " +
+                "user_id, is_primary_resident, move_in_date, created_at, updated_at " +
+                "FROM Resident " +
+                "WHERE " + field + " LIKE ?";
+
+        List<Resident> residentList = new ArrayList<>();
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, "%" + searchText + "%");
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Resident resident = new Resident(
+                        rs.getInt("resident_id"),
+                        rs.getString("apartment_id"),
+                        rs.getString("full_name"),
+                        rs.getString("identity_card"),
+                        rs.getDate("date_of_birth"),
+                        rs.getString("gender"),
+                        rs.getInt("user_id"),
+                        rs.getBoolean("is_primary_resident"),
+                        rs.getDate("move_in_date"),
+                        rs.getDate("created_at"),
+                        rs.getDate("updated_at")
+                );
+                residentList.add(resident);
+            }
+        } catch (SQLException e) {
+            System.out.println("Đã xảy ra lỗi trong quá trình tìm kiếm onChange! " + e.getMessage());
+        }
+        return residentList;
+
     }
 
 

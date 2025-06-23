@@ -68,8 +68,8 @@ public class ReportDAO implements IReportDAO {
 
     @Override
     public boolean saveReport(Report report) {
-        String query = "INSERT INTO report (report_name, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO report (report_name, generation_date, generated_by_user_id, parameters, file_path, created_at, updated_at, report_type) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, report.getReportType());
@@ -82,7 +82,7 @@ public class ReportDAO implements IReportDAO {
                     Date.valueOf(report.getCreatedAt()) : null);
             statement.setDate(7, report.getUpdatedAt() != null ?
                     Date.valueOf(report.getUpdatedAt()) : null);
-
+            statement.setString(8, report.getReportType());
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows > 0) {
