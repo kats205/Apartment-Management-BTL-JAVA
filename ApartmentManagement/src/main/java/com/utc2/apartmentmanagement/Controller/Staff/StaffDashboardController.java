@@ -88,13 +88,13 @@ public class StaffDashboardController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-        approvalButton11.setOnAction(event -> {
-            try {
-                loadProgessView();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+//        approvalButton11.setOnAction(event -> {
+//            try {
+//                loadProgessView();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
     }
 
     public void roleDefination() throws SQLException {
@@ -145,13 +145,13 @@ public class StaffDashboardController implements Initializable {
     }
 
     public void loadApprovalView() throws IOException {
-        System.out.println("Đang cố gắng tải StaffApproval.fxml");
-        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Staff/StaffApproval.fxml");
+        System.out.println("Đang cố gắng tải ComplaintHandling.fxml");
+        URL url = getClass().getResource("/com/utc2/apartmentmanagement/fxml/Staff/Approvalv2.fxml");
         System.out.println("URL: " + (url != null ? url.toString() : "null"));
 
         FXMLLoader loader = new FXMLLoader(url);
         if (url == null) {
-            System.out.println("Không tìm thấy file StaffApproval.fxml");
+            System.out.println("Không tìm thấy file ComplaintHandling.fxml");
             return;
         }
 
@@ -170,7 +170,7 @@ public class StaffDashboardController implements Initializable {
         // Xóa tất cả các view hiện tại và thêm HRView
         contentArea.getChildren().clear();
         contentArea.getChildren().add(StaffApproval);
-        System.out.println("Đã thêm StaffApproval vào contentArea");
+        System.out.println("Đã thêm ComplaintHandling vào contentArea");
     }
 
     // Load Maintenance Handling View

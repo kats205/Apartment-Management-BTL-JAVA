@@ -68,7 +68,6 @@
         </Label>
         <HBox alignment="CENTER_RIGHT" layoutX="868.0" layoutY="575.0" prefHeight="40.0" prefWidth="240.0" spacing="15.0">
             <children>
-                <Button fx:id="printButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="printButton" text="Print Receipt" />
                 <Button fx:id="exportButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" styleClass="exportButton" text="Export" />
             </children>
         </HBox>

@@ -35,16 +35,7 @@
                         </Pane>
                         <HBox layoutX="180.0" layoutY="25.0" prefHeight="40.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0">
                             <children>
-                                <Button fx:id="services" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Services">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../../assets/Dashboard/dash1.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="complaints" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Complaints">
+                                <Button fx:id="complaints" mnemonicParsing="false" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Complaints">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -53,20 +44,20 @@
                                         </ImageView>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="residents" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Residents">
-                                    <graphic>
-                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../../assets/Dashboard/HR.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
-                                <Button fx:id="maintenance" mnemonicParsing="false" prefHeight="40.0" prefWidth="285.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Maintenance">
+                                <Button fx:id="maintenance" mnemonicParsing="false" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="Maintenance">
                                     <graphic>
                                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../../assets/Dashboard/data1.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="profile" mnemonicParsing="false" prefHeight="40.0" prefWidth="340.0" style="-fx-background-color: white;" styleClass="staffMenuItem" text="My Profile">
+                                    <graphic>
+                                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../../assets/Dashboard/profile%20-%20Copy%20(2).png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -105,7 +96,7 @@
                     <children>
                         <VBox prefHeight="165.0" prefWidth="180.0" AnchorPane.leftAnchor="0.0">
                             <children>
-                                <Button fx:id="approvalButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Approvals" textAlignment="CENTER" textFill="WHITE">
+                                <Button fx:id="approvalButton" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Complaint" textAlignment="CENTER" textFill="WHITE">
                                     <graphic>
                                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -117,19 +108,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Button>
-                        <Button fx:id="approvalButton1" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Maintenance Handling" textAlignment="CENTER" textFill="WHITE">
-                           <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../assets/StaffDashboard/handling.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="approvalButton11" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Progress" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="approvalButton1" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="55.0" prefWidth="180.0" style="-fx-background-color: #2c3e50;" styleClass="staffSidebarItem" text="Maintenance" textAlignment="CENTER" textFill="WHITE">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -189,7 +168,7 @@
                                         <Label layoutX="10.0" layoutY="110.0" prefHeight="18.0" prefWidth="58.0" styleClass="staff-stat-detail" text="Active:" />
                                         <Label layoutX="10.0" layoutY="130.0" styleClass="staff-stat-detail" text="Completed:" />
                                         <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="staffActionButton" text="View Details" />
-                                        <Label fx:id="activeServices" layoutX="56.0" layoutY="111.0" styleClass="staff-stat-detail" text="25" />
+                                        <Label fx:id="activeServices" layoutX="62.0" layoutY="111.0" styleClass="staff-stat-detail" text="25" />
                                         <Label fx:id="completedServices" layoutX="80.0" layoutY="130.0" styleClass="staff-stat-detail" text="23" />
                               <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="145.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
                                     </children>
@@ -210,7 +189,7 @@
                                         <Label layoutX="10.0" layoutY="130.0" styleClass="staff-stat-detail" text="Pending:" />
                                         <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="staffActionButton" text="View Complaints" />
                                         <Label fx:id="resolvedComplaints" layoutX="71.0" layoutY="110.0" styleClass="staff-stat-detail" text="20" />
-                                        <Label fx:id="pendingComplaints" layoutX="68.0" layoutY="132.0" styleClass="staff-stat-detail" text="12" />
+                                        <Label fx:id="pendingComplaints" layoutX="85.0" layoutY="130.0" styleClass="staff-stat-detail" text="12" />
                               <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="145.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
                                     </children>
                                 </AnchorPane>
@@ -229,8 +208,8 @@
                                         <Label layoutX="10.0" layoutY="111.0" styleClass="staff-stat-detail" text="Scheduled:" />
                                         <Label layoutX="10.0" layoutY="130.0" styleClass="staff-stat-detail" text="Emergency:" />
                                         <Button layoutX="10.0" layoutY="160.0" mnemonicParsing="false" styleClass="staffActionButton" text="Schedule Tasks" />
-                                        <Label fx:id="scheduledMaintenance" layoutX="79.0" layoutY="113.0" styleClass="staff-stat-detail" text="12" />
-                                        <Label fx:id="emergencyMaintenance" layoutX="85.0" layoutY="133.0" styleClass="staff-stat-detail" text="5" />
+                                        <Label fx:id="scheduledMaintenance" layoutX="81.0" layoutY="110.0" styleClass="staff-stat-detail" text="12" />
+                                        <Label fx:id="emergencyMaintenance" layoutX="80.0" layoutY="130.0" styleClass="staff-stat-detail" text="5" />
                               <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="145.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
                                     </children>
                                 </AnchorPane>
@@ -268,10 +247,10 @@
                                 <TableColumn fx:id="requestIdColumn" prefWidth="100.0" text="Request ID" />
                                 <TableColumn fx:id="residentColumn" prefWidth="130.0" text="Resident" />
                                 <TableColumn fx:id="apartmentColumn" prefWidth="120.0" text="Apartment" />
-                                <TableColumn fx:id="priorityColumn" prefWidth="150.0" text="Priority" />
-                                <TableColumn fx:id="descriptionColumn" prefWidth="230.0" text="Details" />
+                                <TableColumn fx:id="statusColumn" prefWidth="150.0" text="Status" />
+                                <TableColumn fx:id="descriptionColumn" prefWidth="230.0" text="Description" />
                                 <TableColumn fx:id="dateSubmittedColumn" prefWidth="130.0" text="Date Submitted" />
-                                <TableColumn fx:id="statusColumn" prefWidth="180.0" text="Status" />
+                                <TableColumn fx:id="priorityColumn" prefWidth="180.0" text="Priority" />
                             </columns>
                         </TableView>
                     </children>

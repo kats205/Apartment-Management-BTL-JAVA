@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import lombok.Setter;
 
 import java.net.URL;
 import java.sql.Date;
@@ -27,7 +28,7 @@ public class MaintenanceHandlingController implements Initializable {
 
     @FXML
     public AnchorPane MaintenanceHandlingView;
-
+    @Setter
     private StaffDashboardController parentStaffDashboardController;
     // Các nút chức năng
         @FXML public Button refreshButton;

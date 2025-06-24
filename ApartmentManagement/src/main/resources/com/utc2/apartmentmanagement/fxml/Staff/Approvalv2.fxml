@@ -17,17 +17,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="staffDashboard" prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/StaffCSS/StaffApproval.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Staff.StaffApprovalController">
+<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/StaffCSS/Approval.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Staff.StaffApprovalController">
     <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <top>
-         <AnchorPane prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <AnchorPane prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
-               <Label layoutX="383.0" layoutY="20.0" styleClass="main-title" text="Staff Approval Dashboard">
-                  <font>
-                     <Font size="28.0" />
-                  </font>
-               </Label>
-               <Label layoutX="345.0" layoutY="60.0" styleClass="subtitle" text="Manage and approve maintenance requests and service complaints" />
+               <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                     <Label styleClass="main-title" text="Approval Dashboard">
+                        <font>
+                           <Font size="28.0" />
+                        </font>
+                     </Label>
+                     <Label styleClass="subtitle" text="Manage and approve maintenance requests and service complaints" />
+                  </children>
+               </VBox>
             </children>
          </AnchorPane>
       </top>
@@ -96,19 +100,19 @@
                                        </Button>
                                        <Region HBox.hgrow="ALWAYS" />
                                        <Button fx:id="refreshMaintenanceBtn" prefHeight="30.0" prefWidth="80.0" styleClass="refresh-btn" text="Refresh" />
-                                       <Button fx:id="approveAllMaintenanceBtn" onAction="#handleApproveForMaintenance" prefHeight="34.0" prefWidth="100.0" styleClass="delete-btn" text="Approve" />
+                                       <Button fx:id="approveAllMaintenanceBtn" onAction="#handleApproveForMaintenance" prefHeight="34.0" prefWidth="100.0" styleClass="approve-btn" text="Approve" />
                                     </children>
                                  </HBox>
                                  <TableView fx:id="maintenanceTable" prefHeight="360.0" prefWidth="1058.0" VBox.vgrow="ALWAYS">
                                     <columns>
-                                       <TableColumn fx:id="requestIdCol" prefWidth="99.73332405090332" text="Request ID" />
-                                       <TableColumn fx:id="issueTypeCol" prefWidth="113.06668090820312" text="Issue Type" />
-                                       <TableColumn fx:id="maintenanceDescCol" prefWidth="278.13328552246094" text="Description" />
-                                       <TableColumn fx:id="maintenanceStatusCol" prefWidth="79.73333740234375" text="Status" />
-                                       <TableColumn fx:id="priorityCol" prefWidth="100.5333251953125" text="Priority" />
-                                       <TableColumn fx:id="requestDateCol" prefWidth="117.33331298828125" text="Request Date" />
-                                       <TableColumn fx:id="assignedStaffCol" prefWidth="113.066650390625" text="Assigned Staff" />
-                                       <TableColumn fx:id="completionDateCol" prefWidth="180.79998779296875" text="Completion Date" />
+                                       <TableColumn fx:id="requestIdCol" prefWidth="120.0" text="Request ID" />
+                                       <TableColumn fx:id="issueTypeCol" prefWidth="120" text="Issue Type" />
+                                       <TableColumn fx:id="maintenanceDescCol" prefWidth="250" text="Description" />
+                                       <TableColumn fx:id="maintenanceStatusCol" prefWidth="100" text="Status" />
+                                       <TableColumn fx:id="priorityCol" prefWidth="100.0" text="Priority" />
+                                       <TableColumn fx:id="requestDateCol" prefWidth="120" text="Request Date" />
+                                       <TableColumn fx:id="assignedStaffCol" prefWidth="150" text="Assigned Staff" />
+                                       <TableColumn fx:id="completionDateCol" prefWidth="120" text="Completion Date" />
                                     </columns>
                                     <placeholder>
                                        <Label text="No maintenance requests found" />
@@ -178,8 +182,8 @@
                                        <TableColumn fx:id="complaintsDescCol" prefWidth="250" text="Description" />
                                        <TableColumn fx:id="complaintsStatusCol" prefWidth="100" text="Status" />
                                        <TableColumn fx:id="severityCol" prefWidth="100.0" text="Priority" />
-                                       <TableColumn fx:id="submitDateCol" prefWidth="180.800048828125" text="Submit Date" />
-                                       <TableColumn fx:id="complaintsAssignedStaffCol" prefWidth="152.79998779296875" text="Assigned Staff" />
+                                       <TableColumn fx:id="submitDateCol" prefWidth="172.2666015625" text="Submit Date" />
+                                       <TableColumn fx:id="complaintsAssignedStaffCol" prefWidth="164.53350830078125" text="Assigned Staff" />
                                     </columns>
                                     <placeholder>
                                        <Label text="No complaints found" />

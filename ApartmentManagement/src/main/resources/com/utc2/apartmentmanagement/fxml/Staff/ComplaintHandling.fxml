@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="655.0" prefWidth="1100.0" stylesheets="@../../styles/StaffCSS/ComplaintHandling.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <center>
+         <AnchorPane prefHeight="560.0" prefWidth="1100.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+            <children>
+               <ScrollPane prefHeight="560.0" prefWidth="1100.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="1085.0" style="-fx-background-color: white;">
+                        <children>
+                           <VBox prefHeight="650.0" prefWidth="1085.0" spacing="15" styleClass="tab-content">
+                              <padding>
+                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                              </padding>
+                              <children>
+                                 <HBox alignment="CENTER" prefHeight="324.0" prefWidth="1055.0" spacing="15.0">
+                                    <children>
+                                       <AnchorPane prefHeight="110.0" prefWidth="200.0" styleClass="stat-card">
+                                          <children>
+                                             <VBox layoutX="15.0" layoutY="15.0" spacing="5.0">
+                                                <children>
+                                                   <Label styleClass="stat-label" text="Total Approvals" textFill="#7f8c8d">
+                                                      <font>
+                                                         <Font size="12.0" />
+                                                      </font>
+                                                   </Label>
+                                                   <Label fx:id="totalApprovalsLabel" styleClass="stat-value" text="23" textFill="#2c3e50">
+                                                      <font>
+                                                         <Font name="System Bold" size="24.0" />
+                                                      </font>
+                                                   </Label>
+                                                </children>
+                                             </VBox>
+                                             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="170.0" layoutY="20.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../../assets/Dashboard/report1.png" />
+                                                </image>
+                                             </ImageView>
+                                          </children>
+                                       </AnchorPane>
+                                       <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="stat-card">
+                                          <children>
+                                             <VBox layoutX="15.0" layoutY="15.0" spacing="5.0">
+                                                <children>
+                                                   <Label styleClass="stat-label" text="Approved Today" textFill="#7f8c8d">
+                                                      <font>
+                                                         <Font size="12.0" />
+                                                      </font>
+                                                   </Label>
+                                                   <Label fx:id="approvedTodayLabel" styleClass="stat-value-approved" text="6" textFill="#27ae60">
+                                                      <font>
+                                                         <Font name="System Bold" size="24.0" />
+                                                      </font>
+                                                   </Label>
+                                                </children>
+                                             </VBox>
+                                             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="170.0" layoutY="20.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../../assets/StaffDashboard/approve.png" />
+                                                </image>
+                                             </ImageView>
+                                          </children>
+                                       </AnchorPane>
+                                       <AnchorPane prefHeight="100.0" prefWidth="220.0" styleClass="stat-card">
+                                          <children>
+                                             <VBox layoutX="15.0" layoutY="15.0" spacing="5.0">
+                                                <children>
+                                                   <Label styleClass="stat-label" text="Pending Review" textFill="#7f8c8d">
+                                                      <font>
+                                                         <Font size="12.0" />
+                                                      </font>
+                                                   </Label>
+                                                   <Label fx:id="pendingReviewLabel" styleClass="stat-value-pending" text="4" textFill="#f39c12">
+                                                      <font>
+                                                         <Font name="System Bold" size="24.0" />
+                                                      </font>
+                                                   </Label>
+                                                </children>
+                                             </VBox>
+                                             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="170.0" layoutY="20.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../../assets/StaffDashboard/handling.png" />
+                                                </image>
+                                             </ImageView>
+                                          </children>
+                                       </AnchorPane>
+                                       <AnchorPane prefHeight="100.0" prefWidth="200.0" styleClass="stat-card">
+                                          <children>
+                                             <VBox layoutX="15.0" layoutY="15.0" spacing="5.0">
+                                                <children>
+                                                   <Label styleClass="stat-label" text="Approval Rate" textFill="#7f8c8d">
+                                                      <font>
+                                                         <Font size="12.0" />
+                                                      </font>
+                                                   </Label>
+                                                   <ProgressBar fx:id="approvalProgressBar" prefHeight="20.0" prefWidth="150.0" progress="0.85" styleClass="progress-bar-approval" />
+                                                   <Label fx:id="approvalProgressLabel" styleClass="progress-label-approval" text="85%" textFill="#27ae60">
+                                                      <font>
+                                                         <Font name="System Bold" size="14.0" />
+                                                      </font>
+                                                   </Label>
+                                                </children>
+                                             </VBox>
+                                          </children>
+                                       </AnchorPane>
+                                    </children>
+                                 </HBox>
+                                 <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="260.0" styleClass="section-title" text="Assigned Maintenance Tasks" textFill="#2c3e50">
+                                    <font>
+                                       <Font name="System Bold" size="18.0" />
+                                    </font>
+                                 </Label>
+                                 <AnchorPane prefHeight="480.0" prefWidth="1055.0" style="-fx-background-color: white;">
+                                    <children>
+                                       <VBox prefHeight="480.0" prefWidth="1055.0" spacing="15.0">
+                                          <children>
+                                             <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="1055.0">
+                                                <children>
+                                                   <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="975.0" spacing="15">
+                                                      <children>
+                                                         <HBox alignment="CENTER_LEFT" spacing="5">
+                                                            <children>
+                                                               <Label text="Approval Status:" textFill="#2c3e50">
+                                                                  <font>
+                                                                     <Font size="12.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <ComboBox fx:id="approvalStatusFilter" prefHeight="30.0" prefWidth="140.0" styleClass="filter-combo" value="All Status">
+                                                                  <items>
+                                                                     <FXCollections fx:factory="observableArrayList">
+                                                                        <String fx:value="All Status" />
+                                                                        <String fx:value="approved" />
+                                                                        <String fx:value="pending_review" />
+                                                                        <String fx:value="rejected" />
+                                                                        <String fx:value="escalated" />
+                                                                     </FXCollections>
+                                                                  </items>
+                                                               </ComboBox>
+                                                            </children>
+                                                         </HBox>
+                                                         <HBox alignment="CENTER_LEFT" spacing="5">
+                                                            <children>
+                                                               <Label text="Complaint Type:" textFill="#2c3e50">
+                                                                  <font>
+                                                                     <Font size="12.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <ComboBox fx:id="complaintTypeFilter" prefHeight="30.0" prefWidth="140.0" styleClass="filter-combo" value="All Types">
+                                                                  <items>
+                                                                     <FXCollections fx:factory="observableArrayList">
+                                                                        <String fx:value="All Types" />
+                                                                        <String fx:value="maintenance" />
+                                                                        <String fx:value="service" />
+                                                                        <String fx:value="facility" />
+                                                                        <String fx:value="noise" />
+                                                                     </FXCollections>
+                                                                  </items>
+                                                               </ComboBox>
+                                                            </children>
+                                                         </HBox>
+                                                         <HBox alignment="CENTER_LEFT" spacing="5">
+                                                            <children>
+                                                               <Label text="Staff:" textFill="#2c3e50">
+                                                                  <font>
+                                                                     <Font size="12.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <ComboBox fx:id="approverStaffFilter" prefHeight="38.0" prefWidth="120.0" styleClass="filter-combo" value="All Staff">
+                                                                  <items>
+                                                                     <FXCollections fx:factory="observableArrayList">
+                                                                        <String fx:value="All Staff" />
+                                                                        <String fx:value="Technical Team" />
+                                                                        <String fx:value="Supervisor" />
+                                                                        <String fx:value="Manager" />
+                                                                     </FXCollections>
+                                                                  </items>
+                                                               </ComboBox>
+                                                            </children>
+                                                         </HBox>
+                                                         <Region HBox.hgrow="ALWAYS" />
+                                                      </children>
+                                                   </HBox>
+                                                   <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass="refresh-btn" text="Refresh" />
+                                                </children>
+                                             </HBox>
+                                             <HBox prefHeight="277.0" prefWidth="1055.0">
+                                                <children>
+                                                   <TableView fx:id="approvalProgressTable" prefHeight="100.0" prefWidth="1056.0">
+                                                      <columns>
+                                                         <TableColumn fx:id="approvalComplaintIdCol" prefWidth="110.0" text="Complaint ID" />
+                                                         <TableColumn fx:id="approvalComplaintTypeCol" prefWidth="120.0" text="Type" />
+                                                         <TableColumn fx:id="approvalDescCol" prefWidth="140.0" text="Description" />
+                                                         <TableColumn fx:id="approvalStatusCol" prefWidth="100.0" text="Status" />
+                                                         <TableColumn fx:id="approvalSubmitDateCol" prefWidth="115.0" text="Submit Date" />
+                                                         <TableColumn fx:id="approvalDateCol" prefWidth="115.0" text="Approval Date" />
+                                                      </columns>
+                                                      <placeholder>
+                                                         <Label text="No approved complaints found" />
+                                                      </placeholder>
+                                                   </TableView>
+                                                </children>
+                                             </HBox>
+                                             <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                                <children>
+                                                   <Button fx:id="startTaskButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="100.0" styleClass="start-button" text="Start Task">
+                                                      <font>
+                                                         <Font name="System Bold" size="12.0" />
+                                                      </font>
+                                                      <graphic>
+                                                         <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                               <Image url="@../../assets/Dashboard/data1.png" />
+                                                            </image>
+                                                         </ImageView>
+                                                      </graphic>
+                                                   </Button>
+                                                   <Button fx:id="completeTaskButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="120.0" styleClass="complete-button" text="Complete Task">
+                                                      <font>
+                                                         <Font name="System Bold" size="12.0" />
+                                                      </font>
+                                                      <graphic>
+                                                         <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                               <Image url="@../../assets/StaffDashboard/approve.png" />
+                                                            </image>
+                                                         </ImageView>
+                                                      </graphic>
+                                                   </Button>
+                                                </children>
+                                                <padding>
+                                                   <Insets top="5.0" />
+                                                </padding>
+                                                <VBox.margin>
+                                                   <Insets right="15.0" />
+                                                </VBox.margin>
+                                             </HBox>
+                                             <VBox prefHeight="100.0" prefWidth="1055.0">
+                                                <children>
+                                                   <AnchorPane prefHeight="100.0" prefWidth="1055.0" styleClass="content-card">
+                                                      <children>
+                                                         <VBox layoutX="15.0" layoutY="10.0" prefHeight="80.0" prefWidth="1025.0" spacing="8.0">
+                                                            <children>
+                                                               <Label styleClass="field-label" text="Task Details:" textFill="#2c3e50">
+                                                                  <font>
+                                                                     <Font name="System Bold" size="13.0" />
+                                                                  </font>
+                                                               </Label>
+                                                               <TextArea fx:id="taskDetailsArea" editable="false" prefHeight="55.0" prefWidth="1025.0" promptText="Select a task to view details" styleClass="task-details-area" wrapText="true" />
+                                                            </children>
+                                                         </VBox>
+                                                      </children>
+                                                   </AnchorPane>
+                                                </children>
+                                             </VBox>
+                                             <HBox alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="1055.0" spacing="10.0">
+                                                <children>
+                                                   <Button fx:id="cancelButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" styleClass="cancel-button" text="Cancel" />
+                                                </children>
+                                             </HBox>
+                                          </children>
+                                       </VBox>
+                                    </children>
+                                 </AnchorPane>
+                              </children>
+                           </VBox>
+                        </children>
+                     </AnchorPane>
+                  </content>
+               </ScrollPane>
+            </children>
+         </AnchorPane>
+      </center>
+      <top>
+         <AnchorPane prefHeight="95.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+            <children>
+               <VBox alignment="CENTER" layoutX="30.0" layoutY="15.0" spacing="5.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <children>
+                     <Label styleClass="progress-title" text="Complaint Handling" textFill="#2c3e50">
+                        <font>
+                           <Font name="System Bold" size="26.0" />
+                        </font>
+                     </Label>
+                     <Label styleClass="progress-subtitle" text="Building trust through transparent complaint handling" textFill="#7f8c8d">
+                        <font>
+                           <Font size="13.0" />
+                        </font>
+                     </Label>
+                  </children>
+                  <padding>
+                     <Insets top="10.0" />
+                  </padding>
+               </VBox>
+            </children>
+         </AnchorPane>
+      </top>
+   </BorderPane>
+</AnchorPane>
