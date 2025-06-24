@@ -161,7 +161,7 @@
 }
 
 .table-view .table-row-cell:selected {
-    -fx-background-color: #e3f2eb;
+    -fx-background-color: #5ebf65;
     -fx-text-fill: #333333;
 }
 

@@ -137,107 +137,87 @@
     -fx-effect: none;
 }
 
-/* Enhanced Table Styling */
-.staff-table {
-    -fx-background-color: white;
-    -fx-background-radius: 8;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 3);
-    -fx-border-color: #e9ecef;
-    -fx-border-width: 1;
-    -fx-border-radius: 8;
+/* Table styles */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #dce4ec;
+    -fx-border-radius: 5;
 }
 
-.staff-table .table-row-cell:even {
-    -fx-background-color: #f8f9fa;
-}
-
-.staff-table .table-row-cell:odd {
-    -fx-background-color: white;
-}
-
-.staff-table .table-row-cell:hover {
-    -fx-background-color: #fff8e1 !important;
-    -fx-cursor: hand;
-}
-
-.staff-table .table-row-cell:selected {
-    -fx-background-color: #fff3cd !important;
-    -fx-table-cell-border-color: #ffeaa7;
-}
-
-/* Table Cell Styling */
-.staff-table .table-cell {
-    -fx-alignment: center-left;
-    -fx-font-size: 13px;
-    -fx-text-fill: #495057;
-    -fx-border-color: transparent #e9ecef transparent transparent;
-    -fx-border-width: 0 1 0 0;
-}
-
-/* Center align specific columns */
-.staff-table .table-column:nth-child(1), /* ID */
-.staff-table .table-column:nth-child(7), /* Gender */
-.staff-table .table-column:nth-child(11), /* Primary */
-.staff-table .table-column:nth-child(12) /* Actions */ {
-    -fx-alignment: center;
-}
-
-/* Table Header Enhancement */
-.staff-table .column-header {
-    -fx-background-color: #2c3e50;
-    -fx-pref-height: 45;
-    -fx-border-color: transparent #34495e transparent transparent;
-    -fx-border-width: 0 1 0 0;
-}
-
-.staff-table .column-header .label {
-    -fx-text-fill: #f39c12;
+.table-view .column-header {
+    -fx-background-color: #0A4969;
+    -fx-border-color: #34495e;
+    -fx-padding: 12 5 12 5;
     -fx-font-weight: bold;
     -fx-font-size: 13px;
 }
 
-.staff-table .column-header:hover {
+.table-view .column-header-background {
+    -fx-background-color: #2c3e50;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header:hover {
     -fx-background-color: #34495e;
-    -fx-cursor: hand;
 }
 
-.staff-table .column-header:last-child {
-    -fx-border-width: 0;
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #ecf0f1 transparent;
+    -fx-border-width: 0 0 1 0;
 }
 
-
-/* Scrollbar Styling for Table */
-.staff-table .scroll-bar:vertical {
-    -fx-pref-width: 10;
-    -fx-background-color: transparent;
+.table-row-cell:hover {
+    -fx-background-color: #fff4e6;
 }
 
-.staff-table .scroll-bar:vertical .track {
-    -fx-background-color: #f8f9fa;
+.table-row-cell:selected {
+    -fx-background-color: #f39c12;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: white;
+}
+
+.table-row-cell:pressed {
+    -fx-background-color: #e67e22;
+}
+
+.table-cell {
+    -fx-padding: 10 5 10 5;
+    -fx-font-size: 13px;
     -fx-border-color: transparent;
-    -fx-background-radius: 5;
+    -fx-text-fill: #2c3e50;
 }
 
-.staff-table .scroll-bar:vertical .thumb {
-    -fx-background-color: #dee2e6;
-    -fx-background-radius: 5;
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
 }
 
-.staff-table .scroll-bar:vertical .thumb:hover {
-    -fx-background-color: #adb5bd;
+.refresh-btn {
+    -fx-background-color: #17a2b8;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(39, 174, 96, 0.3), 4, 0, 0, 2);
 }
 
-/* Empty Table Message */
-.staff-table:empty {
-    -fx-background-color: white;
+.refresh-btn:hover {
+    -fx-background-color: #138496;
+    -fx-effect: dropshadow(gaussian, rgba(39, 174, 96, 0.4), 6, 0, 0, 3);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
 
-.staff-table .placeholder {
-    -fx-background-color: white;
-}
-
-.staff-table .placeholder .label {
-    -fx-text-fill: #6c757d;
-    -fx-font-size: 16px;
-    -fx-font-style: italic;
+.refresh-btn:pressed {
+    -fx-background-color: #0f6674;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
 }

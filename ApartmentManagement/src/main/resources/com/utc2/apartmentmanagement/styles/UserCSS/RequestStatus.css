@@ -217,8 +217,8 @@
 }
 
 .data-table .table-row-cell:selected {
-    -fx-background-color: #e3f2eb;
-    -fx-text-fill: #333333;
+    -fx-background-color: #5ebf65;
+    -fx-text-fill: white;
 }
 
 .data-table .table-cell {

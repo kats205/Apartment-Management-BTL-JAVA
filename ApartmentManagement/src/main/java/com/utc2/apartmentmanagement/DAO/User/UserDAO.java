@@ -238,7 +238,7 @@ public class UserDAO implements IUserDAO {
                 boolean isMatch = passwordEncryption.checkPassword(passWord, hashedPassword);
                 System.out.println("Password Match: " + isMatch);
 
-                if (true) {
+                if (!isMatch) {
                     roleID = rs.getInt("role_id");
                     System.out.println("User role: " + roleID);
                 } else {
