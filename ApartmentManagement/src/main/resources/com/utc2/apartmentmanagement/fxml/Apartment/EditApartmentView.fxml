@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="editApartmentView" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #f2f2f2;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Apartment.EditApartmentViewController">
+<AnchorPane fx:id="editApartmentView" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #f2f2f2;" stylesheets="@../../styles/EditApartmentView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.EditApartmentViewController">
     <children>
-        <Label alignment="CENTER" layoutX="90.0" layoutY="22.0" prefHeight="40.0" prefWidth="343.0" style="-fx-font-weight: bold;" text="CHỈNH SỬA THÔNG TIN CĂN HỘ" textAlignment="CENTER">
+        <Label alignment="CENTER" layoutY="20.0" prefHeight="40.0" prefWidth="492.0" style="-fx-font-weight: bold;" styleClass="main-title" text="EDIT APARTMENT INFORMATION" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <font>
                 <Font size="20.0" />
             </font>
@@ -25,61 +25,61 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
             <children>
-                <Label text="Mã căn hộ:" GridPane.rowIndex="0">
+                <Label text="Apartment ID:" GridPane.rowIndex="0">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="apartmentIdField" disable="true" prefHeight="30.0" prefWidth="200.0" promptText="Mã căn hộ" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="apartmentIdField" disable="true" prefHeight="30.0" prefWidth="200.0" promptText="Apartment ID" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                <Label text="Tòa nhà:" GridPane.rowIndex="1">
+                <Label text="Building ID:" GridPane.rowIndex="1">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
 
-                <Label text="Tầng:" GridPane.rowIndex="2">
+                <Label text="Floor:" GridPane.rowIndex="2">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="floorField" disable="true" prefHeight="30.0" prefWidth="200.0" promptText="Tầng" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="floorField" disable="true" prefHeight="30.0" prefWidth="200.0" promptText="Floor" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                <Label text="Diện tích (m²):" GridPane.rowIndex="3">
+                <Label text="Acreage (m²):" GridPane.rowIndex="3">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="areaField" prefHeight="30.0" prefWidth="200.0" promptText="Diện tích" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <TextField fx:id="areaField" prefHeight="30.0" prefWidth="200.0" promptText="Acreage" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                <Label text="Số phòng ngủ:" GridPane.rowIndex="4">
+                <Label text="Number Of Bedrooms:" GridPane.rowIndex="4">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="bedroomsField" prefHeight="30.0" prefWidth="200.0" promptText="Số phòng ngủ" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <TextField fx:id="bedroomsField" prefHeight="30.0" prefWidth="200.0" promptText="Number" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                <Label text="Giá thuê (VNĐ):" GridPane.rowIndex="5">
+                <Label text="Rental Price (VND):" GridPane.rowIndex="5">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="priceField" prefHeight="30.0" prefWidth="200.0" promptText="Giá thuê" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <TextField fx:id="priceField" prefHeight="30.0" prefWidth="200.0" promptText="Price" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                <Label text="Phí bảo trì:" GridPane.rowIndex="6">
+                <Label text="Maintenance Fee:" GridPane.rowIndex="6">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <TextField fx:id="maintenanceFeeField" prefHeight="25.0" prefWidth="260.0" promptText="Phí bảo trì" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <TextField fx:id="maintenanceFeeField" prefHeight="25.0" prefWidth="260.0" promptText="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;?import javafx.scene.control.Label?&gt;&lt;?import javafx.scene.text.Font?&gt;&lt;Label text=&quot;Maintenance Fee:&quot; xmlns=&quot;http://javafx.com/javafx/23.0.1&quot; xmlns:fx=&quot;http://javafx.com/fxml/1&quot;&gt;   &lt;font&gt;      &lt;Font size=&quot;14.0&quot; /&gt;   &lt;/font&gt;&lt;/Label&gt;" text="Maintenance fee" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-                <Label text="Trạng thái:" GridPane.rowIndex="7">
+                <Label text="Status:" GridPane.rowIndex="7">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="260.0" promptText="Chọn trạng thái" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextField fx:id="buildingID" disable="true" editable="false" promptText="Mã tòa nhà" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <ComboBox fx:id="statusComboBox" prefHeight="25.0" prefWidth="260.0" promptText="All Status" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="buildingID" disable="true" editable="false" promptText="Building ID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             </children>
             <columnConstraints>
                 <javafx.scene.layout.ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="105.0" prefWidth="113.0" />
@@ -99,8 +99,8 @@
 
         <HBox alignment="CENTER" layoutY="432.0" prefHeight="50.0" prefWidth="500.0" spacing="50.0">
             <children>
-                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" prefHeight="35.0" prefWidth="120.0" styleClass="create-button" stylesheets="@../../styles/Dashboard.css" text="Lưu thay đổi" />
-                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="35.0" prefWidth="120.0" styleClass="close-button" stylesheets="@../../styles/Dashboard.css" text="Hủy bỏ" />
+                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSaveButton" prefHeight="35.0" prefWidth="120.0" styleClass="button-save" text="Save" />
+                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="35.0" prefWidth="120.0" styleClass="cancel-button" text="Cancel" />
             </children>
         </HBox>
     </children>

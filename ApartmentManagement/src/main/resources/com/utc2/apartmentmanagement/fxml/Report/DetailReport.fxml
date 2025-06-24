@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/DetailReport.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Report.DetailReportController">
+<AnchorPane prefHeight="650.0" prefWidth="800.0" stylesheets="@../../styles/DetailReport.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.DetailReportController">
     <children>
         <VBox spacing="20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
@@ -24,7 +24,7 @@
 
             <!-- Tiêu đề -->
             <HBox alignment="CENTER">
-                <Text style="-fx-font-weight: bold;" text="CHI TIẾT BÁO CÁO">
+                <Text style="-fx-font-weight: bold;" text="REPORT DETAILS">
                     <font>
                         <Font size="24" />
                     </font>
@@ -33,16 +33,16 @@
 
             <!-- Bộ lọc -->
             <HBox alignment="CENTER" spacing="15">
-                <Label style="-fx-font-weight: bold;" text="Loại báo cáo:" />
-                <Label fx:id="reportTypeLabel" text="Theo tháng" />
+                <Label style="-fx-font-weight: bold;" text="Report type:" />
+                <Label fx:id="reportTypeLabel" text="By month" />
 
-                <Label style="-fx-font-weight: bold;" text="Từ:" />
+                <Label style="-fx-font-weight: bold;" text="From:" />
                 <Label fx:id="fromDateLabel" text="01/01/2025" />
 
-                <Label style="-fx-font-weight: bold;" text="Đến:" />
+                <Label style="-fx-font-weight: bold;" text="To" />
                 <Label fx:id="toDateLabel" text="30/04/2025" />
 
-                <Button fx:id="exportButton" onAction="#exportReport" styleClass="button-secondary" text="Xuất báo cáo" />
+                <Button fx:id="exportButton" onAction="#exportReport" prefWidth="100.0" styleClass="exportButton" stylesheets="@../../styles/ApartmentView.css" text="Export" />
             </HBox>
 
             <!-- Thông tin tổng hợp -->
@@ -58,23 +58,23 @@
                 </rowConstraints>
                 <children>
                     <VBox alignment="CENTER" style="-fx-background-color: #ffffff; -fx-padding: 10; -fx-background-radius: 5;" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                        <Label style="-fx-font-weight: bold;" text="Tổng số hóa đơn phát hành" />
+                        <Label style="-fx-font-weight: bold;" text="Total number of invoices issued" />
                         <Label fx:id="totalInvoicesLabel" style="-fx-font-size: 20; -fx-text-fill: #007bff;" text="0" />
                     </VBox>
                     <VBox alignment="CENTER" style="-fx-background-color: #ffffff; -fx-padding: 10; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                        <Label style="-fx-font-weight: bold;" text="Tổng số hóa đơn đã thanh toán" />
+                        <Label style="-fx-font-weight: bold;" text="Total invoices paid" />
                         <Label fx:id="paidInvoicesLabel" style="-fx-font-size: 20; -fx-text-fill: #28a745;" text="0" />
                     </VBox>
                     <VBox alignment="CENTER" style="-fx-background-color: #ffffff; -fx-padding: 10; -fx-background-radius: 5;" GridPane.columnIndex="2" GridPane.rowIndex="0">
-                        <Label style="-fx-font-weight: bold;" text="Tỉ lệ thanh toán (%)" />
+                        <Label style="-fx-font-weight: bold;" text="Payment Rate (%)" />
                         <Label fx:id="paymentRateLabel" style="-fx-font-size: 20; -fx-text-fill: #17a2b8;" text="0%" />
                     </VBox>
                     <VBox alignment="CENTER" style="-fx-background-color: #ffffff; -fx-padding: 10; -fx-background-radius: 5;" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                        <Label style="-fx-font-weight: bold;" text="Tổng số tiền đã thu (VNĐ)" />
+                        <Label style="-fx-font-weight: bold;" text="Total amount collected (VND)" />
                         <Label fx:id="totalCollectedLabel" style="-fx-font-size: 20; -fx-text-fill: #28a745;" text="0" />
                     </VBox>
                     <VBox alignment="CENTER" style="-fx-background-color: #ffffff; -fx-padding: 10; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                        <Label style="-fx-font-weight: bold;" text="Tổng tiền chưa thu (VNĐ)" />
+                        <Label style="-fx-font-weight: bold;" text="Total uncollected amount (VND)" />
                         <Label fx:id="totalOutstandingLabel" style="-fx-font-size: 20; -fx-text-fill: #dc3545;" text="0" />
                     </VBox>
                 </children>
@@ -83,10 +83,10 @@
             <!-- Biểu đồ doanh thu theo thời gian -->
             <BarChart fx:id="revenueChart" legendSide="RIGHT" VBox.vgrow="ALWAYS">
                 <xAxis>
-                    <CategoryAxis label="Thời gian" side="BOTTOM" />
+                    <CategoryAxis label="Date" side="BOTTOM" />
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Số tiền (VNĐ)" side="LEFT" />
+                    <NumberAxis label="Amount (VND)" side="LEFT" />
                 </yAxis>
             </BarChart>
         </VBox>

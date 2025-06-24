@@ -286,8 +286,8 @@ public class ReportViewController implements Initializable {
         filePathColumn.setCellValueFactory(new PropertyValueFactory<>("filePath"));
         filePathColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
-        createdAtColumn.setCellValueFactory( new PropertyValueFactory<>("createdAt"));
-        createdAtColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
+//        createdAtColumn.setCellValueFactory( new PropertyValueFactory<>("createdAt"));
+//        createdAtColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
 
         updatedAtColumn.setCellValueFactory(new PropertyValueFactory<>("updatedAt"));
         updatedAtColumn.setStyle("-fx-alignment: CENTER; -fx-font-size: 14px;");
@@ -465,7 +465,7 @@ public class ReportViewController implements Initializable {
     private void exportFullReport() {
         // TODO: Xuất toàn bộ báo cáo (bao gồm biểu đồ, bảng dữ liệu và tóm tắt)
         try {
-            String filePath = PDF_Export.exportNodeToPDF(revenueChart,apartmentStatusPieChart,"Report_List.pdf");
+            String filePath = PDF_Export.exportNodeToPDF(revenueChart,"Report_List.pdf");
 
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -8,67 +8,67 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="apartmentView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Apartment.ApartmentViewController">
+<AnchorPane fx:id="apartmentView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: white;" stylesheets="@../../styles/ApartmentView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Apartment.ApartmentViewController">
     <children>
-        <Label alignment="CENTER" layoutX="435.0" layoutY="20.0" prefHeight="40.0" prefWidth="260.0" style="-fx-font-weight: bold;" text="DANH SÁCH CĂN HỘ" textAlignment="CENTER">
+        <Label alignment="CENTER" layoutX="435.0" layoutY="20.0" prefHeight="40.0" prefWidth="260.0" style="-fx-font-weight: bold;" text="LIST OF APARTMENTS" textAlignment="CENTER">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
         <Label fx:id="noContentLabel" layoutX="93.0" layoutY="27.0" prefHeight="17.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-opacity: 0;" text="No content available" />
 
-        <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="73.0" prefHeight="40.0" prefWidth="1015.0" spacing="15.0">
+        <HBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="90.0" prefHeight="40.0" prefWidth="1015.0" spacing="15.0">
             <children>
-                <Label text="Tòa nhà:">
+                <Label prefHeight="20.0" prefWidth="70.0" text="Building:">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="buildingComboBox" prefHeight="30.0" prefWidth="239.0" promptText="Chọn tòa nhà" stylesheets="@../../styles/Dashboard.css" />
-                <Label text="Trạng thái:">
+                <ComboBox fx:id="buildingComboBox" prefHeight="30.0" prefWidth="239.0" promptText="All Building" stylesheets="@../../styles/Dashboard.css" />
+                <Label prefHeight="20.0" prefWidth="62.0" text="Status:">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="statusComboBox" prefHeight="30.0" prefWidth="245.0" promptText="Chọn trạng thái" stylesheets="@../../styles/Dashboard.css" />
-                <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleButtonSearch" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../../styles/Dashboard.css" text="Tìm kiếm" />
-                <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../../styles/Dashboard.css" text="Làm mới" />
+                <ComboBox fx:id="statusComboBox" prefHeight="30.0" prefWidth="245.0" promptText="All Status" stylesheets="@../../styles/Dashboard.css" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
+                <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleButtonSearch" prefHeight="30.0" prefWidth="100.0" styleClass="search-btn" stylesheets="@../styles/ApartmentView.css" text="Search" />
+                <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="30.0" prefWidth="100.0" styleClass="refresh-btn" text="Refresh" />
             </children>
         </HBox>
-        <TableView fx:id="apartmentTable" layoutX="55.0" layoutY="138.0" onMouseClicked="#getSelectedApartment" prefHeight="412.0" prefWidth="1020.0" stylesheets="@../../styles/Dashboard.css">
+        <TableView fx:id="apartmentTable" layoutX="55.0" layoutY="147.0" onMouseClicked="#getSelectedApartment" prefHeight="400.0" prefWidth="1020.0" stylesheets="@../../styles/Dashboard.css">
 
             <columns>
-                <TableColumn fx:id="idColumn" prefWidth="130.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Mã căn hộ" />
-                <TableColumn fx:id="buildingColumn" prefWidth="100.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Tòa nhà" />
-                <TableColumn fx:id="floorColumn" prefWidth="100.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Tầng" />
-                <TableColumn fx:id="areaColumn" prefWidth="130.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Diện tích (m²)" />
-                <TableColumn fx:id="bedroomsColumn" prefWidth="130.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Số phòng ngủ" />
-                <TableColumn fx:id="priceColumn" prefWidth="150.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Giá thuê (VNĐ)" />
-                <TableColumn fx:id="statusColumn" prefWidth="140.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Trạng thái" />
-                <TableColumn fx:id="maintenanceFeeCol" prefWidth="120.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Phí bảo trì" />
+                <TableColumn fx:id="idColumn" prefWidth="130.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Apartment ID" />
+                <TableColumn fx:id="buildingColumn" prefWidth="100.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Building" />
+                <TableColumn fx:id="floorColumn" prefWidth="100.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Floor" />
+                <TableColumn fx:id="areaColumn" prefWidth="130.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Acreage (m²)" />
+                <TableColumn fx:id="bedroomsColumn" prefWidth="170.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Number of bedrooms" />
+                <TableColumn fx:id="priceColumn" minWidth="150.0" prefWidth="116.7999267578125" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Rental price (VND)" />
+                <TableColumn fx:id="statusColumn" prefWidth="100.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Status" />
+                <TableColumn fx:id="maintenanceFeeCol" prefWidth="140.0" style="-fx-font-size: 14px; -fx-text-alignment: CENTER;" text="Maintenance fee" />
             </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
         </TableView>
-        <Label layoutX="60.0" layoutY="571.0" text="Tổng số căn hộ:">
+        <Label layoutX="60.0" layoutY="571.0" text="Total number of apartments:">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
-        <Label fx:id="apartmentCountLabel" layoutX="167.0" layoutY="572.0" text="0">
+        <Label fx:id="apartmentCountLabel" layoutX="250.0" layoutY="572.0" text="0">
             <font>
                 <Font size="14.0" />
             </font>
         </Label>
         <HBox alignment="CENTER_RIGHT" layoutX="720.0" layoutY="561.0" prefHeight="40.0" prefWidth="355.0" spacing="10.0">
             <children>
-                <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportReport" prefHeight="30.0" prefWidth="100.0" styleClass="actionButton" stylesheets="@../../styles/Dashboard.css" text="Xuất báo cáo" />
+                <Button fx:id="exportButton" mnemonicParsing="false" onAction="#exportReport" prefHeight="30.0" prefWidth="100.0" styleClass="exportButton" stylesheets="@../../styles/Dashboard.css" text="Export" />
             </children>
         </HBox>
-        <Button fx:id="closeButton" layoutX="975.0" layoutY="610.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="100.0" styleClass="close-button" stylesheets="@../../styles/Dashboard.css" text="Đóng" />
+        <Button fx:id="closeButton" layoutX="975.0" layoutY="610.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="100.0" styleClass="cancel-button" stylesheets="@../../styles/Dashboard.css" text="Cancel" />
       <Pagination fx:id="pagination" layoutX="478.0" layoutY="549.0" prefHeight="40.0" prefWidth="200.0" />
+      <Label layoutX="399.0" layoutY="60.0" styleClass="subtitle" text="Detailed information of all available and occupied units" />
     </children>
 </AnchorPane>

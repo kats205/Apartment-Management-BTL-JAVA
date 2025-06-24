@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -17,56 +16,45 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="hrView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Staff.HRViewController">
+<AnchorPane fx:id="hrView" prefHeight="655.0" prefWidth="1130.0" style="-fx-background-color: white;" stylesheets="@../../styles/HRView.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.Staff.HRViewController">
     <children>
         <BorderPane layoutX="0.0" layoutY="0.0" prefHeight="655.0" prefWidth="1130.0">
             <top>
-                <VBox spacing="5.0" BorderPane.alignment="CENTER">
+                <VBox alignment="BOTTOM_CENTER" prefHeight="85.0" prefWidth="1130.0" spacing="10.0" BorderPane.alignment="BOTTOM_CENTER">
                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0">
-                            <children>
-                        <AnchorPane prefHeight="35.0" prefWidth="1110.0">
-                           <children>
-                                      <Label layoutX="443.0" text="QUẢN LÝ NHÂN SỰ" textFill="#2c3e50">
-                                          <font>
-                                              <Font name="System Bold" size="24.0" />
-                                          </font>
-                                      </Label>
-                           </children>
-                        </AnchorPane>
-                            </children>
-                            <padding>
-                                <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <Separator />
+                  <Label styleClass="main-title" text="HUMAN RESOURCES MANAGEMENT" textFill="#2c3e50">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="subtitle" text="Comprehensive system for managing employee records, work history, and organizational structure" />
                     </children>
                 </VBox>
             </top>
             <left>
                 <VBox prefHeight="582.0" prefWidth="300.0" BorderPane.alignment="CENTER">
                     <children>
-                        <TitledPane animated="false" text="Thông tin nhân sự">
+                        <TitledPane animated="false" text="Staff Information">
                             <content>
                                 <VBox spacing="10.0">
                                     <children>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
                                                 <Label prefHeight="25.0" prefWidth="85.0" text="ID:" />
-                                                <TextField fx:id="tfUserId" editable="false" prefWidth="190.0" promptText="ID tự động" />
+                                                <TextField fx:id="tfUserId" editable="false" prefWidth="190.0" promptText="Automatic ID" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
-                                                <Label prefHeight="25.0" prefWidth="85.0" text="Tên đăng nhập:" />
-                                                <TextField fx:id="tfUsername" editable="false" prefWidth="190.0" promptText="Tên đăng nhập" />
+                                                <Label prefHeight="25.0" prefWidth="85.0" text="Userame:" />
+                                                <TextField fx:id="tfUsername" editable="false" prefWidth="190.0" promptText="Username" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0" />
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
-                                                <Label prefHeight="25.0" prefWidth="85.0" text="Họ và tên:" />
-                                                <TextField fx:id="tfFullName" editable="false" prefWidth="190.0" promptText="Họ và tên" />
+                                                <Label prefHeight="25.0" prefWidth="85.0" text="Full Name:" />
+                                                <TextField fx:id="tfFullName" editable="false" prefWidth="190.0" promptText="Full Name" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
@@ -77,14 +65,14 @@
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
-                                                <Label prefHeight="25.0" prefWidth="85.0" text="Số điện thoại:" />
-                                                <TextField fx:id="tfPhone" prefWidth="190.0" promptText="Số điện thoại" />
+                                                <Label prefHeight="25.0" prefWidth="85.0" text="Phone Number:" />
+                                                <TextField fx:id="tfPhone" prefWidth="190.0" promptText="Phone Number" />
                                             </children>
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
-                                                <Label prefHeight="25.0" prefWidth="85.0" text="Vai trò:" />
-                                    <TextField fx:id="tfRole" disable="true" prefWidth="100.0" promptText="Staff" text="Staff">
+                                                <Label prefHeight="25.0" prefWidth="85.0" text="Role:" />
+                                    <TextField fx:id="tfRole" disable="true" prefHeight="30.0" prefWidth="190.0" promptText="Staff" text="Staff">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
@@ -93,7 +81,7 @@
                                         </HBox>
                                         <HBox alignment="CENTER_LEFT" spacing="5.0">
                                             <children>
-                                                <Label prefHeight="25.0" prefWidth="85.0" text="Trạng thái:" />
+                                                <Label prefHeight="25.0" prefWidth="85.0" text="Status:" />
                                                 <CheckBox fx:id="cbActive" prefHeight="17.0" prefWidth="86.0" selected="true" text="Hoạt động" />
                                             </children>
                                         </HBox>
@@ -108,15 +96,15 @@
                             <children>
                                 <HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="10.0">
                                     <children>
-                                        <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #28a745; -fx-text-fill: white;" text="Thêm mới" />
-                                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#handleBtnUpdate" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #007bff; -fx-text-fill: white;" text="Cập nhật" />
-                                        <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #dc3545; -fx-text-fill: white;" text="Xóa" />
+                                        <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #fdaa09; -fx-text-fill: white;" text="Add New" />
+                                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#handleBtnUpdate" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #007bff; -fx-text-fill: white;" text="Update" />
+                                        <Button fx:id="btnDelete" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #dc3545; -fx-text-fill: white;" text="Delete" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER" prefHeight="30.0" spacing="10.0">
                                     <children>
-                                        <Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleBtnClear" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white;" text="Làm mới" />
-                                        <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #17a2b8; -fx-text-fill: white;" text="Lưu thay đổi" />
+                                        <Button fx:id="btnClear" mnemonicParsing="false" onAction="#handleBtnClear" prefHeight="30.0" prefWidth="120.0" style="-fx-text-fill: white;" styleClass="refresh-btn" text="Refresh" />
+                                        <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" style="-fx-text-fill: white;" styleClass="button-save" text="Save" />
                                     </children>
                                 </HBox>
                             </children>
@@ -135,40 +123,38 @@
                     <children>
                         <HBox alignment="CENTER_LEFT" spacing="15.0">
                             <children>
-                        <TextField fx:id="textFullName" prefHeight="30.0" prefWidth="370.0" promptText="Tên nhân sự">
+                        <TextField fx:id="textFullName" prefHeight="30.0" prefWidth="370.0" promptText="Staff's Name">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </TextField>
-                                <ComboBox fx:id="cbFilterPosition" prefHeight="30.0" prefWidth="160.0" promptText="Lọc theo chức vụ" />
-                                <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#handleBtnSearch" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #28a745; -fx-text-fill: white;" text="Tìm kiếm" />
-                                <Button fx:id="btnRefresh" mnemonicParsing="false" onAction="#handleBtnRefresh" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white;" text="Làm mới" />
+                                <ComboBox fx:id="cbFilterPosition" prefHeight="30.0" prefWidth="200.0" promptText="Filter by position" />
+                                <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#handleBtnSearch" prefHeight="30.0" prefWidth="106.0" style="-fx-text-fill: white;" styleClass="search-btn" text="Search" />
+                                <Button fx:id="btnRefresh" mnemonicParsing="false" onAction="#handleBtnRefresh" prefHeight="30.0" prefWidth="100.0" style="-fx-text-fill: white;" styleClass="refresh-btn" text="Refresh" />
                             </children>
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                         </HBox>
-                        <TableView fx:id="tvUsers" fixedCellSize="0.0" onMouseClicked="#handleClickTVUsers" prefHeight="488.0" prefWidth="810.0" stylesheets="@../../styles/Dashboard.css" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="tvUsers" fixedCellSize="0.0" onMouseClicked="#handleClickTVUsers" prefHeight="444.0" prefWidth="812.0" VBox.vgrow="ALWAYS">
                             <columns>
-                                <TableColumn fx:id="colUserId" prefWidth="50.0" text="ID" />
-                                <TableColumn fx:id="colUsername" prefWidth="120.0" text="Tên đăng nhập" />
-                                <TableColumn fx:id="colRole" prefWidth="100.0" text="Vai trò" />
-                                <TableColumn fx:id="colFullName" prefWidth="140.0" text="Họ và tên" />
+                                <TableColumn fx:id="colUserId" prefWidth="90.0" text="Staf ID" />
+                                <TableColumn fx:id="colUsername" prefWidth="150.0" text="Username" />
+                                <TableColumn fx:id="colFullName" prefWidth="150.0" text="Full Name" />
+                                <TableColumn fx:id="colRole" prefWidth="100.0" text="Role" />
                                 <TableColumn fx:id="colEmail" prefWidth="150.0" text="Email" />
-                                <TableColumn fx:id="colPhone" prefWidth="120.0" text="Số điện thoại" />
-                                <TableColumn fx:id="colDepartment" prefWidth="100.0" text="Phòng ban" />
-                                <TableColumn fx:id="colPosition" prefWidth="150.0" text="Chức vụ" />
-                                <TableColumn fx:id="colActive" prefWidth="100.0" text="Trạng thái" />
+                                <TableColumn fx:id="colPhone" prefWidth="120.0" text="Phone Number" />
+                                <TableColumn fx:id="colPosition" prefWidth="100.0" text="Position" />
+                                <TableColumn fx:id="colActive" prefWidth="100.0" text="Status" />
                             </columns>
                         </TableView>
-                  <Pagination fx:id="pagination" prefHeight="17.0" prefWidth="812.0" />
                         <HBox prefHeight="45.0" prefWidth="810.0" spacing="10.0">
                             <children>
                         <AnchorPane prefHeight="45.0" prefWidth="820.0">
                            <children>
                                       <HBox alignment="CENTER_LEFT" layoutX="7.0" layoutY="4.0" prefHeight="20.0" spacing="5.0">
                                           <children>
-                                              <Label prefHeight="20.0" text="Tổng số:">
+                                              <Label prefHeight="20.0" text="Total:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -178,9 +164,10 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
+                                    <Pagination fx:id="pagination" prefHeight="0.0" prefWidth="635.0" />
                                           </children>
                                       </HBox>
-                              <Button fx:id="btnClose" layoutX="706.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="80.0" text="Đóng" AnchorPane.rightAnchor="0.0" />
+                              <Button fx:id="btnClose" layoutX="706.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="100.0" styleClass="cancel-button" text="Cancel" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                             </children>

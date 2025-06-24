@@ -128,7 +128,7 @@
                                                             <graphic>
                                                                 <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                                                     <image>
-                                                                        <Image url="@../../assets/icons/camera.png" />
+                                                                        <Image url="@../../assets/UserDashboard/Complaint/cloud-computing.png" />
                                                                     </image>
                                                                 </ImageView>
                                                             </graphic>

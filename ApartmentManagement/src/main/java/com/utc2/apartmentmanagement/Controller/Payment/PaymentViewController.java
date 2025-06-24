@@ -180,7 +180,6 @@ public class PaymentViewController implements Initializable {
 //        detailButton.setOnAction(event -> viewPaymentDetails());
 
         // Xử lý sự kiện in biên lai
-        printButton.setOnAction(event -> printReceipt());
 
         // Xử lý sự kiện xuất báo cáo
         exportButton.setOnAction(event -> exportReport());

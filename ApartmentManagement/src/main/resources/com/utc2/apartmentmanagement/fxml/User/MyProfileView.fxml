@@ -13,25 +13,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="SettingView" prefHeight="480.0" prefWidth="700.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E3E5EA;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MyProfileController">
+<AnchorPane fx:id="SettingView" prefHeight="480.0" prefWidth="700.0" style="-fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #E3E5EA;" stylesheets="@../../styles/MyProfile.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utc2.apartmentmanagement.Controller.User.MyProfileController">
     <children>
         <VBox layoutX="-9.0" layoutY="3.0" prefHeight="624.0" prefWidth="708.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="393.0">
-                    <children>
-                        <AnchorPane prefHeight="30.0" prefWidth="660.0">
-                            <children>
-                                <Label alignment="CENTER" layoutX="198.0" layoutY="2.0" prefHeight="30.0" prefWidth="262.0" text="CÀI ĐẶT TÀI KHOẢN" textAlignment="CENTER" AnchorPane.topAnchor="0.0">
-                                    <font>
-                                        <Font name="System Bold" size="24.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </AnchorPane>
-                    </children>
+                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="393.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="278.0" styleClass="main-title" stylesheets="@../../styles/MyProfile.css" text="ACCOUNT SETTINGS" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
                 </HBox>
                 <Separator prefWidth="200.0" />
                 <HBox alignment="CENTER" prefHeight="109.0" prefWidth="658.0">
@@ -40,10 +36,10 @@
                             <children>
                                 <ImageView fx:id="userAvatar" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../assets/Profile/Admin/IMG_0466.JPG" />
+                                        <Image url="@../assets/Profile/Admin/IMG_0466.JPG" />
                                     </image>
                                 </ImageView>
-                                <Button fx:id="changeAvatarBtn" mnemonicParsing="false" onAction="#handleChangeAvatar" styleClass="small-button" stylesheets="@../../styles/Dashboard.css" text="Thay đổi ảnh">
+                                <Button fx:id="changeAvatarBtn" mnemonicParsing="false" onAction="#handleChangeAvatar" styleClass="small-button"  text="Change Avatar">
                                     <VBox.margin>
                                         <Insets top="10.0" />
                                     </VBox.margin>
@@ -57,27 +53,27 @@
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="roleLabel1" layoutX="7.0" layoutY="10.0" text="Vai trò:">
+                                <Label fx:id="roleLabel1" layoutX="7.0" layoutY="10.0" text="Role:">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="lastLoginLabel1" layoutX="7.0" layoutY="70.0" text="Đăng nhập lần cuối:">
+                                <Label fx:id="lastLoginLabel1" layoutX="7.0" layoutY="70.0" text="Last login:">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="lastLogin" layoutX="157.0" layoutY="70.0" text="28/04/2025 08:30:15">
+                                <Label fx:id="lastLogin" layoutX="90.0" layoutY="70.0" text="28/04/2025 08:30:15">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="userName" layoutX="93.0" layoutY="40.0" text="Khanh">
+                                <Label fx:id="userName" layoutX="90.0" layoutY="40.0" text="Khanh">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="roleName" layoutX="69.0" layoutY="10.0" text="Admin">
+                                <Label fx:id="roleName" layoutX="50.0" layoutY="10.0" text="Admin">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
@@ -87,7 +83,7 @@
                     </children>
                 </HBox>
                 <Separator prefWidth="200.0" />
-                <Label text="Thông tin cá nhân">
+                <Label text="Personal Information">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -96,7 +92,7 @@
                     <children>
                         <VBox prefHeight="50.0" prefWidth="318.0">
                             <children>
-                                <Label text="Họ và tên">
+                                <Label text="Full Name">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -128,7 +124,7 @@
                     <children>
                         <VBox prefHeight="60.0" prefWidth="425.0">
                             <children>
-                                <Label text="Số điện thoại">
+                                <Label text="Phone Number">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -142,7 +138,7 @@
                         </VBox>
                         <VBox prefHeight="60.0" prefWidth="425.0">
                             <children>
-                                <Label text="Phòng làm việc">
+                                <Label text="Position">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -156,13 +152,13 @@
                         </VBox>
                     </children>
                 </HBox>
-                <Button fx:id="saveProfileBtn" mnemonicParsing="false" onAction="#handleSaveProfileBtn" prefHeight="30.0" prefWidth="150.0" styleClass="primary-button" stylesheets="@../../styles/Dashboard.css" text="Lưu thông tin">
+                <Button fx:id="saveProfileBtn" mnemonicParsing="false" onAction="#handleSaveProfileBtn" prefHeight="30.0" prefWidth="100.0" styleClass="button-save" text="Save">
                     <VBox.margin>
                         <Insets top="10.0" />
                     </VBox.margin>
                 </Button>
                 <Separator prefWidth="200.0" />
-                <Label text="Đổi mật khẩu">
+                <Label text="Change Password">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -171,7 +167,7 @@
                     <children>
                         <VBox prefHeight="50.0" prefWidth="320.0">
                             <children>
-                                <Label text="Mật khẩu hiện tại">
+                                <Label text="Current Password">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -189,7 +185,7 @@
                     <children>
                         <VBox prefHeight="50.0" prefWidth="320.0">
                             <children>
-                                <Label text="Xác nhận mật khẩu mới">
+                                <Label text="Confirm New Password">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -203,7 +199,7 @@
                         </VBox>
                         <VBox prefHeight="50.0" prefWidth="320.0">
                             <children>
-                                <Label text="Mật khẩu mới">
+                                <Label text="New Password">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -219,7 +215,7 @@
                 </HBox>
                 <HBox prefHeight="60.0" prefWidth="658.0" spacing="20.0">
                     <children>
-                        <Button fx:id="changePasswordBtn1" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="30.0" prefWidth="200.0" styleClass="primary-button" stylesheets="@../../styles/Dashboard.css" text="Đổi mật khẩu" />
+                        <Button fx:id="changePasswordBtn1" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="30.0" prefWidth="200.0" styleClass="primary-button"  text="Change Password" />
                     </children>
                     <VBox.margin>
                         <Insets bottom="10.0" right="10.0" top="10.0" />
@@ -227,12 +223,12 @@
                 <Separator prefWidth="200.0" />
                 <HBox alignment="CENTER" prefHeight="30.0" prefWidth="660.0" spacing="20.0">
                     <children>
-                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="200.0" styleClass="logout-button" stylesheets="@../../styles/Dashboard.css" text="Đóng" />
-                        <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#handleLogout" prefHeight="30.0" prefWidth="200.0" styleClass="logout-button" stylesheets="@../../styles/Dashboard.css" text="Đăng xuất" textAlignment="CENTER">
+                        <Button fx:id="closeButton" mnemonicParsing="false" onAction="#handleCloseButton" prefHeight="30.0" prefWidth="200.0" styleClass="cancel-button" text="Cancel" />
+                        <Button fx:id="logoutBtn" mnemonicParsing="false" onAction="#handleLogout" prefHeight="30.0" prefWidth="200.0" styleClass="logout-button"  text="Log Out" textAlignment="CENTER">
                             <graphic>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../assets/Dashboard/logout.png" />
+                                        <Image url="@../assets/Dashboard/logout.png" />
                                     </image>
                                 </ImageView>
                             </graphic>

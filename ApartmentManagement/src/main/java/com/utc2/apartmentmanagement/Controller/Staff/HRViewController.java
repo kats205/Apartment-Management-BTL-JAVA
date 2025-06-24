@@ -122,8 +122,8 @@ public class HRViewController implements Initializable {
         colPhone.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Sodienthoai")));
         colPhone.setStyle("-fx-alignment: CENTER;");
 
-        colDepartment.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Phongban")));
-        colDepartment.setStyle("-fx-alignment: CENTER;");
+//        colDepartment.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Phongban")));
+//        colDepartment.setStyle("-fx-alignment: CENTER;");
 
         colPosition.setCellValueFactory(data -> new SimpleStringProperty((String) data.getValue().get("Chucvu")));
         colPosition.setStyle("-fx-alignment: CENTER;");
